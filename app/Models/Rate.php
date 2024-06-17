@@ -10,7 +10,7 @@ class Rate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['amount'];
+    protected $fillable = ['amount', 'school_id'];
 
     /**
      * Get all of the registrations for the Rate
