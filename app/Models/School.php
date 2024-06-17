@@ -10,7 +10,13 @@ class School extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'phone', 'logo', 'user_id'];
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'logo',
+        'user_id'
+    ];
 
     /**
      * Get all of the users for the School
@@ -30,5 +36,15 @@ class School extends Model
     public function sections(): HasMany
     {
         return $this->hasMany(Section::class);
+    }
+
+    /**
+     * Get all of the responsibleStudents for the School
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function responsibleStudents(): HasMany
+    {
+        return $this->hasMany(ResponsibleStudent::class);
     }
 }

@@ -11,7 +11,10 @@ class Section extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'school_id'];
+    protected $fillable = [
+        'name',
+        'school_id'
+    ];
 
     /**
      * Get the school that owns the Section
@@ -31,5 +34,15 @@ class Section extends Model
     public function options(): HasMany
     {
         return $this->hasMany(Option::class);
+    }
+
+    /**
+     * Get all of the registrationFee for the Section
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function registrationFee(): HasMany
+    {
+        return $this->hasMany(RegistrationFee::class);
     }
 }

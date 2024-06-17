@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ClassRoom;
 use App\Models\Option;
 use App\Models\School;
 use App\Models\Section;
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        $school = School::create(['SCHOOL TEST']);
+        $school = School::create(['name' => 'SCHOOL TEST']);
 
         $sections = [
             ['name' => 'MATERNELLE', 'school_id' => $school->id],
@@ -26,15 +27,15 @@ class DatabaseSeeder extends Seeder
         ];
         Section::insert($sections);
         $options = [
-            ['name' => 'MATERNELLE', 'section_id' => 1],
-            ['name' => 'PRIMAIRE', 'section_id' => 2],
+            ['name' => 'MATERNELLE', 'abbreviation' => null, 'section_id' => 1],
+            ['name' => 'PRIMAIRE', 'abbreviation' => null, 'section_id' => 2],
             ['name' => 'Education de Base', 'abbreviation' => 'EB', 'section_id' => 3],
             ['name' => 'Pédagogie Générale', 'abbreviation' => 'PH', 'section_id' => 3],
-            ['name' => 'Scientifique', 'section_id' => 3],
+            ['name' => 'Scientifique', 'abbreviation' => null, 'section_id' => 3],
         ];
         Option::insert($options);
 
-        Option::factory(50)->create();
+        ClassRoom::factory(50)->create();
 
         User::factory()->create([
             'name' => 'Test User',
