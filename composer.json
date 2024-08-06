@@ -28,8 +28,8 @@
     },
     "autoload": {
         "files": [
-            "App/Domain/Helpers/format_fr_month_name.php",
-            "App/Domain/Helpers/format_number_helper.php"
+            "App/helpers/format_fr_month_name.php",
+            "App/helpers/format_number_helper.php"
         ],
         "psr-4": {
             "App\\": "app/",
