@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('category_registration_fees', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('is_old')->default(false)->after('name');
+            $table->boolean('is_old')->default(false);
             $table->foreignIdFor(School::class)->nullable()
                 ->constrained()
                 ->cascadeOnDelete()
