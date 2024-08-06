@@ -1,0 +1,181 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css';
+@import 'admin-lte/dist/css/adminlte.min.css';
+@import 'icheck-bootstrap/icheck-bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.min.css';
+@import 'overlayscrollbars/overlayscrollbars.css';
+@import 'toastr/toastr';
+
+.cursor-hand {
+    cursor: pointer;
+
+}
+
+.text-app {
+    color: #283ae2;
+}
+
+.bg-app {
+    background-color: #283ae2;
+    color: white;
+}
+
+.bg-side {
+    background-color: #030c4f;
+    color: white;
+}
+
+.card-link {
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.card-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.app-btn {
+    color: wheat;
+    background-color: #283ae2;
+    color: wheat;
+}
+
+.app-btn:hover {
+    color: wheat;
+    background-color: #01062c;
+}
+
+.table-hover tbody tr:hover td {
+    background-color: #7564f5;
+    cursor: pointer;
+    color: white;
+}
+
+.table thead th {
+    background-color: #283ae2;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 5px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-wrapper .avatar-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.avatar-wrapper:hover .avatar-edit {
+    opacity: 1;
+}
+
+.avatar-wrapper .avatar-edit input {
+    display: none;
+}
+
+.avatar-wrapper .avatar-edit label {
+    color: white;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.avatar-wrapper .avatar-edit label:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+input:focus {
+    border: 3px solid #007BFF;
+    /* Couleur de la bordure lors du focus */
+    box-shadow: 0 0 5px #283ae2;
+    /* Ajoute un effet de halo */
+}
+
+.money_format {
+    font-family: Consolas,
+        Menlo,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace,
+        serif;
+}
+
+.zoom {
+    transition: transform .2s;
+}
+
+.zoom:hover {
+    -ms-transform: scale(1.1);
+    /* IE 9 */
+    -webkit-transform: scale(1.1);
+    /* Safari 3-8 */
+    transform: scale(1.1);
+}
+
+.tab-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.nav-tabs {
+    border-bottom: none;
+}
+
+.nav-tabs .nav-link {
+    color: #495057;
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: #e9ecef #e9ecef #dee2e6;
+}
+
+.nav-tabs .nav-link.active {
+    color: #007bff;
+    background-color: transparent;
+    border-bottom: 3px solid #007bff;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.tab-content {
+    padding-top: 20px;
+}

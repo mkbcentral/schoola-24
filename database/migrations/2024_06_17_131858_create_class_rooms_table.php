@@ -15,7 +15,10 @@ return new class extends Migration
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(Option::class)->constrained();
+            $table->foreignIdFor(Option::class)
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete()
+                ->constrained();
             $table->timestamps();
         });
     }

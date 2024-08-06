@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RegistrationFee extends Model
 {
@@ -13,16 +14,39 @@ class RegistrationFee extends Model
     protected $fillable = [
         'name',
         'amount',
-        'section_id'
+        'option_id',
+        'category_registration_fee_id',
+        'school_year_id',
+        'currency'
     ];
 
     /**
-     * Get the section that owns the RegistrationFee
+     * Get the option that owns the RegistrationFee
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function section(): BelongsTo
+    public function option(): BelongsTo
     {
-        return $this->belongsTo(Section::class, 'section_id');
+        return $this->belongsTo(Option::class, 'option_id');
+    }
+
+    /**
+     * Get all of the registrations for the RegistrationFee
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(Registration::class);
+    }
+
+    /**
+     * Get the category_registration_fee_id that owns the RegistrationFee
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function categoryRegistrationFee(): BelongsTo
+    {
+        return $this->belongsTo(CategoryRegistrationFee::class, 'category_registration_fee_id');
     }
 }

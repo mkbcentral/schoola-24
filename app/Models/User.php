@@ -21,7 +21,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'avatar',
+        'role_id',
         'password',
+        'is_active',
+        'is_on_line',
         'school_id'
     ];
 
@@ -45,6 +50,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_on_line' => 'boolean',
+            'is_active' => 'boolean',
         ];
     }
 
@@ -55,7 +62,7 @@ class User extends Authenticatable
      */
     public function school(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'school_id');
+        return $this->belongsTo(School::class, 'school_id');
     }
 
     /**
@@ -66,5 +73,15 @@ class User extends Authenticatable
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Get the role that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }

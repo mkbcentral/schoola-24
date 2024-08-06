@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -24,5 +26,28 @@ class Student extends Model
     public function responsibleStudent(): BelongsTo
     {
         return $this->belongsTo(ResponsibleStudent::class, 'responsible_student_id',);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAgeAttribute(): int
+    {
+        return Carbon::parse($this->attributes['date_of_birth'])->age;
+    }
+
+    /**
+     * Get the registration associated with the Student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function registration(): HasOne
+    {
+        return $this->hasOne(Registration::class);
+    }
+
+    public function getFormattedAg()
+    {
+        return $this->age <= 1 ? $this->age . ' An' : $this->age . ' Ans';
     }
 }

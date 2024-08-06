@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class School extends Model
 {
@@ -46,5 +47,15 @@ class School extends Model
     public function responsibleStudents(): HasMany
     {
         return $this->hasMany(ResponsibleStudent::class);
+    }
+
+    public static function DEFAULT_SCHOOL_ID(): int
+    {
+        return Auth::user()->school->id ?? 0;
+    }
+
+    public static function DEFAULT_SCHOOL_NAME(): string
+    {
+        return Auth::user()->school->name;
     }
 }

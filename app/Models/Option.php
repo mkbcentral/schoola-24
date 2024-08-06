@@ -20,7 +20,7 @@ class Option extends Model
      */
     public function section(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'section_id');
+        return $this->belongsTo(Section::class, 'section_id');
     }
 
     /**

@@ -31,4 +31,9 @@ class Rate extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public static function DEFAULT_RATE_ID()
+    {
+        return 1;
+    }
 }

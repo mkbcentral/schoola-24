@@ -18,7 +18,11 @@ return new class extends Migration
             $table->enum('gender', ['M', 'F']);
             $table->string('place_of_birth')->nullable();
             $table->string('date_of_birth')->nullable();
-            $table->foreignIdFor(ResponsibleStudent::class)->constrained();
+            $table->foreignIdFor(ResponsibleStudent::class)
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete()
+                ->nullable()
+                ->constrained();
             $table->timestamps();
         });
     }

@@ -13,8 +13,28 @@ class CategoryFee extends Model
 
     protected $fillable = [
         'name',
-        'school_year_id'
+        'school_year_id',
+        'school_id',
+        'is_state_fee',
+        'is_paid_in_installment',
+        'is_paid_for_registration',
+        'is_state_fee'
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_state_fee' => 'boolean',
+            'is_paid_in_installment' => 'boolean',
+            'is_paid_for_registration' => 'boolean',
+        ];
+    }
+
 
     /**
      * Get the schoolYear that owns the CategoryFee

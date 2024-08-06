@@ -1,8 +1,7 @@
 <?php
 
 use App\Models\CategoryFee;
-use App\Models\Currency;
-use App\Models\Section;
+use App\Models\ClassRoom;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,9 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('amount', 16)->nullable();
-            $table->foreignIdFor(CategoryFee::class)->constrained();
-            $table->foreignIdFor(Section::class)->constrained();
-            $table->foreignIdFor(Currency::class)->constrained();
+            $table->string('currency')->nullable();
+            $table->foreignIdFor(CategoryFee::class)->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(ClassRoom::class)->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

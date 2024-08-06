@@ -1,7 +1,61 @@
 <?php
 
+use App\Livewire\Application\Admin\List\ConfigureSchoolPage;
+use App\Livewire\Application\Admin\List\ListRolePage;
+use App\Livewire\Application\Admin\List\ListSchoolPage;
+use App\Livewire\Application\Admin\List\ListUserPage;
+use App\Livewire\Application\Config\List\ListClassRoomPage;
+use App\Livewire\Application\Config\List\ListOptionPage;
+use App\Livewire\Application\Config\List\ListSectionPage;
+use App\Livewire\Application\Dashboard\MainDashobardPage;
+use App\Livewire\Application\Fee\Registration\List\ListRegistrationFeePage;
+use App\Livewire\Application\Fee\Scolar\List\ListCategoryScolarFeePage;
+use App\Livewire\Application\Fee\Scolar\MainScolarFeePage;
+use App\Livewire\Application\Payment\MainPaymentPage;
+use App\Livewire\Application\Registration\List\ListRegistrationByClassRoomPage;
+use App\Livewire\Application\Registration\List\ListRegistrationByDatePage;
+use App\Livewire\Application\Registration\List\ListRegistrationByMonthPage;
+use App\Livewire\Application\Student\DetailStudentPage;
+use App\Livewire\Application\Student\List\ListResponsibleStudentPage;
+use App\Livewire\Application\Student\List\ListStudentPage;
 use Illuminate\Support\Facades\Route;
 
+/*
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+*/
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::group(['school' => ''], function () {
+        Route::get('/', MainDashobardPage::class)->name('dashboard.main');
+        Route::get('/responsible-sudent', ListResponsibleStudentPage::class)->name('responsible.main');
+        Route::get('/students', ListStudentPage::class)->name('student.list');
+        Route::get('/student/{registration}', DetailStudentPage::class)->name('student.detail');
+        Route::get('section', ListSectionPage::class)->name('school.section');
+        Route::get('option', ListOptionPage::class)->name('school.option');
+        Route::get('class-room', ListClassRoomPage::class)->name('school.class-room');
+        Route::get('registration-date/{isOld}/{dateFilter}', ListRegistrationByDatePage::class)->name('registration.date');
+        Route::get('registration-month/{isOld}/{monthFilter}', ListRegistrationByMonthPage::class)->name('registration.month');
+        Route::get('registration-by-class-room/{classRoomId}', ListRegistrationByClassRoomPage::class)->name('registration.by.class-room');
+    });
+
+    Route::group(['fee' => ''], function () {
+        Route::get('/registration', ListRegistrationFeePage::class)->name('fee.registration');
+        Route::get('/scolar', MainScolarFeePage::class)->name('fee.scolar');
+        Route::get('/category-scolar', ListCategoryScolarFeePage::class)->name('category.fee.scolar');
+        Route::get('/category-registration', ListCategoryScolarFeePage::class)->name('category.fee.registration');
+    });
+
+    Route::group(['admin' => ''], function () {
+        Route::get('users', ListUserPage::class)->name('admin.main');
+        Route::get('roles', ListRolePage::class)->name('admin.role');
+        Route::get('schools', ListSchoolPage::class)->name('admin.schools');
+        Route::get('schools', ListSchoolPage::class)->name('admin.schools');
+        Route::get('configure-school{school}', ConfigureSchoolPage::class)->name('admin.school.configure');
+    });
+
+    Route::group(['payment' => ''], function () {
+        Route::get('rapport', MainPaymentPage::class)->name('payment.rappport');
+    });
 });

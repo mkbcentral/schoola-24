@@ -24,4 +24,9 @@ class SchoolYear extends Model
     {
         return $this->hasMany(Registration::class);
     }
+
+    public static function DEFAULT_SCHOOL_YEAR_ID(): int
+    {
+        return 1;
+    }
 }

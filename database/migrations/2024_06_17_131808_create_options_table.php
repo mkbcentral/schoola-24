@@ -16,7 +16,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('abbreviation')->nullable();
-            $table->foreignIdFor(Section::class)->constrained();
+            $table->foreignIdFor(Section::class)
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete()
+                ->constrained();
             $table->timestamps();
         });
     }

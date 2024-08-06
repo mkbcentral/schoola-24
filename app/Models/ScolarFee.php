@@ -15,8 +15,8 @@ class ScolarFee extends Model
         'name',
         'amount',
         'category_fee_id',
-        'section_id',
-        'currency_id'
+        'currency',
+        'class_room_id'
     ];
 
     /**
@@ -40,13 +40,13 @@ class ScolarFee extends Model
     }
 
     /**
-     * Get the section that owns the ScolarFee
+     * Get the classRoom that owns the ScolarFee
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function section(): BelongsTo
+    public function classRoom(): BelongsTo
     {
-        return $this->belongsTo(Section::class, 'section_id');
+        return $this->belongsTo(ClassRoom::class, 'class_room_id');
     }
 
     /**
