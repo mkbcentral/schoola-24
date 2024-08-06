@@ -33,8 +33,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->constrained();
             $table->enum('app_status', SchoolAppEnum::getValues())
-                ->default(SchoolAppEnum::IS_FREE)
-                ->after('logo');
+                ->default(SchoolAppEnum::IS_FREE);
             $table->enum('school_status', SchoolEnum::getValues())
                 ->default(SchoolEnum::PENDING)->after('app_status');
             $table->rememberToken();
