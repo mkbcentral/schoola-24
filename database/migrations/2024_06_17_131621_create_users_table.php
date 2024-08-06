@@ -35,7 +35,7 @@ return new class extends Migration
             $table->enum('app_status', SchoolAppEnum::getValues())
                 ->default(SchoolAppEnum::IS_FREE);
             $table->enum('school_status', SchoolEnum::getValues())
-                ->default(SchoolEnum::PENDING)->after('app_status');
+                ->default(SchoolEnum::PENDING);
             $table->rememberToken();
             $table->timestamps();
         });
