@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('category_fees', function (Blueprint $table) {
-            $table->boolean('is_paid_for_registration')->default(false)->after('paid_in_installment');
+            $table->boolean('is_paid_for_registration')->default(false)->after('is_paid_in_installment');
         });
     }
 
