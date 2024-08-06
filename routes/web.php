@@ -8,6 +8,7 @@ use App\Livewire\Application\Config\List\ListClassRoomPage;
 use App\Livewire\Application\Config\List\ListOptionPage;
 use App\Livewire\Application\Config\List\ListSectionPage;
 use App\Livewire\Application\Dashboard\MainDashobardPage;
+use App\Livewire\Application\Fee\Registration\List\ListCategoryRegistrationFeePage;
 use App\Livewire\Application\Fee\Registration\List\ListRegistrationFeePage;
 use App\Livewire\Application\Fee\Scolar\List\ListCategoryScolarFeePage;
 use App\Livewire\Application\Fee\Scolar\MainScolarFeePage;
@@ -44,7 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/registration', ListRegistrationFeePage::class)->name('fee.registration');
         Route::get('/scolar', MainScolarFeePage::class)->name('fee.scolar');
         Route::get('/category-scolar', ListCategoryScolarFeePage::class)->name('category.fee.scolar');
-        Route::get('/category-registration', ListCategoryScolarFeePage::class)->name('category.fee.registration');
+        Route::get('/category-registration', ListCategoryRegistrationFeePage::class)->name('category.fee.registration');
     });
 
     Route::group(['admin' => ''], function () {
