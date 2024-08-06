@@ -31,7 +31,7 @@ class SchoolDataFeature implements ISchoolDataConfig
             )
             ->with('option')
             ->select('class_rooms.*')
-            ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
+            //->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->paginate($per_page);
     }
 
