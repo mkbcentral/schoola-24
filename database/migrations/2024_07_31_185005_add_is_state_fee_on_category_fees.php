@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('category_fees', function (Blueprint $table) {
-            $table->boolean('is_state_fee')->default(false)->after('currency');
+            $table->boolean('is_state_fee')->default(false);
         });
     }
 
