@@ -42,15 +42,17 @@ interface  IPayment
      */
     public static function makeIsPaid(Payment $payment): bool;
 
+
     /**
-     * Retourner la liste de payment
+     * etourner la liste de payment
      * @param mixed $date
      * @param mixed $month
-     * @param mixed $sectionId
      * @param mixed $categoryFeeId
      * @param mixed $feeId
+     * @param mixed $sectionId
      * @param mixed $optionId
-     * @param int $classRoomId
+     * @param mixed $classRoomId
+     * @param mixed $isPaid
      * @param int $perPage
      * @return mixed
      */
@@ -62,20 +64,22 @@ interface  IPayment
         ?int $sectionId,
         ?int $optionId,
         ?int $classRoomId,
+        ?bool $isPaid,
         int $perPage
     ): mixed;
 
     /**
-     * Retouter le total de payments
+     * Retouter le montant total de payments
      * @param mixed $date
      * @param mixed $month
      * @param mixed $categoryFeeId
      * @param mixed $feeId
      * @param mixed $sectionId
      * @param mixed $optionId
-     * @param int $classRoomId
-     * @param int $currency
-     * @return \Ramsey\Uuid\Type\Decimal
+     * @param mixed $classRoomId
+     * @param mixed $isPaid
+     * @param mixed $currency
+     * @return float
      */
     public static function getTotal(
         ?string $date,
@@ -84,18 +88,22 @@ interface  IPayment
         ?int $feeId,
         ?int $sectionId,
         ?int $optionId,
-        int $classRoomId,
+        ?int $classRoomId,
+        ?bool $isPaid,
         ?string $currency
     ): float;
 
+
     /**
-     * Retourner le nombre des payments
-     * @param string $date
-     * @param mixed $sectionId
-     * @param mixed $categoryFeeId
+     * Retouter le nombre total de payments
+     * @param mixed $date
+     * @param mixed $month
+     * @param mixed $categfeeIdoryFeeId
      * @param mixed $feeId
+     * @param mixed $sectionId
      * @param mixed $optionId
-     * @param int $classRoomId
+     * @param mixed $classRoomId
+     * @param mixed $isPaid
      * @return int
      */
     public static function getCount(
@@ -105,6 +113,7 @@ interface  IPayment
         ?int $feeId,
         ?int $sectionId,
         ?int $optionId,
-        int $classRoomId,
+        ?int $classRoomId,
+        ?bool $isPaid,
     ): int;
 }

@@ -24,7 +24,8 @@ class Registration extends Model
         'is_registered',
         'is_old',
         'abandoned',
-        'class_changed'
+        'class_changed',
+        'created_at',
     ];
 
 

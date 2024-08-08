@@ -4,6 +4,7 @@ namespace App\Livewire\Application\Payment\Form;
 
 use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\PaymentForm;
+use App\Models\Payment;
 use App\Models\Registration;
 use Exception;
 use Livewire\Component;
@@ -15,6 +16,7 @@ class FormPaymentPage extends Component
     ];
     public ?Registration $registration;
     public $selectedCategoryFeeId, $selectedIdClassRoom = 0;
+
     public PaymentForm $form;
     public function updatedFormCategoryFeeId($val)
     {
@@ -29,11 +31,19 @@ class FormPaymentPage extends Component
     {
         $this->validate();
         try {
-            $registration = $this->form->create($this->registration->id);
+            $this->form->create($this->registration->id);
             $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
+            $this->dispatch('refreshPaymentList');
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
+    }
+
+
+
+    public function mount()
+    {
+        $this->form->created_at = date('Y-m-d');
     }
 
 

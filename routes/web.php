@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrintPaymentReceiptController;
 use App\Livewire\Application\Admin\List\ConfigureSchoolPage;
 use App\Livewire\Application\Admin\List\ListRolePage;
 use App\Livewire\Application\Admin\List\ListSchoolPage;
@@ -13,6 +14,7 @@ use App\Livewire\Application\Fee\Registration\List\ListRegistrationFeePage;
 use App\Livewire\Application\Fee\Scolar\List\ListCategoryScolarFeePage;
 use App\Livewire\Application\Fee\Scolar\MainScolarFeePage;
 use App\Livewire\Application\Payment\MainPaymentPage;
+use App\Livewire\Application\Payment\NewPaymentPage;
 use App\Livewire\Application\Registration\List\ListRegistrationByClassRoomPage;
 use App\Livewire\Application\Registration\List\ListRegistrationByDatePage;
 use App\Livewire\Application\Registration\List\ListRegistrationByMonthPage;
@@ -55,8 +57,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('schools', ListSchoolPage::class)->name('admin.schools');
         Route::get('configure-school{school}', ConfigureSchoolPage::class)->name('admin.school.configure');
     });
-
     Route::group(['payment' => ''], function () {
+        Route::get('new-payment', NewPaymentPage::class)->name('payment.new');
         Route::get('rapport', MainPaymentPage::class)->name('payment.rappport');
+    });
+    Route::controller(PrintPaymentReceiptController::class)->group(function () {
+        Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt');
     });
 });

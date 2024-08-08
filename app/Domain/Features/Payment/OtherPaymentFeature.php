@@ -26,7 +26,6 @@ class OtherPaymentFeature
                 'scolar_fee_id' => $scolarFee->id,
                 'rate_id' => Rate::DEFAULT_RATE_ID(),
                 'user_id' => Auth::id(),
-                'is_paid' => true
             ]);
         }
     }

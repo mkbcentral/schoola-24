@@ -60,6 +60,7 @@ class FormStudentPage extends Component
 
     public function mount()
     {
+        $this->form->created_at = date('Y-m-d');
     }
 
 

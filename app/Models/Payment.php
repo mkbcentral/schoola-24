@@ -18,7 +18,8 @@ class Payment extends Model
         'scolar_fee_id',
         'rate_id',
         'user_id',
-        'is_paid'
+        'is_paid',
+        'created_at',
     ];
 
     /**
@@ -116,6 +117,12 @@ class Payment extends Model
                 $filters['classRoomId'],
                 function ($query, $f) {
                     return $query->where('registrations.class_room_id', $f);
+                }
+            )
+            ->when(
+                $filters['isPaid'],
+                function ($query, $f) {
+                    return $query->where('payments.is_paid', $f);
                 }
             )
             ->with([

@@ -44,6 +44,7 @@ class FormEditStudentPage extends Component
         $this->form->registration_fee_id = $this->student->registration->registration_fee_id;
         $this->form->class_room_id = $this->student->registration->class_room_id;
         $this->isOldSelected = $this->student->registration->is_old;
+        $this->form->created_at = $this->student->registration->created_at->format('Y-m-d');
     }
 
 

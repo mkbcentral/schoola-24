@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\RoleType;
 use App\Events\RegistrationCreatedEvent;
 use App\Listeners\CreateRegistrationPaymentListner;
 use App\Listeners\LogSuccessfulLogin;
@@ -39,6 +40,23 @@ class AppServiceProvider extends ServiceProvider
         });
         Gate::define('view-school-unaccess', function () {
             return Auth::user()->role->is_for_school == false;
+        });
+
+        Gate::define('manage-student', function () {
+            return Auth::user()->role->is_for_school == true &&
+                Auth::user()->role->name == RoleType::SCHOOL_SECRETARY;
+        });
+        Gate::define('manage-payment', function () {
+            return Auth::user()->role->is_for_school == true &&
+                Auth::user()->role->name == RoleType::SCHOOL_FINANCE;
+        });
+        Gate::define('manage-school', function () {
+            return Auth::user()->role->is_for_school == true &&
+                Auth::user()->role->name == RoleType::SCHOOL_MANAGER;
+        });
+        Gate::define('manage-school-app', function () {
+            return Auth::user()->role->is_for_school == true &&
+                Auth::user()->role->name == RoleType::ADMIN_SCHOOL;
         });
     }
 }

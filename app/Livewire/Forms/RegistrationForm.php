@@ -5,7 +5,6 @@ namespace App\Livewire\Forms;
 use App\Domain\Features\Registration\RegistrationFeature;
 use App\Domain\Features\Student\StudentFeature;
 use App\Domain\Helpers\RegistrationHelper;
-use App\Events\RegistrationCreatedEvent;
 use App\Models\Rate;
 use App\Models\Registration;
 use App\Models\ResponsibleStudent;
@@ -31,6 +30,9 @@ class RegistrationForm extends Form
     public $option_id = '';
     #[Rule('required', message: "Selectionner le type SVP !", onUpdate: false)]
     public $is_old = false;
+    #[Rule('required', message: "Date de creation !", onUpdate: false)]
+    #[Rule('date', message: "Format date invalide", onUpdate: false)]
+    public $created_at = '';
 
     public function create(ResponsibleStudent $responsibleStudent, $gender): Registration
     {
@@ -52,6 +54,7 @@ class RegistrationForm extends Form
                 'school_year_id' => SchoolYear::DEFAULT_SCHOOL_YEAR_ID(),
                 'rate_id' => Rate::DEFAULT_RATE_ID(),
                 'is_old' => $this->is_old,
+                'created_at' => $this->created_at,
             ]);
         }
         return $registration;
@@ -69,6 +72,7 @@ class RegistrationForm extends Form
             'registration_fee_id' => $this->registration_fee_id,
             'class_room_id' => $this->class_room_id,
             'is_old' => $this->is_old,
+            'created_at' => $this->created_at,
         ];
         RegistrationFeature::update($student->registration, $input_registration);
     }

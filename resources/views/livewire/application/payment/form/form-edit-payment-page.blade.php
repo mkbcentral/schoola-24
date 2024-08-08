@@ -1,22 +1,22 @@
 <div>
-    <x-modal.build-modal-fixed idModal='form-payment' size='md' headerLabel="PAYEMENT FRAIS"
+    <x-modal.build-modal-fixed idModal='form-edit-payment' size='md' headerLabel="MODIFIER FRAIS"
         headerLabelIcon='bi bi-arrow-left-right'>
         <div class="d-flex justify-content-center pb-2">
             <x-widget.loading-circular-md wire:loading wire:target='save' />
             <x-widget.loading-circular-md wire:loading wire:target='getRegistration' />
         </div>
-        @if ($registration != null)
+        @if ($payment != null)
             <div class="card p-2">
                 <div>
                     <span class="fw-bold">Nom:</span>
-                    <span>{{ $registration->student->name }}</span>
+                    <span>{{ $payment->registration->student->name }}</span>
                 </div>
                 <div>
                     <span class="fw-bold">Classe:</span>
-                    <span>{{ $registration->classRoom->getOriginalClassRoomName() }}</span>
+                    <span>{{ $payment->registration->classRoom->getOriginalClassRoomName() }}</span>
                 </div>
             </div>
-            <form wire:submit='save'>
+            <form wire:submit='update'>
                 <div class="">
                     <x-form.label value="{{ __('Mois') }}" class="me-2" />
                     <x-widget.list-month-fr wire:model.live='form.month' :error="'form.month'" />
@@ -40,7 +40,8 @@
                     <x-errors.validation-error value='form.created_at' />
                 </div>
                 <div class="mt-4">
-                    <x-form.app-button type='submit' textButton="Payer" icon="bi bi-arrow-left-righ" class="app-btn" />
+                    <x-form.app-button type='submit' textButton="Modifier" icon="bi bi-arrow-left-righ"
+                        class="app-btn" />
                 </div>
             </form>
         @endif

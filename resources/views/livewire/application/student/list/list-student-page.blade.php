@@ -19,8 +19,6 @@
                         <x-form.label value="{{ __('Option') }}" class="me-2" />
                         <x-widget.data.list-option type='text' wire:model.live='option_filter' :error="'form.option_id'" />
                     </div>
-                    <x-form.app-button type='button' data-bs-toggle="modal" data-bs-target="#form-payment"
-                        textButton='Mes paiements' icon="bi bi-list-check" class="app-btn ms-1" />
                 </div>
             </div>
             <table class="table table-bordered table-sm table-hover mt-2">
@@ -66,30 +64,28 @@
                                 <td>{{ $registration?->classRoom?->getOriginalClassRoomName() }}
                                 </td>
                                 <td class="text-center">
-                                    <x-form.app-button type='button' textButton="Payer"
-                                        wire:click='openPaymentForm({{ $registration }})' icon="bi bi-arrow-left-right"
-                                        class="btn-sm app-btn" data-bs-toggle="modal" data-bs-target="#form-payment" />
                                     <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                                         class="btn-secondary btn-sm">
-                                        <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
-                                            data-bs-target="#form-edit-student" labelText='Editer' href="#"
-                                            wire:click='edit({{ $registration->student }})' class="text-primary" />
+                                        @can('manage-student')
+                                            <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
+                                                data-bs-target="#form-edit-student" labelText='Editer' href="#"
+                                                wire:click='edit({{ $registration->student }})' class="text-primary" />
+                                            <x-others.dropdown-link iconLink='bi bi-arrow-left-right'
+                                                labelText='Basculuer la classe' data-bs-toggle="modal"
+                                                data-bs-target="#form-change-class-student"
+                                                wire:click='changeClassStudent({{ $registration }})' href="#"
+                                                class="text-primary" />
+                                            <x-others.dropdown-link iconLink='bi bi-journal-x' labelText='Marquer abandon'
+                                                data-bs-toggle="modal" data-bs-target="#form-give-up-student"
+                                                wire:click='openMakeGiveUpStudentFom({{ $registration }})' href="#"
+                                                class="text-primary" />
+                                            <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
+                                                class="text-primary" href="#"
+                                                wire:click='showDeleteDialog({{ $registration->student }})' />
+                                        @endcan
                                         <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
                                             labelText='Voir détails'
                                             href="{{ route('student.detail', $registration) }}" class="text-primary" />
-
-                                        <x-others.dropdown-link iconLink='bi bi-arrow-left-right'
-                                            labelText='Basculuer la classe' data-bs-toggle="modal"
-                                            data-bs-target="#form-change-class-student"
-                                            wire:click='changeClassStudent({{ $registration }})' href="#"
-                                            class="text-secondary" />
-                                        <x-others.dropdown-link iconLink='bi bi-journal-x' labelText='Marquer abandon'
-                                            data-bs-toggle="modal" data-bs-target="#form-give-up-student"
-                                            wire:click='openMakeGiveUpStudentFom({{ $registration }})' href="#"
-                                            class="text-secondary" />
-                                        <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
-                                            class="text-secondary" href="#"
-                                            wire:click='showDeleteDialog({{ $registration->student }})' />
                                     </x-others.dropdown>
                                 </td>
                             </tr>
@@ -143,6 +139,4 @@
     <livewire:application.student.form.form-edit-student-page />
     <livewire:application.registration.form.form-give-up-student-page />
     <livewire:application.registration.form.form-change-class-student-page />
-    <livewire:application.payment.form.form-payment-page />
-    <livewire:application.payment.list.list-payment-by-date-page>
 </div>

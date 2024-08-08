@@ -16,17 +16,27 @@ class PaymentForm extends Form
     #[Rule('required', message: "Categorie obligatoire", onUpdate: false)]
     public $category_fee_id = '';
 
+    #[Rule('required', message: "Date création obligatoire", onUpdate: false)]
+    #[Rule('date', message: "Format date invalide", onUpdate: false)]
+    public $created_at = '';
+
     public function create(int  $registrationId): Payment|null
     {
         $input = [
             'month' => $this->month,
             'scolar_fee_id' => $this->scolar_fee_id,
-            'registration_id' => $registrationId
+            'registration_id' => $registrationId,
+            'created_at' => $this->created_at
         ];
         return PaymentFeature::create($input);
     }
-    public function update(?Payment $payment, array $input): false
+    public function update(?Payment $payment): void
     {
-        return $payment->update($input);
+        $input = [
+            'month' => $this->month,
+            'scolar_fee_id' => $this->scolar_fee_id,
+            'created_at' => $this->created_at,
+        ];
+        $payment->update($input);
     }
 }

@@ -80,6 +80,7 @@ class ListReportPaymentPage extends Component
                 $this->section_filter,
                 $this->selectedOption,
                 $this->class_room_filter,
+                true,
                 10
             ),
             'total_payments' => PaymentFeature::getTotal(
@@ -90,6 +91,7 @@ class ListReportPaymentPage extends Component
                 $this->section_filter,
                 $this->selectedOption,
                 $this->class_room_filter,
+                true,
                 'CDF'
             ),
         ]);
