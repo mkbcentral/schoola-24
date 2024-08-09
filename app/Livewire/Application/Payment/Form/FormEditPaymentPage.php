@@ -62,6 +62,7 @@ class FormEditPaymentPage extends Component
                 ->where('category_fees.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
                 ->where('scolar_fees.category_fee_id', $this->selectedCategoryFeeId)
                 ->where('scolar_fees.class_room_id', $this->selectedIdClassRoom)
+                ->whre('scolar_fees.is_changed', false)
                 ->select('scolar_fees.*')
                 ->get()
         ]);

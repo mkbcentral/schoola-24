@@ -6,7 +6,7 @@
         ->where('category_fees.school_year_id', App\Models\SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
         ->where('scolar_fees.category_fee_id', $selectedCategoryId)
         ->where('scolar_fees.class_room_id', $classRoomId)
-        ->whre('scolar_fees.is_changed', false)
+        ->where('scolar_fees.is_changed', false)
         ->select('scolar_fees.*')
         ->get();
 @endphp
