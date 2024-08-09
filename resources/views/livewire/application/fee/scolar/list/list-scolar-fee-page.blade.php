@@ -48,7 +48,9 @@
                         @else
                             @foreach ($scolrFees as $index => $scolarFee)
                                 <tr wire:key='{{ $scolarFee->id }}'>
-                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    <td
+                                        class="text-center {{ $scolarFee->is_changed == false ? 'bg-success' : 'bg-warning' }}">
+                                        {{ $index + 1 }}</td>
                                     <td>{{ $scolarFee->name }}</td>
                                     <td class="">{{ $scolarFee?->classRoom->getOriginalClassRoomName() }}</td>
                                     <td class="text-end">{{ $scolarFee->amount }}</td>
@@ -57,6 +59,9 @@
                                         <x-form.app-button type='button' icon="bi bi-pencil-fill"
                                             data-bs-toggle="modal" data-bs-target="#form-scolar-fee"
                                             class="btn-sm app-btn" wire:click='edit({{ $scolarFee }})' />
+                                        <x-form.app-button type='button' icon="bi bi-x-circle-fill"
+                                            wire:confirm="Est-vous sur de réaliser l'opération" class="btn-sm bg-danger"
+                                            wire:click='makeIsChange({{ $scolarFee }})' />
                                         <x-form.app-button wire:confirm="Est-vous sur de réaliser l'opération"
                                             type='button' icon="bi bi-trash-fill" class="btn-secondary btn-sm"
                                             wire:click='delete({{ $scolarFee }})' />

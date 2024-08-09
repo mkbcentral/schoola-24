@@ -5,6 +5,7 @@
         ->join('sections', 'options.section_id', '=', 'sections.id')
         ->where('sections.school_id', App\Models\School::DEFAULT_SCHOOL_ID())
         ->where('option_id', $optionId)
+        ->whre('scolar_fees.is_changed', false)
         ->select('class_rooms.*')
         ->get();
 @endphp

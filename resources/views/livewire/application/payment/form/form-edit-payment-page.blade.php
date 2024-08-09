@@ -30,8 +30,12 @@
                 </div>
                 <div class="mt-2">
                     <x-form.label value="{{ __('Frais') }}" class="me-2" />
-                    <x-widget.data.list-fee-by-category selectedCategoryId='{{ $selectedCategoryFeeId }}'
-                        classRoomId='{{ $selectedIdClassRoom }}' wire:model.live='form.scolar_fee_id' />
+                    <select id="my-select" class="form-control" wire:model.live='form.scolar_fee_id'>
+                        <option value="">Choisir...</option>
+                        @foreach ($scolarFees as $scolarFee)
+                            <option class="text-uppercase" value="{{ $scolarFee->id }}">{{ $scolarFee->name }}</option>
+                        @endforeach
+                    </select>
                     <x-errors.validation-error value='form.scolar_fee_id' />
                 </div>
                 <div class="">

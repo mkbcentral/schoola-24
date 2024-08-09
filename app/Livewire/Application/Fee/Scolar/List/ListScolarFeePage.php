@@ -53,6 +53,21 @@ class ListScolarFeePage extends Component
         }
     }
 
+    public function makeIsChange(?ScolarFee $scolarFee)
+    {
+        try {
+            if ($scolarFee->is_changed == false) {
+                $scolarFee->is_changed = true;
+            } else {
+                $scolarFee->is_changed = false;
+            }
+            $this->dispatch('updated', ['message' => AppMessage::DATA_UPDATED_SUCCESS]);
+            $scolarFee->update();
+        } catch (Exception $ex) {
+            $this->dispatch('error', ['message' => $ex->getMessage()]);
+        }
+    }
+
     public function refreshData()
     {
         $this->class_room_filter = 0;
@@ -72,7 +87,7 @@ class ListScolarFeePage extends Component
                 $this->option_filter,
                 $this->class_room_filter,
                 $this->per_page
-            )
+            ),
         ]);
     }
 }

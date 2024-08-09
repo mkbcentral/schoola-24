@@ -5,6 +5,9 @@ namespace App\Livewire\Application\Payment\Form;
 use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\PaymentForm;
 use App\Models\Payment;
+use App\Models\School;
+use App\Models\SchoolYear;
+use App\Models\ScolarFee;
 use Exception;
 use Livewire\Component;
 
@@ -52,6 +55,15 @@ class FormEditPaymentPage extends Component
     }
     public function render()
     {
-        return view('livewire.application.payment.form.form-edit-payment-page');
+        return view('livewire.application.payment.form.form-edit-payment-page', [
+            'scolarFees' => ScolarFee::query()
+                ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
+                ->where('category_fees.school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('category_fees.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->where('scolar_fees.category_fee_id', $this->selectedCategoryFeeId)
+                ->where('scolar_fees.class_room_id', $this->selectedIdClassRoom)
+                ->select('scolar_fees.*')
+                ->get()
+        ]);
     }
 }

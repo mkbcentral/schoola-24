@@ -16,7 +16,8 @@ class ScolarFee extends Model
         'amount',
         'category_fee_id',
         'currency',
-        'class_room_id'
+        'class_room_id',
+        'is_changed'
     ];
 
     /**
