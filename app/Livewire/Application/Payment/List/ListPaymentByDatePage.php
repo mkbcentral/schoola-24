@@ -7,9 +7,11 @@ use App\Domain\Utils\AppMessage;
 use App\Models\Payment;
 use Exception;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListPaymentByDatePage extends Component
 {
+    use WithPagination;
     protected $listeners = [
         "refreshPaymentList" => '$refresh',
     ];
