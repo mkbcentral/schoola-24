@@ -20,7 +20,7 @@
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 5px;
             width: 400px;
             position: relative;
         }
@@ -51,12 +51,12 @@
         .company-info {
             text-align: center;
             margin-bottom: 20px;
-            font-size: 14px;
+            font-size: 20px;
         }
 
         .transaction-info {
             margin-bottom: 20px;
-            font-size: 14px;
+            font-size: 20px;
         }
 
         table {
