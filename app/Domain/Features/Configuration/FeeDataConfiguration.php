@@ -33,13 +33,13 @@ class FeeDataConfiguration implements IFeeDataConfiguration
             ->when(
                 $optionId,
                 function ($query, $f) {
-                    return $query->where('scolar_fees.class_room_id', $f);
+                    return $query->where('class_rooms.option_id', $f);
                 }
             )
             ->when(
                 $classRoomId,
                 function ($query, $f) {
-                    return $query->where('class_rooms.option_id', $f);
+                    return $query->where('scolar_fees.class_room_id', $f);
                 }
             )
             ->select('scolar_fees.*')

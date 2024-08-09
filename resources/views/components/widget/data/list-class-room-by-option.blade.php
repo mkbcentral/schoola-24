@@ -10,7 +10,7 @@
 @endphp
 
 <select id="my-select" class="form-control" {{ $attributes }}>
-    <option>Choisir...</option>
+    <option value="0">Choisir...</option>
     @foreach ($classRooms as $classRoom)
         <option class="text-uppercase" value="{{ $classRoom->id }}">{{ $classRoom->getOriginalClassRoomName() }}</option>
     @endforeach
