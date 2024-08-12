@@ -3,6 +3,7 @@
 namespace App\Livewire\Application\Dashboard\Registration;
 
 use App\Domain\Features\Configuration\SchoolDataFeature;
+use App\Domain\Features\Registration\RegistrationFeature;
 use App\Models\Option;
 use Livewire\Component;
 
@@ -29,6 +30,15 @@ class DashRegistrationByClassRoomPage extends Component
         return view('livewire.application.dashboard.registration.dash-registration-by-class-room-page', [
             'classRooms' => SchoolDataFeature::getClassRoomList(
                 $this->option_filer,
+                null,
+                null
+            ),
+            'counter' => RegistrationFeature::getCount(
+                null,
+                null,
+                null,
+                $this->option_filer,
+                null,
                 null,
                 null
             )

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Features\Payment\PaymentFeature;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,5 +54,34 @@ class CategoryFee extends Model
     public function scolarFees(): HasMany
     {
         return $this->hasMany(ScolarFee::class);
+    }
+
+    public function getAmountByDate(string $date): int|float
+    {
+        return PaymentFeature::getTotal(
+            $date,
+            null,
+            $this->id,
+            null,
+            null,
+            null,
+            null,
+            true,
+            'CDF'
+        );
+    }
+    public function getAmountByMonth(string $month): int|float
+    {
+        return PaymentFeature::getTotal(
+            null,
+            $month,
+            $this->id,
+            null,
+            null,
+            null,
+            null,
+            true,
+            'CDF'
+        );
     }
 }

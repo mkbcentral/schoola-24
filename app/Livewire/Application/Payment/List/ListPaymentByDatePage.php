@@ -6,6 +6,7 @@ use App\Domain\Features\Payment\PaymentFeature;
 use App\Domain\Utils\AppMessage;
 use App\Models\Payment;
 use Exception;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,6 +17,8 @@ class ListPaymentByDatePage extends Component
         "refreshPaymentList" => '$refresh',
     ];
     public ?string $date_filter = '';
+    #[Url(as: 'q')]
+    public $q = '';
 
     public function mount()
     {
@@ -62,6 +65,7 @@ class ListPaymentByDatePage extends Component
             'payments' => PaymentFeature::getList(
                 $this->date_filter,
                 '',
+                $this->q,
                 null,
                 null,
                 null,

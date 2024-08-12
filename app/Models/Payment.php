@@ -72,6 +72,7 @@ class Payment extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query->join('registrations', 'registrations.id', 'payments.registration_id')
+            ->join('students', 'students.id', 'registrations.student_id')
             ->join('class_rooms', 'class_rooms.id', 'registrations.class_room_id')
             ->join('options', 'options.id', 'class_rooms.option_id')
             ->join('sections', 'sections.id', 'options.section_id')
@@ -125,8 +126,16 @@ class Payment extends Model
                     return $query->where('payments.is_paid', $f);
                 }
             )
+            ->when(
+                $filters['key_to_search'],
+                function ($query, $f) {
+                    return $query->where('students.name', 'like', '%' . $f . '%');
+                }
+            )
             ->with([
-                'registration', 'scolarFee', 'rate'
+                'registration',
+                'scolarFee',
+                'rate'
             ])
             ->select('payments.*');
     }

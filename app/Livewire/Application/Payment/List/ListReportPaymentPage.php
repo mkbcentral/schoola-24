@@ -75,6 +75,7 @@ class ListReportPaymentPage extends Component
             'payments' => PaymentFeature::getList(
                 $this->date_filter,
                 $this->month_filter,
+                null,
                 $this->selectedCategoryFeeId,
                 $this->scolary_fee_filter,
                 $this->section_filter,
@@ -86,6 +87,7 @@ class ListReportPaymentPage extends Component
             'total_payments' => PaymentFeature::getTotal(
                 $this->date_filter,
                 $this->month_filter,
+                null,
                 $this->selectedCategoryFeeId,
                 $this->scolary_fee_filter,
                 $this->section_filter,

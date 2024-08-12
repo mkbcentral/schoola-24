@@ -137,7 +137,14 @@ class Registration extends Model
             ->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
             ->join("options", "options.id", "=", "class_rooms.option_id")
             ->join("sections", "sections.id", "=", "options.section_id")
+            ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
             ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+            ->when($filters['date'], function ($query, $date) {
+                return $query->whereDate('registrations.created_at', $date);
+            })
+            ->when($filters['month'], function ($query, $month) {
+                return $query->whereMonth('registrations.created_at', $month);
+            })
             ->when($filters['section_id'], function ($query, $sectionId) {
                 return $query->where('sections.id', $sectionId);
             })
@@ -147,8 +154,16 @@ class Registration extends Model
             ->when($filters['class_room_id'], function ($query, $classRoomId) {
                 return $query->where('class_rooms.id', $classRoomId);
             })
-            ->where('registrations.is_old', $filters['is_old'])
-            ->select('registrations.*')
+            ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
+                return $query->where('students.responsible_student_id', $classRoomId);
+            })
+            ->when($filters['is_old'], function ($query, $isOld) {
+                return $query->where('registrations.is_old', $isOld);
+            })
+            ->when($filters['q'], function ($query, $q) {
+                return $query->where('students.name', 'like', '%' . $q . '%');
+            })
+            ->select('registrations.*', 'students.name')
             ->with(
                 [
                     'student',
@@ -172,6 +187,12 @@ class Registration extends Model
             ->join("options", "options.id", "=", "class_rooms.option_id")
             ->join("sections", "sections.id", "=", "options.section_id")
             ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+            ->when($filters['date'], function ($query, $date) {
+                return $query->whereDate('registrations.created_at', $date);
+            })
+            ->when($filters['month'], function ($query, $month) {
+                return $query->whereMonth('registrations.created_at', $month);
+            })
             ->when($filters['section_id'], function ($query, $sectionId) {
                 return $query->where('sections.id', $sectionId);
             })
@@ -181,7 +202,12 @@ class Registration extends Model
             ->when($filters['class_room_id'], function ($query, $classRoomId) {
                 return $query->where('class_rooms.id', $classRoomId);
             })
-            ->where('registrations.is_old', $filters['is_old'])
+            ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
+                return $query->where('students.responsible_student_id', $classRoomId);
+            })
+            ->when($filters['is_old'], function ($query, $isOld) {
+                return $query->where('registrations.is_old', $isOld);
+            })
             ->with(
                 [
                     'student',

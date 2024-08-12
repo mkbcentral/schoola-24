@@ -5,6 +5,7 @@
                 <x-form.label value="{{ __('Date') }}" class="me-2" />
                 <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
             </div>
+            <x-form.search-input wire:model.live='q' />
             <h3 class="text-primary text-uppercase">Total: {{ app_format_number($total_payments, 1) }} Fc</h3>
         </div>
     </div>

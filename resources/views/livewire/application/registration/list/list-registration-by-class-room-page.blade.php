@@ -6,14 +6,18 @@
     <x-content.main-content-page>
         <div class="d-flex justify-content-between align-items-center">
         </div>
-        <x-others.list-title icon='bi bi-list-task' color='text-primary h3'
-            title='Liste des élèves : {{ $classRoom->getOriginalClassRoomName() }}' />
+        <div class="d-flex justify-content-between align-items-center">
+            <x-others.list-title icon='bi bi-list-task' color='text-primary h3'
+                title='Liste des élèves : {{ $classRoom->getOriginalClassRoomName() }}' />
+            <x-form.search-input wire:model.live='q' />
+        </div>
+
         <div class="">
             <div class="d-flex justify-content-center mt-2">
                 <x-widget.loading-circular-md wire:loading />
             </div>
         </div>
-        <table class="table table-hover">
+        <table class="table table-bordered table-sm">
             <thead class="bg-app">
                 <tr class="cursor-hand bg-app">
                     <th class="text-center">#</th>
@@ -43,10 +47,12 @@
                             <td class="text-center">{{ $registration->gender }}</td>
                             <td class="text-center">
                                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                    class="app-btn btn-sm">
-                                    <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
-                                        data-bs-target="#form-edit-student" labelText='Editer' href="#"
-                                        wire:click='edit({{ $registration->student }})' class="text-primary" />
+                                    class="btn-secondary btn-sm">
+                                    @can('manage-student')
+                                        <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
+                                            data-bs-target="#form-edit-student" labelText='Editer' href="#"
+                                            wire:click='edit({{ $registration->student }})' class="text-primary" />
+                                    @endcan
                                     <x-others.dropdown-link iconLink='bi bi-info-circle-fill' labelText='Voir détails'
                                         href="{{ route('student.detail', $registration) }}" class="text-primary" />
                                 </x-others.dropdown>

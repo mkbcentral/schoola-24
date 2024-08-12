@@ -51,6 +51,14 @@ class ClassRoom extends Model
 
     public  function getRegistrationCountForCurrentSchoolYear(string $month = ""): int|float
     {
-        return RegistrationFeature::getCountByClassRoom($this->id, $month);
+        return RegistrationFeature::getCount(
+            null,
+            null,
+            null,
+            null,
+            $this->id,
+            null,
+            null
+        );
     }
 }

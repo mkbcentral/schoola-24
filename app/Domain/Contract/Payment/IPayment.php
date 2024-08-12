@@ -42,11 +42,11 @@ interface  IPayment
      */
     public static function makeIsPaid(Payment $payment): bool;
 
-
     /**
-     * etourner la liste de payment
+     * Summary of getList
      * @param mixed $date
      * @param mixed $month
+     * @param mixed $q
      * @param mixed $categoryFeeId
      * @param mixed $feeId
      * @param mixed $sectionId
@@ -59,6 +59,7 @@ interface  IPayment
     public static function getList(
         ?string $date,
         ?string $month,
+        ?string $q,
         ?int $categoryFeeId,
         ?int $feeId,
         ?int $sectionId,

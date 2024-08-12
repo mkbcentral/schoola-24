@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Livewire\Application\Dashboard\Registration;
+namespace App\Livewire\Application\Dashboard\Payment;
 
-use App\Domain\Features\Registration\RegistrationFeature;
+use App\Domain\Features\Payment\PaymentFeature;
+use App\Models\CategoryFee;
+use App\Models\ScolarFee;
 use Livewire\Component;
 
-class DashRegistrationCountPage extends Component
+class DashPaymentPage extends Component
 {
-
     protected $listeners = [
         "dateFilder" => "getDateFilter",
         "monthFilder" => "getMonthFilter",
@@ -32,46 +33,32 @@ class DashRegistrationCountPage extends Component
     {
         $this->date_filter = $date;
     }
-
     public function render()
     {
-        return view('livewire.application.dashboard.registration.dash-registration-count-page', [
-            'counter_new' => $this->is_by_date == true ?
-                RegistrationFeature::getCount(
+        return view('livewire.application.dashboard.payment.dash-payment-page', [
+            'categoryFees' => CategoryFee::query()->get(),
+            'total' => $this->is_by_date == true ?
+                PaymentFeature::getTotal(
                     $this->date_filter,
                     null,
                     null,
                     null,
                     null,
                     null,
-                    false
-                ) : RegistrationFeature::getCount(
+                    null,
+                    true,
+                    'CDF'
+                ) : PaymentFeature::getTotal(
                     null,
                     $this->month_filter,
                     null,
                     null,
                     null,
                     null,
-                    false
-                ),
-            'counter_old' => $this->is_by_date == true ?
-                RegistrationFeature::getCount(
-                    $this->date_filter,
                     null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    true
-                ) : RegistrationFeature::getCount(
-                    null,
-                    $this->month_filter,
-                    null,
-                    null,
-                    null,
-                    null,
-                    true
-                ),
+                    true,
+                    'CDF'
+                )
         ]);
     }
 }

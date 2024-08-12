@@ -11,7 +11,6 @@ use Livewire\Component;
 class ListRegistrationByMonthPage extends Component
 {
     protected $listeners = [
-        //'refreshListStudent' => '$refresh',
         'deletedStudentListner' => 'delete',
     ];
     public bool $isOld;
@@ -53,8 +52,10 @@ class ListRegistrationByMonthPage extends Component
     public function render()
     {
         return view('livewire.application.registration.list.list-registration-by-month-page', [
-            'registrations' => RegistrationFeature::getListByMonth(
+            'registrations' => RegistrationFeature::getList(
+                null,
                 $this->monthFilter,
+                null,
                 null,
                 null,
                 null,
@@ -62,8 +63,9 @@ class ListRegistrationByMonthPage extends Component
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,
-                10
-            )
+                $this->per_page
+
+            ),
         ]);
     }
 }

@@ -14,10 +14,14 @@
                     <x-form.app-button type='button' wire:click='refreshData' textButton=''
                         icon="bi bi-arrow-clockwise" class="app-btn ms-1" />
                 </div>
+                <div>
+                    <h4> Nbre Total: {{ $counter <= 1 ? $counter . 'Elève' : $counter . ' Elèves' }}</h4>
+                </div>
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center">
                         <x-form.label value="{{ __('Option') }}" class="me-2" />
                         <x-widget.data.list-option type='text' wire:model.live='option_filter' :error="'form.option_id'" />
+
                     </div>
                 </div>
             </div>

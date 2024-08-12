@@ -3,7 +3,6 @@
 namespace App\Domain\Contract\Registration;
 
 use App\Models\Registration;
-use App\Models\ResponsibleStudent;
 
 interface  IRegistration
 {
@@ -57,166 +56,66 @@ interface  IRegistration
      */
     public static function makeClassChanged(Registration $registration): bool;
     /**
-     * Recuperer la liste de inscription par date
-     * @param string $date
-     * @param mixed $sectionId
-     * @param mixed $optionId
-     * @param int $classRoomId
-     * @param bool $isOld
-     * @param string $q
-     * @param string $sortBy
-     * @param bool $sortAsc
-     * @param int $per_page
-     * @return mixed
-     */
-    public static function getListByDate(
-        string $date,
-        ?int $sectionId,
-        ?int $optionId,
-        int $classRoomId,
-        bool $isOld,
-        string $q,
-        string $sortBy,
-        bool   $sortAsc,
-        int $per_page = 20
-    ): mixed;
-
-    /**
-     * Recuperer la liste des inscriptions par mois
-     * @param string $month
-     * @param mixed $sectionId
-     * @param mixed $optionId
-     * @param int $classRoomId
-     * @param bool $isOld
-     * @param string $q
-     * @param string $sortBy
-     * @param bool $sortAsc
-     * @param int $per_page
-     * @return mixed
-     */
-    public static function getListByMonth(
-        string $month,
-        ?int $sectionId,
-        ?int $optionId,
-        int $classRoomId,
-        bool $isOld,
-        string $q,
-        string $sortBy,
-        bool   $sortAsc,
-        int $per_page = 20
-    ): mixed;
-
-    /**
-     * Recuperer le nombre total des inscription par date
-     * @param string $date
-     * @param mixed $sectionId
-     * @param mixed $optionId
-     * @param int $classRoomId
-     * @param bool $isOld
-     * @return int
-     */
-    public static function getTotalCountByDate(
-        string $date,
-        ?int $sectionId,
-        ?int $optionId,
-        int $classRoomId,
-        bool $isOld
-    ): int;
-
-    /**
-     * Recuperer le nombre total des inscription par mois
-     * @param string $month
-     * @param mixed $sectionId
-     * @param mixed $optionId
-     * @param int $classRoomId
-     * @param bool $isOld
-     * @return int
-     */
-    public static function getTotalCountByMonth(
-        string $month,
-        ?int $sectionId,
-        ?int $optionId,
-        int $classRoomId,
-        bool $isOld
-    ): int;
-
-    /**
-     * Recuperer le montant total des inscription par date
-     * @param string $date
-     * @param mixed $sectionId
-     * @param mixed $optionId
-     * @param int $classRoomId
-     * @param bool $isOld
-     * @return int
-     */
-    public static function getTotalAmountByDate(
-        string $date,
-        ?int $sectionId,
-        ?int $optionId,
-        int $classRoomId,
-        bool $isOld
-    ): int;
-
-    /**
-     * Recuperer le montant total des inscription par mois
-     * @param string $month
-     * @param mixed $sectionId
-     * @param mixed $optionId
-     * @param int $classRoomId
-     * @param bool $isOld
-     * @return int
-     */
-    public static function getTotalAmountByMonth(
-        string $month,
-        ?int $sectionId,
-        ?int $optionId,
-        int $classRoomId,
-        bool $isOld
-    ): int;
-
-    /**
-     * Recuperer les inscription par classe
-     * @param int $class_room_id
-     * @param string $sortBy
-     * @param bool $sortAsc
-     * @return mixed
-     */
-    public static function getListByClassRoom(
-        int $class_room_id,
-        string $sortBy,
-        bool   $sortAsc,
-    ): mixed;
-    /**
-     * Recuperer le nombre d'inscription par classe
-     * @param int $class_room_id
+     * Summary of getList
+     * @param mixed $date
      * @param mixed $month
-     * @return float|int
-     */
-    public static function getCountByClassRoom(int $class_room_id, $month = ""): float|int;
-
-    /**
-     * Recuprer la liste des inscription par responsable
-     * @param mixed $responsibleStudent
+     * @param mixed $sectionId
+     * @param mixed $optionId
+     * @param mixed $classRoomId
+     * @param mixed $responsibleId
+     * @param mixed $isOld
+     * @param mixed $q
+     * @param mixed $sortBy
+     * @param mixed $sortAsc
+     * @param mixed $per_page
      * @return mixed
      */
-    public static function getListByResponsible(
-        ?ResponsibleStudent $responsibleStudent
+    public static function getList(
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId,
+        ?bool $isOld,
+        ?string $q,
+        ?string $sortBy,
+        ?bool   $sortAsc,
+        ?int $per_page
     ): mixed;
 
     /**
-     * Recupeter
-     * @param string $q
+     * Summary of getList
+     * @param mixed $date
+     * @param mixed $month
+     * @param mixed $sectionId
      * @param mixed $optionId
-     * @param string $sortBy
-     * @param bool $sortAsc
-     * @param int $per_page
+     * @param mixed $classRoomId
+     * @param mixed $responsibleId
+     * @param mixed $isOld
+     * @param mixed $q
+     * @param mixed $sortBy
+     * @param mixed $sortAsc
+     * @param mixed $per_page
      * @return mixed
      */
-    public static function getListAllInscription(
-        string $q,
+    public static function getCount(
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
         ?int $optionId,
-        string $sortBy,
-        bool   $sortAsc,
-        int $per_page = 20
+        ?int $classRoomId,
+        ?int $responsibleId,
+        ?bool $isOld,
+    ): mixed;
+
+    public static function getTotalAmount(
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId,
+        ?bool $isOld,
     ): mixed;
 }

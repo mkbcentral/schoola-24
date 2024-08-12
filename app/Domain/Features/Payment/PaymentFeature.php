@@ -52,6 +52,7 @@ class PaymentFeature implements IPayment
     public static function getList(
         string|null $date,
         string|null $month,
+        string|null $q,
         int|null $categoryFeeId,
         int|null $feeId,
         int|null $sectionId,
@@ -63,6 +64,7 @@ class PaymentFeature implements IPayment
         $filters = [
             'date' => $date,
             'month' => $month,
+            'key_to_search' => $q,
             'categoryFeeId' => $categoryFeeId,
             'feeId' => $feeId,
             'sectionId' => $sectionId,
@@ -124,6 +126,7 @@ class PaymentFeature implements IPayment
         $filters = [
             'date' => $date,
             'month' => $month,
+            'key_to_search' => '',
             'categoryFeeId' => $categoryFeeId,
             'feeId' => $feeId,
             'sectionId' => $sectionId,
@@ -138,6 +141,8 @@ class PaymentFeature implements IPayment
             ->get();
         foreach ($payments as $payment) {
             if ($payment->scolarFee->currency == "USD" && $currency == "USD") {
+                $total += $payment->scolarFee->amount * $payment->rate->amount;
+            } elseif ($payment->scolarFee->currency == "USD" && $currency == "CDF") {
                 $total += $payment->scolarFee->amount * $payment->rate->amount;
             } else {
                 $total += $payment->scolarFee->amount;

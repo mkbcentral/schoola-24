@@ -40,12 +40,18 @@ class ListStudentForPaymentPage extends Component
     public function render()
     {
         return view('livewire.application.payment.list.list-student-for-payment-page', [
-            'registrations' => RegistrationFeature::getListAllInscription(
-                $this->q,
+            'registrations' => RegistrationFeature::getList(
                 null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $this->q,
                 $this->sortBy,
                 $this->sortAsc,
-                $this->per_page,
+                $this->per_page
 
             ),
         ]);

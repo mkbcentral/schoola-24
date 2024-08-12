@@ -1,12 +1,9 @@
 <div>
-    <x-navigation.bread-crumb icon='bi bi-person-fill-add' label="Incriptions">
-        <x-navigation.bread-crumb-item label='Dashboard' />
-        <x-navigation.bread-crumb-item label='Inscription par date' isLinked=true link="dashboard.main" />
+    <x-navigation.bread-crumb icon='bi bi-person-fill-add' label="{{ $isOld == true ? 'Réincriptions' : 'Incriptions' }}">
+        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="dashboard.main" />
+        <x-navigation.bread-crumb-item label="{{ $isOld == true ? 'Réincriptions' : 'Incriptions' }} par date" />
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
-        <div class="d-flex justify-content-between align-items-center">
-            <x-others.list-title icon='bi bi-list-task' title='Liste des inscription' />
-        </div>
         <div class="mt-2">
             <div class="d-flex justify-content-center pb-2">
                 <x-widget.loading-circular-md wire:loading />

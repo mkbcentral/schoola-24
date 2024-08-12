@@ -7,7 +7,7 @@
         <div>
             @if ($responsibleStudent)
                 <div>
-                    <span class="fw-bold">Nom:</span>
+                    <span class="fw-bold">Nom resp.:</span>
                     <span>{{ $responsibleStudent->name }}</span>
                 </div>
                 <div>

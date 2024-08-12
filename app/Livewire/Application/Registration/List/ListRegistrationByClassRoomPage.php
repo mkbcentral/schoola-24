@@ -16,6 +16,9 @@ class ListRegistrationByClassRoomPage extends Component
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
 
+    #[Url(as: 'q')]
+    public $q = '';
+
     public ?ClassRoom $classRoom;
 
     public function sortData($value): void
@@ -38,10 +41,19 @@ class ListRegistrationByClassRoomPage extends Component
     public function render()
     {
         return view('livewire.application.registration.list.list-registration-by-class-room-page', [
-            'registrations' => RegistrationFeature::getListByClassRoom(
+            'registrations' => RegistrationFeature::getList(
+                null,
+                null,
+                null,
+                null,
                 $this->classRoomId,
+                null,
+                null,
+                $this->q,
                 $this->sortBy,
-                $this->sortAsc
+                $this->sortAsc,
+                null
+
             ),
         ]);
     }
