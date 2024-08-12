@@ -60,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
         });
         Gate::define('view-payment', function () {
             return Auth::user()->role->is_for_school == true &&
-                Auth::user()->role->name == RoleType::SCHOOL_MANAGER &&
+                Auth::user()->role->name == RoleType::SCHOOL_MANAGER ||
                 Auth::user()->role->name == RoleType::SCHOOL_FINANCE;
         });
     }
