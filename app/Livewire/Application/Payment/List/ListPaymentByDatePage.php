@@ -72,7 +72,7 @@ class ListPaymentByDatePage extends Component
                 null,
                 null,
                 null,
-                10
+                100
             ),
             'total_payments' => PaymentFeature::getTotal(
                 $this->date_filter,

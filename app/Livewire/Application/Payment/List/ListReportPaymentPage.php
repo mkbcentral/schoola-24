@@ -4,15 +4,17 @@ namespace App\Livewire\Application\Payment\List;
 
 use App\Domain\Features\Payment\PaymentFeature;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListReportPaymentPage extends Component
 {
+    use WithPagination;
 
     public int $selectedCategoryFeeId = 0;
     public ?string $date_filter = '', $month_filter = '';
     public int $option_filter = 0, $section_filter = 0, $class_room_filter = 0, $scolary_fee_filter = 0;
     public int $selectedSection = 0, $selectedOption = 0, $selectedClassRoom = 0;
-    public int $per_page = 10;
+    public int $per_page = 100;
 
     protected $listeners = [
         "selectedCategoryFee" => 'getSelectedCategoryFee'
