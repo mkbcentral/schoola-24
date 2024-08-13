@@ -17,6 +17,7 @@ class OtherPaymentFeature
             ->where('category_fees.is_paid_for_registration', true)
             ->where('scolar_fees.class_room_id', $registration->classRoom->id)
             ->select('scolar_fees.*')
+            ->where('is_changed', false)
             ->get();
         foreach ($scolarFees as $scolarFee) {
             Payment::create([
