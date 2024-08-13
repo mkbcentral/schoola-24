@@ -12,6 +12,7 @@ class ListReportPaymentPage extends Component
     public ?string $date_filter = '', $month_filter = '';
     public int $option_filter = 0, $section_filter = 0, $class_room_filter = 0, $scolary_fee_filter = 0;
     public int $selectedSection = 0, $selectedOption = 0, $selectedClassRoom = 0;
+    public int $per_page = 10;
 
     protected $listeners = [
         "selectedCategoryFee" => 'getSelectedCategoryFee'
@@ -30,6 +31,10 @@ class ListReportPaymentPage extends Component
     public function updatedMonthFilter()
     {
         $this->date_filter = null;
+    }
+    public function updatedDateFilter()
+    {
+        $this->month_filter = "";
     }
 
     /**
@@ -66,7 +71,7 @@ class ListReportPaymentPage extends Component
     public function mount(int $categoryFeeId)
     {
         $this->selectedCategoryFeeId = $categoryFeeId;
-        $this->month_filter = date('m');
+        $this->date_filter = date('Y-m-d');
     }
 
     public function render()
@@ -82,19 +87,19 @@ class ListReportPaymentPage extends Component
                 $this->selectedOption,
                 $this->class_room_filter,
                 true,
-                10
+                $this->per_page
             ),
+
             'total_payments' => PaymentFeature::getTotal(
                 $this->date_filter,
                 $this->month_filter,
-                null,
                 $this->selectedCategoryFeeId,
                 $this->scolary_fee_filter,
                 $this->section_filter,
                 $this->selectedOption,
                 $this->class_room_filter,
                 true,
-                'CDF'
+                "CDF"
             ),
         ]);
     }

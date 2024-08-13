@@ -12,6 +12,7 @@
 @endphp
 <select id="my-select" class="form-control" {{ $attributes }}>
     <option value="">Choisir...</option>
+    <option value="0">Tout</option>
     @foreach ($scolarFees as $scolarFee)
         <option class="text-uppercase" value="{{ $scolarFee->id }}">{{ $scolarFee->name }}</option>
     @endforeach

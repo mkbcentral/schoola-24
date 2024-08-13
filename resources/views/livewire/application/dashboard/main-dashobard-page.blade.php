@@ -20,18 +20,15 @@
         </div>
         <div class="row row-cols-2 row-cols-lg-2 g-2 gy-0  g-lg-2 mb-0 mt-2">
             @can('view-school-access')
-                <div class="col-md-6 ">
-                    <livewire:application.dashboard.registration.dash-registration-count-page :date="$date_filter">
-                </div>
                 @can('view-payment')
-                    <div class="col-md-6  mt-2">
-                        <livewire:application.dashboard.payment.dash-payment-page :date="$date_filter">
+                    <div class="col-md-6  mt-2 p-2">
+                        <livewire:application.dashboard.payment.dash-payment-page :date="$date_filter" />
                     </div>
                 @endcan
-                <div class="col-md-6  mt-2">
+                <div class="col-md-6 mt-2 p-2">
+                    <livewire:application.dashboard.registration.dash-registration-count-page :date="$date_filter" />
                     <livewire:application.dashboard.registration.dash-registration-by-class-room-page :date="$date_filter">
                 </div>
-
             @endcan
         </div>
 

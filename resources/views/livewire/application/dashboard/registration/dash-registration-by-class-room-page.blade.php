@@ -1,5 +1,5 @@
 <div class="">
-    <h4 class="mt-2 text-secondary text-end">Par mois</h4>
+    <h4 class="mt-2 text-secondary text-end">Efféctis par option</h4>
     <div class="d-flex">
         <div class="d-flex align-items-center">
             <x-form.label value="{{ __('Choisir option') }}" class="me-2 fw-bold" />

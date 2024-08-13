@@ -1,4 +1,6 @@
-<div class="">
+<div class="mt-2">
+    <h4 class="text-secondary text-end"> Evolution insc. & Réinsc par
+        {{ $is_by_date == true ? ' jour' : 'mois' }}</h4>
     <div class="row mt-2">
         <x-others.card-dashboard title='{{ $counter_new }}' subtitle='Inscription' color='text-bg-primary'
             icon='bi bi-person-fill-add'

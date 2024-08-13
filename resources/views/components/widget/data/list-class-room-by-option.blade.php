@@ -11,6 +11,7 @@
 
 <select id="my-select" class="form-control" {{ $attributes }}>
     <option value="0">Choisir...</option>
+    <option value="0">Tout</option>
     @foreach ($classRooms as $classRoom)
         <option class="text-uppercase" value="{{ $classRoom->id }}">{{ $classRoom->getOriginalClassRoomName() }}</option>
     @endforeach
