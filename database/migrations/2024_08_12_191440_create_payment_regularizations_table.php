@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('month');
             $table->float('amount')->default(0);
             $table->foreignIdFor(ClassRoom::class)->constrained();
-            $table->$table->timestamps();
+            $table->timestamps();
         });
     }
 

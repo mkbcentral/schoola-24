@@ -138,7 +138,7 @@
             <strong>Nom:</strong> {{ $payment->registration->student->name }}<br>
             <strong>Classe:</strong> {{ $payment->registration->classRoom->getOriginalClassRoomName() }}<br>
             <strong>Motif:</strong> {{ $payment->scolarFee->name }}<br>
-            <strong>Mois:</strong> {{ $payment->month }}<br>
+            <strong>Mois:</strong> {{ $payment->month($payment->month) }}<br>
             <strong>Date:</strong> <span id="date">{{ $payment->created_at->format('Y-m-d') }}</span><br>
         </div>
         <table>

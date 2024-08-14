@@ -1,7 +1,8 @@
 <div>
     <div>
         <div class="d-flex justify-content-end">
-            <h3 class="text-primary text-uppercase">Total: {{ app_format_number($total_payments, 1) }} Fc</h3>
+            <h3 class="text-primary text-uppercase">Total: {{ app_format_number($total_payments, 1) }}
+                {{ $categoryFeeSelected->currency }}</h3>
         </div>
         <div class="d-flex">
             <div class="d-flex align-items-center me-2">
@@ -46,7 +47,7 @@
                 </th>
                 <th>CLASSE</th>
                 <th>FRAIS</th>
-                <th>MONTANT</th>
+                <th class="text-end">MONTANT</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
@@ -70,7 +71,8 @@
                             {{ $payment->scolarFee->name }}/
                             {{ format_fr_month_name($payment->month) }}
                         </td>
-                        <td class="text-center">{{ $payment->getAmountCDF() }}</td>
+                        <td class="text-end">{{ app_format_number($payment->getAmount(), 1) }}
+                            {{ $payment->scolarFee->categoryFee->currency }}</td>
                         <td class="text-center"></td>
                     </tr>
                 @endforeach

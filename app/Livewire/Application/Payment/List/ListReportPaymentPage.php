@@ -3,6 +3,7 @@
 namespace App\Livewire\Application\Payment\List;
 
 use App\Domain\Features\Payment\PaymentFeature;
+use App\Models\CategoryFee;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,6 +12,7 @@ class ListReportPaymentPage extends Component
     use WithPagination;
 
     public int $selectedCategoryFeeId = 0;
+    public ?CategoryFee $categoryFeeSelected;
     public ?string $date_filter = '', $month_filter = '';
     public int $option_filter = 0, $section_filter = 0, $class_room_filter = 0, $scolary_fee_filter = 0;
     public int $selectedSection = 0, $selectedOption = 0, $selectedClassRoom = 0;
@@ -28,6 +30,7 @@ class ListReportPaymentPage extends Component
     public function getSelectedCategoryFee(int $index)
     {
         $this->selectedCategoryFeeId = $index;
+        $this->categoryFeeSelected = CategoryFee::findOrFail($index);
     }
 
     public function updatedMonthFilter()
@@ -74,6 +77,7 @@ class ListReportPaymentPage extends Component
     {
         $this->selectedCategoryFeeId = $categoryFeeId;
         $this->date_filter = date('Y-m-d');
+        $this->categoryFeeSelected = CategoryFee::findOrFail($categoryFeeId);
     }
 
     public function render()

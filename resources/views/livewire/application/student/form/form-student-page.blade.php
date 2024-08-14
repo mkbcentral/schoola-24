@@ -60,10 +60,11 @@
                     <div class="col">
                         <x-form.label value="{{ __('Type inscription') }}" />
                         <x-widget.data.list-registration-fee-by-option optionId="{{ $selectedOption }}"
-                            isOld="{{ $isOldSelected == '' ? 0 : $isOldSelected }}" type='text'
-                            wire:model.blur='form.registration_fee_id' :error="'form.registration_fee_id'" />
+                            isOld="{{ $isOldSelected }}" type='text' wire:model.blur='form.registration_fee_id'
+                            :error="'form.registration_fee_id'" />
                         <x-errors.validation-error value='form.registration_fee_id' />
                     </div>
+
                     <div class="col">
                         <x-form.label value="{{ __('Date inscription') }}" />
                         <x-form.input type='date' wire:model.blur='form.created_at' :error="'form.created_at'" />

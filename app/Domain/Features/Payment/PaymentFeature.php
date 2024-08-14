@@ -140,13 +140,7 @@ class PaymentFeature implements IPayment
             ->filter($filters)
             ->get();
         foreach ($payments as $payment) {
-            if ($payment->scolarFee->currency == "USD" && $currency == "USD") {
-                $total += $payment->scolarFee->amount * $payment->rate->amount;
-            } elseif ($payment->scolarFee->currency == "USD" && $currency == "CDF") {
-                $total += $payment->scolarFee->amount * $payment->rate->amount;
-            } else {
-                $total += $payment->scolarFee->amount;
-            }
+            $total += $payment->scolarFee->amount;
         }
 
         return $total;

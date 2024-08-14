@@ -8,13 +8,13 @@
         <div class="d-flex justify-content-center pb-2">
             <x-widget.loading-circular-md wire:loading wire:target='handlerSubmit' />
         </div>
-        <form wire:submit='handlerSubmit'>
-            <div>
-                <x-form.label value="{{ __('Dévise') }}" class="fw-bold" />
-                <x-widget.currency-widget wire:model.blur='form.currency' :error="'form.currency'" />
-                <x-errors.validation-error value='form.currency' />
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">Type frais: {{ $categoryFeeSelected?->name }}</h5>
             </div>
-            <div class="row mt-2">
+        </div>
+        <form wire:submit='handlerSubmit'>
+            <div class="row">
                 <div class="col">
                     <x-form.label value="{{ __('Nom frais') }}" class="fw-bold" />
                     <x-form.input type='text' wire:model.blur='form.name' :error="'form.name'" />
@@ -39,13 +39,6 @@
                         wire:model.blur='form.class_room_id' :error="'form.class_room_id'" />
                     <x-errors.validation-error value='form.class_room_id' />
                 </div>
-            </div>
-
-            <div>
-                <x-form.label value="{{ __('Categorie') }}" class=" mt-2" />
-                <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='form.category_fee_id'
-                    :error="'form.category_fee_id'" />
-                <x-errors.validation-error value='form.category_fee_id' />
             </div>
             <div class="d-flex justify-content-between mt-4">
                 @if ($scolarFeeSelected != null)

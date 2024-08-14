@@ -32,6 +32,8 @@ class ListScolarFeePage extends Component
     public function getSelectedCategoryFee(int $index)
     {
         $this->idCategorySelected = $index;
+        $this->resetPage();
+        $this->reset('q');
     }
 
     public function edit(?ScolarFee $scolarFee)

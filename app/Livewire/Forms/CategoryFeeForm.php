@@ -12,6 +12,8 @@ class CategoryFeeForm extends Form
 {
     #[Rule('required', message: "Nom categrie obligation", onUpdate: false)]
     public $name = '';
+    #[Rule('required', message: "Devise obligatoire obligation", onUpdate: false)]
+    public $currency = '';
     #[Rule('required', message: "Selection type obligatoire", onUpdate: false)]
     public $is_paid_in_installment = false;
     #[Rule('required', message: "Selection type obligatoire", onUpdate: false)]

@@ -7,14 +7,20 @@
         </h4>
     </div>
     <div class="card-body">
-        <div class="d-flex justify-content-center pb-2">
+        <div class="d-flex justify-content-center">
             <x-widget.loading-circular-md wire:loading wire:target='handlerSubmit,cancelUpdate' />
         </div>
+
         <form wire:submit='handlerSubmit'>
             <div>
                 <x-form.label value="{{ __('Categorie') }}" />
                 <x-form.input type='text' wire:model.blur='form.name' :error="'form.name'" />
                 <x-errors.validation-error value='form.name' />
+            </div>
+            <div>
+                <x-form.label value="{{ __('Dévise') }}" class="fw-bold" />
+                <x-widget.currency-widget wire:model.blur='form.currency' :error="'form.currency'" />
+                <x-errors.validation-error value='form.currency' />
             </div>
             <div>
                 <x-form.input-check-box idAndFor="isOld" color="primary" text="C'est un frais de l'état ?"

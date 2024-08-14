@@ -78,5 +78,5 @@
             </div>
         </div>
     </div>
-    <livewire:application.fee.scolar.form.form-scolar-fee-page>
+
 </div>

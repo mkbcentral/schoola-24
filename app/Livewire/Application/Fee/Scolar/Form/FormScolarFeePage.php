@@ -4,6 +4,7 @@ namespace App\Livewire\Application\Fee\Scolar\Form;
 
 use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\ScolarFeeForm;
+use App\Models\CategoryFee;
 use App\Models\ScolarFee;
 use Exception;
 use Livewire\Component;
@@ -13,9 +14,11 @@ class FormScolarFeePage extends Component
     protected $listeners = [
         "scolrFeeData" => "getScolarFee",
         "dataFormResed" => "resetFormData",
+        "categoryFeeDataChanged" => "changeCategoryFee",
         "refreshIndex" => 'sele'
     ];
     public ?ScolarFee $scolarFeeSelected = null;
+    public ?CategoryFee $categoryFeeSelected = null;
     public int $option_filter = 0;
     public int $selectedOption = 0;
     public ScolarFeeForm $form;
@@ -23,6 +26,12 @@ class FormScolarFeePage extends Component
     {
         $this->scolarFeeSelected = null;
         $this->form->reset();
+        $this->form->name = $this->categoryFeeSelected->name;
+    }
+
+    public function changeCategoryFee(CategoryFee $categoryFeea)
+    {
+        $this->categoryFeeSelected = $categoryFeea;
     }
 
     public function updatedOptionFilter($val)
@@ -34,6 +43,7 @@ class FormScolarFeePage extends Component
     {
         $this->dispatch('refreshIndex', $val);
         $this->dispatch('selectedCategoryFee', $val);
+        $this->categoryFeeSelected = CategoryFee::findOrFail($val);
     }
 
     public function getScolarFee(ScolarFee $scolarFee)
@@ -48,9 +58,10 @@ class FormScolarFeePage extends Component
     public function save()
     {
         $input = $this->validate();
+        $input['category_fee_id'] = $this->categoryFeeSelected->id;
+        $this->form->create($input);
+        $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
         try {
-            $this->form->create($input);
-            $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
@@ -75,13 +86,17 @@ class FormScolarFeePage extends Component
             $this->update();
         }
         $this->dispatch('regFeeDataRefreshed');
-        //$this->form->reset();
     }
 
     public function cancelUpdate()
     {
         $this->scolarFeeSelected = null;
         $this->form->reset();
+    }
+
+    public function mount(CategoryFee $categoryFeeSelected)
+    {
+        $this->categoryFeeSelected = $categoryFeeSelected;
     }
 
     public function render()

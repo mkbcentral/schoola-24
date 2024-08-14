@@ -17,6 +17,7 @@ class CategoryFee extends Model
         'school_year_id',
         'school_id',
         'is_state_fee',
+        'currency',
         'is_paid_in_installment',
         'is_paid_for_registration',
         'is_state_fee'
@@ -56,7 +57,7 @@ class CategoryFee extends Model
         return $this->hasMany(ScolarFee::class);
     }
 
-    public function getAmountByDate(string $date): int|float
+    public function getAmountByDate(string $date): string|null
     {
         return PaymentFeature::getTotal(
             $date,

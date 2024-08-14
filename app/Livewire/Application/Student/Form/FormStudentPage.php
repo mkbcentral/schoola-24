@@ -27,7 +27,6 @@ class FormStudentPage extends Component
 
     public function updatedFormIsOld($val)
     {
-
         $this->isOldSelected = $val;
     }
 
@@ -47,7 +46,6 @@ class FormStudentPage extends Component
             $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
             $this->dispatch('close-form-student');
             OtherPaymentFeature::createPaymentForRegistration($registration);
-            //event(new RegistrationCreatedEvent($registration));
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }

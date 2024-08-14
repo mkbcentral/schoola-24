@@ -4,6 +4,7 @@ namespace App\Livewire\Application\Payment\List;
 
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Domain\Utils\AppMessage;
+use App\Models\CategoryFee;
 use App\Models\Payment;
 use Exception;
 use Livewire\Attributes\Url;
@@ -17,12 +18,21 @@ class ListPaymentByDatePage extends Component
         "refreshPaymentList" => '$refresh',
     ];
     public ?string $date_filter = '';
+    public int $category_fee_filter = 0;
+    public ?CategoryFee $categoryFeeSelected;
     #[Url(as: 'q')]
     public $q = '';
 
     public function mount()
     {
         $this->date_filter = date('Y-m-d');
+        $this->category_fee_filter = CategoryFee::firstOrFail()->id;
+        $this->categoryFeeSelected = CategoryFee::firstOrFail();
+    }
+
+    public function updatedCategoryFeeFilter($val)
+    {
+        $this->categoryFeeSelected = CategoryFee::findOrFail($val);
     }
 
     public function edit(Payment $payment)
@@ -66,7 +76,7 @@ class ListPaymentByDatePage extends Component
                 $this->date_filter,
                 '',
                 $this->q,
-                null,
+                $this->category_fee_filter,
                 null,
                 null,
                 null,
@@ -77,7 +87,7 @@ class ListPaymentByDatePage extends Component
             'total_payments' => PaymentFeature::getTotal(
                 $this->date_filter,
                 '',
-                null,
+                $this->category_fee_filter,
                 null,
                 null,
                 null,
@@ -85,6 +95,7 @@ class ListPaymentByDatePage extends Component
                 true,
                 'CDF'
             ),
+            'categoryFees' => CategoryFee::all()
         ]);
     }
 }

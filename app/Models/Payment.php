@@ -144,24 +144,8 @@ class Payment extends Model
      * Retourner le montant en CDF
      * @return void
      */
-    public function getAmountCDF(): string|null
+    public function getAmount(): int|float
     {
-        if ($this->scolarFee->currency == "USD") {
-            return $this->scolarFee->amount * $this->rate->amount . ' Fc';
-        } else {
-            return $this->scolarFee->amount . ' Fc';
-        }
-    }
-    /**
-     * Retourner le montant en USD
-     * @return void
-     */
-    public function getAmountUSD(): string|null
-    {
-        if ($this->scolarFee->currency == "CDF") {
-            return $this->scolarFee->amount / $this->rate->amount . ' $';
-        } else {
-            return $this->scolarFee->amount . ' $';
-        }
+        return $this->scolarFee->amount;
     }
 }

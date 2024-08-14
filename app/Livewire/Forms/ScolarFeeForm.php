@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\SchoolYear;
 use App\Models\ScolarFee;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
@@ -17,12 +16,7 @@ class ScolarFeeForm extends Form
     #[Rule('required', message: "Classe obligatoire", onUpdate: false)]
     public $class_room_id = '';
 
-    #[Rule('required', message: "Categorie obligatoire", onUpdate: false)]
-    public $category_fee_id
-    = '';
 
-    #[Rule('required', message: "Dévise obligatoire obligation", onUpdate: false)]
-    public $currency = '';
 
     public function create(array $input)
     {

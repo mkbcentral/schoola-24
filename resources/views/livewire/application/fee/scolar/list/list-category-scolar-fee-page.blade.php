@@ -26,6 +26,9 @@
                                             <th>
                                                 Categorie
                                             </th>
+                                            <th>
+                                                Devise
+                                            </th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -39,6 +42,7 @@
                                                 <tr wire:key='{{ $categoryFee->id }}'>
                                                     <td class="text-center">{{ $index + 1 }}</td>
                                                     <td>{{ $categoryFee->name }}</td>
+                                                    <td>{{ $categoryFee->currency }}</td>
                                                     <td class="text-center">
                                                         <x-form.app-button type='button' icon="bi bi-pencil-fill"
                                                             class="btn-sm app-btn"

@@ -26,4 +26,5 @@
             </div>
         </div>
     </x-content.main-content-page>
+    <livewire:application.fee.scolar.form.form-scolar-fee-page :categoryFeeSelected="$categoryFeeSelected">
 </div>

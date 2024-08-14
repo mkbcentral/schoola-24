@@ -16,7 +16,7 @@
                                         {{ $is_by_date == true
                                             ? app_format_number($categoryFee->getAmountByDate($date_filter), 1)
                                             : app_format_number($categoryFee->getAmountByMonth($month_filter), 1) }}
-                                        Fc
+                                        {{ $categoryFee->currency }}
                                     </h4>
                                 </div>
                                 <i class="bi bi-currency-exchange h4"></i>
