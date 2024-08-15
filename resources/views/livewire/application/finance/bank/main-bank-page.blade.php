@@ -9,7 +9,7 @@
                 <livewire:application.finance.bank.list.list-bank-deposit-page />
             </div>
             <div class="col-md-4 mt-2">
-                <livewire:application.finance.bank.form.form-bank-deposit-page>
+                <livewire:application.finance.bank.form.form-bank-deposit-page />
             </div>
         </div>
     </x-content.main-content-page>

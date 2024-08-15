@@ -5,7 +5,7 @@
         ->get();
 @endphp
 
-<select id="my-select" class="form-control" {{ $attributes }}>
+<select id="my-select" class="form-select form-control" {{ $attributes }}>
     <option disabled>Choisir...</option>
     <option value="0">Tout</option>
     @foreach ($categoryFees as $cat)

@@ -10,11 +10,13 @@ class BankDeposit extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'description',
         'amount',
         'month',
         'currency',
         'school_id',
-        'school_year_id'
+        'school_year_id',
+        'category_fee_id '
     ];
 
     /**

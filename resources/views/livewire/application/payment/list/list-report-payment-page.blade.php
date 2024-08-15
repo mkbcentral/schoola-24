@@ -41,6 +41,7 @@
         <thead class="table-primary">
             <tr class="">
                 <th class="text-center">N°</th>
+                <th class="">DATE</th>
                 <th class="">CODE</th>
                 <th class="cursor-hand">
                     <span>NOM COMPLET</span>
@@ -61,6 +62,9 @@
                     <tr wire:key='{{ $payment->id }}' class=" ">
                         <td class="text-center">
                             {{ $index + 1 }}
+                        </td>
+                        <td class="text-uppercase">
+                            {{ $payment->created_at->format('d/m/Y') }}
                         </td>
                         <td class="text-uppercase">
                             {{ $payment->payment_number }}
