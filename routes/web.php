@@ -13,8 +13,12 @@ use App\Livewire\Application\Fee\Registration\List\ListCategoryRegistrationFeePa
 use App\Livewire\Application\Fee\Registration\List\ListRegistrationFeePage;
 use App\Livewire\Application\Fee\Scolar\List\ListCategoryScolarFeePage;
 use App\Livewire\Application\Fee\Scolar\MainScolarFeePage;
+use App\Livewire\Application\Finance\Bank\MainBankPage;
+use App\Livewire\Application\Finance\Salary\MainSalaryPage;
+use App\Livewire\Application\Finance\Saving\MainSavingMoneyPage;
 use App\Livewire\Application\Payment\MainPaymentPage;
 use App\Livewire\Application\Payment\NewPaymentPage;
+use App\Livewire\Application\Payment\Reguralization\MainRegularizationPaymentPage;
 use App\Livewire\Application\Registration\List\ListRegistrationByClassRoomPage;
 use App\Livewire\Application\Registration\List\ListRegistrationByDatePage;
 use App\Livewire\Application\Registration\List\ListRegistrationByMonthPage;
@@ -59,9 +63,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::group(['payment' => ''], function () {
         Route::get('new-payment', NewPaymentPage::class)->name('payment.new');
+        Route::get('regularization', MainRegularizationPaymentPage::class)->name('payment.regularization');
         Route::get('rapport', MainPaymentPage::class)->name('payment.rappport');
     });
     Route::controller(PrintPaymentReceiptController::class)->group(function () {
         Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt');
+    });
+
+    Route::prefix('finance')->group(function () {
+        Route::get('bank', MainBankPage::class)->name('finance.bank');
+        Route::get('saving-money', MainSavingMoneyPage::class)->name('finance.saving.money');
+        Route::get('salary', MainSalaryPage::class)->name('finance.salary');
     });
 });

@@ -7,7 +7,7 @@
 @endphp
 
 <select id="my-select" class="form-select" {{ $attributes }}>
-    <option value="0">Choisir...</option>
+    <option disabled>Choisir...</option>
     <option value="0">Tout</option>
     @foreach ($options as $option)
         <option class="text-uppercase" value="{{ $option->id }}">{{ $option->name }}</option>

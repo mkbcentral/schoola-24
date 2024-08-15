@@ -28,27 +28,6 @@ class PaymentFeature implements IPayment
     /**
      * @inheritDoc
      */
-    public static function delete(Payment $payment): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function get(int $id): Payment|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-
-
-    /**
-     * @inheritDoc
-     */
     public static function getList(
         string|null $date,
         string|null $month,
@@ -75,24 +54,6 @@ class PaymentFeature implements IPayment
         return Payment::query()
             ->filter($filters)
             ->paginate($perPage);
-    }
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public static function makeIsPaid(Payment $payment): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function update(Payment $payment, array $input): bool
-    {
-        return false;
     }
     /**
      * @inheritDoc

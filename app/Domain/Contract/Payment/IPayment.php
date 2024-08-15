@@ -16,33 +16,6 @@ interface  IPayment
      */
     public static function create(array $input): ?Payment;
     /**
-     * Récuprer le payment
-     * @param int $id
-     * @return \App\Models\Payment
-     */
-    public static function get(int $id): ?Payment;
-
-    /**
-     * Mettre à jour le payement
-     * @param \App\Models\Payment $payment
-     * @param array $input
-     * @return bool
-     */
-    public static function update(Payment $payment, array $input): bool;
-    /**
-     * Retirer le payment
-     * @param \App\Models\Payment $payment
-     * @return bool
-     */
-    public static function delete(Payment $payment): bool;
-    /**
-     * Marquer le payment payé
-     * @param \App\Models\Payment $payment
-     * @return bool
-     */
-    public static function makeIsPaid(Payment $payment): bool;
-
-    /**
      * Summary of getList
      * @param mixed $date
      * @param mixed $month

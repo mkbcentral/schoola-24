@@ -138,7 +138,7 @@
             <strong>Nom:</strong> {{ $payment->registration->student->name }}<br>
             <strong>Classe:</strong> {{ $payment->registration->classRoom->getOriginalClassRoomName() }}<br>
             <strong>Motif:</strong> {{ $payment->scolarFee->name }}<br>
-            <strong>Mois:</strong> {{ $payment->month($payment->month) }}<br>
+            <strong>Mois:</strong> {{ format_fr_month_name($payment->month) }}<br>
             <strong>Date:</strong> <span id="date">{{ $payment->created_at->format('Y-m-d') }}</span><br>
         </div>
         <table>
@@ -153,11 +153,13 @@
                 <tr>
                     <td class="item-name">{{ $payment->scolarFee->name }}</td>
                     <td>1</td>
-                    <td class="item-price">{{ $payment->getAmountCDF() }}</td>
+                    <td class="item-price">{{ $payment->getAmount() }} {{ $payment->scolarFee->categoryFee->currency }}
+                    </td>
                 </tr>
                 <tr class="total-row">
                     <td colspan="2">Total</td>
-                    <td class="item-price">{{ $payment->getAmountCDF() }}</td>
+                    <td class="item-price">{{ $payment->getAmount() }} {{ $payment->scolarFee->categoryFee->currency }}
+                    </td>
                 </tr>
             </tbody>
         </table>

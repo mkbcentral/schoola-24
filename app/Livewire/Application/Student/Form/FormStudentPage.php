@@ -4,7 +4,6 @@ namespace App\Livewire\Application\Student\Form;
 
 use App\Domain\Features\Payment\OtherPaymentFeature;
 use App\Domain\Utils\AppMessage;
-use App\Events\RegistrationCreatedEvent;
 use App\Livewire\Forms\RegistrationForm;
 use App\Models\ResponsibleStudent;
 use Exception;
@@ -24,13 +23,10 @@ class FormStudentPage extends Component
     {
         $this->selectedOption = $val;
     }
-
     public function updatedFormIsOld($val)
     {
         $this->isOldSelected = $val;
     }
-
-
     public function getResponsibleStudent(?ResponsibleStudent $responsibleStudent)
     {
         $this->responsibleStudent = $responsibleStudent;
@@ -55,13 +51,10 @@ class FormStudentPage extends Component
         $this->save();
         $this->dispatch('refreshListResponsibleStudent');
     }
-
     public function mount()
     {
         $this->form->created_at = date('Y-m-d');
     }
-
-
     public function render()
     {
         return view('livewire.application.student.form.form-student-page');

@@ -23,8 +23,10 @@
                               href="{{ route('student.list') }}" :active="request()->routeIs(['student.list'])" />
                           <x-navigation.nav-link linkLabel='Nouveau paiement' icon='bi bi-arrow-left-right'
                               href="{{ route('payment.new') }}" :active="request()->routeIs(['payment.new'])" />
+
                           <x-navigation.nav-link linkLabel='Liste des payments' icon='bi bi-people-fill'
                               href="{{ route('payment.rappport') }}" :active="request()->routeIs(['payment.rappport'])" />
+
                           <x-navigation.dropdown-link wire:ignore.self label='Gestion des frais' icon='bi bi-wallet2'
                               class="text-white ">
                               <x-navigation.nav-link linkLabel='Frais inscription' icon='bi bi-file-earmark-plus-fill'

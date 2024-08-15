@@ -6,7 +6,8 @@
 @endphp
 
 <select id="my-select" class="form-control" {{ $attributes }}>
-    <option>Choisir...</option>
+    <option disabled>Choisir...</option>
+    <option value="0">Tout</option>
     @foreach ($categoryFees as $cat)
         <option class="text-uppercase" value="{{ $cat->id }}">{{ $cat->name }}</option>
     @endforeach
