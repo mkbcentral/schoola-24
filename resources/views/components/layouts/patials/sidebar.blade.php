@@ -23,10 +23,19 @@
                               href="{{ route('student.list') }}" :active="request()->routeIs(['student.list'])" />
                           <x-navigation.nav-link linkLabel='Nouveau paiement' icon='bi bi-arrow-left-right'
                               href="{{ route('payment.new') }}" :active="request()->routeIs(['payment.new'])" />
-
+                          <x-navigation.nav-link linkLabel='Régularisation' icon='bi bi-wallet2'
+                              href="{{ route('payment.regularization') }}" :active="request()->routeIs(['payment.regularization'])" />
                           <x-navigation.nav-link linkLabel='Liste des payments' icon='bi bi-people-fill'
                               href="{{ route('payment.rappport') }}" :active="request()->routeIs(['payment.rappport'])" />
-
+                          <x-navigation.dropdown-link wire:ignore.self label='Finace' icon='bi bi-box-seam-fill'
+                              class="text-white ">
+                              <x-navigation.nav-link linkLabel='Dépot banque' icon='bi bi-bank2'
+                                  href="{{ route('finance.bank') }}" :active="request()->routeIs(['finance.bank'])" />
+                              <x-navigation.nav-link linkLabel='Epargne' icon='bi bi-wallet-fill'
+                                  href="{{ route('finance.saving.money') }}" :active="request()->routeIs(['finance.saving.money'])" />
+                              <x-navigation.nav-link linkLabel='Salaire' icon='bi bi-card-heading'
+                                  href="{{ route('finance.salary') }}" :active="request()->routeIs(['finance.salary'])" />
+                          </x-navigation.dropdown-link>
                           <x-navigation.dropdown-link wire:ignore.self label='Gestion des frais' icon='bi bi-wallet2'
                               class="text-white ">
                               <x-navigation.nav-link linkLabel='Frais inscription' icon='bi bi-file-earmark-plus-fill'

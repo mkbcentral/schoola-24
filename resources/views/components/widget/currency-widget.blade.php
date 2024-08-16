@@ -1,9 +1,10 @@
+@props(['size' => 'col-md-2'])
 @php
     $currencies = ['USD', 'CDF'];
 @endphp
 <div class="row">
     @foreach ($currencies as $currency)
-        <div class="col-md-2">
+        <div class="{{ $size }}">
             <!-- radio -->
             <div class="form-group clearfix">
                 <div class="icheck-primary d-inline">

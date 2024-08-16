@@ -99,9 +99,7 @@
             </table>
             <div class="d-flex justify-content-between align-items-center">
                 <span>{{ $registrations->links('livewire::bootstrap') }}</span>
-                @if ($registrations->count() > 9)
-                    <x-others.table-page-number wire:model.live='per_page' />
-                @endif
+                <x-others.table-page-number wire:model.live='per_page' />
             </div>
         </div>
     </x-content.main-content-page>

@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class FormBankDepositPage extends Component
 {
-    protected $listners = [
+    protected $listeners = [
         'bankDepositData' => 'getBankDeposit'
     ];
     public ?BankDeposit $bankDeposit = null;
@@ -19,7 +19,8 @@ class FormBankDepositPage extends Component
     public function getBankDeposit(BankDeposit $bankDeposit): void
     {
         $this->bankDeposit = $bankDeposit;
-        $this->form->reset();
+        $this->form->fill($bankDeposit->toArray());
+        $this->form->created_at = $bankDeposit->created_at->format('Y-m-d');
     }
     public function save(): void
     {
@@ -41,12 +42,23 @@ class FormBankDepositPage extends Component
     }
     public function handlerSubmit(): void
     {
+        $this->validate();
         if ($this->bankDeposit == null) {
             $this->save();
         } else {
             $this->update();
         }
         $this->form->reset();
+        $this->bankDeposit = null;
+        $this->dispatch('bankDepositListRefred');
+        $this->form->created_at = date('Y-m-d');
+    }
+
+    public function cancelUpdate(): void
+    {
+        $this->bankDeposit = null;
+        $this->form->reset();
+        $this->form->created_at = date('Y-m-d');
     }
 
     public function mount()

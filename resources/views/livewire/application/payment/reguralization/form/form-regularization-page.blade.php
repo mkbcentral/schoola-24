@@ -2,6 +2,9 @@
     <x-modal.build-modal-fixed idModal='form-payment-regularization' size='md'
         headerLabel="{{ $paymentRegularization == null ? 'CREATION PAYEMENT' : 'MODIFICATION PAIEMENT' }} "
         headerLabelIcon="{{ $paymentRegularization == null ? 'bi bi-plus-circle-fill' : 'bi bi-pencil-fill' }} ">
+        <div class="d-flex justify-content-center pb-2">
+            <x-widget.loading-circular-md wire:loading wire:target='handlerSubmit' />
+        </div>
         <div class="row">
             <form wire:submit='handlerSubmit'>
                 <div class="row">

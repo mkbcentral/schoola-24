@@ -41,7 +41,7 @@
         <thead class="table-primary">
             <tr class="">
                 <th class="text-center">N°</th>
-                <th class="">DATE</th>
+                <th class="">DATE PAIMENT</th>
                 <th class="">CODE</th>
                 <th class="cursor-hand">
                     <span>NOM COMPLET</span>

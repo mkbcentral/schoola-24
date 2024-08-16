@@ -16,7 +16,7 @@ class ListReportPaymentPage extends Component
     public ?string $date_filter = '', $month_filter = '';
     public int $option_filter = 0, $section_filter = 0, $class_room_filter = 0, $scolary_fee_filter = 0;
     public int $selectedSection = 0, $selectedOption = 0, $selectedClassRoom = 0;
-    public int $per_page = 100;
+    public int $per_page = 10;
 
     protected $listeners = [
         "selectedCategoryFee" => 'getSelectedCategoryFee'

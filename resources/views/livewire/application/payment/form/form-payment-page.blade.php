@@ -2,8 +2,7 @@
     <x-modal.build-modal-fixed idModal='form-payment' size='xl' headerLabel="PAYEMENT FRAIS"
         headerLabelIcon='bi bi-arrow-left-right'>
         <div class="d-flex justify-content-center pb-2">
-            <x-widget.loading-circular-md wire:loading wire:target='save' />
-            <x-widget.loading-circular-md wire:loading wire:target='getRegistration' />
+            <x-widget.loading-circular-md wire:loading />
         </div>
         @if ($registration != null)
             <div class="row">
@@ -36,16 +35,22 @@
                                 classRoomId='{{ $selectedIdClassRoom }}' wire:model.live='form.scolar_fee_id' />
                             <x-errors.validation-error value='form.scolar_fee_id' />
                         </div>
-                        <div class="">
+                        <div class="mt-2">
                             <x-form.label value="{{ __('Date paiement') }}" />
                             <x-form.input type='date' wire:model.blur='form.created_at' :error="'form.created_at'" />
                             <x-errors.validation-error value='form.created_at' />
                         </div>
+                        @if ($scolarFee != null)
+                            <h3 class="mt-2">Montant:
+                                {{ app_format_number($scolarFee->amount, 1) . ' ' . $scolarFee->categoryFee->currency }}
+                            </h3>
+                        @endif
                         <div class="mt-4">
                             <x-form.app-button type='submit' textButton="Payer" icon="bi bi-arrow-left-righ"
                                 class="app-btn" />
                         </div>
                     </form>
+
                 </div>
                 <div class="col-md-8">
                     <div class="d-flex justify-content-center pb-2">
@@ -73,7 +78,7 @@
                                     </tr>
                                 @else
                                     <tbody>
-                                        @foreach ($registration->payments as $index => $payment)
+                                        @foreach ($registration->payments()->where('is_paid', true)->get() as $index => $payment)
                                             <tr wire:key='{{ $payment->id }}' class=" ">
                                                 <td class="text-center">
                                                     {{ $index + 1 }}

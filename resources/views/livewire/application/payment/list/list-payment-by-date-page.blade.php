@@ -13,7 +13,8 @@
             <x-form.search-input wire:model.live='q' />
             <div class="form-group d-flex">
                 <label for="my-select">Type Frais</label>
-                <select id="my-select" class="form-control" name="" wire:model.live='category_fee_filter'>
+                <select id="my-select" class="form-control form-select" name=""
+                    wire:model.live='category_fee_filter'>
                     <option disabled>Choisir</option>
                     @foreach ($categoryFees as $categoryFee)
                         <option value="{{ $categoryFee->id }}">{{ $categoryFee->name }}</option>
@@ -85,9 +86,7 @@
     </table>
     <div class="d-flex justify-content-between align-items-center">
         <span>{{ $payments->links('livewire::bootstrap') }}</span>
-        @if ($payments->count() > 9)
-            <x-others.table-page-number wire:model.live='per_page' />
-        @endif
+        <x-others.table-page-number wire:model.live='per_page' />
     </div>
-    @livewire('application.payment.form.form-edit-payment-page');
+    <livewire:application.payment.form.form-edit-payment-page>
 </div>

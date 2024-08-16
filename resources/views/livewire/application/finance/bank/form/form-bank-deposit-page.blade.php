@@ -1,9 +1,16 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <h4>CREATION DEPOT BANQUE</h4>
+            <h4>
+                <i class="{{ $bankDeposit == null ? 'bi bi-plus-circle-fill' : 'bi bi-pencil-fill' }}"></i>
+                {{ $bankDeposit == null ? 'CREATION DEPOT BANQUE' : 'MODIFICATION DEPOT BANQUE' }}
+            </h4>
+
         </div>
         <div class="card-body">
+            <div class="d-flex justify-content-center pb-2">
+                <x-widget.loading-circular-md wire:loading />
+            </div>
             <form wire:submit='handlerSubmit'>
                 <div>
                     <x-form.label value="{{ __('Dévise') }}" class="fw-bold" />
@@ -23,7 +30,7 @@
                     </div>
                     <div class="mt-2 col">
                         <x-form.label value="{{ __('Mois') }}" class="me-2" />
-                        <x-widget.list-month-fr wire:model.live='form.month' :error="'form.month'" />
+                        <x-widget.list-month-fr wire:model.blurr='form.month' :error="'form.month'" />
                         <x-errors.validation-error value='form.month' />
                     </div>
                 </div>
@@ -39,7 +46,13 @@
                         <x-errors.validation-error value='form.created_at' />
                     </div>
                 </div>
-                <div class="mt-4 d-flex justify-content-end">
+                <div class="mt-4 d-flex justify-content-between">
+                    <div>
+                        @if ($bankDeposit != null)
+                            <x-form.app-button type='button' textButton="Annuer" icon="bi bi-x-lg"
+                                wire:click='cancelUpdate' class="btn-danger" />
+                        @endif
+                    </div>
                     <x-form.app-button type='submit' textButton="Sauvegarder'" icon="bi bi-arrow-left-righ"
                         class="app-btn" />
                 </div>

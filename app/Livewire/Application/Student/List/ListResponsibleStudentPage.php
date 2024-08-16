@@ -5,7 +5,6 @@ namespace App\Livewire\Application\Student\List;
 use App\Domain\Features\Student\ResponsibleStudentFeature;
 use App\Domain\Utils\AppMessage;
 use App\Models\ResponsibleStudent;
-use App\Models\ScolarFee;
 use Exception;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -18,7 +17,7 @@ class ListResponsibleStudentPage extends Component
     ];
 
     public ?ResponsibleStudent $responsibleStudentToDelete = null;
-    public int $per_page = 20;
+    public int $per_page = 10;
 
     #[Url(as: 'q')]
     public $q = '';
@@ -78,9 +77,7 @@ class ListResponsibleStudentPage extends Component
         }
     }
 
-    public function mount()
-    {
-    }
+    public function mount() {}
 
     public function render()
     {

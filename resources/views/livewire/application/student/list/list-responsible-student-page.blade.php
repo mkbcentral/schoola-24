@@ -70,10 +70,8 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-between align-items-center">
-                <span>{{ $responsibleStudents->links() }}</span>
-                @if ($responsibleStudents->count() >= 10)
-                    <x-others.table-page-number wire:model.live='per_page' />
-                @endif
+                <span>{{ $responsibleStudents->links('livewire::bootstrap') }}</span>
+                <x-others.table-page-number wire:model.live='per_page' />
             </div>
         </div>
         @push('js')

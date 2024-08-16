@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,7 @@ class BankDeposit extends Model
         'currency',
         'school_id',
         'school_year_id',
-        'category_fee_id '
+        'category_fee_id'
     ];
 
     /**
@@ -37,5 +38,42 @@ class BankDeposit extends Model
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class, 'school_year_id');
+    }
+
+    /**
+     * Get the categoryFee that owns the BankDeposit
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function categoryFee(): BelongsTo
+    {
+        return $this->belongsTo(CategoryFee::class, 'category_fee_id');
+    }
+    /**
+     * Summary of scopeFilter
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        return  $query->when(
+            $filters['date'],
+            function ($query, $value) {
+                return $query->whereDate('created_at', $value);
+            }
+        )->when(
+            $filters['month'],
+            function ($query, $value) {
+                return $query->where('month', $value);
+            }
+        )->when(
+            $filters['currency'],
+            function ($query, $value) {
+                return $query->where('currency', $value);
+            }
+        )->with([
+            'categoryFee',
+        ]);
     }
 }
