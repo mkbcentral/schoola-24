@@ -34,6 +34,6 @@ class Rate extends Model
 
     public static function DEFAULT_RATE_ID()
     {
-        return 1;
+        return 2;
     }
 }
