@@ -153,12 +153,18 @@
                 <tr>
                     <td class="item-name">{{ $payment->scolarFee->name }}</td>
                     <td>1</td>
-                    <td class="item-price">{{ $payment->getAmount() }} {{ $payment->scolarFee->categoryFee->currency }}
+                    <td class="item-price">
+                        {{ $payment->scolarFee->categoryFee->currency == 'USD'
+                            ? app_format_number($payment->getAmount() * $payment->rate->amount, 1) . ' FC'
+                            : app_format_number($payment->getAmount(), 1) . ' Fc' }}
                     </td>
                 </tr>
                 <tr class="total-row">
                     <td colspan="2">Total</td>
-                    <td class="item-price">{{ $payment->getAmount() }} {{ $payment->scolarFee->categoryFee->currency }}
+                    <td class="item-price">
+                        {{ $payment->scolarFee->categoryFee->currency == 'USD'
+                            ? app_format_number($payment->getAmount() * $payment->rate->amount, 1) . ' Fc'
+                            : app_format_number($payment->getAmount(), 1) . 'Fc' }}
                     </td>
                 </tr>
             </tbody>

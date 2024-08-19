@@ -13,6 +13,7 @@ class SalaryDetail extends Model
         'description',
         'amount',
         'currency',
+        'category_salary_id',
         'salary_id'
     ];
 
@@ -24,5 +25,15 @@ class SalaryDetail extends Model
     public function salary(): BelongsTo
     {
         return $this->belongsTo(Salary::class, 'salary_id');
+    }
+
+    /**
+     * Get the categorySalary that owns the SalaryDetail
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function categorySalary(): BelongsTo
+    {
+        return $this->belongsTo(CategorySalary::class, 'category_salary_id');
     }
 }

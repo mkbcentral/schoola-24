@@ -14,7 +14,8 @@ class Salary extends Model
     protected $fillable = [
         'month',
         'school_id',
-        'school_year_id'
+        'school_year_id',
+        'created_at'
     ];
 
     /**

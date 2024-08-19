@@ -52,6 +52,7 @@ class FormBankDepositPage extends Component
         $this->bankDeposit = null;
         $this->dispatch('bankDepositListRefred');
         $this->form->created_at = date('Y-m-d');
+        $this->form->month = date('m');
     }
 
     public function cancelUpdate(): void
@@ -59,11 +60,13 @@ class FormBankDepositPage extends Component
         $this->bankDeposit = null;
         $this->form->reset();
         $this->form->created_at = date('Y-m-d');
+        $this->form->month = date('m');
     }
 
     public function mount()
     {
         $this->form->created_at = date('Y-m-d');
+        $this->form->month = date('m');
     }
 
     public function render()
