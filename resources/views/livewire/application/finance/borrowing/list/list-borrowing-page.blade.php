@@ -17,6 +17,16 @@
             <x-form.label value="{{ __('Date') }}" class="fw-bold me-2" />
             <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
         </div>
+        <div class="d-flex align-items-center form-group">
+            <x-form.label value="{{ __('Dévise') }}" class="fw-bold me-2" />
+            <select id="my-select" class="form-control" name="" wire:model.live='currency_filter'>
+                <option disabled>Choisir</option>
+                <option value=''>Tout</option>
+                <option value="USD">USD</option>
+                <option value="CDF">CDF</option>
+            </select>
+        </div>
+
     </div>
     <table class="table table-bordered table-hover mt-2">
         <thead class="table-primary">
@@ -24,45 +34,53 @@
                 <th class="text-center">N°</th>
                 <th>DATE OPERATION</th>
                 <th>DESCRIPTION</th>
+                <th>MOIS</th>
                 <th class="text-end">MT USD</th>
                 <th class="text-end">MT CDF</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
-        @if ($salaries->isEmpty())
+        @if ($moneyBorrowings->isEmpty())
             <tr>
                 <td colspan="7"><x-errors.data-empty /></td>
             </tr>
         @else
             <tbody>
-                @foreach ($salaries as $index => $salary)
-                    <tr wire:key='{{ $salary->id }}' class=" ">
+                @foreach ($moneyBorrowings as $index => $moneyBorrowing)
+                    <tr wire:key='{{ $moneyBorrowing->id }}' class=" ">
                         <td class="text-center ">
                             {{ $index + 1 }}
                         </td>
-                        <td>{{ $salary->created_at->format('d/m/Y') }}</td>
+                        <td>{{ $moneyBorrowing->created_at->format('d/m/Y') }}</td>
+                        <td>{{ $moneyBorrowing->description }}</td>
                         <td>
-                            <i class="bi bi-envelope-fill"></i> Enveloppe salariale/
-                            {{ format_fr_month_name($salary->month) }}
+                            {{ format_fr_month_name($moneyBorrowing->month) }}
                         </td>
                         <td class="text-end">
-                            {{ app_format_number($salary->getAmount('USD'), 1) }}
+                            @if ($moneyBorrowing->currency == 'USD')
+                                {{ app_format_number($moneyBorrowing->amount, 1) }}
+                                {{ $moneyBorrowing->currency }}
+                            @else
+                                <span class="fw-bold">-</span>
+                            @endif
                         </td>
                         <td class="text-end">
-                            {{ app_format_number($salary->getAmount('CDF'), 1) }}
+                            @if ($moneyBorrowing->currency == 'CDF')
+                                {{ app_format_number($moneyBorrowing->amount, 1) }}
+                                {{ $moneyBorrowing->currency }}
+                            @else
+                                <span class="fw-bold">-</span>
+                            @endif
                         </td>
                         <td class="text-center">
                             @can('manage-payment')
                                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                                     class="btn-secondary btn-sm">
-                                    <x-others.dropdown-link iconLink='bi bi-clipboard-plus-fill' labelText='Ajouter détail'
-                                        href="#" wire:click='edit({{ $salary }})' data-bs-toggle="modal"
-                                        data-bs-target="#salary-detail-page" />
-                                    <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Edit' href="#"
-                                        wire:click='edit({{ $salary }})' />
+                                    <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer' href="#"
+                                        wire:click='edit({{ $moneyBorrowing }})' />
                                     <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer' href="#"
                                         wire:confirm="Voulez-vous vraiment supprimer ?"
-                                        wire:click='delete({{ $salary }})' />
+                                        wire:click='delete({{ $moneyBorrowing }})' />
                                 </x-others.dropdown>
                             @endcan
                         </td>
@@ -71,6 +89,4 @@
             </tbody>
         @endif
     </table>
-    <livewire:application.finance.salary.list.list-salary-detail-page />
-    <livewire:application.finance.salary.list.list-salary-detail-page>
 </div>

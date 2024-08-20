@@ -32,9 +32,6 @@ class ListRolePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-
-
-
     public function render()
     {
         return view('livewire.application.admin.list.list-role-page', [

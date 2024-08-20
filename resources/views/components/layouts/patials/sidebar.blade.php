@@ -35,7 +35,23 @@
                                   href="{{ route('finance.saving.money') }}" :active="request()->routeIs(['finance.saving.money'])" />
                               <x-navigation.nav-link linkLabel='Salaire' icon='bi bi-card-heading'
                                   href="{{ route('finance.salary') }}" :active="request()->routeIs(['finance.salary'])" />
+                              <x-navigation.nav-link linkLabel='Gestion emprunts' icon='bi bi-wallet'
+                                  href="{{ route('finance.money.borrowing') }}" :active="request()->routeIs(['finance.money.borrowing'])" />
+                              <x-navigation.nav-link linkLabel='Gestion taux' icon='bi bi-cash-coin'
+                                  href="{{ route('finance.rate') }}" :active="request()->routeIs(['finance.rate'])" />
                           </x-navigation.dropdown-link>
+                          <x-navigation.dropdown-link wire:ignore.self label='Dépenses' icon='bi bi-journal-text'
+                              class="text-white ">
+                              <x-navigation.nav-link linkLabel='Depenses sur le frais' icon='bi bi-folder'
+                                  href="{{ route('expense.fee') }}" :active="request()->routeIs(['expense.fee'])" />
+                              <x-navigation.nav-link linkLabel='Autres dépenses' icon='bi bi-folder-symlink'
+                                  href="{{ route('expense.other') }}" :active="request()->routeIs(['expense.other'])" />
+                              <x-navigation.nav-link linkLabel='Categori dépense' icon='bi bi-journals'
+                                  href="{{ route('expense.category') }}" :active="request()->routeIs(['expense.category'])" />
+                              <x-navigation.nav-link linkLabel='Source autres dép.' icon='bi bi-journal-bookmark-fill'
+                                  href="{{ route('expense.other.source') }}" :active="request()->routeIs(['expense.other.source'])" />
+                          </x-navigation.dropdown-link>
+
                           <x-navigation.dropdown-link wire:ignore.self label='Gestion des frais' icon='bi bi-wallet2'
                               class="text-white ">
                               <x-navigation.nav-link linkLabel='Frais inscription' icon='bi bi-file-earmark-plus-fill'

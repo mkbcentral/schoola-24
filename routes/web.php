@@ -14,6 +14,12 @@ use App\Livewire\Application\Fee\Registration\List\ListRegistrationFeePage;
 use App\Livewire\Application\Fee\Scolar\List\ListCategoryScolarFeePage;
 use App\Livewire\Application\Fee\Scolar\MainScolarFeePage;
 use App\Livewire\Application\Finance\Bank\MainBankPage;
+use App\Livewire\Application\Finance\Borrowing\MainMoneyBorrowingPage;
+use App\Livewire\Application\Finance\Expense\MainCateoryExpensePage;
+use App\Livewire\Application\Finance\Expense\MainExpensePage;
+use App\Livewire\Application\Finance\Expense\MainOtherExpensePage;
+use App\Livewire\Application\Finance\Expense\MainOtherSourceExpensePage;
+use App\Livewire\Application\Finance\Rate\MainRatePage;
 use App\Livewire\Application\Finance\Salary\MainSalaryPage;
 use App\Livewire\Application\Finance\Saving\MainSavingMoneyPage;
 use App\Livewire\Application\Payment\MainPaymentPage;
@@ -74,5 +80,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('bank', MainBankPage::class)->name('finance.bank');
         Route::get('saving-money', MainSavingMoneyPage::class)->name('finance.saving.money');
         Route::get('salary', MainSalaryPage::class)->name('finance.salary');
+        Route::get('money-borrowing', MainMoneyBorrowingPage::class)->name('finance.money.borrowing');
+        Route::get('rate', MainRatePage::class)->name('finance.rate');
+    });
+
+    Route::prefix('expense')->group(function () {
+        Route::get('category', MainCateoryExpensePage::class)->name('expense.category');
+        Route::get('other-source', MainOtherSourceExpensePage::class)->name('expense.other.source');
+        Route::get('fee', MainExpensePage::class)->name('expense.fee');
+        Route::get('other', MainOtherExpensePage::class)->name('expense.other');
     });
 });

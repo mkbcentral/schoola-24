@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Application\Finance\Salary\List;
 
+use App\Domain\Features\Finance\SalaryFeature;
 use App\Domain\Utils\AppMessage;
 use App\Models\Salary;
 use Exception;
@@ -17,9 +18,7 @@ class ListSalaryPage extends Component
     ];
     public ?string $date_filter = null, $month_filter = '', $currency_filter = '';
 
-    public function getSalary():void{
-        
-    }
+    public function getSalary(): void {}
 
     public function updatedMonthFilter()
     {
@@ -53,9 +52,17 @@ class ListSalaryPage extends Component
     public function render()
     {
         return view('livewire.application.finance.salary.list.list-salary-page', [
-            'salaries' => Salary::query()->paginate(109),
-            'total_usd' => 0,
-            'total_cdf' => 0
+            'salaries' => SalaryFeature::getList($this->date_filter, $this->month_filter),
+            'total_usd' => SalaryFeature::getAmountTotal(
+                $this->date_filter,
+                $this->month_filter,
+                'USD'
+            ),
+            'total_cdf' => SalaryFeature::getAmountTotal(
+                $this->date_filter,
+                $this->month_filter,
+                'CDF'
+            )
         ]);
     }
 }

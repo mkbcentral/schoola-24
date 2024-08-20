@@ -201,7 +201,6 @@ class Registration extends Model
             })
             ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
                 return $query->where('students.responsible_student_id', $classRoomId);
-            })
-            ->where('registrations.is_old', $filters['is_old']);
+            });
     }
 }

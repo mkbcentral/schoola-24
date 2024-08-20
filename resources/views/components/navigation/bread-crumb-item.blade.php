@@ -2,5 +2,5 @@
 @if ($isLinked == false)
     <li class="breadcrumb-item active">{{ $label }}</li>
 @else
-    <li class="breadcrumb-item "><a href="{{ route($link) }}" wire:navigate>{{ $label }}</a></li>
+    <li class="breadcrumb-item "><a href="{{ route($link) }}">{{ $label }}</a></li>
 @endif

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Features\Finance\SalaryFeature;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,5 +46,10 @@ class Salary extends Model
     public function salaryDetails(): HasMany
     {
         return $this->hasMany(SalaryDetail::class);
+    }
+
+    public function getAmount(string $currency): int|float
+    {
+        return SalaryFeature::getDetailAmountToatl($this->id, $currency);
     }
 }

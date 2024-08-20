@@ -31,7 +31,6 @@ class ListSalaryDetailPage extends Component
 
     public function save(): void
     {
-
         try {
             $this->form->create($this->salary);
             $this->dispatch('added', ['message', AppMessage::DATA_SAVED_SUCCESS]);
@@ -58,6 +57,7 @@ class ListSalaryDetailPage extends Component
         }
         $this->form->reset();
         $this->salaryDetailToEdit = null;
+        $this->dispatch('SalaryListRefred');
     }
 
     public function cancelUpdate(): void
@@ -65,6 +65,17 @@ class ListSalaryDetailPage extends Component
         $this->salaryDetailToEdit = null;
         $this->form->reset();
     }
+
+    public function delete(?SalaryDetail $salaryDetail)
+    {
+        try {
+            $salaryDetail->delete();
+            $this->dispatch('updated', ['message' => AppMessage::DATA_UPDATED_SUCCESS]);
+        } catch (Exception $ex) {
+            $this->dispatch('error', ['message' => $ex->getMessage()]);
+        }
+    }
+
     public function render()
     {
         return view('livewire.application.finance.salary.list.list-salary-detail-page');

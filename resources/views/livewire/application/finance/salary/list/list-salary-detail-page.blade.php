@@ -11,8 +11,12 @@
                         <x-widget.loading-circular-md wire:loading wire:target='getRegistration' />
                     </div>
                     <div class="card">
-                        <div class="card-header">
-                            DETAILS SALAIRE
+                        <div class="card-header text-uppercase">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <H4> DETAILS SALAIRE</H4>
+                                <H4> Total: {{ app_format_number($salary->getAmount('USD'), 1) }} $ |
+                                    {{ app_format_number($salary->getAmount('CDF'), 1) }} Fc</H4>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-sm table-hover mt-2">
@@ -20,8 +24,8 @@
                                     <tr class="">
                                         <th class="text-center">N°</th>
                                         <th class="">DESCRIPTION</th>
-                                        <th>M.T USD</th>
-                                        <th>M.T CDF</th>
+                                        <th class="text-end">M.T USD</th>
+                                        <th class="text-end">M.T CDF</th>
                                         <th class="text-end">ACTIONS</th>
                                     </tr>
                                 </thead>
@@ -30,21 +34,28 @@
                                         <tr>
                                             <td class="text-center">{{ $index + 1 }}</td>
                                             <td>{{ $salaryDetail->description }}</td>
-                                            <td>
+                                            <td class="text-end">
                                                 @if ($salaryDetail->currency == 'USD')
                                                     {{ app_format_number($salaryDetail->amount, 1) }}
                                                 @else
                                                     -
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="text-end">
                                                 @if ($salaryDetail->currency == 'CDF')
                                                     {{ app_format_number($salaryDetail->amount, 1) }}
                                                 @else
                                                     -
                                                 @endif
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                <x-form.app-button type='button' icon="bi bi-pencil-fill"
+                                                    class="btn-sm app-btn" wire:click='edit({{ $salaryDetail }})' />
+                                                <x-form.app-button type='button' icon="bi bi-trash-fill"
+                                                    class="btn-danger btn-sm"
+                                                    wire:confirm='Etês-vous sûr de supprimer ?'
+                                                    wire:click='delete({{ $salaryDetail }})' />
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -66,33 +77,40 @@
                             <span>{{ $salary->created_at->format('d/m/Y') }}</span>
                         </div>
                     </div>
-                    <form wire:submit='save'>
-                        <div>
-                            <x-form.label value="{{ __('Dévise') }}" class="fw-bold" />
-                            <x-widget.currency-widget wire:model.blur='form.currency' :error="'form.currency'" />
-                            <x-errors.validation-error value='form.currency' />
-                        </div>
-                        <div class="mt-2">
-                            <x-form.label value="{{ __('Description') }}" />
-                            <x-form.input type='text' wire:model.blur='form.description' :error="'form.description'" />
-                            <x-errors.validation-error value='form.description' />
-                        </div>
-                        <div class="mt-2">
-                            <x-form.label value="{{ __('Monatnt') }}" />
-                            <x-form.input type='text' wire:model.blur='form.amount' :error="'form.amount'" />
-                            <x-errors.validation-error value='form.amount' />
-                        </div>
-                        <div class="mt-2">
-                            <x-form.label value="{{ __('Categorie') }}" />
-                            <x-widget.data.list-cat-salary wire:model.blur='form.category_salary_id'
-                                :error="'form.category_salary_id'" />
-                            <x-errors.validation-error value='form.category_salary_id' />
-                        </div>
-                        <div class="mt-4">
-                            <x-form.app-button type='submit' textButton="Payer" icon="bi bi-arrow-left-righ"
-                                class="app-btn" />
-                        </div>
-                    </form>
+                    <div class="mt-2">
+                        <h4><i
+                                class="{{ $salaryDetailToEdit == null ? 'bi bi-plus-circle-fill' : 'bi bi-pencil-fill' }}"></i>
+                            {{ $salaryDetailToEdit == null ? 'CREATION' : 'EDITION' }}
+                        </h4>
+                        <hr>
+                        <form wire:submit='handlerSubmit'>
+                            <div>
+                                <x-form.label value="{{ __('Dévise') }}" class="fw-bold" />
+                                <x-widget.currency-widget wire:model.blur='form.currency' :error="'form.currency'" />
+                                <x-errors.validation-error value='form.currency' />
+                            </div>
+                            <div class="mt-2">
+                                <x-form.label value="{{ __('Description') }}" />
+                                <x-form.input type='text' wire:model.blur='form.description' :error="'form.description'" />
+                                <x-errors.validation-error value='form.description' />
+                            </div>
+                            <div class="mt-2">
+                                <x-form.label value="{{ __('Monatnt') }}" />
+                                <x-form.input type='text' wire:model.blur='form.amount' :error="'form.amount'" />
+                                <x-errors.validation-error value='form.amount' />
+                            </div>
+                            <div class="mt-2">
+                                <x-form.label value="{{ __('Categorie') }}" />
+                                <x-widget.data.list-cat-salary wire:model.blur='form.category_salary_id'
+                                    :error="'form.category_salary_id'" />
+                                <x-errors.validation-error value='form.category_salary_id' />
+                            </div>
+                            <div class="d-flex justify-content-end mt-4">
+                                <x-form.app-button type='submit' textButton="Sauvegarder" icon="bi bi-arrow-left-righ"
+                                    class="app-btn" />
+                            </div>
+                        </form>
+                    </div>
 
                 </div>
             </div>

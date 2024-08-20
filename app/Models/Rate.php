@@ -10,7 +10,7 @@ class Rate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['amount', 'school_id'];
+    protected $fillable = ['amount', 'school_id', 'is_changed'];
 
     /**
      * Get all of the registrations for the Rate
@@ -34,6 +34,6 @@ class Rate extends Model
 
     public static function DEFAULT_RATE_ID()
     {
-        return 2;
+        return Rate::query()->where('is_changed', false)->firstOrFail()->id;
     }
 }
