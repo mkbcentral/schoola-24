@@ -157,10 +157,12 @@ class Registration extends Model
             ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
                 return $query->where('students.responsible_student_id', $classRoomId);
             })
-            ->when($filters['q'], function ($query, $q) {
-                return $query->where('students.name', 'like', '%' . $q . '%');
+            ->when($filters['is_old'], function ($query, $is_old) {
+                return $query->where('registrations.is_old', $is_old);
             })
-
+            ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
+                return $query->where('students.responsible_student_id', $classRoomId);
+            })
             ->select('registrations.*', 'students.name')
             ->with(
                 [

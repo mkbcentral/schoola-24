@@ -68,7 +68,7 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-between align-items-center">
-                <span>{{ $registrations->links() }}</span>
+                <span>{{ $registrations->links('livewire::bootstrap') }}</span>
                 @if ($registrations->count() >= 10)
                     <x-others.table-page-number wire:model.live='per_page' />
                 @endif
