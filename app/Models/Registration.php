@@ -160,6 +160,7 @@ class Registration extends Model
             ->when($filters['q'], function ($query, $q) {
                 return $query->where('students.name', 'like', '%' . $q . '%');
             })
+
             ->select('registrations.*', 'students.name')
             ->with(
                 [
@@ -199,6 +200,7 @@ class Registration extends Model
             ->when($filters['class_room_id'], function ($query, $classRoomId) {
                 return $query->where('class_rooms.id', $classRoomId);
             })
+            ->where('registrations.is_old', $filters['is_old'])
             ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
                 return $query->where('students.responsible_student_id', $classRoomId);
             });
