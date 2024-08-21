@@ -17,7 +17,8 @@ class ExpenseFee extends Model
         'currency',
         'category_expense_id',
         'category_fee_id',
-        'school_year_id'
+        'school_year_id',
+        'created_at'
     ];
     /**
      * Get the CategoryExpense that owns the ExpenseFee

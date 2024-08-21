@@ -32,7 +32,7 @@ class ListOtherExpensePage extends Component
     }
     public function edit(?OtherExpense $otherExpense)
     {
-        $this->dispatch('expenseFeeData', $otherExpense);
+        $this->dispatch('otherExpenseData', $otherExpense);
     }
 
     public function delete(?OtherExpense $otherExpense)

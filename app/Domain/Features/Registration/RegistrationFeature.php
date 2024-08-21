@@ -127,6 +127,29 @@ class RegistrationFeature implements IRegistration
     /**
      * @inheritDoc
      */
+    public static function getCountAll(
+        string|null $date,
+        string|null $month,
+        int|null $sectionId,
+        int|null $optionId,
+        int|null $classRoomId,
+        int|null $responsibleId,
+        bool|null $isOld
+    ): mixed {
+        $filters = [
+            'section_id' => $sectionId,
+            'date' => $date,
+            'month' => $month,
+            'option_id' => $optionId,
+            'class_room_id' => $classRoomId,
+            'responsible_student_id' => $responsibleId,
+            'is_old' => $isOld,
+        ];
+        return Registration::query()
+            ->filterCounterAll($filters)
+            ->count();
+    }
+
     public static function getCount(
         string|null $date,
         string|null $month,

@@ -109,7 +109,7 @@ class ListStudentPage extends Component
                 $this->per_page
 
             ),
-            'counter' => RegistrationFeature::getCount(
+            'counter' => RegistrationFeature::getCountAll(
                 null,
                 null,
                 null,

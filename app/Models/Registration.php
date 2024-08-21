@@ -160,6 +160,9 @@ class Registration extends Model
             ->when($filters['is_old'], function ($query, $is_old) {
                 return $query->where('registrations.is_old', $is_old);
             })
+            ->when($filters['q'], function ($query, $q) {
+                return $query->where('students.name', 'like', '%' . $q . '%');
+            })
             ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
                 return $query->where('students.responsible_student_id', $classRoomId);
             })
@@ -202,7 +205,33 @@ class Registration extends Model
             ->when($filters['class_room_id'], function ($query, $classRoomId) {
                 return $query->where('class_rooms.id', $classRoomId);
             })
-            ->where('registrations.is_old', $filters['is_old'])
+            ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
+                return $query->where('students.responsible_student_id', $classRoomId);
+            })
+            ->where('registrations.is_old', $filters['is_old']);;
+    }
+
+    public function scopeFilterCounterAll(Builder $query, array $filters): Builder
+    {
+        return $query->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
+            ->join("options", "options.id", "=", "class_rooms.option_id")
+            ->join("sections", "sections.id", "=", "options.section_id")
+            ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+            ->when($filters['date'], function ($query, $date) {
+                return $query->whereDate('registrations.created_at', $date);
+            })
+            ->when($filters['month'], function ($query, $month) {
+                return $query->whereMonth('registrations.created_at', $month);
+            })
+            ->when($filters['section_id'], function ($query, $sectionId) {
+                return $query->where('sections.id', $sectionId);
+            })
+            ->when($filters['option_id'], function ($query, $optionId) {
+                return $query->where('options.id', $optionId);
+            })
+            ->when($filters['class_room_id'], function ($query, $classRoomId) {
+                return $query->where('class_rooms.id', $classRoomId);
+            })
             ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
                 return $query->where('students.responsible_student_id', $classRoomId);
             });

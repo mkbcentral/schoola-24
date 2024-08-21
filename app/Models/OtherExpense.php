@@ -17,7 +17,8 @@ class OtherExpense extends Model
         'currency',
         'category_expense_id',
         'other_source_expense_id',
-        'school_year_id'
+        'school_year_id',
+        'created_at'
     ];
 
     /**
