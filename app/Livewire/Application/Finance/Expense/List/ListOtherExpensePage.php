@@ -3,6 +3,7 @@
 namespace App\Livewire\Application\Finance\Expense\List;
 
 use App\Domain\Features\Finance\OtherExpenseFeature;
+use App\Domain\Utils\AppMessage;
 use App\Models\OtherExpense;
 use Exception;
 use Livewire\Component;
@@ -38,6 +39,7 @@ class ListOtherExpensePage extends Component
     {
         try {
             $otherExpense->delete();
+            $this->dispatch('updated', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }

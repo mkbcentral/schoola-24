@@ -63,5 +63,9 @@ class AppServiceProvider extends ServiceProvider
                 Auth::user()->role->name == RoleType::SCHOOL_MANAGER ||
                 Auth::user()->role->name == RoleType::SCHOOL_FINANCE;
         });
+        Gate::define('edit-school-user', function () {
+            return Auth::user()->role->is_for_school == true &&
+                Auth::user()->role->name == RoleType::ADMIN_SCHOOL;
+        });
     }
 }

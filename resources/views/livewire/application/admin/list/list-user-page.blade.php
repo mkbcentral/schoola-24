@@ -74,17 +74,29 @@
                                             <td>{{ $user?->role?->name }}</td>
                                             <td class="text-center">
                                                 <x-others.dropdown icon="bi bi-three-dots-vertical"
-                                                    class="btn-primary btn-sm">
+                                                    class="btn-secondary btn-sm">
                                                     <x-others.dropdown-link iconLink='bi bi-pencil-fill'
                                                         labelText='Editer' href="#" data-bs-toggle="modal"
                                                         data-bs-target="#form-user"
-                                                        wire:click='edit({{ $user }})' class="text-primary" />
+                                                        wire:click='edit({{ $user }})' class="" />
                                                     <x-others.dropdown-link
                                                         wire:confirm="Est-vous sur de réaliser l'opération"
                                                         iconLink="{{ $user->is_active == true ? 'bi bi-x-circle' : 'bi bi-check-lg' }}"
                                                         labelText="{{ $user->is_active == true ? 'Déactiver' : 'Activer' }}"
                                                         wire:click='activateUser({{ $user }})' href="#"
                                                         class="{{ $user->is_active == true ? 'text-danger' : 'text-primary' }}" />
+                                                    <x-others.dropdown-link iconLink='bi bi-link'
+                                                        labelText='Attacher un simple menu'
+                                                        href="{{ route('admin.attach.single.menu', $user) }}"
+                                                        class="" />
+                                                    <x-others.dropdown-link iconLink='bi bi-link'
+                                                        labelText='Attacher un multi menu'
+                                                        href="{{ route('admin.attach.multi.menu', $user) }}"
+                                                        class="" />
+                                                    <x-others.dropdown-link iconLink='bi bi-link'
+                                                        labelText='Attacher un sous menu'
+                                                        href="{{ route('admin.attach.sub.menu', $user) }}"
+                                                        class="" />
                                                     <x-others.dropdown-link iconLink='bi bi-trash-fill'
                                                         labelText='Supprimer' class="text-secondary"
                                                         wire:confirm="Est-vous sur de réaliser l'opération"

@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -74,7 +75,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Payment::class);
     }
-
     /**
      * Get the role that owns the User
      *
@@ -83,5 +83,33 @@ class User extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id');
+    }
+    /**
+     * The singleAppLinks that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function singleAppLinks(): BelongsToMany
+    {
+        return $this->belongsToMany(SingleAppLink::class)->withPivot('id');
+    }
+    /**
+     * The subLinks that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function subLinks(): BelongsToMany
+    {
+        return $this->belongsToMany(SubLink::class)->withPivot('id');
+    }
+
+    /**
+     * The multiAppLinks that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function multiAppLinks(): BelongsToMany
+    {
+        return $this->belongsToMany(MultiAppLink::class)->withPivot(('id'));
     }
 }
