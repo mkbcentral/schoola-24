@@ -52,7 +52,7 @@ class ListRegistrationByClassRoomPage extends Component
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,
-                null
+
 
             ),
         ]);

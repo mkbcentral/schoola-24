@@ -23,6 +23,6 @@
                 </div>
             @endforeach
         </div>
-        <h4>Total/Option: {{ $counter <= 1 ? $counter . 'Elève' : $counter . ' Elèves' }}</h4>
+        <h4>Total/Option: {{ $counter <= 1 ? $counter . ' Elève' : $counter . ' Elèves' }}</h4>
     </div>
 </div>

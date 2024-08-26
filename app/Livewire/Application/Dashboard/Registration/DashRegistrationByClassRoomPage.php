@@ -5,6 +5,7 @@ namespace App\Livewire\Application\Dashboard\Registration;
 use App\Domain\Features\Configuration\SchoolDataFeature;
 use App\Domain\Features\Registration\RegistrationFeature;
 use App\Models\Option;
+use App\Models\School;
 use Livewire\Component;
 
 class DashRegistrationByClassRoomPage extends Component
@@ -22,7 +23,11 @@ class DashRegistrationByClassRoomPage extends Component
 
     public function mount()
     {
-        $this->option_filer = Option::first()?->id;
+        $this->option_filer = Option::query()
+            ->join('sections', 'sections.id', 'options.section_id')
+            ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+            ->select('options.*')
+            ->first()->id;
     }
 
     public function render()
@@ -33,12 +38,11 @@ class DashRegistrationByClassRoomPage extends Component
                 null,
                 null
             ),
-            'counter' => RegistrationFeature::getCount(
+            'counter' => RegistrationFeature::getCountAll(
                 null,
-                null,
+                $this->month_filter,
                 null,
                 $this->option_filer,
-                null,
                 null,
                 null
             )

@@ -27,10 +27,10 @@
                 @endcan
                 <div class="col-md-6 mt-2 p-2">
                     <livewire:application.dashboard.registration.dash-registration-count-page :date="$date_filter" />
-                    <livewire:application.dashboard.registration.dash-registration-by-class-room-page :date="$date_filter">
+                    <livewire:application.dashboard.registration.dash-registration-by-class-room-page :date="$date_filter" />
+                    <livewire:application.dashboard.registration.dash-registration-count-by-section-page />
                 </div>
             @endcan
         </div>
-
     </x-content.main-content-page>
 </div>

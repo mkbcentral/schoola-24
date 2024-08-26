@@ -31,17 +31,14 @@ class ListStudentForPaymentPage extends Component
     {
         $this->dispatch('registrationData', $registration);
     }
-
     public function refreshData(): void
     {
         $this->reset();
     }
-
     public function render()
     {
         return view('livewire.application.payment.list.list-student-for-payment-page', [
             'registrations' => RegistrationFeature::getList(
-                null,
                 null,
                 null,
                 null,

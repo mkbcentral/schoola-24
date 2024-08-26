@@ -19,7 +19,10 @@ class MainScolarFeePage extends Component
 
     public function mount()
     {
-        $this->categoryFeeSelected = CategoryFee::firstOrFail();
+        $this->categoryFeeSelected = CategoryFee::query()
+            ->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->first();
         $this->selectedIndex = $this->categoryFeeSelected->id;
     }
 

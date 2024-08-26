@@ -1,74 +1,62 @@
- <div class="card p-2 mt-2">
-     <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
-         <div class="col">
-             <form action="" class="card">
-                 <div class="d-flex justify-center">
-                     <div class="avatar-wrapper mt-2">
-                         <img id="avatar-preview" src="{{ asset('images/defautl-user.jpg') }}" alt="logo">
-                         <div class="avatar-edit">
-                             <input type="file" id="avatar-upload" accept="image/*">
-                             <label for="avatar-upload">Changer</label>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="card-body">
-                     <div class="">
-                         <x-form.label value="{{ __('Nom école') }}" class="" />
-                         <x-form.input type='text' wire:model.blur='form.name' icon='bi bi-house-gear-fill'
-                             :error="'form.name'" style="height: 40px" />
-                         <x-errors.validation-error value='form.name' />
-                     </div>
-                     <div class="mt-2">
-                         <x-form.label value="{{ __('Adresse email') }}" class="" />
-                         <x-form.input type='text' wire:model.blur='form.email' icon='bi bi-envelope-at-fill'
-                             :error="'form.email'" style="height: 40px" />
-                         <x-errors.validation-error value='form.email' />
-                     </div>
-                     <div class="mt-2">
-                         <x-form.label value="{{ __('Contact') }}" class="" />
-                         <x-form.input type='text' wire:model.blur='form.phone' icon='bi bi-telephone-fill'
-                             :error="'form.phone'" style="height: 40px" />
-                         <x-errors.validation-error value='form.phone' />
-                     </div>
-                     <div class="form-group mt-2">
-                         <label for="my-select">Mode</label>
-                         <select class="form-select" aria-label="Default select example"
-                             wire:model.blur='form.app_status'>
-                             <option selected>Choisir</option>
-                             @foreach (App\Enums\SchoolAppEnum::getValues() as $item)
-                                 <option value="{{ $item }}">{{ $item }}</option>
-                             @endforeach
-                         </select>
-                         <x-errors.validation-error value='form.app_status' />
-                     </div>
-                     <div class="form-group mt-2">
-                         <label for="my-select">Status</label>
-                         <select class="form-select" aria-label="Default select example"
-                             wire:model.blur='form.school_status'>
-                             <option selected>Choisir</option>
-                             @foreach (App\Enums\SchoolEnum::getValues() as $item)
-                                 <option value="{{ $item }}">{{ $item }}</option>
-                             @endforeach
-                         </select>
-                         <x-errors.validation-error value='form.school_status' />
-                     </div>
-                 </div>
-             </form>
-         </div>
-     </div>
-     @push('js')
-         <script type="module">
-             // Handle avatar image preview
-             document.getElementById('avatar-upload').addEventListener('change', function(e) {
-                 const file = e.target.files[0];
-                 if (file) {
-                     const reader = new FileReader();
-                     reader.onload = function(e) {
-                         document.getElementById('avatar-preview').src = e.target.result;
-                     }
-                     reader.readAsDataURL(file);
-                 }
-             });
-         </script>
-     @endpush
- </div>
+<div>
+    <x-navigation.bread-crumb icon='bi bi-box-fill' label="Configuration école" color=''>
+        <x-navigation.bread-crumb-item label='Gestionnaire écoles' />
+        <x-navigation.bread-crumb-item label='Liste des écoles' isLinked=true link="admin.schools" />
+        <x-navigation.bread-crumb-item label='Dasnboard' isLinked=true link="dashboard.main" />
+    </x-navigation.bread-crumb>
+    <x-content.main-content-page>
+        <div class="d-flex justify-content-between">
+            <div>
+                <img class="img-fluid rounded-circle me-2" style="width: 70px;height: 70px;"
+                    src="{{ asset($school->logo == null ? 'images/defautl-user.jpg' : 'storage/' . $school->logo) }}"
+                    alt="User Image">
+                <h2 id="schoolNameTop" class="mb-3">{{ $school->name }}</h2>
+                <p class="mb-1">
+                    <i class="bi bi-telephone-fill me-2"></i>
+                    <span id="schoolPhone">{{ $school->phone }}</span>
+                </p>
+                <div class="d-flex align-items-center">
+                    <p class="mb-1">
+                        <i class="bi bi-envelope-fill me-2"></i>
+                        <span id="schoolEmail">{{ $school->email }}</span>
+                    </p>
+                    <x-form.app-button wire:click='edit' data-bs-toggle="modal" data-bs-target="#form-school"
+                        icon="bi bi-pencil-square" class="" />
+                </div>
+            </div>
+        </div>
+        <div>
+            @if ($user != null)
+                <div>
+                    <h2>Infos admin</h2>
+                    <p class="mb-1">
+                        <i class="bi bi-telephone-fill me-2"></i>
+                        <span id="schoolPhone">{{ $user->name }}</span>
+                    </p>
+                    <p class="mb-1">
+                        <i class="bi bi-envelope-fill me-2"></i>
+                        <span id="schoolPhone">{{ $user->email }}</span>
+                    </p>
+                    <div class="d-flex align-items-center">
+                        <x-form.app-button wire:click='newUserAdmin' textButton="Envoyer mail du compte"
+                            data-bs-toggle="modal" data-bs-target="#form-user-config" icon="bi bi-envelope-arrow-up"
+                            class="app-btn mt-2 me-2" />
+                        <x-others.dropdown icon="bi bi-sliders" class="btn-link">
+                            <x-others.dropdown-link iconLink='bi bi-link' labelText='Attacher un simple menu'
+                                href="{{ route('admin.attach.single.menu', $user) }}" class="" />
+                            <x-others.dropdown-link iconLink='bi bi-link' labelText='Attacher un multi menu'
+                                href="{{ route('admin.attach.multi.menu', $user) }}" class="" />
+                            <x-others.dropdown-link iconLink='bi bi-link' labelText='Attacher un sous menu'
+                                href="{{ route('admin.attach.sub.menu', $user) }}" class="" />
+                        </x-others.dropdown>
+                    </div>
+                </div>
+            @else
+                <x-form.app-button wire:click='newUserAdmin' textButton="Ouvrir compte admin" data-bs-toggle="modal"
+                    data-bs-target="#form-user-admin" icon="bi bi-person-fill-gear" class="app-btn mt-2" />
+            @endif
+        </div>
+        <livewire:application.admin.form.form-school-page />
+        <livewire:application.admin.form.form-user-admin-page />
+    </x-content.main-content-page>
+</div>

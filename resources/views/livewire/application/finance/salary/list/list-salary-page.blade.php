@@ -71,6 +71,10 @@
             </tbody>
         @endif
     </table>
+    <div class="d-flex justify-content-between">
+        <span>{{ $salaries->links('livewire::bootstrap') }}</span>
+        <x-others.table-page-number wire:model.live='per_page' />
+    </div>
     <livewire:application.finance.salary.list.list-salary-detail-page />
     <livewire:application.finance.salary.list.list-salary-detail-page>
 </div>

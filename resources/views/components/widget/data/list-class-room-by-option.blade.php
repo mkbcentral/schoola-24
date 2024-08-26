@@ -11,7 +11,7 @@
         ->get();
 @endphp
 
-<select id="my-select" class="form-control" {{ $attributes }}>
+<select id="my-select" class="form-control form-select" {{ $attributes }}>
     <option disabled>Choisir...</option>
     <option value="0">Tout</option>
     @foreach ($classRooms as $classRoom)

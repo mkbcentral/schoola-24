@@ -37,7 +37,8 @@ class BankDepositFeature implements IBankDeposit
     public static function getList(
         string|null $date,
         string|null $month,
-        string|null $currency
+        string|null $currency,
+        int|null $per_page
     ): mixed {
         $filters = [
             'date' => $date,
@@ -46,6 +47,6 @@ class BankDepositFeature implements IBankDeposit
         ];
         return BankDeposit::query()
             ->filter($filters)
-            ->paginate(10);
+            ->paginate($per_page);
     }
 }

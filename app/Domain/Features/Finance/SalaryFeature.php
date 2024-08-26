@@ -6,6 +6,7 @@ use App\Domain\Contract\Finance\ISalary;
 use App\Models\Salary;
 use App\Models\SalaryDetail;
 use App\Models\School;
+use App\Models\SchoolYear;
 
 class SalaryFeature implements ISalary
 {
@@ -27,6 +28,7 @@ class SalaryFeature implements ISalary
                 return $query->where('month', $val);
             })
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->get();
         foreach ($salaries as $salary) {
             foreach ($salary->salaryDetails()->where('currency', $currency)->get() as $salaryDetail) {
@@ -57,16 +59,26 @@ class SalaryFeature implements ISalary
     /**
      * @inheritDoc
      */
-    public static function getList(string|null $date, string|null $month): mixed
-    {
+    public static function getList(
+        string|null $date,
+        string|null $month,
+        int|null $per_page
+    ): mixed {
         return Salary::query()
-            ->when($date, function ($query, $val) {
-                return $query->whereDate('creared_at', $val);
-            })
-            ->when($month, function ($query, $val) {
-                return $query->where('month', $val);
-            })
+            ->when(
+                $date,
+                function ($query, $val) {
+                    return $query->whereDate('creared_at', $val);
+                }
+            )
+            ->when(
+                $month,
+                function ($query, $val) {
+                    return $query->where('month', $val);
+                }
+            )
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->get();
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->paginate($per_page);
     }
 }

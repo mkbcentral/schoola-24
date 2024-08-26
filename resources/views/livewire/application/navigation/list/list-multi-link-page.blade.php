@@ -28,16 +28,14 @@
                         <td>{{ $multiAppLink->name }}</td>
                         <td>{{ $multiAppLink->icon }}</td>
                         <td class="text-center">
-                            @can('manage-payment')
-                                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                    class="btn-secondary btn-sm">
-                                    <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer' href="#"
-                                        wire:click='edit({{ $multiAppLink }})' />
-                                    <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer' href="#"
-                                        wire:confirm="Voulez-vous vraiment supprimer ?"
-                                        wire:click='delete({{ $multiAppLink }})' />
-                                </x-others.dropdown>
-                            @endcan
+                            <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                                class="btn-secondary btn-sm">
+                                <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer' href="#"
+                                    wire:click='edit({{ $multiAppLink }})' />
+                                <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer' href="#"
+                                    wire:confirm="Voulez-vous vraiment supprimer ?"
+                                    wire:click='delete({{ $multiAppLink }})' />
+                            </x-others.dropdown>
                         </td>
                     </tr>
                 @endforeach

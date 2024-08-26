@@ -56,7 +56,34 @@ interface  IRegistration
      */
     public static function makeClassChanged(Registration $registration): bool;
     /**
-     * Summary of getList
+     * Recuprer la liste de tout les élèves
+     * @param mixed $date
+     * @param mixed $month
+     * @param mixed $sectionId
+     * @param mixed $optionId
+     * @param mixed $classRoomId
+     * @param mixed $responsibleId
+     * @param mixed $isOld
+     * @param mixed $sortBy
+     * @param mixed $sortAsc
+     * @param mixed $per_page
+     * @return mixed
+     */
+    public static function getList(
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId,
+        ?string $q,
+        ?string $sortBy,
+        ?bool   $sortAsc,
+        ?int $per_page
+    ): mixed;
+
+    /**
+     * Recuperer la liste des élèves moyennant une condition (ancien ou nouveau)
      * @param mixed $date
      * @param mixed $month
      * @param mixed $sectionId
@@ -70,7 +97,7 @@ interface  IRegistration
      * @param mixed $per_page
      * @return mixed
      */
-    public static function getList(
+    public static function getListOoldOrNew(
         ?string $date,
         ?string $month,
         ?int $sectionId,
@@ -85,7 +112,7 @@ interface  IRegistration
     ): mixed;
 
     /**
-     * Summary of getList
+     * Recupérer l'effection moyennant une condition (ancien ou nouveau)
      * @param mixed $date
      * @param mixed $month
      * @param mixed $sectionId
@@ -97,7 +124,7 @@ interface  IRegistration
      * @param mixed $sortBy
      * @param mixed $sortAsc
      * @param mixed $per_page
-     * @return mixed
+     * @return int|float
      */
     public static function getCount(
         ?string $date,
@@ -107,8 +134,39 @@ interface  IRegistration
         ?int $classRoomId,
         ?int $responsibleId,
         ?bool $isOld,
-    ): mixed;
+    ): int|float;
 
+
+    /**
+     * Recuperer tout l'effectif
+     * @param mixed $date
+     * @param mixed $month
+     * @param mixed $sectionId
+     * @param mixed $optionId
+     * @param mixed $classRoomId
+     * @param mixed $responsibleId
+     * @return int|float
+     */
+    public static function getCountAll(
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId,
+    ): int|float;
+
+    /**
+     * Recuperer le montant total percu pour les inscriptions
+     * @param mixed $date
+     * @param mixed $month
+     * @param mixed $sectionId
+     * @param mixed $optionId
+     * @param mixed $classRoomId
+     * @param mixed $responsibleId
+     * @param mixed $isOld
+     * @return int|float
+     */
     public static function getTotalAmount(
         ?string $date,
         ?string $month,
@@ -117,5 +175,5 @@ interface  IRegistration
         ?int $classRoomId,
         ?int $responsibleId,
         ?bool $isOld,
-    ): mixed;
+    ): int|float;
 }

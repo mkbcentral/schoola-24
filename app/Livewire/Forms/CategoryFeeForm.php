@@ -29,6 +29,7 @@ class CategoryFeeForm extends Form
     }
     public function update(CategoryFee $categoryFee, array $input)
     {
+        $input['school_year_id'] = SchoolYear::DEFAULT_SCHOOL_YEAR_ID();
         $categoryFee->update($input);
     }
 }

@@ -16,7 +16,10 @@ class ListSalaryPage extends Component
         'SalaryListRefred' => '$refresh',
         'getSalaryDataDetail' => 'getSalary',
     ];
-    public ?string $date_filter = null, $month_filter = '', $currency_filter = '';
+    public ?string $date_filter = '';
+    public ?string $month_filter = '';
+    public ?string  $currency_filter = '';
+    public ?int $per_page = 10;
 
     public function getSalary(): void {}
 
@@ -52,7 +55,11 @@ class ListSalaryPage extends Component
     public function render()
     {
         return view('livewire.application.finance.salary.list.list-salary-page', [
-            'salaries' => SalaryFeature::getList($this->date_filter, $this->month_filter),
+            'salaries' => SalaryFeature::getList(
+                $this->date_filter,
+                $this->month_filter,
+                $this->per_page
+            ),
             'total_usd' => SalaryFeature::getAmountTotal(
                 $this->date_filter,
                 $this->month_filter,

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Application\Payment\List;
 
+use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Domain\Utils\AppMessage;
 use App\Models\CategoryFee;
@@ -26,8 +27,9 @@ class ListPaymentByDatePage extends Component
     public function mount()
     {
         $this->date_filter = date('Y-m-d');
-        $this->category_fee_filter = CategoryFee::firstOrFail()->id;
-        $this->categoryFeeSelected = CategoryFee::firstOrFail();
+        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
+        $this->category_fee_filter = $categoryFee->id;
+        $this->categoryFeeSelected = $categoryFee;
     }
 
     public function updatedCategoryFeeFilter($val)
@@ -95,7 +97,7 @@ class ListPaymentByDatePage extends Component
                 true,
                 'CDF'
             ),
-            'categoryFees' => CategoryFee::all()
+            'categoryFees' => FeeDataConfiguration::getListCategoryFee(100)
         ]);
     }
 }

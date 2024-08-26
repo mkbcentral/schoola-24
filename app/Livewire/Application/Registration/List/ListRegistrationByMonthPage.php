@@ -17,6 +17,7 @@ class ListRegistrationByMonthPage extends Component
     public string $monthFilter;
 
     public int $per_page = 20;
+    public int  $option_filter = 0;
 
     #[Url(as: 'q')]
     public $q = '';
@@ -52,11 +53,11 @@ class ListRegistrationByMonthPage extends Component
     public function render()
     {
         return view('livewire.application.registration.list.list-registration-by-month-page', [
-            'registrations' => RegistrationFeature::getList(
+            'registrations' => RegistrationFeature::getListOoldOrNew(
                 null,
                 $this->monthFilter,
                 null,
-                null,
+                $this->option_filter,
                 null,
                 null,
                 $this->isOld,
@@ -64,7 +65,6 @@ class ListRegistrationByMonthPage extends Component
                 $this->sortBy,
                 $this->sortAsc,
                 $this->per_page
-
             ),
         ]);
     }

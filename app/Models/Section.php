@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Features\Registration\RegistrationFeature;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,5 +45,21 @@ class Section extends Model
     public function registrationFee(): HasMany
     {
         return $this->hasMany(RegistrationFee::class);
+    }
+
+    /**
+     * Summary of getRegistrationCountForCurrentSchoolYear
+     * @return int|float
+     */
+    public  function getRegistrationCountForCurrentSchoolYear(): int|float
+    {
+        return RegistrationFeature::getCountAll(
+            null,
+            null,
+            $this->id,
+            null,
+            null,
+            null,
+        );
     }
 }

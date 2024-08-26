@@ -4,7 +4,8 @@ namespace App\Livewire\Application\Dashboard\Payment;
 
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Models\CategoryFee;
-use App\Models\ScolarFee;
+use App\Models\School;
+use App\Models\SchoolYear;
 use Livewire\Component;
 
 class DashPaymentPage extends Component
@@ -36,7 +37,10 @@ class DashPaymentPage extends Component
     public function render()
     {
         return view('livewire.application.dashboard.payment.dash-payment-page', [
-            'categoryFees' => CategoryFee::query()->get(),
+            'categoryFees' => CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->get(),
             'total' => $this->is_by_date == true ?
                 PaymentFeature::getTotal(
                     $this->date_filter,

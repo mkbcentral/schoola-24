@@ -17,7 +17,8 @@ class BankDeposit extends Model
         'currency',
         'school_id',
         'school_year_id',
-        'category_fee_id'
+        'category_fee_id',
+        'created_at'
     ];
 
     /**
@@ -74,6 +75,7 @@ class BankDeposit extends Model
             }
         )->with([
             'categoryFee',
-        ]);
+        ])->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID());
     }
 }

@@ -14,7 +14,10 @@ class ListBankDepositPage extends Component
     protected $listeners = [
         'bankDepositListRefred' => '$refresh'
     ];
-    public ?string $date_filter = null, $month_filter = '', $currency_filter = '';
+    public ?string $date_filter = '';
+    public ?string $month_filter = '';
+    public ?string $currency_filter = '';
+    public ?int $per_page = 10;
 
     public function updatedMonthFilter()
     {
@@ -42,7 +45,7 @@ class ListBankDepositPage extends Component
 
     public function mount()
     {
-        $this->month_filter = date('09');
+        $this->month_filter = date('m');
     }
 
     public function render()
@@ -51,7 +54,8 @@ class ListBankDepositPage extends Component
             'bankDeposits' => BankDepositFeature::getList(
                 $this->date_filter,
                 $this->month_filter,
-                $this->currency_filter
+                $this->currency_filter,
+                $this->per_page
             ),
             'total_usd' => BankDepositFeature::getAmountTotal(
                 $this->date_filter,

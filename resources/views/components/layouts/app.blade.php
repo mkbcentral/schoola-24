@@ -13,7 +13,7 @@
     @stack('style')
 </head>
 
-<body class="layout-fixed sidebar-mini sidebar-expand-lg bg-body-tertiary app-loaded">
+<body class="layout-fixed sidebar-mini sidebar-expand-lg bg-body-tertiary app-loaded" id="collapse-set">
     <div class="app-wrapper">
         @include('components.layouts.patials.navbar')
         @include('components.layouts.patials.sidebar')

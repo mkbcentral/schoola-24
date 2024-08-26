@@ -16,7 +16,8 @@ class School extends Model
         'email',
         'phone',
         'logo',
-        'user_id'
+        'app_status',
+        'school_status'
     ];
 
     /**

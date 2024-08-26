@@ -13,17 +13,12 @@
             <x-form.search-input wire:model.live='q' />
             <div class="form-group d-flex">
                 <label for="my-select">Type Frais</label>
-                <select id="my-select" class="form-control form-select" name=""
-                    wire:model.live='category_fee_filter'>
-                    <option disabled>Choisir</option>
-                    @foreach ($categoryFees as $categoryFee)
-                        <option value="{{ $categoryFee->id }}">{{ $categoryFee->name }}</option>
-                    @endforeach
-                </select>
+                <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='category_fee_filter'
+                    :error="'category_fee_filter'" />
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center pb-2">
         <x-widget.loading-circular-md wire:loading />
     </div>
     <table class="table table-bordered table-sm table-hover mt-2">

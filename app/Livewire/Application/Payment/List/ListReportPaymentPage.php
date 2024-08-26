@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Application\Payment\List;
 
+use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Models\CategoryFee;
 use Livewire\Component;
@@ -21,7 +22,6 @@ class ListReportPaymentPage extends Component
     protected $listeners = [
         "selectedCategoryFee" => 'getSelectedCategoryFee'
     ];
-
     /**
      * Recuprer le categorie de frais selectionné
      * @param int $index
@@ -30,7 +30,7 @@ class ListReportPaymentPage extends Component
     public function getSelectedCategoryFee(int $index)
     {
         $this->selectedCategoryFeeId = $index;
-        $this->categoryFeeSelected = CategoryFee::findOrFail($index);
+        $this->categoryFeeSelected = CategoryFee::find($index);
     }
 
     public function updatedMonthFilter()
@@ -41,7 +41,6 @@ class ListReportPaymentPage extends Component
     {
         $this->month_filter = "";
     }
-
     /**
      * Summary of updatedSectionFilter
      * @param mixed $val
@@ -61,13 +60,10 @@ class ListReportPaymentPage extends Component
     {
         $this->selectedOption = $val;
     }
-
     public function updatedClassRoomFilter($val)
     {
         $this->selectedClassRoom = $val;
     }
-
-
     /**
      * Summary of mount
      * @param int $categoryFeeId
@@ -75,9 +71,10 @@ class ListReportPaymentPage extends Component
      */
     public function mount(int $categoryFeeId)
     {
+        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
         $this->selectedCategoryFeeId = $categoryFeeId;
         $this->date_filter = date('Y-m-d');
-        $this->categoryFeeSelected = CategoryFee::findOrFail($categoryFeeId);
+        $this->categoryFeeSelected = $categoryFee;
     }
 
     public function render()
@@ -95,7 +92,6 @@ class ListReportPaymentPage extends Component
                 true,
                 $this->per_page
             ),
-
             'total_payments' => PaymentFeature::getTotal(
                 $this->date_filter,
                 $this->month_filter,

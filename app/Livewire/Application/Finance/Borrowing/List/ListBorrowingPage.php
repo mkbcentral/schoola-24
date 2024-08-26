@@ -14,7 +14,10 @@ class ListBorrowingPage extends Component
     protected $listeners = [
         'moneyBorrowingListRefred' => '$refresh'
     ];
-    public ?string $date_filter = null, $month_filter = '', $currency_filter = '';
+    public ?string $date_filter = null;
+    public ?string $month_filter = '';
+    public ?string  $currency_filter = '';
+    public ?int $per_page = 10;
 
     public function updatedMonthFilter()
     {
@@ -49,7 +52,8 @@ class ListBorrowingPage extends Component
             'moneyBorrowings' => MoneyBorrowingFeature::getList(
                 $this->date_filter,
                 $this->month_filter,
-                $this->currency_filter
+                $this->currency_filter,
+                $this->per_page
             ),
             'total_usd' => MoneyBorrowingFeature::getAmount(
                 $this->date_filter,

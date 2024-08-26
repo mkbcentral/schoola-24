@@ -2,6 +2,8 @@
 
 namespace App\Domain\Contract\Configuration;
 
+use App\Models\CategoryFee;
+
 interface IFeeDataConfiguration
 {
     /**
@@ -27,4 +29,10 @@ interface IFeeDataConfiguration
         int $classRoomId,
         int $per_page
     ): mixed;
+
+    /**
+     * Recuperer la catégorie des frais pour chaque école et année scolaire
+     * @return \App\Models\CategoryFee
+     */
+    public static function getListCategoryFeeForCurrentSchool(): CategoryFee;
 }

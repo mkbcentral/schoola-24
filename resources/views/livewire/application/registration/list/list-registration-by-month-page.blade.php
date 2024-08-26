@@ -1,7 +1,7 @@
 <div>
     <x-navigation.bread-crumb icon='bi bi-person-fill-add' label="{{ $isOld == true ? 'Réincriptions' : 'Incriptions' }}">
-        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="dashboard.main" />
         <x-navigation.bread-crumb-item label="{{ $isOld == true ? 'Réincriptions' : 'Incriptions' }} par mois" />
+        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="dashboard.main" />
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
         <div class="mt-2">
@@ -11,6 +11,10 @@
             <div class="d-flex justify-content-between align-items-center">
                 <x-others.list-title color='text-primary' cl title="Mois: {{ format_fr_month_name($monthFilter) }}" />
                 <x-form.search-input wire:model.live='q' />
+                <div class="d-flex align-items-center">
+                    <x-form.label value="{{ __('Option') }}" class="me-2" />
+                    <x-widget.data.list-option type='text' wire:model.live='option_filter' :error="'form.option_id'" />
+                </div>
             </div>
             <table class="table table-bordered table-sm">
                 <thead class="bg-app">
@@ -28,7 +32,7 @@
                 <tbody>
                     @if ($registrations->isEmpty())
                         <tr>
-                            <td colspan="4"><x-errors.data-empty /></td>
+                            <td colspan="5"><x-errors.data-empty /></td>
                         </tr>
                     @else
                         @foreach ($registrations as $index => $registration)
@@ -43,21 +47,20 @@
                                             class="btn-secondary btn-sm">
                                             <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
                                                 data-bs-target="#form-edit-student" labelText='Editer' href="#"
-                                                wire:click='edit({{ $registration->student }})' class="text-primary" />
+                                                wire:click='edit({{ $registration->student }})' />
                                             <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
-                                                labelText='Voir détails' href="{{ route('student.detail', $registration) }}"
-                                                class="text-primary" />
+                                                labelText='Voir détails'
+                                                href="{{ route('student.detail', $registration) }}" />
                                             <x-others.dropdown-link iconLink='bi bi-arrow-left-right'
                                                 labelText='Basculuer la classe' data-bs-toggle="modal"
                                                 data-bs-target="#form-change-class-student"
-                                                wire:click='changeClassStudent({{ $registration }})' href="#"
-                                                class="text-secondary" />
+                                                wire:click='changeClassStudent({{ $registration }})' href="#" />
                                             <x-others.dropdown-link iconLink='bi bi-journal-x' labelText='Marquer abandon'
                                                 data-bs-toggle="modal" data-bs-target="#form-give-up-student"
-                                                wire:click='openMakeGiveUpStudentFom({{ $registration }})' href="#"
-                                                class="text-secondary" />
+                                                wire:click='openMakeGiveUpStudentFom({{ $registration }})'
+                                                href="#" />
                                             <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
-                                                class="text-secondary" href="#"
+                                                href="#"
                                                 wire:click='showDeleteDialog({{ $registration->student }})' />
                                         </x-others.dropdown>
                                     @endcan

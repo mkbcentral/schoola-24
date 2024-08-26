@@ -19,7 +19,8 @@ class ListStudentPage extends Component
         'refreshListStudent' => '$refresh',
         'deletedStudentListner' => 'delete',
     ];
-    public int $per_page = 10, $option_filter = 0;
+    public int $per_page = 10;
+    public int  $option_filter = 0;
     #[Url(as: 'q')]
     public $q = '';
     #[Url(as: 'sortBy')]
@@ -102,7 +103,6 @@ class ListStudentPage extends Component
                 $this->option_filter,
                 null,
                 null,
-                null,
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,
@@ -116,7 +116,6 @@ class ListStudentPage extends Component
                 null,
                 null,
                 null,
-                null
             )
         ]);
     }

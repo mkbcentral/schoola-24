@@ -8,6 +8,7 @@ use App\Livewire\Application\Admin\List\ConfigureSchoolPage;
 use App\Livewire\Application\Admin\List\ListRolePage;
 use App\Livewire\Application\Admin\List\ListSchoolPage;
 use App\Livewire\Application\Admin\List\ListUserPage;
+use App\Livewire\Application\Admin\UserProfilePage;
 use App\Livewire\Application\Config\List\ListClassRoomPage;
 use App\Livewire\Application\Config\List\ListOptionPage;
 use App\Livewire\Application\Config\List\ListSectionPage;
@@ -65,6 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     //Routes work on administration
     Route::prefix('administration')->group(function () {
+        Route::get('user-profile', UserProfilePage::class)->name('admin.user.profile');
         Route::get('users', ListUserPage::class)->name('admin.main');
         Route::get('roles', ListRolePage::class)->name('admin.role');
         Route::get('schools', ListSchoolPage::class)->name('admin.schools');
@@ -72,7 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('attach-multi-menu/{user}', AttachMultiAppLinkToUserPage::class)->name('admin.attach.multi.menu');
         Route::get('attach-sub-menu/{user}', AttacheSubMenuToUserPage::class)->name('admin.attach.sub.menu');
         Route::get('schools', ListSchoolPage::class)->name('admin.schools');
-        Route::get('configure-school{school}', ConfigureSchoolPage::class)->name('admin.school.configure');
+        Route::get('configure-school/{school}', ConfigureSchoolPage::class)->name('admin.school.configure');
     });
     //Routes work on payments
     Route::prefix('payment')->group(function () {

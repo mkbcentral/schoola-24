@@ -7,8 +7,6 @@ use App\Models\Registration;
 
 class RegistrationFeature implements IRegistration
 {
-    private static string $keyToSearch;
-
     /**
      * @inheritDoc
      */
@@ -63,93 +61,6 @@ class RegistrationFeature implements IRegistration
         $registration->isRegistered != $registration->isRegistered;
         return $registration->update();
     }
-
-
-    /**
-     * @inheritDoc
-     */
-    public static function getTotalAmountByMonth(
-        string $month,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        bool $isOld,
-    ): int {
-        $total = 0;
-        $filters = [
-            'section_id' => $sectionId,
-            'option_id' => $optionId,
-            'class_room_id' => $classRoomId,
-            'is_old' => $isOld,
-        ];
-        $registrations =  Registration::query()
-            ->whereMonth("registrations.created_at", $month)
-            ->filterNotSorted($filters)
-            ->get();
-        foreach ($registrations as $registration) {
-            $total += $registration->registrationFee->amount;
-        }
-        return $total;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getList(
-        string|null $date,
-        string|null $month,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        int|null $responsibleId,
-        bool|null $isOld,
-        string|null $q,
-        string|null $sortBy,
-        bool|null $sortAsc,
-        int|null $per_page
-    ): mixed {
-        $filters = [
-            'section_id' => $sectionId,
-            'date' => $date,
-            'month' => $month,
-            'option_id' => $optionId,
-            'class_room_id' => $classRoomId,
-            'responsible_student_id' => $responsibleId,
-            'is_old' => $isOld,
-            'sort_by' => $sortBy,
-            'sort_asc' => $sortAsc,
-            'q' => $q,
-        ];
-        return Registration::query()
-            ->filter($filters)
-            ->paginate($per_page);
-    }
-    /**
-     * @inheritDoc
-     */
-    public static function getCountAll(
-        string|null $date,
-        string|null $month,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        int|null $responsibleId,
-        bool|null $isOld
-    ): mixed {
-        $filters = [
-            'section_id' => $sectionId,
-            'date' => $date,
-            'month' => $month,
-            'option_id' => $optionId,
-            'class_room_id' => $classRoomId,
-            'responsible_student_id' => $responsibleId,
-            'is_old' => $isOld,
-        ];
-        return Registration::query()
-            ->filterCounterAll($filters)
-            ->count();
-    }
-
     public static function getCount(
         string|null $date,
         string|null $month,
@@ -158,7 +69,7 @@ class RegistrationFeature implements IRegistration
         int|null $classRoomId,
         int|null $responsibleId,
         bool|null $isOld
-    ): mixed {
+    ): int|float {
         $filters = [
             'section_id' => $sectionId,
             'date' => $date,
@@ -183,7 +94,7 @@ class RegistrationFeature implements IRegistration
         int|null $classRoomId,
         int|null $responsibleId,
         bool|null $isOld
-    ): mixed {
+    ): int|float {
         $total = 0;
         $filters = [
             'date' => $date,
@@ -201,5 +112,91 @@ class RegistrationFeature implements IRegistration
             $total += $registration->registrationFee->amount;
         }
         return $total;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getList(
+        string|null $date,
+        string|null $month,
+        int|null $sectionId,
+        int|null $optionId,
+        int|null $classRoomId,
+        int|null $responsibleId,
+        string|null $q,
+        string|null $sortBy,
+        bool|null $sortAsc,
+        int|null $per_page
+    ): mixed {
+        $filters = [
+            'section_id' => $sectionId,
+            'date' => $date,
+            'month' => $month,
+            'option_id' => $optionId,
+            'class_room_id' => $classRoomId,
+            'responsible_student_id' => $responsibleId,
+            'sort_by' => $sortBy,
+            'sort_asc' => $sortAsc,
+            'q' => $q,
+        ];
+        return Registration::query()
+            ->filter($filters)
+            ->paginate($per_page);
+    }
+    /**
+     * @inheritDoc
+     */
+    public static function getListOoldOrNew(
+        string|null $date,
+        string|null $month,
+        int|null $sectionId,
+        int|null $optionId,
+        int|null $classRoomId,
+        int|null $responsibleId,
+        bool|null $isOld,
+        string|null $q,
+        string|null $sortBy,
+        bool|null $sortAsc,
+        int|null $per_page
+    ): mixed {
+        $filters = [
+            'section_id' => $sectionId,
+            'date' => $date,
+            'month' => $month,
+            'option_id' => $optionId,
+            'class_room_id' => $classRoomId,
+            'responsible_student_id' => $responsibleId,
+            'sort_by' => $sortBy,
+            'is_old' => $isOld,
+            'sort_asc' => $sortAsc,
+            'q' => $q,
+        ];
+        return Registration::query()
+            ->filterOldOrnew($filters)
+            ->paginate($per_page);
+    }
+    /**
+     * @inheritDoc
+     */
+    public static function getCountAll(
+        string|null $date,
+        string|null $month,
+        int|null $sectionId,
+        int|null $optionId,
+        int|null $classRoomId,
+        int|null $responsibleId
+    ): float|int {
+        $filters = [
+            'section_id' => $sectionId,
+            'date' => $date,
+            'month' => $month,
+            'option_id' => $optionId,
+            'class_room_id' => $classRoomId,
+            'responsible_student_id' => $responsibleId,
+        ];
+        return Registration::query()
+            ->filterCounterAll($filters)
+            ->count();
     }
 }

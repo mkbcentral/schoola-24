@@ -89,4 +89,8 @@
             </tbody>
         @endif
     </table>
+    <div class="d-flex justify-content-between">
+        <span>{{ $moneyBorrowings->links('livewire::bootstrap') }}</span>
+        <x-others.table-page-number wire:model.live='per_page' />
+    </div>
 </div>

@@ -1,15 +1,14 @@
 <div>
-    <x-modal.build-modal-fixed idModal='form-user' bg='bg-indigo' size='lg'
-        headerLabel="{{ $user == null ? 'CREATION' : 'EDITION' }}UTILISATEUR"
-        headerLabelIcon="  {{ $user == null ? 'bi bi-person-fill-add' : 'bi bi-pencil-fill' }}">
+    <x-modal.build-modal-fixed idModal='form-user-admin' bg='bg-indigo' size='lg'
+        headerLabel="CREATION COMPTE ADEMINISTRATEUR" headerLabelIcon="bi bi-person-fill-add">
         <div class="d-flex justify-content-center pb-2">
-            <x-widget.loading-circular-md wire:loading wire:target='handlerSubmit' />
+            <x-widget.loading-circular-md wire:loading wire:target='save' />
         </div>
-        <form wire:submit='handlerSubmit'>
+        <form wire:submit='save'>
             <div class="row">
                 <div class="col-md-6">
                     <div>
-                        <x-form.label value="{{ __('Nom utilisateur') }}" />
+                        <x-form.label value="{{ __('Nom responsable') }}" />
                         <x-form.input type='text' wire:model.blur='form.name' :error="'form.name'"
                             style="height: 40px" />
                         <x-errors.validation-error value='form.name' />
@@ -49,18 +48,9 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end mt-4">
-                <x-form.app-button type='submit' textButton="{{ $user == null ? 'Sauvegarder' : 'Mettre àjour' }}"
-                    icon="{{ $user == null ? 'fa fa-save' : 'fa fa-sync' }}" class="app-btn" />
+                <x-form.app-button type='submit' textButton="Créer compte" icon="" class="app-btn" />
             </div>
         </form>
 
     </x-modal.build-modal-fixed>
-    @push('js')
-        <script type="module">
-            //Open  form  modal
-            window.addEventListener('close-form-user', e => {
-                $('#form-user').modal('hide')
-            });
-        </script>
-    @endpush
 </div>

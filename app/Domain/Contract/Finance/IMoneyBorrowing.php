@@ -11,7 +11,12 @@ interface IMoneyBorrowing
      * @param mixed $currency
      * @return mixed
      */
-    public static function getList(?string $date, ?string $month, ?string $currency): mixed;
+    public static function getList(
+        string $date,
+        ?string $month,
+        ?string $currency,
+        ?int $per_page
+    ): mixed;
     /**
      * Recuperer le montant total des emprunts
      * @param mixed $date
@@ -19,5 +24,9 @@ interface IMoneyBorrowing
      * @param mixed $currency
      * @return int|float
      */
-    public static function getAmount(?string $date, ?string $month, ?string $currency): int|float;
+    public static function getAmount(
+        ?string $date,
+        ?string $month,
+        ?string $currency
+    ): int|float;
 }

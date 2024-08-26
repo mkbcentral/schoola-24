@@ -5,6 +5,7 @@ namespace App\Livewire\Application\Admin\List;
 use App\Domain\Features\Admin\UserFeature;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -58,7 +59,12 @@ class ListUserPage extends Component
     public function render()
     {
         return view('livewire.application.admin.list.list-user-page', [
-            'users' => UserFeature::getListUser(
+            'users' => Auth::user()->role->is_for_school == true ? UserFeature::getListSchoolUser(
+                $this->q,
+                $this->sortBy,
+                $this->sortAsc,
+                $this->per_page
+            ) : UserFeature::getListAppUser(
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,

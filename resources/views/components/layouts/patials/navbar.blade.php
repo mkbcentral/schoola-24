@@ -1,7 +1,7 @@
 <nav class="app-header navbar navbar-expand bg-body">
     <div class="container-fluid">
         <ul class="navbar-nav">
-            <li class="nav-item">
+            <li class="nav-item" onclick="toggleSideBar()">
                 <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
                     <i class="bi bi-list"></i>
                 </a>
@@ -83,19 +83,15 @@
         <script type="module">
             (() => {
                 "use strict";
-
                 const storedTheme = localStorage.getItem("theme");
-
                 const getPreferredTheme = () => {
                     if (storedTheme) {
                         return storedTheme;
                     }
-
                     return window.matchMedia("(prefers-color-scheme: dark)").matches ?
                         "dark" :
                         "light";
                 };
-
                 const setTheme = function(theme) {
                     if (
                         theme === "auto" &&
@@ -106,7 +102,6 @@
                         document.documentElement.setAttribute("data-bs-theme", theme);
                     }
                 };
-
                 setTheme(getPreferredTheme());
 
                 const showActiveTheme = (theme, focus = false) => {
@@ -138,7 +133,6 @@
                         themeSwitcher.focus();
                     }
                 };
-
                 window
                     .matchMedia("(prefers-color-scheme: dark)")
                     .addEventListener("change", () => {
@@ -146,10 +140,8 @@
                             setTheme(getPreferredTheme());
                         }
                     });
-
                 window.addEventListener("DOMContentLoaded", () => {
                     showActiveTheme(getPreferredTheme());
-
                     for (const toggle of document.querySelectorAll("[data-bs-theme-value]")) {
                         toggle.addEventListener("click", () => {
                             const theme = toggle.getAttribute("data-bs-theme-value");
@@ -160,6 +152,33 @@
                     }
                 });
             })();
+        </script>
+        <script>
+            const contentTocollapse = document.getElementById("collapse-set")
+            const collapse = localStorage.getItem('collapse');
+
+            function loadInitCollapse() {
+                c = localStorage.getItem('collapse')
+                contentTocollapse.classList.add(c)
+                console.log(c);
+            }
+            loadInitCollapse();
+
+            function toggleSideBar() {
+                "use strict";
+                if (collapse == 'sidebar-collapse') {
+                    localStorage.setItem('collapse', 'sidebar-collapse')
+                    const col = localStorage.getItem('collapse');
+                    contentTocollapse.classList.add(col)
+                    contentTocollapse.classList.remove('sidebar-open');
+
+                } else {
+                    localStorage.setItem('collapse', 'sidebar-open')
+                    const col = localStorage.getItem('collapse');
+                    contentTocollapse.classList.add(col)
+                    contentTocollapse.classList.remove('sidebar-collapse');
+                }
+            }
         </script>
     @endpush
 </nav>

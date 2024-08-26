@@ -44,7 +44,8 @@ class MoneyBorrowingFeature implements IMoneyBorrowing
     public static function getList(
         string|null $date,
         string|null $month,
-        string|null $currency
+        string|null $currency,
+        int|null $per_page
     ): mixed {
         return MoneyBorrowing::query()
             ->when($date, function ($query, $val) {
@@ -58,6 +59,6 @@ class MoneyBorrowingFeature implements IMoneyBorrowing
             })
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->get();
+            ->paginate($per_page);
     }
 }

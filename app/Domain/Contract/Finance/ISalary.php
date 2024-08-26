@@ -8,9 +8,14 @@ interface ISalary
      * Recuperer la liste de salaires
      * @param mixed $date
      * @param mixed $month
+     * @param mixed $per_page
      * @return mixed
      */
-    public static function getList(?string $date, ?string $month): mixed;
+    public static function getList(
+        ?string $date,
+        ?string $month,
+        ?int $per_page
+    ): mixed;
 
     /**
      * Récuperer le montant total de salair

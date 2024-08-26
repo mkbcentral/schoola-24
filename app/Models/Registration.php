@@ -132,50 +132,19 @@ class Registration extends Model
      */
     public function scopeFilter(Builder $query, array $filters): Builder
     {
-        return $query
-            ->join('students', 'students.id', 'registrations.student_id')
-            ->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
-            ->join("options", "options.id", "=", "class_rooms.option_id")
-            ->join("sections", "sections.id", "=", "options.section_id")
-            ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
-            ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
-            ->when($filters['date'], function ($query, $date) {
-                return $query->whereDate('registrations.created_at', $date);
-            })
-            ->when($filters['month'], function ($query, $month) {
-                return $query->whereMonth('registrations.created_at', $month);
-            })
-            ->when($filters['section_id'], function ($query, $sectionId) {
-                return $query->where('sections.id', $sectionId);
-            })
-            ->when($filters['option_id'], function ($query, $optionId) {
-                return $query->where('options.id', $optionId);
-            })
-            ->when($filters['class_room_id'], function ($query, $classRoomId) {
-                return $query->where('class_rooms.id', $classRoomId);
-            })
-            ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
-                return $query->where('students.responsible_student_id', $classRoomId);
-            })
-            ->when($filters['is_old'], function ($query, $is_old) {
-                return $query->where('registrations.is_old', $is_old);
-            })
+        return $this->reusableFilterQuery($query, $filters)
             ->when($filters['q'], function ($query, $q) {
                 return $query->where('students.name', 'like', '%' . $q . '%');
             })
-            ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
-                return $query->where('students.responsible_student_id', $classRoomId);
-            })
             ->select('registrations.*', 'students.name')
-            ->with(
-                [
-                    'student',
-                    'registrationFee',
-                    'classRoom',
-                    'schoolYear',
-                    'rate'
-                ]
-            )->orderBy($filters['sort_by'], $filters['sort_asc'] ? 'ASC' : 'DESC');
+            ->orderBy($filters['sort_by'], $filters['sort_asc'] ? 'ASC' : 'DESC');
+    }
+    public function scopeFilterOldOrnew(Builder $query, array $filters): Builder
+    {
+        return $this->reusableFilterQuery($query, $filters)
+            ->where('registrations.is_old', $filters['is_old'])
+            ->select('registrations.*', 'students.name')
+            ->orderBy($filters['sort_by'], $filters['sort_asc'] ? 'ASC' : 'DESC');
     }
 
     /**
@@ -186,37 +155,25 @@ class Registration extends Model
      */
     public function scopeFilterNotSorted(Builder $query, array $filters): Builder
     {
-        return $query->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
-            ->join("options", "options.id", "=", "class_rooms.option_id")
-            ->join("sections", "sections.id", "=", "options.section_id")
-            ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
-            ->when($filters['date'], function ($query, $date) {
-                return $query->whereDate('registrations.created_at', $date);
-            })
-            ->when($filters['month'], function ($query, $month) {
-                return $query->whereMonth('registrations.created_at', $month);
-            })
-            ->when($filters['section_id'], function ($query, $sectionId) {
-                return $query->where('sections.id', $sectionId);
-            })
-            ->when($filters['option_id'], function ($query, $optionId) {
-                return $query->where('options.id', $optionId);
-            })
-            ->when($filters['class_room_id'], function ($query, $classRoomId) {
-                return $query->where('class_rooms.id', $classRoomId);
-            })
-            ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
-                return $query->where('students.responsible_student_id', $classRoomId);
-            })
-            ->where('registrations.is_old', $filters['is_old']);;
+        return  $this->reusableFilterQuery($query, $filters)
+            ->where('registrations.is_old', $filters['is_old']);
     }
 
     public function scopeFilterCounterAll(Builder $query, array $filters): Builder
     {
-        return $query->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
+        return $this->reusableFilterQuery($query, $filters);
+    }
+
+    public function reusableFilterQuery(Builder $query, array $filters): Builder
+    {
+        return $query
+            ->join('students', 'students.id', 'registrations.student_id')
+            ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
+            ->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
             ->join("options", "options.id", "=", "class_rooms.option_id")
             ->join("sections", "sections.id", "=", "options.section_id")
             ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+
             ->when($filters['date'], function ($query, $date) {
                 return $query->whereDate('registrations.created_at', $date);
             })
@@ -234,6 +191,14 @@ class Registration extends Model
             })
             ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
                 return $query->where('students.responsible_student_id', $classRoomId);
-            });
+            })->with(
+                [
+                    'student',
+                    'registrationFee',
+                    'classRoom',
+                    'schoolYear',
+                    'rate'
+                ]
+            );
     }
 }

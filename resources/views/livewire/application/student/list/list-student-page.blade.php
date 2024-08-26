@@ -21,7 +21,6 @@
                     <div class="d-flex align-items-center">
                         <x-form.label value="{{ __('Option') }}" class="me-2" />
                         <x-widget.data.list-option type='text' wire:model.live='option_filter' :error="'form.option_id'" />
-
                     </div>
                 </div>
             </div>
@@ -73,23 +72,22 @@
                                         @can('manage-student')
                                             <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
                                                 data-bs-target="#form-edit-student" labelText='Editer' href="#"
-                                                wire:click='edit({{ $registration->student }})' class="text-primary" />
+                                                wire:click='edit({{ $registration->student }})' />
                                             <x-others.dropdown-link iconLink='bi bi-arrow-left-right'
                                                 labelText='Basculuer la classe' data-bs-toggle="modal"
                                                 data-bs-target="#form-change-class-student"
-                                                wire:click='changeClassStudent({{ $registration }})' href="#"
-                                                class="text-primary" />
+                                                wire:click='changeClassStudent({{ $registration }})' href="#" />
                                             <x-others.dropdown-link iconLink='bi bi-journal-x' labelText='Marquer abandon'
                                                 data-bs-toggle="modal" data-bs-target="#form-give-up-student"
-                                                wire:click='openMakeGiveUpStudentFom({{ $registration }})' href="#"
-                                                class="text-primary" />
+                                                wire:click='openMakeGiveUpStudentFom({{ $registration }})'
+                                                href="#" />
                                             <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
-                                                class="text-primary" href="#"
+                                                href="#"
                                                 wire:click='showDeleteDialog({{ $registration->student }})' />
                                         @endcan
                                         <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
                                             labelText='Voir détails'
-                                            href="{{ route('student.detail', $registration) }}" class="text-primary" />
+                                            href="{{ route('student.detail', $registration) }}" />
                                     </x-others.dropdown>
                                 </td>
                             </tr>

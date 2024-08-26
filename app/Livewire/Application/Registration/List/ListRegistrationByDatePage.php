@@ -17,6 +17,7 @@ class ListRegistrationByDatePage extends Component
     public string $dateFilter;
 
     public int $per_page = 20;
+    public int  $option_filter = 0;
 
     #[Url(as: 'q')]
     public $q = '';
@@ -25,7 +26,6 @@ class ListRegistrationByDatePage extends Component
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
     public ?Student $studentToDelete;
-
     public function sortData($value): void
     {
         if ($value == $this->sortBy) {
@@ -33,31 +33,27 @@ class ListRegistrationByDatePage extends Component
         }
         $this->sortBy = $value;
     }
-
     public function edit(Student $student)
     {
         $this->dispatch('studentData', $student);
     }
-
     public function openMakeGiveUpStudentFom(Registration $registration)
     {
         $this->dispatch('registrationData', $registration);
     }
-
     public function changeClassStudent(Registration $registration)
     {
         $this->dispatch('registrationData', $registration);
     }
-
-
+    public function mount() {}
     public function render()
     {
         return view('livewire.application.registration.list.list-registration-by-date-page', [
-            'registrations' => RegistrationFeature::getList(
+            'registrations' => RegistrationFeature::getListOoldOrNew(
                 $this->dateFilter,
                 null,
                 null,
-                null,
+                $this->option_filter,
                 null,
                 null,
                 $this->isOld,

@@ -37,7 +37,8 @@ class SavingMoneyFeature implements ISavingMoney
     public static function getList(
         string|null $date,
         string|null $month,
-        string|null $currency
+        string|null $currency,
+        int|null $per_page,
     ): mixed {
         $filters = [
             'date' => $date,
@@ -46,6 +47,6 @@ class SavingMoneyFeature implements ISavingMoney
         ];
         return SavingMoney::query()
             ->filter($filters)
-            ->paginate(10);
+            ->paginate($per_page);
     }
 }

@@ -34,10 +34,10 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center pb-2">
+    <div class="d-flex justify-content-center mt-2">
         <x-widget.loading-circular-md wire:loading />
     </div>
-    <table class="table table-bordered table-sm table-hover mt-2">
+    <table class="table table-bordered table-sm table-hover mt-2" wire:loading.class='d-none'>
         <thead class="table-primary">
             <tr class="">
                 <th class="text-center">N°</th>

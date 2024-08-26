@@ -89,6 +89,8 @@
             </tbody>
         @endif
     </table>
-    <span>{{ $savingMoneys->links('livewire::bootstrap') }}</span>
-
+    <div class="d-flex justify-content-between">
+        <span>{{ $savingMoneys->links('livewire::bootstrap') }}</span>
+        <x-others.table-page-number wire:model.live='per_page' />
+    </div>
 </div>

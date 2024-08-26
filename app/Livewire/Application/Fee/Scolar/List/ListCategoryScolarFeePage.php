@@ -13,7 +13,7 @@ use Livewire\WithPagination;
 class ListCategoryScolarFeePage extends Component
 {
     use WithPagination;
-    public int $per_page = 5, $option_filter = 0;
+    public int $per_page = 10, $option_filter = 0;
     #[Url(as: 'q')]
     public $q = '';
 

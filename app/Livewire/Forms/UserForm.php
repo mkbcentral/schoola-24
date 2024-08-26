@@ -3,9 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Role;
-use App\Models\School;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 
@@ -31,12 +29,6 @@ class UserForm extends Form
 
     public function create(array $input): void
     {
-        $role = Role::findOrFail($this->role_id);
-        if ($role->is_for_school == true) {
-            $input['school_id'] = School::DEFAULT_SCHOOL_ID();
-        }
-
-        $input['password'] = Hash::make('password');
         User::create($input);
     }
     public function update(User $user, array $input): void
