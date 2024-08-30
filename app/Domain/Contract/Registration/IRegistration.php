@@ -63,7 +63,7 @@ interface  IRegistration
      * @param mixed $optionId
      * @param mixed $classRoomId
      * @param mixed $responsibleId
-     * @param mixed $isOld
+     * @param mixed $q
      * @param mixed $sortBy
      * @param mixed $sortAsc
      * @param mixed $per_page

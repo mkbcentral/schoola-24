@@ -24,8 +24,6 @@ class ListStudentByResponsiblePage extends Component
         $this->responsibleStudent = $responsibleStudent;
         $this->selectedResponsibleId = $responsibleStudent->id;
     }
-
-
     public function render()
     {
 

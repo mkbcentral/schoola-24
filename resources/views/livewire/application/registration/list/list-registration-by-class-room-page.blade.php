@@ -9,7 +9,13 @@
         <div class="d-flex justify-content-between align-items-center">
             <x-others.list-title icon='bi bi-list-task' color='text-primary h3'
                 title='Liste des élèves : {{ $classRoom->getOriginalClassRoomName() }}' />
-            <x-form.search-input wire:model.live='q' />
+            <div class="d-flex">
+                <x-form.search-input wire:model.live='q' />
+                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-secondary btn-sm ms-2">
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
+                        href="{{ route('print.students.by.classRomm', [$classRoomId, $sortAsc]) }}" target='_blank' />
+                </x-others.dropdown>
+            </div>
         </div>
 
         <div class="">
@@ -44,7 +50,7 @@
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td>{{ $registration->name }}</td>
                             <td class="text-center">{{ $registration->student->getFormattedAg() }}</td>
-                            <td class="text-center">{{ $registration->gender }}</td>
+                            <td class="text-center">{{ $registration->student->gender }}</td>
                             <td class="text-center">
                                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                                     class="btn-secondary btn-sm">

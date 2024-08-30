@@ -48,11 +48,10 @@ class ListRegistrationByClassRoomPage extends Component
                 null,
                 $this->classRoomId,
                 null,
-                null,
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,
-
+                100
 
             ),
         ]);

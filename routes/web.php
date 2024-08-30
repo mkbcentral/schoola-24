@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PrintPaymentReceiptController;
+use App\Http\Controllers\SchoolDataPrinterController;
 use App\Livewire\Application\Admin\AttacheSingleMenuToUserPage;
 use App\Livewire\Application\Admin\AttacheSubMenuToUserPage;
 use App\Livewire\Application\Admin\AttachMultiAppLinkToUserPage;
@@ -106,5 +107,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Routes work to print receipt
     Route::controller(PrintPaymentReceiptController::class)->group(function () {
         Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt');
+    });
+
+    Route::prefix('print')->group(function () {
+        Route::controller(SchoolDataPrinterController::class)->group(function () {
+            Route::get('class-room-by-option', 'printStudentNumbersPerClassRoom')->name('class.room.by.option');
+            Route::get('students-by-class-room/{classRoomId}/{sortAsc}', 'printListStudeForClassRoom')->name('print.students.by.classRomm');
+        });
     });
 });

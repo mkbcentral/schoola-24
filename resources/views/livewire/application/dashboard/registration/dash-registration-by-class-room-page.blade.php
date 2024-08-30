@@ -1,9 +1,17 @@
 <div class="">
     <h4 class="mt-2 text-secondary text-end">Efféctis par option</h4>
-    <div class="d-flex">
-        <div class="d-flex align-items-center">
-            <x-form.label value="{{ __('Choisir option') }}" class="me-2 fw-bold" />
-            <x-widget.data.list-option wire:model.live='option_filer' />
+    <div class="">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <x-form.label value="{{ __('Choisir option') }}" class="me-2 fw-bold" />
+                <x-widget.data.list-option wire:model.live='option_filer' />
+            </div>
+            <div>
+                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-secondary btn-sm">
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
+                        href="{{ route('class.room.by.option') }}" target='_blank' />
+                </x-others.dropdown>
+            </div>
         </div>
     </div>
     <div>
