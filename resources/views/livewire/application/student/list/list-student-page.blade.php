@@ -39,8 +39,8 @@
                             <x-form.sort-icon sortField="students.date_of_birth" :sortAsc="$sortAsc" :sortBy="$sortBy" />
                         </th>
                         <th class="text-center">GENRE</th>
-                        <th class="text-center">STATUS</th>
-                        <th>CLASSE</th>
+                        <th class="text-center">CLASSE</th>
+                        <th> STATUS</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
