@@ -54,6 +54,14 @@ class ListRegistrationByClassRoomPage extends Component
                 100
 
             ),
+            'count' => RegistrationFeature::getCountAll(
+                null,
+                null,
+                null,
+                null,
+                $this->classRoomId,
+                null,
+            )
         ]);
     }
 }

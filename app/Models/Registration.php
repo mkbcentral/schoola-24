@@ -139,6 +139,12 @@ class Registration extends Model
             ->select('registrations.*', 'students.name')
             ->orderBy($filters['sort_by'], $filters['sort_asc'] ? 'ASC' : 'DESC');
     }
+    /**
+     * Summary of scopeFilterOldOrnew
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeFilterOldOrnew(Builder $query, array $filters): Builder
     {
         return $this->reusableFilterQuery($query, $filters)

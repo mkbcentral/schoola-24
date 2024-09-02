@@ -10,11 +10,10 @@
 </head>
 
 <body class="antialiased">
-    <div class="d-flex justify-content-center">
-        <img src="{{ public_path('aquila.jpg') }}" alt="Logo" width="100px">
-        <div>
-            <h6>C.S AQUILA</h6>
-        </div>
+    <div class="text-center">
+        <img src="{{ public_path('aquila.jpg') }}" alt="Logo" width="80px" height="80px">
+        <h5 class="mt-2">{{ Auth::user()->school->name }}</h5>
+        <hr>
     </div>
     {{ $slot }}
 </body>

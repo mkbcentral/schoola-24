@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrintPaymentController;
 use App\Http\Controllers\PrintPaymentReceiptController;
 use App\Http\Controllers\SchoolDataPrinterController;
 use App\Livewire\Application\Admin\AttacheSingleMenuToUserPage;
@@ -30,6 +31,7 @@ use App\Livewire\Application\Finance\Saving\MainSavingMoneyPage;
 use App\Livewire\Application\Navigation\MainMultiAppLinkPage;
 use App\Livewire\Application\Navigation\MainSingleAppLinkPage;
 use App\Livewire\Application\Navigation\MainSubLinkPage;
+use App\Livewire\Application\Payment\MainControlPaymentPage;
 use App\Livewire\Application\Payment\MainPaymentPage;
 use App\Livewire\Application\Payment\NewPaymentPage;
 use App\Livewire\Application\Payment\Reguralization\MainRegularizationPaymentPage;
@@ -82,6 +84,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('new-payment', NewPaymentPage::class)->name('payment.new');
         Route::get('regularization', MainRegularizationPaymentPage::class)->name('payment.regularization');
         Route::get('rapport', MainPaymentPage::class)->name('payment.rappport');
+        Route::get('control', MainControlPaymentPage::class)->name('payment.control');
     });
     //Route work on finance
     Route::prefix('finance')->group(function () {
@@ -110,9 +113,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('print')->group(function () {
+        /**
+         * Route d'imprssion des éffectifs par (toutes les options,classe,date,mois)
+         */
         Route::controller(SchoolDataPrinterController::class)->group(function () {
-            Route::get('class-room-by-option', 'printStudentNumbersPerClassRoom')->name('class.room.by.option');
-            Route::get('students-by-class-room/{classRoomId}/{sortAsc}', 'printListStudeForClassRoom')->name('print.students.by.classRomm');
+            Route::get('class-room-by-option', 'printStudentNumbersPerClassRoom')
+                ->name('class.room.by.option');
+            Route::get('students-by-class-room/{classRoomId}/{sortAsc}', 'printListStudeForClassRoom')
+                ->name('print.students.by.classRomm');
+            Route::get('students-by-date/{date}/{isOld}/{sortAsc}', 'printListStudentByDate')
+                ->name('print.students.by.date');
+            Route::get('students-by-month/{month}/{isOld}/{sortAsc}', 'printListStudentByMonth')
+                ->name('print.students.by.month');
+        });
+        /**
+         * Route d'impression de paiemnts
+         */
+        Route::controller(PrintPaymentController::class)->group(function () {
+            Route::get('payemets-by-date/{date}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByDate')->name('print.payment.date');
+            Route::get('payemets-by-month/{month}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByMonth')->name('print.payment.month');
+            Route::get('payemets-slip-by-date/{date}', 'printPaymentSlipByDate')->name('print.payment.slip.date');
+            Route::get('payemets-slip-by-month/{month}', 'printPaymentSlipByMonth')->name('print.payment.slip.month');
         });
     });
 });

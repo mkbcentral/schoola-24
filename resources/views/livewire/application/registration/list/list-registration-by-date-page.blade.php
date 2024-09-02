@@ -12,9 +12,20 @@
                 <x-others.list-title color='text-primary'
                     title="Date: {{ (new DateTime($dateFilter))->format('d/m/Y') }}" />
                 <x-form.search-input wire:model.live='q' />
+                <h6>(Total:
+                    {{ $count <= 1 ? $count . ' Elève' : $count . ' Elèves' }})
+                </h6>
                 <div class="d-flex align-items-center">
-                    <x-form.label value="{{ __('Option') }}" class="me-2" />
-                    <x-widget.data.list-option type='text' wire:model.live='option_filter' :error="'form.option_id'" />
+                    <div class="d-flex align-items-center">
+                        <x-form.label value="{{ __('Option') }}" class="me-2" />
+                        <x-widget.data.list-option type='text' wire:model.live='option_filter' :error="'form.option_id'" />
+                    </div>
+                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                        class="btn-secondary btn-sm ms-2">
+                        <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
+                            href="{{ route('print.students.by.date', [$dateFilter, $isOld == null ? 0 : $isOld, $sortAsc]) }}"
+                            target='_blank' />
+                    </x-others.dropdown>
                 </div>
             </div>
             <table class="table table-bordered table-sm">

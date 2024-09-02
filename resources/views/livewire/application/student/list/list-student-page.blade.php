@@ -39,6 +39,7 @@
                             <x-form.sort-icon sortField="students.date_of_birth" :sortAsc="$sortAsc" :sortBy="$sortBy" />
                         </th>
                         <th class="text-center">GENRE</th>
+                        <th class="text-center">STATUS</th>
                         <th>CLASSE</th>
                         <th class="text-center">Actions</th>
                     </tr>
@@ -65,6 +66,11 @@
                                 <td class="text-center">{{ $registration->student->getFormattedAg() }}</td>
                                 <td class="text-center">{{ $registration->student->gender }}</td>
                                 <td>{{ $registration?->classRoom?->getOriginalClassRoomName() }}
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge text-bg-{{ $registration->is_old ? 'warning' : 'info' }}">
+                                        {{ $registration->is_old ? 'Ancien' : 'Nouveau' }}
+                                    </span>
                                 </td>
                                 <td class="text-center">
                                     <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"

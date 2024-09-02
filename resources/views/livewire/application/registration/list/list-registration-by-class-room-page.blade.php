@@ -1,7 +1,7 @@
 <div>
     <x-navigation.bread-crumb icon='bi bi-people-fill' label="Effectif par classe">
-        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="dashboard.main" />
         <x-navigation.bread-crumb-item label='Effectif par classe' />
+        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="dashboard.main" />
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
         <div class="d-flex justify-content-between align-items-center">
@@ -9,6 +9,10 @@
         <div class="d-flex justify-content-between align-items-center">
             <x-others.list-title icon='bi bi-list-task' color='text-primary h3'
                 title='Liste des élèves : {{ $classRoom->getOriginalClassRoomName() }}' />
+            <h4>
+                <span class="badge text-bg-info">(Total:
+                    {{ $count <= 1 ? $count . ' Elève' : $count . ' Elèves' }})</span>
+            </h4>
             <div class="d-flex">
                 <x-form.search-input wire:model.live='q' />
                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-secondary btn-sm ms-2">
@@ -27,6 +31,7 @@
             <thead class="bg-app">
                 <tr class="cursor-hand bg-app">
                     <th class="text-center">#</th>
+                    <th class="">S-ID</th>
                     <th wire:click="sortData('students.name')">
                         <span>NOM COMPLET</span>
                         <x-form.sort-icon sortField="students.name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
@@ -36,6 +41,7 @@
                         <x-form.sort-icon sortField="students.date_of_birth" :sortAsc="$sortAsc" :sortBy="$sortBy" />
                     </th>
                     <th class="text-center">GENRE</th>
+                    <th class="text-center">STATUS</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -48,9 +54,15 @@
                     @foreach ($registrations as $index => $registration)
                         <tr wire:key='{{ $registration->id }}'>
                             <td class="text-center">{{ $index + 1 }}</td>
+                            <td>{{ $registration->code }}</td>
                             <td>{{ $registration->name }}</td>
                             <td class="text-center">{{ $registration->student->getFormattedAg() }}</td>
                             <td class="text-center">{{ $registration->student->gender }}</td>
+                            <td class="text-center">
+                                <span class="badge text-bg-{{ $registration->is_old ? 'warning' : 'info' }}">
+                                    {{ $registration->is_old ? 'Ancien' : 'Nouveau' }}
+                                </span>
+                            </td>
                             <td class="text-center">
                                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                                     class="btn-secondary btn-sm">

@@ -66,6 +66,15 @@ class ListRegistrationByMonthPage extends Component
                 $this->sortAsc,
                 $this->per_page
             ),
+            'count' => RegistrationFeature::getCount(
+                null,
+                $this->monthFilter,
+                null,
+                null,
+                null,
+                null,
+                $this->isOld
+            )
         ]);
     }
 }

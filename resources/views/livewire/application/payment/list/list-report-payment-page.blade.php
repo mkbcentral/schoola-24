@@ -32,6 +32,36 @@
                 <x-widget.data.list-fee-by-category selectedCategoryId='{{ $selectedCategoryFeeId }}'
                     classRoomId='{{ $selectedClassRoom }}' wire:model.live='scolary_fee_filter' />
             </div>
+            <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" title='Impression'
+                class="btn-secondary btn-sm ms-2">
+                @if ($isByDate == true)
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer rapport journalier'
+                        href="{{ route('print.payment.date', [
+                            $date_filter,
+                            $selectedCategoryFeeId,
+                            $scolary_fee_filter,
+                            $section_filter,
+                            $selectedOption,
+                            $class_room_filter,
+                        ]) }}"
+                        target='_blank' />
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Bordereau de versement journalier'
+                        href="{{ route('print.payment.slip.date', [$date_filter]) }}" target='_blank' />
+                @else
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer rapport mensuel'
+                        href="{{ route('print.payment.month', [
+                            $month_filter,
+                            $selectedCategoryFeeId,
+                            $scolary_fee_filter,
+                            $section_filter,
+                            $selectedOption,
+                            $class_room_filter,
+                        ]) }}"
+                        target='_blank' />
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Bordereau de versement mensuel'
+                        href="{{ route('print.payment.slip.month', [$month_filter]) }}" target='_blank' />
+                @endif
+            </x-others.dropdown>
         </div>
     </div>
     <div class="d-flex justify-content-center mt-2">
@@ -54,7 +84,7 @@
         </thead>
         @if ($payments->isEmpty())
             <tr>
-                <td colspan="7"><x-errors.data-empty /></td>
+                <td colspan="8"><x-errors.data-empty /></td>
             </tr>
         @else
             <tbody>

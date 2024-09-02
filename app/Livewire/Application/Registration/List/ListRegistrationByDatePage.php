@@ -7,9 +7,11 @@ use App\Models\Registration;
 use App\Models\Student;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListRegistrationByDatePage extends Component
 {
+    use WithPagination;
     protected $listeners = [
         'deletedStudentListner' => 'delete',
     ];
@@ -61,8 +63,16 @@ class ListRegistrationByDatePage extends Component
                 $this->sortBy,
                 $this->sortAsc,
                 $this->per_page
-
             ),
+            'count' => RegistrationFeature::getCount(
+                $this->dateFilter,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $this->isOld
+            )
         ]);
     }
 }

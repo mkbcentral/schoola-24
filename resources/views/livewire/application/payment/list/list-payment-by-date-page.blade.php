@@ -11,10 +11,19 @@
                 <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
             </div>
             <x-form.search-input wire:model.live='q' />
-            <div class="form-group d-flex">
-                <label for="my-select">Type Frais</label>
-                <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='category_fee_filter'
-                    :error="'category_fee_filter'" />
+            <div class="form-group d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                    <label for="my-select">Type Frais</label>
+                    <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='category_fee_filter'
+                        :error="'category_fee_filter'" />
+                </div>
+                <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" class="btn-secondary btn-sm ms-2">
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer rapport'
+                        href="{{ route('print.payment.date', [$date_filter, $category_fee_filter, 0, 0, 0, 0]) }}"
+                        target='_blank' />
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Bordereau de versement'
+                        href="{{ route('print.payment.slip.date', [$date_filter]) }}" target='_blank' />
+                </x-others.dropdown>
             </div>
         </div>
     </div>
@@ -36,7 +45,9 @@
         </thead>
         @if ($payments->isEmpty())
             <tr>
-                <td colspan="7"><x-errors.data-empty /></td>
+                <td colspan="7">
+                    <x-errors.data-empty />
+                </td>
             </tr>
         @else
             <tbody>

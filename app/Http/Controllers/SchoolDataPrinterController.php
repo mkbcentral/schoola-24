@@ -23,7 +23,13 @@ class SchoolDataPrinterController extends Controller
         $pdf->loadView('prints.school.print-list-class-room-by-option', compact(['options']));
         return $pdf->stream();
     }
-
+    /**
+     * Imprimer la liste des iffectifs par classe
+     * @param \Illuminate\Http\Request $request
+     * @param int $classRoomId
+     * @param bool $sortAsc
+     * @return mixed
+     */
     public function printListStudeForClassRoom(
         Request $request,
         int $classRoomId,
@@ -48,6 +54,80 @@ class SchoolDataPrinterController extends Controller
             'prints.school.print-list-students-by-class-room',
             compact(
                 ['registrationns', 'classRoom']
+            )
+        );
+        return $pdf->stream();
+    }
+
+    /**
+     * Imprimer la liste des élèves par date
+     * @param mixed $date
+     * @param bool $isOld
+     * @param bool $sortAsc
+     * @return mixed
+     */
+    public function printListStudentByDate(
+        ?string $date,
+        bool $isOld,
+        bool $sortAsc
+    ): mixed {
+        $sortBy = 'students.name';
+        $registrationns = RegistrationFeature::getListOoldOrNew(
+            $date,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $isOld,
+            null,
+            $sortBy,
+            $sortAsc,
+            1000
+
+        );
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView(
+            'prints.school.print-list-students-by-date-or-month',
+            compact(
+                ['registrationns']
+            )
+        );
+        return $pdf->stream();
+    }
+
+    /**
+     * Imprimer la liste de élèves par mois
+     * @param mixed $month
+     * @param bool $isOld
+     * @param bool $sortAsc
+     * @return mixed
+     */
+    public function printListStudentByMonth(
+        ?string $month,
+        bool $isOld,
+        bool $sortAsc
+    ): mixed {
+        $sortBy = 'students.name';
+        $registrationns = RegistrationFeature::getListOoldOrNew(
+            null,
+            $month,
+            null,
+            null,
+            null,
+            null,
+            $isOld,
+            null,
+            $sortBy,
+            $sortAsc,
+            1000
+
+        );
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView(
+            'prints.school.print-list-students-by-date-or-month',
+            compact(
+                ['registrationns']
             )
         );
         return $pdf->stream();

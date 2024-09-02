@@ -27,6 +27,26 @@ class DateFormatHelper
             ['name' => 'DECEMBRE', 'number' => '12'],
         ];
     }
+
+
+    public static function getScoolFrMonths(): array
+    {
+        return [
+            ['name' => 'JANVIER', 'number' => '01'],
+            ['name' => 'FEVRIER', 'number' => '02'],
+            ['name' => 'MARS', 'number' => '03'],
+            ['name' => 'AVRIL', 'number' => '04'],
+            ['name' => 'MAI', 'number' => '05'],
+            ['name' => 'JUIN', 'number' => '06'],
+            ['name' => 'JUILLET', 'number' => '07'],
+            ['name' => 'AOUT', 'number' => '08'],
+            ['name' => 'SEPTEMBRE', 'number' => '09'],
+            ['name' => 'OCTOBRE', 'number' => '10'],
+            ['name' => 'NOVEMBRE', 'number' => '11'],
+            ['name' => 'DECEMBRE', 'number' => '12'],
+        ];
+    }
+
     /**
      * Get list date for month
      * @param mixed $month

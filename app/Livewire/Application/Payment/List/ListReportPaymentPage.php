@@ -14,10 +14,17 @@ class ListReportPaymentPage extends Component
 
     public int $selectedCategoryFeeId = 0;
     public ?CategoryFee $categoryFeeSelected;
-    public ?string $date_filter = '', $month_filter = '';
-    public int $option_filter = 0, $section_filter = 0, $class_room_filter = 0, $scolary_fee_filter = 0;
-    public int $selectedSection = 0, $selectedOption = 0, $selectedClassRoom = 0;
-    public int $per_page = 10;
+    public ?string $date_filter = '';
+    public string $month_filter = '';
+    public int $option_filter = 0;
+    public ?int $section_filter = 0;
+    public ?int $class_room_filter = 0;
+    public ?int $scolary_fee_filter = 0;
+    public ?int $selectedSection = 0;
+    public ?int $selectedOption = 0;
+    public ?int $selectedClassRoom = 0;
+    public ?int $per_page = 20;
+    public bool $isByDate = true;
 
     protected $listeners = [
         "selectedCategoryFee" => 'getSelectedCategoryFee'
@@ -35,11 +42,13 @@ class ListReportPaymentPage extends Component
 
     public function updatedMonthFilter()
     {
-        $this->date_filter = null;
+        $this->date_filter = '';
+        $this->isByDate = false;
     }
     public function updatedDateFilter()
     {
         $this->month_filter = "";
+        $this->isByDate = true;
     }
     /**
      * Summary of updatedSectionFilter

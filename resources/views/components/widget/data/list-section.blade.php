@@ -4,8 +4,8 @@
 @endphp
 
 <select id="my-select" class="form-control" {{ $attributes }}>
-    <option value="">Choisir...</option>
-    <option class="0">Tout</option>
+    <option disabled>Choisir...</option>
+    <option value="0">Tout</option>
     @foreach ($sections as $section)
         <option class="text-uppercase" value="{{ $section->id }}">{{ $section->name }}</option>
     @endforeach
