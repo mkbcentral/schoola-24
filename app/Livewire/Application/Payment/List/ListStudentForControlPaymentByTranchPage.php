@@ -11,7 +11,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ListStudentForControlPaymentPage extends Component
+class ListStudentForControlPaymentByTranchPage extends Component
 {
     use WithPagination;
     protected $listeners = [
@@ -61,7 +61,7 @@ class ListStudentForControlPaymentPage extends Component
 
     public function render()
     {
-        return view('livewire.application.payment.list.list-student-for-control-payment-page', [
+        return view('livewire.application.payment.list.list-student-for-control-payment-by-tranch-page', [
             'registrations' => RegistrationFeature::getList(
                 null,
                 null,
@@ -75,7 +75,12 @@ class ListStudentForControlPaymentPage extends Component
                 100
 
             ),
-
+            'scolarFees' => FeeDataConfiguration::getListScalarFee(
+                $this->selectedCategoryFeeId,
+                null,
+                $this->class_room_filter,
+                10
+            )
         ]);
     }
 }

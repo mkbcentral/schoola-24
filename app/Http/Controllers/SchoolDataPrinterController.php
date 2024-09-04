@@ -90,7 +90,7 @@ class SchoolDataPrinterController extends Controller
         $pdf->loadView(
             'prints.school.print-list-students-by-date-or-month',
             compact(
-                ['registrationns']
+                ['registrationns', 'date', 'isOld']
             )
         );
         return $pdf->stream();

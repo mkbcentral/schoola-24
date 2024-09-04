@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Features\Payment\PaymentFeature;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -179,7 +180,7 @@ class Registration extends Model
             ->join("options", "options.id", "=", "class_rooms.option_id")
             ->join("sections", "sections.id", "=", "options.section_id")
             ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
-
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->when($filters['date'], function ($query, $date) {
                 return $query->whereDate('registrations.created_at', $date);
             })
@@ -203,8 +204,39 @@ class Registration extends Model
                     'registrationFee',
                     'classRoom',
                     'schoolYear',
+                    'payments',
                     'rate'
                 ]
             );
+    }
+
+    public function getStatusPayment(int $registrationId, $categoryFeeId, string $month): bool
+    {
+        $statuse = false;
+        $payment = PaymentFeature::getSinglePaymentForStudentWithMonth($registrationId, $categoryFeeId, $month);
+        if ($payment) {
+            $statuse = true;
+        } else {
+            $statuse = false;
+        }
+
+        return $statuse;
+    }
+
+    public function getStatusPaymentByTranch(int $registrationId, $categoryFeeId, int $scolarFeeId): bool
+    {
+        $statuse = false;
+        $payment = PaymentFeature::getSinglePaymentForStudentWithTranche(
+                $registrationId,
+                $categoryFeeId,
+                $scolarFeeId
+            );
+        if ($payment) {
+            $statuse = true;
+        } else {
+            $statuse = false;
+        }
+
+        return $statuse;
     }
 }

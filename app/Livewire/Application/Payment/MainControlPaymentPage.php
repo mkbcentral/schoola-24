@@ -3,6 +3,7 @@
 namespace App\Livewire\Application\Payment;
 
 use App\Domain\Features\Configuration\FeeDataConfiguration;
+use App\Models\CategoryFee;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,18 +11,19 @@ class MainControlPaymentPage extends Component
 {
     use WithPagination;
     public int $selectedIndex = 0;
-
+    public ?CategoryFee $categoryFeeSelected = null;
 
     public function mount()
     {
-        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
-        $this->selectedIndex = $categoryFee->id;
+        $this->categoryFeeSelected = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
+        $this->selectedIndex = $this->categoryFeeSelected->id;
     }
 
     public function changeIndex(int $index)
     {
         $this->selectedIndex = $index;
         $this->dispatch('selectedCategoryFee', $index);
+        $this->categoryFeeSelected = CategoryFee::find($index);
     }
 
 

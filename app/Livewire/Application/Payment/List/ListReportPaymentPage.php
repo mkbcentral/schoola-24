@@ -11,7 +11,9 @@ use Livewire\WithPagination;
 class ListReportPaymentPage extends Component
 {
     use WithPagination;
-
+    protected $listeners = [
+        "selectedCategoryFee" => 'getSelectedCategoryFee'
+    ];
     public int $selectedCategoryFeeId = 0;
     public ?CategoryFee $categoryFeeSelected;
     public ?string $date_filter = '';
@@ -26,9 +28,7 @@ class ListReportPaymentPage extends Component
     public ?int $per_page = 20;
     public bool $isByDate = true;
 
-    protected $listeners = [
-        "selectedCategoryFee" => 'getSelectedCategoryFee'
-    ];
+
     /**
      * Recuprer le categorie de frais selectionné
      * @param int $index
@@ -80,8 +80,8 @@ class ListReportPaymentPage extends Component
      */
     public function mount(int $categoryFeeId)
     {
-        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
         $this->selectedCategoryFeeId = $categoryFeeId;
+        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
         $this->date_filter = date('Y-m-d');
         $this->categoryFeeSelected = $categoryFee;
     }

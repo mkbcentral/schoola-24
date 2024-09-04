@@ -10,7 +10,7 @@
             <td style="border: none;font-weight: bold" class="text-right">COORDONATEUR</td>
         </tr>
         <tr>
-            <td style="border: none;">NKULU MWENEZ Nomie</td>
+            <td style="border: none;">NKULU MWENZE Naomie</td>
             <td style="border: none;" class="text-right">KAMWANYA MPELEMBE Gauthier</td>
         </tr>
     </tbody>

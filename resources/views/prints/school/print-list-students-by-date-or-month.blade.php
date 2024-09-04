@@ -1,7 +1,14 @@
 <x-print-layout>
 
     <div class="">
-        <h6>Total:
+        <h6>
+            Type: {{ $isOld == true ? 'Réinscription' : 'Inscriptions' }}
+        </h6>
+        <h6>
+            Date: {{ (new DateTime($date))->format('d/m/Y') }}
+        </h6>
+        <h6>
+            Total:
             {{ $registrationns->count() <= 1 ? $registrationns->count() . ' Elève' : $registrationns->count() . ' Elèves' }}
         </h6>
         <table class="table table-bordered table-sm">

@@ -1,5 +1,5 @@
 <div>
-    <x-navigation.bread-crumb icon='bi bi-currency-exchange' label="Gestionnaire des payments">
+    <x-navigation.bread-crumb icon='bi bi-arrow-left-right' label="Control paiement">
         <x-navigation.bread-crumb-item label='Paiements des frais' />
         <x-navigation.bread-crumb-item label='Dasnboard' isLinked=true link="dashboard.main" />
     </x-navigation.bread-crumb>
@@ -22,7 +22,14 @@
                         <x-widget.loading-circular-md wire:loading />
                     </div>
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <livewire:application.payment.list.list-student-for-control-payment-page :categoryFeeId='$selectedIndex' />
+                        @if ($categoryFeeSelected->is_paid_in_installment)
+                            <livewire:application.payment.list.list-student-for-control-payment-by-tranch-page
+                                :categoryFeeId='$selectedIndex' />
+                        @else
+                            <livewire:application.payment.list.list-student-for-control-payment-page
+                                :categoryFeeId='$selectedIndex' />
+                        @endif
+
                     </div>
                 </div>
             </div>

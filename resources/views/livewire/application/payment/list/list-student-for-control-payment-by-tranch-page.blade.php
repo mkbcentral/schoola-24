@@ -1,6 +1,5 @@
 <div>
     @php
-        $months = App\Domain\Helpers\DateFormatHelper::getScoolFrMonths();
         $paymentStatus = false;
     @endphp
     <div class="d-flex justify-content-between align-items-center">
@@ -29,8 +28,8 @@
                     <span>NOM COMPLET</span>
                     <x-form.sort-icon sortField="students.name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
                 </th>
-                @foreach ($months as $month)
-                    <th class="text-center">{{ $month['name'] }}</th>
+                @foreach ($scolarFees as $scolarFee)
+                    <th class="text-ellipsis">{{ $scolarFee->name }}</th>
                 @endforeach
 
             </tr>
@@ -49,12 +48,12 @@
                         </td>
                         <td>{{ $registration->student->name }}/{{ $registration->classRoom->getOriginalClassRoomName() }}
                         </td>
-                        @foreach ($months as $month)
+                        @foreach ($scolarFees as $scolarFee)
                             @php
-                                $paymentStatus = $registration->getStatusPayment(
+                                $paymentStatus = $registration->getStatusPaymentByTranch(
                                     $registration->id,
                                     $selectedCategoryFeeId,
-                                    $month['number'],
+                                    $scolarFee->id,
                                 );
                             @endphp
                             <td

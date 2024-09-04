@@ -17,17 +17,17 @@ interface IFeeDataConfiguration
 
     /**
      * Retourner la liste des frais scolaire
-     * @param int $categoryId
-     * @param int $optionId
-     * @param int $classRoomId
+     * @param mixed $categoryId
+     * @param mixed $optionId
+     * @param mixed $classRoomId
      * @param int $per_page
      * @return mixed
      */
     public static function getListScalarFee(
-        int $categoryId,
-        int $optionId,
-        int $classRoomId,
-        int $per_page
+        ?int $categoryId,
+        ?int $optionId,
+        ?int $classRoomId,
+        int $per_page = 10
     ): mixed;
 
     /**

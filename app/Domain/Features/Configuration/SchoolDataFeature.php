@@ -58,4 +58,14 @@ class SchoolDataFeature implements ISchoolDataConfig
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->get();
     }
+
+    public static function getOptionFirstOption(int $per_page = 10): Option
+    {
+        return Option::query()
+            ->join('sections', 'options.section_id',  'sections.id')
+            ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+            ->with('section')
+            ->select('options.*')
+            ->first();
+    }
 }

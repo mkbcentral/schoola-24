@@ -62,6 +62,14 @@ class Payment extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * Retourner le montant en CDF
+     * @return void
+     */
+    public function getAmount(): int|float
+    {
+        return $this->scolarFee->amount;
+    }
 
     /**
      * Summary of scopeFilter
@@ -140,12 +148,15 @@ class Payment extends Model
             ->select('payments.*');
     }
 
-    /**
-     * Retourner le montant en CDF
-     * @return void
-     */
-    public function getAmount(): int|float
+
+    public function reusableScopeData(Builder $query): Builder
     {
-        return $this->scolarFee->amount;
+        return $query->join('registrations', 'registrations.id', 'payments.registration_id')
+            ->join('students', 'students.id', 'registrations.student_id')
+            ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
+            ->join('scolar_fees', 'payments.scolar_fee_id', 'scolar_fees.id')
+            ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
+            ->where('responsible_students.school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID());
     }
 }

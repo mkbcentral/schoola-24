@@ -24,11 +24,25 @@ class FeeDataConfiguration implements IFeeDataConfiguration
     /**
      * @inheritDoc
      */
+
+    /**
+     * @inheritDoc
+     */
+    public static function getListCategoryFeeForCurrentSchool(): CategoryFee
+    {
+        return CategoryFee::query()
+            ->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->first();
+    }
+    /**
+     * @inheritDoc
+     */
     public static function getListScalarFee(
-        int $categoryId,
-        int $optionId,
-        int $classRoomId,
-        int $per_page
+        int|null $categoryId,
+        int|null $optionId,
+        int|null $classRoomId,
+        int $per_page = 10
     ): mixed {
         return ScolarFee::query()
             ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
@@ -50,15 +64,5 @@ class FeeDataConfiguration implements IFeeDataConfiguration
             ->where('category_fees.school_id', School::DEFAULT_SCHOOL_ID())
             ->select('scolar_fees.*')
             ->paginate($per_page);
-    }
-    /**
-     * @inheritDoc
-     */
-    public static function getListCategoryFeeForCurrentSchool(): CategoryFee
-    {
-        return CategoryFee::query()
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->first();
     }
 }
