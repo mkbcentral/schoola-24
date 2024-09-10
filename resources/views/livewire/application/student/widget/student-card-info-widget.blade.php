@@ -74,10 +74,11 @@
         </div>
         <div class="card-footer">
             <div class="d-flex justify-content-between align-items-center">
-                <x-form.app-button wire:click='edit({{ $registration->student }})' data-bs-toggle="modal"
-                    data-bs-target="#form-edit-student" textButton='Modifier' icon="bi bi-pencil-fill"
-                    class="app-btn" />
-                <small class="text-muted">Inscrit dép 3 mois</small>
+                @can('manage-student')
+                    <x-form.app-button wire:click='edit({{ $registration->student }})' data-bs-toggle="modal"
+                        data-bs-target="#form-edit-student" textButton='Modifier' icon="bi bi-pencil-fill"
+                        class="app-btn" />
+                @endcan
             </div>
         </div>
         <x-widget.data.student-qrcode />

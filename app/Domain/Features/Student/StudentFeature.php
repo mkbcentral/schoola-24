@@ -3,9 +3,12 @@
 namespace App\Domain\Features\Student;
 
 use App\Domain\Contract\Student\IStudent;
+use App\Models\Registration;
 use App\Models\School;
 use App\Models\SchoolYear;
 use App\Models\Student;
+use Illuminate\Support\Facades\Storage;
+use LaravelQRCode\Facades\QRCode;
 
 /**
  * Summary of StudentFeature
@@ -112,5 +115,29 @@ class StudentFeature implements IStudent
                 'registration.classRoom'
             ])
             ->paginate($per_page);
+    }
+    /**
+     * @inheritDoc
+     */
+    public static function generateStudentQRCode(Registration $registration): string
+    {
+        $filename = $registration->student->name . '-qr-code.png';
+        $directory = 'school/qrcodes';
+
+        // Créer le répertoire s'il n'existe pas
+        if (!Storage::exists('public/' . $directory)) {
+            Storage::makeDirectory('public/' . $directory);
+        }
+
+        // Chemin complet où le QR code sera sauvegardé
+        $path = $directory . '/' . $filename;
+
+        // Générer et stocker le QR code
+        QRCode::text($registration->code)
+            ->setOutfile(storage_path('app/public/' . $path))
+            ->png();
+        // Retourner le chemin relatif
+        $relativePath = '/storage/' . $path;
+        return $relativePath;
     }
 }

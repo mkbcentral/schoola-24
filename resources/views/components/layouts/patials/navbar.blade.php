@@ -7,7 +7,8 @@
                 </a>
             </li>
             <li class="nav-item d-none d-md-block">
-                <a href="#" class="nav-link">{{ Auth::user()?->school?->name }}</a>
+                <a href="#"
+                    class="nav-link">{{ Auth::user()?->school?->type . ' ' . Auth::user()?->school?->name }}</a>
             </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -49,20 +50,23 @@
                 </ul>
             </li>
 
-            <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                    data-bs-toggle="dropdown"> <img src="{{ asset('images/defautl-user.jpg') }}"
-                        class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">
-                        {{ Auth::user()->name }}</span> </a>
-                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
-                    <li class="user-header text-bg-primary"> <img src="{{ asset('images/defautl-user.jpg') }}"
-                            class="rounded-circle shadow" alt="User Image">
+            <li class="nav-item dropdown user-menu">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <img src="{{ asset(Auth::user()->avatar != null ? 'storage/' . Auth::user()->avatar : 'images/defautl-user.jpg') }}"
+                        id="imageProfile" class="user-image rounded-circle shadow" alt="User Image">
+                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                    <li class="user-header text-bg-primary">
+                        <img src="{{ asset(Auth::user()->avatar != null ? 'storage/' . Auth::user()->avatar : 'images/defautl-user.jpg') }}"
+                            id="imageProfile2" class="rounded-circle shadow" alt="User Image">
                         <p>
                             {{ Auth::user()->name }}
                             <small>{{ Auth::user()->email }}</small>
                         </p>
-                    </li> <!--end::User Image--> <!--begin::Menu Body-->
+                    </li>
                     <li class="user-footer">
-                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                        <a href="{{ route('admin.user.profile') }}" class="btn btn-default btn-flat">Profile</a>
 
                         <form method="POST" action="{{ route('logout') }}" class="float-end">
                             @csrf

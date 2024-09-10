@@ -15,9 +15,12 @@
             </h4>
             <div class="d-flex">
                 <x-form.search-input wire:model.live='q' />
-                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-secondary btn-sm ms-2">
+                <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" class="btn-secondary btn-sm ms-2">
                     <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
                         href="{{ route('print.students.by.classRomm', [$classRoomId, $sortAsc]) }}" target='_blank' />
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer les cartes'
+                        href="{{ route('print.students.cards.by.classRomm', [$classRoomId, $sortAsc]) }}"
+                        target='_blank' />
                 </x-others.dropdown>
             </div>
         </div>

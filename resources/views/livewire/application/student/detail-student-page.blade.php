@@ -6,9 +6,10 @@
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
         <div class="row gx-2">
-            <div class="col-6">
+            <div class="col">
                 <livewire:application.student.widget.student-card-info-widget :registration="$registration" />
             </div>
+
     </x-content.main-content-page>
 
 </div>

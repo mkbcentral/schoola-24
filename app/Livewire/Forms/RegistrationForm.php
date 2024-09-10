@@ -56,6 +56,8 @@ class RegistrationForm extends Form
                 'is_old' => $this->is_old,
                 'created_at' => $this->created_at,
             ]);
+            $qrcode = StudentFeature::generateStudentQRCode($registration);
+            $registration->update(['qr_code' => $qrcode]);
         }
         return $registration;
     }

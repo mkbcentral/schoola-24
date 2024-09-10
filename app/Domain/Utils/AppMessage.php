@@ -6,6 +6,7 @@ class AppMessage
 {
     const LOGGED_IN_SUCCESS = "Connexion bien établie !";
     const DATA_SAVED_SUCCESS = "Donnée bien sauvegardée";
+    const QRCODE_GENERATED_SUCCESSFULLY = "QRCode bien généré";
     const DATA_UPDATED_SUCCESS = "Donnée bien mises à jour";
     const DATA_DELETED_SUCCESS = "Donnée bien rétirée";
 

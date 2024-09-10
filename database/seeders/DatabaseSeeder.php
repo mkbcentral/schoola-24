@@ -2,11 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Domain\Helpers\RegistrationHelper;
 use App\Enums\RoleType;
 use App\Models\CategoryRegistrationFee;
 use App\Models\CategorySalary;
 use App\Models\Currency;
 use App\Models\Rate;
+use App\Models\Registration;
 use App\Models\Role;
 use App\Models\School;
 use App\Models\SchoolYear;
@@ -50,11 +52,12 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Inscription', 'school_id' => $school->id],
             ['name' => 'Réinscription', 'school_id' => $school->idb],
         ]);
-        */
+
         $categorySalaries = [
             ['name' => 'Salaire', 'school_id' => 1, 'school_year_id' => 1],
             ['name' => 'Prime', 'school_id' => 1, 'school_year_id' => 1],
         ];
         CategorySalary::insert($categorySalaries);
+        */
     }
 }

@@ -18,7 +18,7 @@
                                     <img class="img-fluid rounded-circle me-2" style="width: 70px;height: 70px;"
                                         src="{{ asset($school->logo == null ? 'images/defautl-user.jpg' : 'storage/' . $school->logo) }}"
                                         alt="User Image">
-                                    <h5>{{ $school->name }}</h5>
+                                    <h5>{{ $school->type . ' ' . $school->name }}</h5>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mt-4">
                                     <span

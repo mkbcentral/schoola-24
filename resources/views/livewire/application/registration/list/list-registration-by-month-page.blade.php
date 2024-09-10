@@ -37,6 +37,7 @@
                             <x-form.sort-icon sortField="name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
                         </th>
                         <th>CLASSE</th>
+                        <th class="text-center">STATUS</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -53,15 +54,22 @@
                                 <td>{{ $registration->student->name }}</td>
                                 <td>{{ $registration->classRoom->getOriginalClassRoomName() }}</td>
                                 <td class="text-center">
-                                    @can('manage-student')
-                                        <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                            class="btn-secondary btn-sm">
+                                    <span class="badge text-bg-{{ $registration->is_old ? 'warning' : 'info' }}">
+                                        {{ $registration->is_old ? 'Ancien' : 'Nouveau' }}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+
+                                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                                        class="btn-secondary btn-sm">
+                                        <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
+                                            labelText='Voir détails'
+                                            href="{{ route('student.detail', $registration) }}" />
+                                        @can('manage-student')
                                             <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
                                                 data-bs-target="#form-edit-student" labelText='Editer' href="#"
                                                 wire:click='edit({{ $registration->student }})' />
-                                            <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
-                                                labelText='Voir détails'
-                                                href="{{ route('student.detail', $registration) }}" />
+
                                             <x-others.dropdown-link iconLink='bi bi-arrow-left-right'
                                                 labelText='Basculuer la classe' data-bs-toggle="modal"
                                                 data-bs-target="#form-change-class-student"
@@ -73,8 +81,9 @@
                                             <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
                                                 href="#"
                                                 wire:click='showDeleteDialog({{ $registration->student }})' />
-                                        </x-others.dropdown>
-                                    @endcan
+                                        @endcan
+
+                                    </x-others.dropdown>
 
                                 </td>
                             </tr>

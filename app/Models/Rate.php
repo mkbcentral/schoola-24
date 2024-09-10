@@ -32,8 +32,12 @@ class Rate extends Model
         return $this->hasMany(Payment::class);
     }
 
-    public static function DEFAULT_RATE_ID()
+    public static function DEFAULT_RATE(): int
     {
-        return Rate::query()->where('is_changed', false)->firstOrFail()->id;
+        return Rate::query()->where('is_changed', false)->first()->amount;
+    }
+    public static function DEFAULT_RATE_ID(): int
+    {
+        return Rate::query()->where('is_changed', false)->first()->id;
     }
 }

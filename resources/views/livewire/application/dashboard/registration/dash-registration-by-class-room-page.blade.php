@@ -7,7 +7,7 @@
                 <x-widget.data.list-option wire:model.live='option_filer' />
             </div>
             <div>
-                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-secondary btn-sm">
+                <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" class="btn-secondary btn-sm">
                     <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
                         href="{{ route('class.room.by.option') }}" target='_blank' />
                 </x-others.dropdown>

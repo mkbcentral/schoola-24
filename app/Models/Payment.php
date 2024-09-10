@@ -72,20 +72,14 @@ class Payment extends Model
     }
 
     /**
-     * Summary of scopeFilter
+     * Scope pour les données liste avec des filtres spécifiques
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param array $filters
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFilter(Builder $query, array $filters): Builder
     {
-        return $query->join('registrations', 'registrations.id', 'payments.registration_id')
-            ->join('students', 'students.id', 'registrations.student_id')
-            ->join('class_rooms', 'class_rooms.id', 'registrations.class_room_id')
-            ->join('options', 'options.id', 'class_rooms.option_id')
-            ->join('sections', 'sections.id', 'options.section_id')
-            ->join('scolar_fees', 'scolar_fees.id', 'payments.scolar_fee_id')
-            ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
+        return $this->reusableScopeData($query)
             ->when(
                 $filters['date'],
                 function ($query, $f) {
@@ -148,12 +142,31 @@ class Payment extends Model
             ->select('payments.*');
     }
 
+    /**
+     * Scope pour les requetes non lister (montant,nombre, un paiement )
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotFilter(Builder $query): Builder
+    {
+        return $this->reusableScopeData($query);
+    }
 
+
+    /**
+     * Données du reutilisable dans un scope
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function reusableScopeData(Builder $query): Builder
     {
-        return $query->join('registrations', 'registrations.id', 'payments.registration_id')
+        return $query
+            ->join('registrations', 'registrations.id', 'payments.registration_id')
             ->join('students', 'students.id', 'registrations.student_id')
             ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
+            ->join('class_rooms', 'class_rooms.id', 'registrations.class_room_id')
+            ->join('options', 'options.id', 'class_rooms.option_id')
+            ->join('sections', 'sections.id', 'options.section_id')
             ->join('scolar_fees', 'payments.scolar_fee_id', 'scolar_fees.id')
             ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
             ->where('responsible_students.school_id', School::DEFAULT_SCHOOL_ID())

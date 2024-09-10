@@ -44,69 +44,74 @@ use App\Livewire\Application\Student\List\ListStudentPage;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', MainDashobardPage::class)->name('dashboard.main');
-    //Routes load on registration group
-    Route::prefix('registration')->group(function () {
-        Route::get('/responsible-sudent', ListResponsibleStudentPage::class)->name('responsible.main');
-        Route::get('/students', ListStudentPage::class)->name('student.list');
-        Route::get('/student/{registration}', DetailStudentPage::class)->name('student.detail');
-        Route::get('registration-date/{isOld}/{dateFilter}', ListRegistrationByDatePage::class)->name('registration.date');
-        Route::get('registration-month/{isOld}/{monthFilter}', ListRegistrationByMonthPage::class)->name('registration.month');
-        Route::get('registration-by-class-room/{classRoomId}', ListRegistrationByClassRoomPage::class)->name('registration.by.class-room');
+
+    Route::middleware(['access.chercker'])->group(function () {
+        Route::get('/', MainDashobardPage::class)->name('dashboard.main');
+        //Routes load on registration group
+        Route::prefix('registration')->group(function () {
+            Route::get('/responsible-sudent', ListResponsibleStudentPage::class)->name('responsible.main');
+            Route::get('/students', ListStudentPage::class)->name('student.list');
+        });
+        //Routes work on confiiguration group
+        Route::prefix('configuration')->group(function () {
+            Route::get('section', ListSectionPage::class)->name('school.section');
+            Route::get('option', ListOptionPage::class)->name('school.option');
+            Route::get('class-room', ListClassRoomPage::class)->name('school.class-room');
+        });
+        //Routes work on sttings school fees
+        Route::prefix('fee-setting')->group(function () {
+            Route::get('/registration', ListRegistrationFeePage::class)->name('fee.registration');
+            Route::get('/scolar', MainScolarFeePage::class)->name('fee.scolar');
+            Route::get('/category-scolar', ListCategoryScolarFeePage::class)->name('category.fee.scolar');
+            Route::get('/category-registration', ListCategoryRegistrationFeePage::class)->name('category.fee.registration');
+        });
+        //Routes work on administration
+        Route::prefix('administration')->group(function () {
+            Route::get('user-profile', UserProfilePage::class)->name('admin.user.profile');
+            Route::get('users', ListUserPage::class)->name('admin.main');
+            Route::get('roles', ListRolePage::class)->name('admin.role');
+            Route::get('schools', ListSchoolPage::class)->name('admin.schools');
+        });
+        //Routes work on payments
+        Route::prefix('payment')->group(function () {
+            Route::get('new-payment', NewPaymentPage::class)->name('payment.new');
+            Route::get('regularization', MainRegularizationPaymentPage::class)->name('payment.regularization');
+            Route::get('rapport', MainPaymentPage::class)->name('payment.rappport');
+            Route::get('control', MainControlPaymentPage::class)->name('payment.control');
+        });
+        //Route work on finance
+        Route::prefix('finance')->group(function () {
+            Route::get('bank', MainBankPage::class)->name('finance.bank');
+            Route::get('saving-money', MainSavingMoneyPage::class)->name('finance.saving.money');
+            Route::get('salary', MainSalaryPage::class)->name('finance.salary');
+            Route::get('money-borrowing', MainMoneyBorrowingPage::class)->name('finance.money.borrowing');
+            Route::get('rate', MainRatePage::class)->name('finance.rate');
+        });
+        //Routes work on expense
+        Route::prefix('expense')->group(function () {
+            Route::get('category', MainCateoryExpensePage::class)->name('expense.category');
+            Route::get('other-source', MainOtherSourceExpensePage::class)->name('expense.other.source');
+            Route::get('fee', MainExpensePage::class)->name('expense.fee');
+            Route::get('other', MainOtherExpensePage::class)->name('expense.other');
+        });
+        //Routes work on navigation
+        Route::prefix('navigation')->group(function () {
+            Route::get('single', MainSingleAppLinkPage::class)->name('navigation.single');
+            Route::get('multi', MainMultiAppLinkPage::class)->name('navigation.multi');
+            Route::get('sub', MainSubLinkPage::class)->name('navigation.sub');
+        });
     });
-    //Routes work on confiiguration group
-    Route::prefix('configuration')->group(function () {
-        Route::get('section', ListSectionPage::class)->name('school.section');
-        Route::get('option', ListOptionPage::class)->name('school.option');
-        Route::get('class-room', ListClassRoomPage::class)->name('school.class-room');
-    });
-    //Routes work on sttings school fees
-    Route::prefix('fee-setting')->group(function () {
-        Route::get('/registration', ListRegistrationFeePage::class)->name('fee.registration');
-        Route::get('/scolar', MainScolarFeePage::class)->name('fee.scolar');
-        Route::get('/category-scolar', ListCategoryScolarFeePage::class)->name('category.fee.scolar');
-        Route::get('/category-registration', ListCategoryRegistrationFeePage::class)->name('category.fee.registration');
-    });
-    //Routes work on administration
-    Route::prefix('administration')->group(function () {
-        Route::get('user-profile', UserProfilePage::class)->name('admin.user.profile');
-        Route::get('users', ListUserPage::class)->name('admin.main');
-        Route::get('roles', ListRolePage::class)->name('admin.role');
-        Route::get('schools', ListSchoolPage::class)->name('admin.schools');
-        Route::get('attach-single-menu/{user}', AttacheSingleMenuToUserPage::class)->name('admin.attach.single.menu');
-        Route::get('attach-multi-menu/{user}', AttachMultiAppLinkToUserPage::class)->name('admin.attach.multi.menu');
-        Route::get('attach-sub-menu/{user}', AttacheSubMenuToUserPage::class)->name('admin.attach.sub.menu');
-        Route::get('schools', ListSchoolPage::class)->name('admin.schools');
-        Route::get('configure-school/{school}', ConfigureSchoolPage::class)->name('admin.school.configure');
-    });
-    //Routes work on payments
-    Route::prefix('payment')->group(function () {
-        Route::get('new-payment', NewPaymentPage::class)->name('payment.new');
-        Route::get('regularization', MainRegularizationPaymentPage::class)->name('payment.regularization');
-        Route::get('rapport', MainPaymentPage::class)->name('payment.rappport');
-        Route::get('control', MainControlPaymentPage::class)->name('payment.control');
-    });
-    //Route work on finance
-    Route::prefix('finance')->group(function () {
-        Route::get('bank', MainBankPage::class)->name('finance.bank');
-        Route::get('saving-money', MainSavingMoneyPage::class)->name('finance.saving.money');
-        Route::get('salary', MainSalaryPage::class)->name('finance.salary');
-        Route::get('money-borrowing', MainMoneyBorrowingPage::class)->name('finance.money.borrowing');
-        Route::get('rate', MainRatePage::class)->name('finance.rate');
-    });
-    //Routes work on expense
-    Route::prefix('expense')->group(function () {
-        Route::get('category', MainCateoryExpensePage::class)->name('expense.category');
-        Route::get('other-source', MainOtherSourceExpensePage::class)->name('expense.other.source');
-        Route::get('fee', MainExpensePage::class)->name('expense.fee');
-        Route::get('other', MainOtherExpensePage::class)->name('expense.other');
-    });
-    //Routes work on navigation
-    Route::prefix('navigation')->group(function () {
-        Route::get('single', MainSingleAppLinkPage::class)->name('navigation.single');
-        Route::get('multi', MainMultiAppLinkPage::class)->name('navigation.multi');
-        Route::get('sub', MainSubLinkPage::class)->name('navigation.sub');
-    });
+
+    Route::get('registration/student/{registration}', DetailStudentPage::class)->name('student.detail');
+    Route::get('registration/registration-date/{isOld}/{dateFilter}', ListRegistrationByDatePage::class)->name('registration.date');
+    Route::get('registration/registration-month/{isOld}/{monthFilter}', ListRegistrationByMonthPage::class)->name('registration.month');
+    Route::get('registration/registration-by-class-room/{classRoomId}', ListRegistrationByClassRoomPage::class)->name('registration.by.class-room');
+
+    Route::get('administration/attach-single-menu/{user}', AttacheSingleMenuToUserPage::class)->name('admin.attach.single.menu');
+    Route::get('administration/attach-multi-menu/{user}', AttachMultiAppLinkToUserPage::class)->name('admin.attach.multi.menu');
+    Route::get('administration/attach-sub-menu/{user}', AttacheSubMenuToUserPage::class)->name('admin.attach.sub.menu');
+    Route::get('administration/configure-school/{school}', ConfigureSchoolPage::class)->name('admin.school.configure');
+
     //Routes work to print receipt
     Route::controller(PrintPaymentReceiptController::class)->group(function () {
         Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt');
@@ -121,6 +126,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 ->name('class.room.by.option');
             Route::get('students-by-class-room/{classRoomId}/{sortAsc}', 'printListStudeForClassRoom')
                 ->name('print.students.by.classRomm');
+            Route::get('students-cards-by-class-room/{classRoomId}/{sortAsc}', 'printListStudentCardsForClassRoom')
+                ->name('print.students.cards.by.classRomm');
             Route::get('students-by-date/{date}/{isOld}/{sortAsc}', 'printListStudentByDate')
                 ->name('print.students.by.date');
             Route::get('students-by-month/{month}/{isOld}/{sortAsc}', 'printListStudentByMonth')

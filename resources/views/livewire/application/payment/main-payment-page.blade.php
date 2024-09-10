@@ -22,7 +22,13 @@
                         <x-widget.loading-circular-md wire:loading />
                     </div>
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <livewire:application.payment.list.list-report-payment-page :categoryFeeId='$selectedIndex' />
+
+
+                        @if ($categoryFeeSelected->is_paid_in_installment)
+                            <livewire:application.payment.list.list-report-payment-by-tranch-page :categoryFeeId='$selectedIndex' />
+                        @else
+                            <livewire:application.payment.list.list-report-payment-page :categoryFeeId='$selectedIndex' />
+                        @endif
                     </div>
                 </div>
             </div>

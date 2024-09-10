@@ -2,6 +2,7 @@
 
 namespace App\Domain\Contract\Student;
 
+use App\Models\Registration;
 use App\Models\Student;
 
 interface  IStudent
@@ -25,4 +26,11 @@ interface  IStudent
     ): mixed; //Recuperer la liste des éléves
     public static function update(Student $student, array $input): bool; //Mettre à jour un éléve
     public static function delete(Student $student): bool; //Retirer un éléves
+
+    /**
+     * Cette function permet de générer un qrocode
+     * @param \App\Models\Registration $registration
+     * @return string
+     */
+    public static function generateStudentQRCode(Registration $registration): string;
 }

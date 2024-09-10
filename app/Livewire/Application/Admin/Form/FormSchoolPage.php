@@ -53,6 +53,7 @@ class FormSchoolPage extends Component
         $this->form->reset();
         $this->school = null;
         $this->dispatch('listSchoolRefred');
+        $this->dispatch('schoolConfigDataRefreshed');
     }
     public function cancelUpdate(): void
     {

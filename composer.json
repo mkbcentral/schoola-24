@@ -11,6 +11,7 @@
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^2.2",
         "bensampo/laravel-enum": "^6.11",
+        "giauphan/laravel-qr-code": "^1.0",
         "laravel/fortify": "^1.21",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",

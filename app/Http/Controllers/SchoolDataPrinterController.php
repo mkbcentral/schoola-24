@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ClassRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use LaravelQRCode\Facades\QRCode;
 
 class SchoolDataPrinterController extends Controller
 {
@@ -58,6 +59,43 @@ class SchoolDataPrinterController extends Controller
         );
         return $pdf->stream();
     }
+
+    /**
+     * Imprimer la liste des iffectifs par classe
+     * @param \Illuminate\Http\Request $request
+     * @param int $classRoomId
+     * @param bool $sortAsc
+     * @return mixed
+     */
+    public function printListStudentCardsForClassRoom(
+        Request $request,
+        int $classRoomId,
+        bool $sortAsc
+    ): mixed {
+        $sortBy = 'students.name';
+        $classRoom = ClassRoom::find($classRoomId);
+        $registrationns = RegistrationFeature::getList(
+            null,
+            null,
+            null,
+            null,
+            $classRoomId,
+            null,
+            null,
+            $sortBy,
+            $sortAsc,
+            100
+        );
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView(
+            'prints.school.print-list-students-cards-by-class-room',
+            compact(
+                ['registrationns', 'classRoom']
+            )
+        );
+        return $pdf->stream();
+    }
+
 
     /**
      * Imprimer la liste des élèves par date

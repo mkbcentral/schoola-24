@@ -22,6 +22,7 @@ class Registration extends Model
         'class_room_id',
         'school_year_id',
         'rate_id',
+        'qr_code',
         'is_registered',
         'is_old',
         'abandoned',
@@ -227,10 +228,10 @@ class Registration extends Model
     {
         $statuse = false;
         $payment = PaymentFeature::getSinglePaymentForStudentWithTranche(
-                $registrationId,
-                $categoryFeeId,
-                $scolarFeeId
-            );
+            $registrationId,
+            $categoryFeeId,
+            $scolarFeeId
+        );
         if ($payment) {
             $statuse = true;
         } else {

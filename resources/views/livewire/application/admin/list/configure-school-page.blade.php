@@ -7,9 +7,7 @@
     <x-content.main-content-page>
         <div class="d-flex justify-content-between">
             <div>
-                <img class="img-fluid rounded-circle me-2" style="width: 70px;height: 70px;"
-                    src="{{ asset($school->logo == null ? 'images/defautl-user.jpg' : 'storage/' . $school->logo) }}"
-                    alt="User Image">
+                <livewire:application.admin.school.updatelogo-school-page />
                 <h2 id="schoolNameTop" class="mb-3">{{ $school->name }}</h2>
                 <p class="mb-1">
                     <i class="bi bi-telephone-fill me-2"></i>

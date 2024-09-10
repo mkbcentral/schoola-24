@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Application\Dashboard\Payment;
 
+use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Models\CategoryFee;
 use App\Models\School;
@@ -15,7 +16,7 @@ class DashPaymentPage extends Component
         "monthFilder" => "getMonthFilter",
     ];
     public string $date_filter;
-    public string $month_filter;
+    public string $month_filter = '';
 
     public bool $is_by_date = true;
 
@@ -36,11 +37,9 @@ class DashPaymentPage extends Component
     }
     public function render()
     {
+
         return view('livewire.application.dashboard.payment.dash-payment-page', [
-            'categoryFees' => CategoryFee::query()
-                ->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-                ->get(),
+            'categoryFees' =>  FeeDataConfiguration::getListCategoryFee(100),
             'total' => $this->is_by_date == true ?
                 PaymentFeature::getTotal(
                     $this->date_filter,
