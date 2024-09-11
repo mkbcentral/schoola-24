@@ -15,25 +15,31 @@ class StudentPaymentStatusController extends Controller
     {
         $status = false;
         $registration = Registration::where('code', $request->code)->first();
-        $payment = PaymentFeature::getSinglePaymentForStudentWithMonth(
-            $registration->id,
-            $request->category_fee_id,
-            $request->month
-        );
-        if ($payment) {
-            $status = true;
+        if ($registration) {
+            $payment = PaymentFeature::getSinglePaymentForStudentWithMonth(
+                $registration->id,
+                $request->category_fee_id,
+                $request->month
+            );
+            if ($payment) {
+                $status = true;
+            } else {
+                $status = false;
+            }
+            if ($status == true) {
+                return response()->json([
+                    'mesage' => "En ordre",
+                    'status' => $status
+                ]);
+            } else {
+                return response()->json([
+                    'mesage' => "Pas en ordre",
+                    'status' => $status
+                ]);
+            }
         } else {
-            $status = false;
-        }
-        if ($status == true) {
             return response()->json([
-                'mesage' => "En ordre",
-                'status' => $status
-            ]);
-        } else {
-            return response()->json([
-                'mesage' => "Pas en ordre",
-                'status' => $status
+                'error' => "Eleve introuvable"
             ]);
         }
     }

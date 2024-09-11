@@ -4,6 +4,7 @@ namespace App\Livewire\Application\Student\List;
 
 use App\Domain\Features\Registration\RegistrationFeature;
 use App\Domain\Features\Student\StudentFeature;
+use App\Domain\Helpers\RegistrationHelper;
 use App\Domain\Utils\AppMessage;
 use App\Models\Registration;
 use App\Models\Student;
@@ -129,6 +130,11 @@ class ListStudentPage extends Component
      */
     public function refreshData(): void
     {
+        $registrations = Registration::all();
+        foreach ($registrations as $registration) {
+            $code =  RegistrationHelper::gerenateRegistrationCode($registration->class_room_id, rand(100, 1000));
+            $registration->update(['code' => $code]);
+        }
         $this->reset();
         $this->resetPage();
     }
