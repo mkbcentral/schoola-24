@@ -5,9 +5,12 @@
         <x-navigation.bread-crumb-item label='Dasnboard' isLinked=true link="dashboard.main" />
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
-        <div class="row gx-2">
-            <div class="col">
+        <div class="row">
+            <div class="col-md-4">
                 <livewire:application.student.widget.student-card-info-widget :registration="$registration" />
+            </div>
+            <div class="col-md-8">
+                <livewire:application.widgets.student.student-payments-info-widget :registration="$registration" />
             </div>
 
     </x-content.main-content-page>

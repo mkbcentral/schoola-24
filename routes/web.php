@@ -67,7 +67,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         //Routes work on administration
         Route::prefix('administration')->group(function () {
-            Route::get('user-profile', UserProfilePage::class)->name('admin.user.profile');
             Route::get('users', ListUserPage::class)->name('admin.main');
             Route::get('roles', ListRolePage::class)->name('admin.role');
             Route::get('schools', ListSchoolPage::class)->name('admin.schools');
@@ -111,7 +110,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('administration/attach-multi-menu/{user}', AttachMultiAppLinkToUserPage::class)->name('admin.attach.multi.menu');
     Route::get('administration/attach-sub-menu/{user}', AttacheSubMenuToUserPage::class)->name('admin.attach.sub.menu');
     Route::get('administration/configure-school/{school}', ConfigureSchoolPage::class)->name('admin.school.configure');
-
+    Route::get('administration/user-profile', UserProfilePage::class)->name('admin.user.profile');
     //Routes work to print receipt
     Route::controller(PrintPaymentReceiptController::class)->group(function () {
         Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt');

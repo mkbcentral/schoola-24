@@ -4,7 +4,6 @@ namespace App\Livewire\Application\Student\List;
 
 use App\Domain\Features\Registration\RegistrationFeature;
 use App\Domain\Features\Student\StudentFeature;
-use App\Domain\Helpers\RegistrationHelper;
 use App\Domain\Utils\AppMessage;
 use App\Models\Registration;
 use App\Models\Student;
@@ -30,10 +29,26 @@ class ListStudentPage extends Component
     public $sortAsc = true;
 
     public ?Student $studentToDelete;
-    public array $selectedRegistrations = [];
-    public $selectPageRows;
+    public  $selectedRegistrations;
+    public bool $selectPageRows = false;
 
-    public function updatedSelectPageRows() {}
+    /**
+     * Selectionner toutes les ligne de du table
+     * @param mixed $value
+     * @return void
+     */
+    public function updatedSelectPageRows($value)
+    {
+        if ($value) {
+            $this->per_page = 1000;
+            $this->selectedRegistrations = $this->registrations->pluck('id')->map(function ($id) {
+                return (string)$id;
+            });
+        } else {
+            $this->reset(['selectedRegistrations', 'selectPageRows']);
+            $this->per_page = 10;
+        }
+    }
 
     public function updatedOptionFilter($val): void
     {
@@ -41,9 +56,8 @@ class ListStudentPage extends Component
             $this->option_filter = 0;
         }
     }
-
     /**
-     * Filtrer le manière (ASC/DESC)
+     * Trier le manière (ASC/DESC)
      * @param mixed $value
      * @return void
      */
@@ -53,6 +67,7 @@ class ListStudentPage extends Component
             $this->sortBy = !$this->sortBy;
         }
         $this->sortAsc = $value;
+        $this->resetPage();
     }
 
     /**
@@ -114,12 +129,8 @@ class ListStudentPage extends Component
      */
     public function refreshData(): void
     {
-        $registrations = Registration::all();
-        foreach ($registrations as $registration) {
-            $code =  RegistrationHelper::gerenateRegistrationCode($registration->class_room_id, rand(100, 1000));
-            $registration->update(['code' => $code]);
-        }
         $this->reset();
+        $this->resetPage();
     }
 
     /**
@@ -171,49 +182,29 @@ class ListStudentPage extends Component
     }
 
     /**
-     * Générer un les qr-code pour tout les élèves
-     * @return void
+     * Fonction magique (computed) qui permet d'avoir les regisations dans tout les composant
+     * @return mixed
      */
-    public function generateQrcodeForAll(): void
+    public function getRegistrationsProperty()
     {
-        try {
-            $registrations = RegistrationFeature::getList(
-                null,
-                null,
-                null,
-                $this->option_filter,
-                null,
-                null,
-                $this->q,
-                $this->sortBy,
-                $this->sortAsc,
-                1000
-            );
-            foreach ($registrations as $registration) {
-                $qrcode = StudentFeature::generateStudentQRCode($registration);
-                $registration->update(['qr_code' => $qrcode]);
-            }
-            $this->dispatch('added', ['message' => AppMessage::QRCODE_GENERATED_SUCCESSFULLY]);
-        } catch (Exception $ex) {
-            $this->dispatch('delete-student-failed', ['message' => $ex->getMessage()]);
-        }
+        return RegistrationFeature::getList(
+            null,
+            null,
+            null,
+            $this->option_filter,
+            null,
+            null,
+            $this->q,
+            $this->sortBy,
+            $this->sortAsc,
+            $this->per_page
+        );
     }
 
     public function render()
     {
         return view('livewire.application.student.list.list-student-page', [
-            'registrations' => RegistrationFeature::getList(
-                null,
-                null,
-                null,
-                $this->option_filter,
-                null,
-                null,
-                $this->q,
-                $this->sortBy,
-                $this->sortAsc,
-                $this->per_page
-            ),
+            'registrations' => $this->registrations,
             'counter' => RegistrationFeature::getCountAll(
                 null,
                 null,

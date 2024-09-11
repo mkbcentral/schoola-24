@@ -220,7 +220,6 @@ class Registration extends Model
         } else {
             $statuse = false;
         }
-
         return $statuse;
     }
 

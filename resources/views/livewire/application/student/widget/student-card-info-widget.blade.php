@@ -37,40 +37,32 @@
         </style>
     @endpush
     <div class="card user-card">
-        <div class="row g-0">
-            <div class="col-md-4 d-flex align-items-center justify-content-center p-3">
-                <img src="{{ asset('images/defautl-user.jpg') }}" alt="User avatar" class="user-avatar" width="100"
-                    height="100">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <strong>Nom:</strong> {{ $registration->student->name }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Genre:</strong> {{ $registration->student->gender }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Age:</strong>
-                            {{ $registration->student->getFormattedAg() }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Classe:</strong>
-                            {{ $registration->classRoom->getOriginalClassRoomName() }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Responsable:</strong>
-                            {{ $registration->student->responsibleStudent->name }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Contact:</strong>
-                            {{ $registration->student->responsibleStudent->phone . ' - ' . $registration->student->responsibleStudent->other_phone }}
-                        </li>
-                    </ul>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>Nom:</strong> {{ $registration->student->name }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Genre:</strong> {{ $registration->student->gender }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Age:</strong>
+                    {{ $registration->student->getFormattedAg() }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Classe:</strong>
+                    {{ $registration->classRoom->getOriginalClassRoomName() }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Responsable:</strong>
+                    {{ $registration->student->responsibleStudent->name }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Contact:</strong>
+                    {{ $registration->student->responsibleStudent->phone . ' - ' . $registration->student->responsibleStudent->other_phone }}
+                </li>
+            </ul>
 
-                </div>
-            </div>
         </div>
         <div class="card-footer">
             <div class="d-flex justify-content-between align-items-center">
@@ -81,7 +73,9 @@
                 @endcan
             </div>
         </div>
-        <x-widget.data.student-qrcode />
+        <div class="text-center">
+            <img src="{{ asset($registration->qr_code) }}" width="120">
+        </div>
     </div>
 
     <livewire:application.student.form.form-edit-student-page />

@@ -13,18 +13,13 @@
                     <x-form.search-input wire:model.live='q' />
                     <x-form.app-button type='button' wire:click='refreshData' textButton=''
                         icon="bi bi-arrow-clockwise" class="app-btn ms-1" />
-
-                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-secondary ms-2">
-                        @if ($selectedRegistrations != [])
+                    @if ($selectedRegistrations != [])
+                        <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-secondary ms-2">
                             <x-others.dropdown-link wire:click='generateQrcodeItems'
                                 wire:confirm="Etês-vous sûre de réaliser l'opération" iconLink='bi bi-qr-code-scan'
                                 labelText='Générer Qrcode' href="#" />
-                        @endif
-                        <x-others.dropdown-link wire:click='generateQrcodeForAll'
-                            wire:confirm="Etês-vous sûre de réaliser l'opération" iconLink='bi bi-qr-code-scan'
-                            labelText='Générer Qrcode pour tous' href="#" />
-                    </x-others.dropdown>
-
+                        </x-others.dropdown>
+                    @endif
                 </div>
                 <div>
                     <h4> Nbre Total: {{ $counter <= 1 ? $counter . 'Elève' : $counter . ' Elèves' }}</h4>
@@ -74,9 +69,15 @@
                                 {{ $index + 1 }}
                             </td>
                             <td class="text-uppercase {{ $registration->abandoned == true ? 'bg-warning' : '' }}">
+                                @if ($registration->qr_code)
+                                    <i class="bi bi-qr-code"></i>
+                                @endif
                                 {{ $registration->code }}
                             </td>
-                            <td>{{ $registration->student->name }}</td>
+                            <td>
+
+                                {{ $registration->student->name }}
+                            </td>
                             <td class="text-center">{{ $registration->student->getFormattedAg() }}</td>
                             <td class="text-center">{{ $registration->student->gender }}</td>
                             <td>{{ $registration?->classRoom?->getOriginalClassRoomName() }}
@@ -105,9 +106,11 @@
                                     @endcan
                                     <x-others.dropdown-link iconLink='bi bi-info-circle-fill' labelText='Voir détails'
                                         href="{{ route('student.detail', $registration) }}" />
-                                    <x-others.dropdown-link wire:click='generateQRCode({{ $registration }})'
-                                        wire:confirm="Etês-vous sûre de réaliser l'opération"
-                                        iconLink='bi bi-qr-code-scan' labelText='Générer Qrcode' href="#" />
+                                    @if (!$registration->qr_code)
+                                        <x-others.dropdown-link wire:click='generateQRCode({{ $registration }})'
+                                            wire:confirm="Etês-vous sûre de réaliser l'opération"
+                                            iconLink='bi bi-qr-code-scan' labelText='Générer Qrcode' href="#" />
+                                    @endif
                                 </x-others.dropdown>
                             </td>
                         </tr>
@@ -156,7 +159,5 @@
         </script>
     @endpush
 
-    <livewire:application.student.form.form-edit-student-page />
-    <livewire:application.registration.form.form-give-up-student-page />
-    <livewire:application.registration.form.form-change-class-student-page />
+
 </div>

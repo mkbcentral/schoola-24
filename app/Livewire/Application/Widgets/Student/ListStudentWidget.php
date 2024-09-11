@@ -20,24 +20,8 @@ class ListStudentWidget extends Component
         'refreshListStudentWidget' => '$refresh',
         'deletedStudentListner' => 'delete',
     ];
-    public  $registrations;
+    public mixed $registrations;
     public ?Student $studentToDelete;
-    public string $sortBy = '';
-    public bool $sortAsc = true;
-
-
-    /**
-     * Filtrer le manière (ASC/DESC)
-     * @param mixed $value
-     * @return void
-     */
-    public function sortData($value): void
-    {
-        if ($value == $this->sortBy) {
-            $this->sortBy = !$this->sortBy;
-        }
-        $this->sortAsc = $value;
-    }
 
     /**
      * Editer un élève
@@ -154,45 +138,14 @@ class ListStudentWidget extends Component
         }
     }
 
-    /**
-     * Générer un les qr-code pour tout les élèves
-     * @return void
-     */
-    public function generateQrcodeForAll(): void
-    {
-        try {
-            $registrations = RegistrationFeature::getList(
-                null,
-                null,
-                null,
-                $this->option_filter,
-                null,
-                null,
-                $this->q,
-                $this->sortBy,
-                $this->sortAsc,
-                1000
-            );
-            foreach ($registrations as $registration) {
-                $qrcode = StudentFeature::generateStudentQRCode($registration);
-                $registration->update(['qr_code' => $qrcode]);
-            }
-            $this->dispatch('added', ['message' => AppMessage::QRCODE_GENERATED_SUCCESSFULLY]);
-        } catch (Exception $ex) {
-            $this->dispatch('delete-student-failed', ['message' => $ex->getMessage()]);
-        }
-    }
 
-    public function mount(mixed  $registrations, bool $sortAsc, string $sortBy)
+    public function mount(mixed  $registrations)
     {
         $this->registrations = $registrations;
-        $this->sortAsc = $sortAsc;
-        $this->sortBy = $sortBy;
     }
 
     public function render()
     {
-
         return view('livewire.application.widgets.student.list-student-widget');
     }
 }

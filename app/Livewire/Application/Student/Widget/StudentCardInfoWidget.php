@@ -12,11 +12,6 @@ class StudentCardInfoWidget extends Component
     public function mount(Registration $registration)
     {
         $this->registration = $registration;
-        $studentInfo = new \stdClass;
-        $studentInfo->code = $registration->code;
-        $studentInfo->name = $registration->student->name;
-        $studentInfo->classRoom = $registration->classRoom->getOriginalClassRoomName();
-        $this->dispatch('loading-qrcode', $studentInfo);
     }
 
     public function edit(Student $student)
