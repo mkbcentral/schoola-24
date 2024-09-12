@@ -20,7 +20,7 @@ class ListPaymentByDatePage extends Component
     ];
     public ?string $date_filter = '';
     public int $category_fee_filter = 0;
-    public int $per_page = 10;
+    public int $per_page = 100;
     public ?CategoryFee $categoryFeeSelected;
     #[Url(as: 'q')]
     public $q = '';
