@@ -23,7 +23,7 @@ class LoginController extends Controller
                 ->first();
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response([
-                    'error' => 'The provided credentials are incorrect.',
+                    'error' => 'Email ou mot de passe incorrect.',
                 ], 500);
             } else {
                 $token = $user->createToken('token')->plainTextToken;

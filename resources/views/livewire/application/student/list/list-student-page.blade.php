@@ -159,5 +159,11 @@
         </script>
     @endpush
 
+    @livewire('application.student.form.form-student-page')
+    @livewire('application.registration.form.form-give-up-student-page')
+    @include('application.registration.form.form-change-class-student-page')
+
+
+
 
 </div>
