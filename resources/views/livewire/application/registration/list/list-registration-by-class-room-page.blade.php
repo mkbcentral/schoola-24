@@ -85,4 +85,6 @@
         </table>
     </x-content.main-content-page>
     <livewire:application.student.form.form-edit-student-page />
+    <livewire:application.registration.form.form-give-up-student-page />
+    <livewire:application.registration.form.form-change-class-student-page />
 </div>
