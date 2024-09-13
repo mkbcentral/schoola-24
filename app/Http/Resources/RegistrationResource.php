@@ -18,7 +18,7 @@ class RegistrationResource extends JsonResource
             'id' => $this->id,
             'code' => $this->code,
             'name' => $this->student->name,
-            'class' => $this->classRoom->getOriginalClassRoomName(),
+            'classRoom' => $this->classRoom->getOriginalClassRoomName(),
         ];
     }
 }
