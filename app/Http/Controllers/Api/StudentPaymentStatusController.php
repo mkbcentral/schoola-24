@@ -6,20 +6,23 @@ use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryFeeResource;
+use App\Http\Resources\RegistrationResource;
 use App\Models\Registration;
-use Illuminate\Http\Request;
 
 class StudentPaymentStatusController extends Controller
 {
-    public function checkStudentHasPaied(Request $request)
-    {
+    public function checkStudentHasPaied(
+        string $code,
+        int $categoryFeeId,
+        string $month
+    ) {
         $status = false;
-        $registration = Registration::where('code', $request->code)->first();
+        $registration = Registration::where('code', $code)->first();
         if ($registration) {
             $payment = PaymentFeature::getSinglePaymentForStudentWithMonth(
                 $registration->id,
-                $request->category_fee_id,
-                $request->month
+                $categoryFeeId,
+                $month
             );
             if ($payment) {
                 $status = true;
@@ -28,11 +31,13 @@ class StudentPaymentStatusController extends Controller
             }
             if ($status == true) {
                 return response()->json([
+                    'student' => new RegistrationResource($registration),
                     'mesage' => "En ordre",
-                    'status' => $status
+                    'status' => $status,
                 ]);
             } else {
                 return response()->json([
+                    'student' => new RegistrationResource($registration),
                     'mesage' => "Pas en ordre",
                     'status' => $status
                 ]);

@@ -11,7 +11,7 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller(StudentPaymentStatusController::class)->group(function () {
-        Route::get('payment/status', 'checkStudentHasPaied');
+        Route::get('payment/status/{code}/{categoryFeeId}/{month}', 'checkStudentHasPaied');
         Route::get('fee/categories', 'getListCategoryFee');
     });
 });
