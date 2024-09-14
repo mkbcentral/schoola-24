@@ -34,18 +34,18 @@ class StudentPaymentStatusController extends Controller
                     'student' => new RegistrationResource($registration),
                     'mesage' => "En ordre",
                     'status' => $status,
-                ]);
+                ], 200);
             } else {
                 return response()->json([
                     'student' => new RegistrationResource($registration),
                     'mesage' => "Pas en ordre",
                     'status' => $status
-                ]);
+                ], 200);
             }
         } else {
             return response()->json([
                 'error' => "Eleve introuvable"
-            ]);
+            ], 404);
         }
     }
 
