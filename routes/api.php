@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\StudentPaymentStatusController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::post('/login', LoginController::class);
+    Route::get('/logout', LogoutController::class)->middleware('auth:sanctum');
 });
