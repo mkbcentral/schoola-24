@@ -72,14 +72,17 @@ class StudentCounterController extends Controller
                 null
             );
             $classRoomCount = [];
+            $total = 0;
             foreach ($classRooms as $classRoom) {
                 $classRoomCount[] = [
                     'name' => $classRoom->getOriginalClassRoomName(),
                     'count' => $classRoom->getRegistrationCountForCurrentSchoolYear(),
                 ];
+                $total += $classRoom->getRegistrationCountForCurrentSchoolYear();
             }
             return response()->json([
-                'classRooms' => $classRoomCount
+                'total' => $total,
+                'classRooms' => $classRoomCount,
             ]);
         } catch (Exception $ex) {
             return response()->json([
