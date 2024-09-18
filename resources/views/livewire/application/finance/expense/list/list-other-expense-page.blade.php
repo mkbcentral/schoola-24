@@ -19,7 +19,7 @@
         </div>
         <div class="d-flex align-items-center  me-2">
             <x-form.label value="{{ __('Source') }}" class="fw-bold me-2" />
-            <x-widget.data.list-category-expense type='text' wire:model.live='other_source_expense_id_filter'
+            <x-widget.data.list-other-source-expense type='text' wire:model.live='other_source_expense_id_filter'
                 :error="'other_source_expense_id_filter'" />
         </div>
         <div class="d-flex align-items-center  me-2">

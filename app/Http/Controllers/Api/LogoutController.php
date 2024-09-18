@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LogoutController extends Controller

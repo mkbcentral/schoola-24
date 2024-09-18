@@ -26,6 +26,7 @@ use App\Livewire\Application\Finance\Expense\MainExpensePage;
 use App\Livewire\Application\Finance\Expense\MainOtherExpensePage;
 use App\Livewire\Application\Finance\Expense\MainOtherSourceExpensePage;
 use App\Livewire\Application\Finance\Rate\MainRatePage;
+use App\Livewire\Application\Finance\Salary\List\ListCategorySalaryPage;
 use App\Livewire\Application\Finance\Salary\MainSalaryPage;
 use App\Livewire\Application\Finance\Saving\MainSavingMoneyPage;
 use App\Livewire\Application\Navigation\MainMultiAppLinkPage;
@@ -83,6 +84,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('bank', MainBankPage::class)->name('finance.bank');
             Route::get('saving-money', MainSavingMoneyPage::class)->name('finance.saving.money');
             Route::get('salary', MainSalaryPage::class)->name('finance.salary');
+            Route::get('salary/category', ListCategorySalaryPage::class)->name('finance.salary.category');
             Route::get('money-borrowing', MainMoneyBorrowingPage::class)->name('finance.money.borrowing');
             Route::get('rate', MainRatePage::class)->name('finance.rate');
         });
