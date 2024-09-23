@@ -119,14 +119,15 @@
                                             <img src="{{ public_path(Auth::user()->school->logo != null ? 'storage/' . Auth::user()->school->logo : 'images/defautl-user.jpg') }}"
                                                 alt="Logo" width="50px" height="50px">
                                         </div>
-                                        <div class="school-name">{{ Auth::user()->school->name }}</div>
+                                        <div class="school-name">
+                                            {{ Auth::user()->school->type }}{{ Auth::user()->school->name }}</div>
                                     </div>
                                 </div>
                                 <div class="schoola-id">SCHOOLA-ID</div>
                                 <img src="{{ public_path($registrationn->qr_code == null ? 'empty.png' : $registrationn->qr_code) }}"
                                     alt="QR Code" class="qr-code">
                                 <div class="id-number">ID:{{ $registrationn->code }}</div>
-                                <div class="website">www.schoola.app</div>
+                                <div class="website">https://mkbcentral.com</div>
                             </div>
                         </td>
                     </tr>

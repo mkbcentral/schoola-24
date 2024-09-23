@@ -28,7 +28,7 @@ class LoginController extends Controller
             } else {
                 $token = $user->createToken('token')->plainTextToken;
                 return response([
-                    'data' => new UserResource($user),
+                    'user' => new UserResource($user),
                     'token' => $token,
                 ], 200);
             }

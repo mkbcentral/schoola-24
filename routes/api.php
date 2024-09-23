@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(PaymentRepportPaymentController::class)->group(function () {
         Route::get('payment/repport/date/{date}', 'getPaymentbyDate');
         Route::get('payment/repport/month/{month}', 'getPaymentbyMonth');
+        Route::get('student/payments/{code}', action: 'getStudentPayment');
     });
 
     Route::controller(StudentCounterController::class)->group(function () {
