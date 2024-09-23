@@ -130,11 +130,6 @@ class ListStudentPage extends Component
      */
     public function refreshData(): void
     {
-        $registrations = Registration::all();
-        foreach ($registrations as $registration) {
-            $code =  RegistrationHelper::gerenateRegistrationCode($registration->class_room_id, rand(100, 1000));
-            $registration->update(['code' => $code]);
-        }
         $this->reset();
         $this->resetPage();
     }
