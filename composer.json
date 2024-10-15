@@ -17,6 +17,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "mediumart/orange-sms": "^2.0",
         "mike42/escpos-php": "^4.0"
     },
     "require-dev": {

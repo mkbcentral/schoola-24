@@ -107,7 +107,14 @@
                         </td>
                         <td class="text-end">{{ app_format_number($payment->getAmount(), 1) }}
                             {{ $payment->scolarFee->categoryFee->currency }}</td>
-                        <td class="text-center"></td>
+                        <td class="text-center">
+                            <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                                class="btn-secondary btn-sm">
+                                <x-others.dropdown-link iconLink='bi bi-send-plus' labelText='Envoyer SMS'
+                                    wire:confirm="Etês-vous sûre d'envoyer l'SMS" href="#"
+                                    wire:click='sendSMS({{ $payment }})' class="text-primary" />
+                            </x-others.dropdown>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

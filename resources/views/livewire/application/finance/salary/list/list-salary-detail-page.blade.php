@@ -6,7 +6,7 @@
         </div>
         @if ($salary != null)
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="d-flex justify-content-center pb-2">
                         <x-widget.loading-circular-md wire:loading wire:target='getRegistration' />
                     </div>
@@ -26,7 +26,7 @@
                                         <th class="">DESCRIPTION</th>
                                         <th class="text-end">M.T USD</th>
                                         <th class="text-end">M.T CDF</th>
-                                        <th class="text-end">ACTIONS</th>
+                                        <th class="text-center">ACTIONS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,7 +48,7 @@
                                                     -
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <x-form.app-button type='button' icon="bi bi-pencil-fill"
                                                     class="btn-sm app-btn" wire:click='edit({{ $salaryDetail }})' />
                                                 <x-form.app-button type='button' icon="bi bi-trash-fill"
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="card p-2">
                         <div>
                             <span>
@@ -90,6 +90,12 @@
                                 <x-errors.validation-error value='form.currency' />
                             </div>
                             <div class="mt-2">
+                                <x-form.label value="{{ __('Categorie') }}" />
+                                <x-widget.data.list-cat-salary wire:model.blur='form.category_salary_id'
+                                    :error="'form.category_salary_id'" />
+                                <x-errors.validation-error value='form.category_salary_id' />
+                            </div>
+                            <div class="mt-2">
                                 <x-form.label value="{{ __('Description') }}" />
                                 <x-form.input type='text' wire:model.blur='form.description' :error="'form.description'" />
                                 <x-errors.validation-error value='form.description' />
@@ -98,12 +104,6 @@
                                 <x-form.label value="{{ __('Monatnt') }}" />
                                 <x-form.input type='text' wire:model.blur='form.amount' :error="'form.amount'" />
                                 <x-errors.validation-error value='form.amount' />
-                            </div>
-                            <div class="mt-2">
-                                <x-form.label value="{{ __('Categorie') }}" />
-                                <x-widget.data.list-cat-salary wire:model.blur='form.category_salary_id'
-                                    :error="'form.category_salary_id'" />
-                                <x-errors.validation-error value='form.category_salary_id' />
                             </div>
                             <div class="d-flex justify-content-end mt-4">
                                 <x-form.app-button type='submit' textButton="Sauvegarder" icon="bi bi-arrow-left-righ"

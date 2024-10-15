@@ -4,7 +4,6 @@ namespace App\Livewire\Application\Student\List;
 
 use App\Domain\Features\Registration\RegistrationFeature;
 use App\Domain\Features\Student\StudentFeature;
-use App\Domain\Helpers\RegistrationHelper;
 use App\Domain\Utils\AppMessage;
 use App\Models\Registration;
 use App\Models\Student;

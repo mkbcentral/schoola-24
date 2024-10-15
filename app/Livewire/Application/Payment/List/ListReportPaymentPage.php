@@ -2,11 +2,15 @@
 
 namespace App\Livewire\Application\Payment\List;
 
-use App\Domain\Features\Configuration\FeeDataConfiguration;
-use App\Domain\Features\Payment\PaymentFeature;
-use App\Models\CategoryFee;
+use Exception;
+use App\Models\Payment;
 use Livewire\Component;
+use App\Models\CategoryFee;
 use Livewire\WithPagination;
+use App\Domain\Utils\AppMessage;
+use App\Domain\Helpers\SmsNoficationHelper;
+use App\Domain\Features\Payment\PaymentFeature;
+use App\Domain\Features\Configuration\FeeDataConfiguration;
 
 class ListReportPaymentPage extends Component
 {
@@ -85,6 +89,18 @@ class ListReportPaymentPage extends Component
         $this->date_filter = date('Y-m-d');
         $this->categoryFeeSelected = $categoryFee;
     }
+
+    public function sendSMS(Payment $payment)
+    {
+        try {
+            $phone = $payment->registration->student->responsibleStudent->phone;
+            SmsNoficationHelper::sendOrangeSMS($phone, "Test sms");
+            $this->dispatch('updated', ['message' => AppMessage::SMS_SENT]);
+        } catch (Exception $ex) {
+            $this->dispatch('error', ['message' => $ex->getMessage()]);
+        }
+    }
+
 
     public function render()
     {

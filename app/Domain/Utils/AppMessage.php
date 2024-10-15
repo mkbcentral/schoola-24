@@ -9,6 +9,7 @@ class AppMessage
     const QRCODE_GENERATED_SUCCESSFULLY = "QRCode bien généré";
     const DATA_UPDATED_SUCCESS = "Donnée bien mises à jour";
     const DATA_DELETED_SUCCESS = "Donnée bien rétirée";
+    const SMS_SENT = "Sms bien envoyé";
 
     const ACTION_FAILLED = "Echec de l'opération !";
     const DATA_DELETED_FAILLED = "Impossible de réaliser l'opoération";
