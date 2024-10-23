@@ -3,10 +3,12 @@
 namespace App\Domain\Features\Configuration;
 
 use App\Domain\Contract\Configuration\IFeeDataConfiguration;
+use App\Enums\RoleType;
 use App\Models\CategoryFee;
 use App\Models\School;
 use App\Models\SchoolYear;
 use App\Models\ScolarFee;
+use Illuminate\Support\Facades\Auth;
 
 class FeeDataConfiguration implements IFeeDataConfiguration
 {
@@ -16,10 +18,29 @@ class FeeDataConfiguration implements IFeeDataConfiguration
      */
     public static function getListCategoryFee(int $per_page): mixed
     {
-        return CategoryFee::query()
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->paginate($per_page);
+
+        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE){
+            return CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->paginate($per_page);
+        }elseif (
+            Auth::user()->role->name == RoleType::SCHOOL_MANAGER ||
+            Auth::user()->role->name == RoleType::SCHOOL_BOSS
+        ){
+            return CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->where('is_accessory',false)
+                ->paginate($per_page);
+        }
+        else{
+            return CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->where('is_accessory',true)
+                ->paginate($per_page);
+        }
     }
     /**
      * @inheritDoc

@@ -22,7 +22,7 @@ class PaymentFeature implements IPayment
                 'scolar_fee_id' => $input['scolar_fee_id'],
                 'rate_id' => Rate::DEFAULT_RATE_ID(),
                 'user_id' => Auth::id()
-            ]);;
+            ]);
     }
     /**
      * @inheritDoc
@@ -31,13 +31,13 @@ class PaymentFeature implements IPayment
         string|null $date,
         string|null $month,
         string|null $q,
-        int|null $categoryFeeId,
-        int|null $feeId,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        bool|null $isPaid = false,
-        int $perPage
+        int|null    $categoryFeeId,
+        int|null    $feeId,
+        int|null    $sectionId,
+        int|null    $optionId,
+        int|null    $classRoomId,
+        bool|null   $isPaid,
+        int         $perPage
     ): mixed {
         $filters = [
             'date' => $date,
@@ -48,7 +48,8 @@ class PaymentFeature implements IPayment
             'sectionId' => $sectionId,
             'optionId' => $optionId,
             'classRoomId' => $classRoomId,
-            'isPaid' => $isPaid
+            'isPaid' => $isPaid,
+            'isAccessory' => null
         ];
         return Payment::query()
             ->filter($filters)
@@ -60,12 +61,12 @@ class PaymentFeature implements IPayment
     public static function getCount(
         string|null $date,
         string|null $month,
-        int|null $categfeeIdoryFeeId,
-        int|null $feeId,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        bool|null $isPaid
+        int|null    $categfeeIdoryFeeId,
+        int|null    $feeId,
+        int|null    $sectionId,
+        int|null    $optionId,
+        int|null    $classRoomId,
+        bool|null   $isPaid
     ): int {
         return 0;
     }
@@ -81,6 +82,7 @@ class PaymentFeature implements IPayment
         int|null $optionId,
         int|null $classRoomId,
         bool|null $isPaid,
+        bool|null $isAccessory,
         string|null $currency
     ): float {
         $filters = [
@@ -92,7 +94,8 @@ class PaymentFeature implements IPayment
             'sectionId' => $sectionId,
             'optionId' => $optionId,
             'classRoomId' => $classRoomId,
-            'isPaid' => $isPaid
+            'isPaid' => $isPaid,
+            'isAccessory' => $isAccessory,
         ];
 
         $total = 0;

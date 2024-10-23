@@ -52,6 +52,7 @@ class CheckRedirectUserRoute
             RoleType::SCHOOL_TEACHER => $routes,
             RoleType::SCHOOL_DIRECTOR => $routes,
             RoleType::SCHOOL_BOSS => $routes,
+            RoleType::SCHOOL_GUARD => $routes,
         ];
     }
 }

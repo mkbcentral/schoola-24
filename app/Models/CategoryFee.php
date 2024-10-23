@@ -20,7 +20,9 @@ class CategoryFee extends Model
         'currency',
         'is_paid_in_installment',
         'is_paid_for_registration',
-        'is_state_fee'
+        'is_state_fee',
+        'is_for_dash',
+        'is_accessory'
     ];
 
     /**
@@ -34,6 +36,8 @@ class CategoryFee extends Model
             'is_state_fee' => 'boolean',
             'is_paid_in_installment' => 'boolean',
             'is_paid_for_registration' => 'boolean',
+            'is_for_dash' => 'boolean',
+            'is_accessory' => 'boolean',
         ];
     }
 
@@ -68,6 +72,7 @@ class CategoryFee extends Model
             null,
             null,
             true,
+            null,
             'CDF'
         );
     }

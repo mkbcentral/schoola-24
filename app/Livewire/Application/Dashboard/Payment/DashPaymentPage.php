@@ -50,6 +50,7 @@ class DashPaymentPage extends Component
                     null,
                     null,
                     true,
+                    null,
                     'CDF'
                 ) : PaymentFeature::getTotal(
                     null,
@@ -60,6 +61,7 @@ class DashPaymentPage extends Component
                     null,
                     null,
                     true,
+                    false,
                     'CDF'
                 )
         ]);

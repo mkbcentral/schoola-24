@@ -96,6 +96,7 @@ class ListPaymentByDatePage extends Component
                 null,
                 0,
                 true,
+                null,
                 'CDF'
             ),
             'categoryFees' => FeeDataConfiguration::getListCategoryFee(100)

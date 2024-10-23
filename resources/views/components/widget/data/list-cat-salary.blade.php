@@ -3,6 +3,7 @@
         ->where('school_id', App\Models\School::DEFAULT_SCHOOL_ID())
         ->where('school_year_id', App\Models\SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
         ->get();
+    
 @endphp
 
 <select id="my-select" class="form-select form-control" {{ $attributes }}>

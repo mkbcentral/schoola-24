@@ -140,6 +140,12 @@ class Payment extends Model
                 }
             )
             ->when(
+                $filters['isAccessory'],
+                function ($query, $f) {
+                    return $query->where('category_fees.is_accessory', $f);
+                }
+            )
+            ->when(
                 $filters['key_to_search'],
                 function ($query, $f) {
                     return $query->where('students.name', 'like', '%' . $f . '%');

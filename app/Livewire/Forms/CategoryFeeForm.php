@@ -20,6 +20,10 @@ class CategoryFeeForm extends Form
     public $is_paid_for_registration = false;
     #[Rule('required', message: "Selection type obligatoire", onUpdate: false)]
     public $is_state_fee = false;
+    #[Rule('required', message: "Selection type obligatoire", onUpdate: false)]
+    public $is_for_dash = false;
+    #[Rule('required', message: "Selection type obligatoire", onUpdate: false)]
+    public $is_accessory = false;
 
     public function create(array $input)
     {

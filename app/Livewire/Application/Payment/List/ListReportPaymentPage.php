@@ -126,6 +126,7 @@ class ListReportPaymentPage extends Component
                 $this->selectedOption,
                 $this->class_room_filter,
                 true,
+                null,
                 "CDF"
             ),
         ]);

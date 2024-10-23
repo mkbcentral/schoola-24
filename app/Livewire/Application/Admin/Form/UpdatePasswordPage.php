@@ -14,15 +14,13 @@ class UpdatePasswordPage extends Component
     public $current_password = '';
     public $confirm_password = '';
 
-    public function update(): void
+    public function updatePassword(): void
     {
         $this->validate([
-            'current_password' => ['required'],
             'old_password' => ['required'],
+            'current_password' => ['required'],
             'confirm_password' => ['required'],
         ]);
-        $user = Auth::user();
-
         try {
             $user = Auth::user();
             if (Hash::check($this->old_password, $user->password)) {

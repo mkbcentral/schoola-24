@@ -22,4 +22,5 @@ final class RoleType extends Enum
     const SCHOOL_DIRECTOR = 'SCHOOL_DIRECTOR';
     const SCHOOL_BOSS = 'SCHOOL_BOSS';
     const APP_ADMIN = 'APP_ADMIN';
+    const SCHOOL_GUARD='SCHOOL_GUARD';
 }
