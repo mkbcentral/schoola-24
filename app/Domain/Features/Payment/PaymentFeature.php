@@ -37,6 +37,7 @@ class PaymentFeature implements IPayment
         int|null    $optionId,
         int|null    $classRoomId,
         bool|null   $isPaid,
+        int|null   $userId,
         int         $perPage
     ): mixed {
         $filters = [
@@ -49,7 +50,8 @@ class PaymentFeature implements IPayment
             'optionId' => $optionId,
             'classRoomId' => $classRoomId,
             'isPaid' => $isPaid,
-            'isAccessory' => null
+            'isAccessory' => null,
+            'userId' => $userId,
         ];
         return Payment::query()
             ->filter($filters)
@@ -66,7 +68,7 @@ class PaymentFeature implements IPayment
         int|null    $sectionId,
         int|null    $optionId,
         int|null    $classRoomId,
-        bool|null   $isPaid
+        bool|null   $isPaid,
     ): int {
         return 0;
     }
@@ -83,6 +85,7 @@ class PaymentFeature implements IPayment
         int|null $classRoomId,
         bool|null $isPaid,
         bool|null $isAccessory,
+        int|null   $userId,
         string|null $currency
     ): float {
         $filters = [
@@ -96,6 +99,7 @@ class PaymentFeature implements IPayment
             'classRoomId' => $classRoomId,
             'isPaid' => $isPaid,
             'isAccessory' => $isAccessory,
+            'userId' => $userId,
         ];
 
         $total = 0;

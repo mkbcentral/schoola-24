@@ -5,9 +5,12 @@ namespace App\Livewire\Application\Payment\List;
 use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Domain\Utils\AppMessage;
+use App\Enums\RoleType;
 use App\Models\CategoryFee;
 use App\Models\Payment;
+use App\Models\School;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -28,7 +31,14 @@ class ListPaymentByDatePage extends Component
     public function mount()
     {
         $this->date_filter = date('Y-m-d');
-        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
+        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE){
+            $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
+        }else{
+            $categoryFee=CategoryFee::query()->where('school_id',School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id',School::DEFAULT_SCHOOL_ID())
+                ->where('is_accessory',true)
+                ->first();
+        }
         $this->category_fee_filter = $categoryFee->id;
         $this->categoryFeeSelected = $categoryFee;
     }
@@ -60,7 +70,7 @@ class ListPaymentByDatePage extends Component
     public function makeIsPaid(?Payment $payment)
     {
         try {
-            if ($payment->is_paid == true) {
+            if ($payment->is_paid) {
                 $payment->is_paid = false;
             } else {
                 $payment->is_paid = true;
@@ -85,6 +95,7 @@ class ListPaymentByDatePage extends Component
                 null,
                 null,
                 null,
+                 Auth::id(),
                 $this->per_page
             ),
             'total_payments' => PaymentFeature::getTotal(
@@ -97,6 +108,7 @@ class ListPaymentByDatePage extends Component
                 0,
                 true,
                 null,
+                Auth::id(),
                 'CDF'
             ),
             'categoryFees' => FeeDataConfiguration::getListCategoryFee(100)

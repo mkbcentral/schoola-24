@@ -27,7 +27,7 @@ interface  IPayment
      * @param mixed $classRoomId
      * @param mixed $isPaid
      * @param int $perPage
-     * @param int $isAccessoire
+     * @param mixed $userId
      * @return mixed
      */
     public static function getList(
@@ -40,6 +40,7 @@ interface  IPayment
         ?int $optionId,
         ?int $classRoomId,
         ?bool $isPaid,
+        ?int $userId,
         int $perPage
     ): mixed;
 
@@ -54,8 +55,9 @@ interface  IPayment
      * @param mixed $classRoomId
      * @param mixed $isPaid
      * @param mixed $isAccessory
+     * @param mixed $userId
      * @param mixed $currency
-     * @return float
+ * @return float
      */
     public static function getTotal(
         ?string $date,
@@ -67,6 +69,7 @@ interface  IPayment
         ?int $classRoomId,
         ?bool $isPaid,
         ?bool $isAccessory,
+        ?int $userId,
         ?string $currency
     ): float;
 

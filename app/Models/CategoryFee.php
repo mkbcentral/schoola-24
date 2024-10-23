@@ -73,6 +73,7 @@ class CategoryFee extends Model
             null,
             true,
             null,
+            null,
             'CDF'
         );
     }
@@ -87,6 +88,8 @@ class CategoryFee extends Model
             null,
             null,
             true,
+            null,
+            null,
             'CDF'
         );
     }

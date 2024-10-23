@@ -97,6 +97,8 @@ class ListReportPaymentByTranchPage extends Component
                 $this->selectedOption,
                 $this->class_room_filter,
                 true,
+                null,
+
                 $this->per_page
             ),
             'scolarFees' => FeeDataConfiguration::getListScalarFee(
@@ -114,6 +116,8 @@ class ListReportPaymentByTranchPage extends Component
                 $this->selectedOption,
                 $this->class_room_filter,
                 true,
+                null,
+                null,
                 "CDF"
             ),
         ]);

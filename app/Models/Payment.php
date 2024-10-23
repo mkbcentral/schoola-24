@@ -146,6 +146,12 @@ class Payment extends Model
                 }
             )
             ->when(
+                $filters['userId'],
+                function ($query, $f) {
+                    return $query->where('payments.user_id', $f);
+                }
+            )
+            ->when(
                 $filters['key_to_search'],
                 function ($query, $f) {
                     return $query->where('students.name', 'like', '%' . $f . '%');
