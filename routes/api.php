@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\StudentCounterController;
 use App\Http\Controllers\Api\StudentPaymentStatusController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\MakePaymentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -14,7 +15,7 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller(StudentPaymentStatusController::class)->group(function () {
-        Route::get('payment/status/{code}/{categoryFeeId}/{month}', 'checkStudentHasPaied');
+        Route::get('payment/status/{code}/{categoryFeeId}/{month}', 'checkStudentHasPaid');
         Route::get('fee/categories', 'getListCategoryFee');
     });
 
@@ -23,6 +24,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('payment/repport/month/{month}', 'getPaymentbyMonth');
         Route::get('student/payments/{code}', action: 'getStudentPayment');
     });
+
+    Route::post('payment/make-payment/{code}',MakePaymentController::class);
 
     Route::controller(StudentCounterController::class)->group(function () {
         Route::get('student/count', 'countOldAndNewStudent');

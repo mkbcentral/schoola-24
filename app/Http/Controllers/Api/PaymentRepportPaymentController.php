@@ -21,22 +21,28 @@ class PaymentRepportPaymentController extends Controller
         try {
             $categories = FeeDataConfiguration::getListCategoryFee(100);
             $payments = [];
+
             foreach ($categories as $category) {
-                $payments[] = [
-                    'name' => $category->name,
-                    'amount' =>  PaymentFeature::getTotal(
-                        $request->date,
-                        null,
-                        $category->id,
-                        null,
-                        null,
-                        null,
-                        null,
-                        true,
-                        'CDF'
-                    ),
-                    'currency' => $category->currency
-                ];
+                $amount=PaymentFeature::getTotal(
+                    $request->date,
+                    null,
+                    $category->id,
+                    null,
+                    null,
+                    null,
+                    null,
+                    true,
+                    null,
+                    'CDF'
+                );
+                if ($amount > 0){
+                    $payments[] = [
+                        'name' => $category->name,
+                        'amount' => $amount ,
+                        'currency' => $category->currency
+                    ];
+                }
+
             }
             return response()->json([
                 'payments' => $payments
@@ -58,21 +64,25 @@ class PaymentRepportPaymentController extends Controller
             $categories = FeeDataConfiguration::getListCategoryFee(100);
             $payments = [];
             foreach ($categories as $category) {
-                $payments[] = [
-                    'name' => $category->name,
-                    'amount' =>  PaymentFeature::getTotal(
-                        null,
-                        $request->month,
-                        $category->id,
-                        null,
-                        null,
-                        null,
-                        null,
-                        true,
-                        'CDF'
-                    ),
-                    'currency' => $category->currency
-                ];
+                $amount=PaymentFeature::getTotal(
+                    null,
+                    $request->month,
+                    $category->id,
+                    null,
+                    null,
+                    null,
+                    null,
+                    true,
+                    null,
+                    'CDF'
+                );
+                if ($amount > 0){
+                    $payments[] = [
+                        'name' => $category->name,
+                        'amount' =>  $amount,
+                        'currency' => $category->currency
+                    ];
+                }
             }
             return response()->json([
                 'payments' => $payments

@@ -11,7 +11,7 @@ use App\Models\Registration;
 
 class StudentPaymentStatusController extends Controller
 {
-    public function checkStudentHasPaied(
+    public function checkStudentHasPaid(
         string $code,
         int $categoryFeeId,
         string $month
@@ -26,25 +26,15 @@ class StudentPaymentStatusController extends Controller
             );
             if ($payment) {
                 $status = true;
-            } else {
-                $status = false;
             }
-            if ($status == true) {
-                return response()->json([
-                    'student' => new RegistrationResource($registration),
-                    'mesage' => "En ordre",
-                    'status' => $status,
-                ], 200);
-            } else {
-                return response()->json([
-                    'student' => new RegistrationResource($registration),
-                    'mesage' => "Pas en ordre",
-                    'status' => $status
-                ], 200);
-            }
+            return response()->json([
+                'student' => new RegistrationResource($registration),
+                'status' => $status,
+            ], 200);
+
         } else {
             return response()->json([
-                'error' => "Eleve introuvable"
+                'message' => "Eleve introuvable"
             ], 404);
         }
     }
