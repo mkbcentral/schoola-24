@@ -33,6 +33,7 @@ class PaymentRepportPaymentController extends Controller
                     null,
                     true,
                     null,
+                    null,
                     'CDF'
                 );
                 if ($amount > 0){
@@ -73,6 +74,7 @@ class PaymentRepportPaymentController extends Controller
                     null,
                     null,
                     true,
+                    null,
                     null,
                     'CDF'
                 );
