@@ -30,6 +30,12 @@ interface IFeeDataConfiguration
         int $per_page = 10
     ): mixed;
 
+    public static function getListScalarFeeNotPaginate(
+        ?int $categoryId,
+        ?int $optionId,
+        ?int $classRoomId,
+    ): mixed;
+
     /**
      * Recuperer la catégorie des frais pour chaque école et année scolaire
      * @return \App\Models\CategoryFee

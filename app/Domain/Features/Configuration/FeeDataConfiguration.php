@@ -86,4 +86,28 @@ class FeeDataConfiguration implements IFeeDataConfiguration
             ->select('scolar_fees.*')
             ->paginate($per_page);
     }
+
+    public static function getListScalarFeeNotPaginate(?int $categoryId, ?int $optionId, ?int $classRoomId,): mixed
+    {
+        return ScolarFee::query()
+            ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
+            ->join('class_rooms', 'class_rooms.id', 'scolar_fees.class_room_id')
+            ->join('options', 'class_rooms.option_id', 'options.id')
+            ->where('category_fee_id', $categoryId)
+            ->when(
+                $optionId,
+                function ($query, $f) {
+                    return $query->where('class_rooms.option_id', $f);
+                }
+            )
+            ->when(
+                $classRoomId,
+                function ($query, $f) {
+                    return $query->where('scolar_fees.class_room_id', $f);
+                }
+            )
+            ->where('category_fees.school_id', School::DEFAULT_SCHOOL_ID())
+            ->select('scolar_fees.*')
+            ->get();
+    }
 }
