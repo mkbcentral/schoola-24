@@ -28,8 +28,5 @@
                 </div>
             @endforeach
         </div>
-        <livewire:application.chart.payment.main-payment-chart-page :date="$date_filter" />
     </div>
-
-
 </div>

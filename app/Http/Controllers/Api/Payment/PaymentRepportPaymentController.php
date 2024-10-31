@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Payment;
 
 use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Domain\Features\Payment\PaymentFeature;

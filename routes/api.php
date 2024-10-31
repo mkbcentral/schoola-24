@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Api\LoginController;
-use App\Http\Controllers\Api\LogoutController;
-use App\Http\Controllers\Api\PaymentRepportPaymentController;
-use App\Http\Controllers\Api\StudentCounterController;
-use App\Http\Controllers\Api\StudentPaymentStatusController;
+use App\Http\Controllers\Api\Expense\ExpenseFeeController;
+use App\Http\Controllers\Api\Payment\MakePaymentController;
+use App\Http\Controllers\Api\Payment\PaymentRepportPaymentController;
+use App\Http\Controllers\Api\Student\StudentCounterController;
+use App\Http\Controllers\Api\Student\StudentPaymentStatusController;
+use App\Http\Controllers\Api\User\AuthUserController;
+use App\Http\Controllers\Api\User\LoginController;
+use App\Http\Controllers\Api\User\LogoutController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\MakePaymentController;
-use App\Http\Controllers\Api\AuthUserController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller(StudentPaymentStatusController::class)->group(function () {
@@ -29,6 +30,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('student/count/section', action: 'countBySection');
         Route::get('student/count/class-room/{optionId}', 'countByClasseRoom');
         Route::get('student/options', 'getListOption');
+    });
+
+    Route::prefix('expense')->group(function () {
+        Route::controller(ExpenseFeeController::class)->group(function () {
+            Route::get('date/{date}', 'getExpenseByDate');
+            Route::get('month/{month}', 'getExpenseByMonth');
+        });
     });
 
 

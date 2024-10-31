@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Student;
 
 use App\Domain\Features\Configuration\SchoolDataFeature;
 use App\Domain\Features\Registration\RegistrationFeature;
