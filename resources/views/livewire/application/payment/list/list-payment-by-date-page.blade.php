@@ -81,9 +81,7 @@
                                 <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
                                     class="text-secondary" wire:confirm='Etês-vous sûre de supprimer' href="#"
                                     wire:click='delete({{ $payment }})' />
-
                             </x-others.dropdown>
-
                         </td>
                     </tr>
                 @endforeach

@@ -1,9 +1,9 @@
+
 @import 'bootstrap/scss/bootstrap';
 @import 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css';
 @import 'admin-lte/dist/css/adminlte.min.css';
 @import 'icheck-bootstrap/icheck-bootstrap.min.css';
 @import 'bootstrap-icons/font/bootstrap-icons.min.css';
-@import 'overlayscrollbars/overlayscrollbars.css';
 @import 'toastr/toastr';
 
 .cursor-hand {
@@ -12,7 +12,7 @@
 }
 
 .text-app {
-    color: #283ae2;
+    color: #342e37;
 }
 
 .bg-app {
@@ -122,15 +122,15 @@ input:focus {
 
 .money_format {
     font-family: Consolas,
-        Menlo,
-        Monaco,
-        Lucida Console,
-        Liberation Mono,
-        DejaVu Sans Mono,
-        Bitstream Vera Sans Mono,
-        Courier New,
-        monospace,
-        serif;
+    Menlo,
+    Monaco,
+    Lucida Console,
+    Liberation Mono,
+    DejaVu Sans Mono,
+    Bitstream Vera Sans Mono,
+    Courier New,
+    monospace,
+    serif;
 }
 
 .zoom {

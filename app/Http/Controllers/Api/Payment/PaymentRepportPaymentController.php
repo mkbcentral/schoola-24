@@ -16,7 +16,7 @@ class PaymentRepportPaymentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return mixed|\Illuminate\Http\JsonResponse
      */
-    public function getPaymentbyDate(Request $request)
+    public function getPaymentByDate(Request $request)
     {
         try {
             $categories = FeeDataConfiguration::getListCategoryFee(100);
@@ -59,7 +59,7 @@ class PaymentRepportPaymentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return mixed|\Illuminate\Http\JsonResponse
      */
-    public function getPaymentbyMonth(Request $request)
+    public function getPaymentByMonth(Request $request)
     {
         try {
             $categories = FeeDataConfiguration::getListCategoryFee(100);

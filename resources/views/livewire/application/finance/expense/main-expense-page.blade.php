@@ -5,12 +5,18 @@
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
         <div class="row">
-            <div class="col-md-8 mt-2">
-                <livewire:application.finance.expense.list.list-expense-fee-page />
-            </div>
-            <div class="col-md-4 mt-2">
-                <livewire:application.finance.expense.form.form-expense-page />
-            </div>
+            @if(Auth::user()->role->name == \App\Enums\RoleType::SCHOOL_FINANCE)
+                <div class="col-md-8 mt-2">
+                    <livewire:application.finance.expense.list.list-expense-fee-page />
+                </div>
+                <div class="col-md-4 mt-2">
+                    <livewire:application.finance.expense.form.form-expense-page />
+                </div>
+            @else
+                <div class="col-md-12 mt-2">
+                    <livewire:application.finance.expense.list.list-expense-fee-page />
+                </div>
+            @endif
         </div>
     </x-content.main-content-page>
 </div>

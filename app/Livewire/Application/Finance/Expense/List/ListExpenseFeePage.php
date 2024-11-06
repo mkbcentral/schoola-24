@@ -19,20 +19,20 @@ class ListExpenseFeePage extends Component
         $currency_filter = '';
     public int  $category_fee_id_filter = 0, $category_expense_id_filter = 0, $per_page = 10;
 
-    public function updatedMonthFilter()
+    public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
     }
-    public function updatedDateFilter()
+    public function updatedDateFilter(): void
     {
         $this->month_filter = "";
     }
-    public function edit(?ExpenseFee $expenseFee)
+    public function edit(?ExpenseFee $expenseFee): void
     {
         $this->dispatch('expenseFeeData', $expenseFee);
     }
 
-    public function delete(?ExpenseFee $expenseFee)
+    public function delete(?ExpenseFee $expenseFee): void
     {
         try {
             $expenseFee->delete();
@@ -41,11 +41,11 @@ class ListExpenseFeePage extends Component
         }
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->month_filter = date('m');
     }
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.expense.list.list-expense-fee-page', [
             'expenseFees' => ExpenseFeeFeature::getList(
