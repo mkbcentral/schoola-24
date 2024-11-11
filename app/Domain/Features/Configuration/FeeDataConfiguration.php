@@ -19,7 +19,7 @@ class FeeDataConfiguration implements IFeeDataConfiguration
     public static function getListCategoryFee(int $per_page): mixed
     {
 
-        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE){
+        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE || Auth::user()->role->name == RoleType::SCHOOL_MONEY_COLLECTOR ){
             return CategoryFee::query()
                 ->where('school_id', School::DEFAULT_SCHOOL_ID())
                 ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
