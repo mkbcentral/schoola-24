@@ -4,6 +4,7 @@ namespace App\Livewire\Application\Auth;
 
 use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\AuthForm;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class LoginPage extends Component
@@ -17,8 +18,14 @@ class LoginPage extends Component
         $this->validate();
         try {
             if ($this->form->login()) {
-                $this->dispatch('added', ['message' => AppMessage::LOGGED_IN_SUCCESS]);
-                $this->redirect('/');;
+                if (!Auth::user()->is_active){
+                    Auth::logout();
+                    $this->dispatch('error', ['message' => AppMessage::LOGGED_IN_FAILLED_TO_UNACTIVATE_USER]);
+                }else{
+                    $this->dispatch('added', ['message' => AppMessage::LOGGED_IN_SUCCESS]);
+                    $this->redirect('/');;
+                }
+
             } else {
                 $this->dispatch('error', ['message' => AppMessage::LOGGED_IN_FAILLED]);
             }

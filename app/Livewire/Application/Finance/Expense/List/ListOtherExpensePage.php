@@ -20,22 +20,22 @@ class ListOtherExpensePage extends Component
     public ?string    $currency_filter = '';
     public int  $other_source_expense_id_filter = 0;
     public int $category_expense_id_filter = 0;
-    public int $per_page = 10;
+    public int $per_page = 25;
 
-    public function updatedMonthFilter()
+    public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
     }
-    public function updatedDateFilter()
+    public function updatedDateFilter(): void
     {
         $this->month_filter = "";
     }
-    public function edit(?OtherExpense $otherExpense)
+    public function edit(?OtherExpense $otherExpense): void
     {
         $this->dispatch('otherExpenseData', $otherExpense);
     }
 
-    public function delete(?OtherExpense $otherExpense)
+    public function delete(?OtherExpense $otherExpense): void
     {
         try {
             $otherExpense->delete();
@@ -44,7 +44,13 @@ class ListOtherExpensePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-    public function render()
+
+    public function  mount(): void
+    {
+        $this->month_filter=date('10');
+    }
+
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.expense.list.list-other-expense-page', [
             'otherExpenses' => OtherExpenseFeature::getList(

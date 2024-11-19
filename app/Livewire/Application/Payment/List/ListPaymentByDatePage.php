@@ -28,11 +28,11 @@ class ListPaymentByDatePage extends Component
     #[Url(as: 'q')]
     public $q = '';
 
-    public function mount()
+    public function mount(): void
     {
         $this->date_filter = date('Y-m-d');
         if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE){
-            $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
+            $categoryFee = FeeDataConfiguration::getFirstCategoryFee();
         }else{
             $categoryFee=CategoryFee::query()->where('school_id',School::DEFAULT_SCHOOL_ID())
                 ->where('school_year_id',School::DEFAULT_SCHOOL_ID())
@@ -43,20 +43,20 @@ class ListPaymentByDatePage extends Component
         $this->categoryFeeSelected = $categoryFee;
     }
 
-    public function updatedCategoryFeeFilter($val)
+    public function updatedCategoryFeeFilter($val): void
     {
         $this->categoryFeeSelected = CategoryFee::findOrFail($val);
     }
 
-    public function edit(Payment $payment)
+    public function edit(Payment $payment): void
     {
         $this->dispatch('paymentData', $payment);
     }
 
-    public function delete(?Payment $payment)
+    public function delete(?Payment $payment): void
     {
         try {
-            if ($payment->is_paid == false) {
+            if (!$payment->is_paid) {
                 $payment->delete();
                 $this->dispatch('updated', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {
@@ -67,7 +67,7 @@ class ListPaymentByDatePage extends Component
         }
     }
 
-    public function makeIsPaid(?Payment $payment)
+    public function makeIsPaid(?Payment $payment): void
     {
         try {
             if ($payment->is_paid) {
@@ -82,7 +82,7 @@ class ListPaymentByDatePage extends Component
         }
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.payment.list.list-payment-by-date-page', [
             'payments' => PaymentFeature::getList(

@@ -23,11 +23,11 @@ class ListSalaryPage extends Component
 
     public function getSalary(): void {}
 
-    public function updatedMonthFilter()
+    public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
     }
-    public function updatedDateFilter()
+    public function updatedDateFilter(): void
     {
         $this->month_filter = "";
     }
@@ -39,7 +39,7 @@ class ListSalaryPage extends Component
     {
         $this->dispatch('salaryData', $salary);
     }
-    public function delete(Salary $salary)
+    public function delete(Salary $salary): void
     {
         try {
             $salary->delete();
@@ -48,11 +48,11 @@ class ListSalaryPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-    public function mount()
+    public function mount(): void
     {
-        $this->month_filter = date('09');
+        $this->month_filter = date('m');
     }
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.salary.list.list-salary-page', [
             'salaries' => SalaryFeature::getList(

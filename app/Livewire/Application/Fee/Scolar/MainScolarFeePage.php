@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Application\Fee\Scolar;
 
+use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Models\CategoryFee;
 use App\Models\ClassRoom;
 use App\Models\School;
@@ -17,16 +18,13 @@ class MainScolarFeePage extends Component
     public ?CategoryFee $categoryFeeSelected;
 
 
-    public function mount()
+    public function mount(): void
     {
-        $this->categoryFeeSelected = CategoryFee::query()
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->first();
+        $this->categoryFeeSelected = FeeDataConfiguration::getFirstCategoryFee();
         $this->selectedIndex = $this->categoryFeeSelected->id;
     }
 
-    public function changeIndex(int $index)
+    public function changeIndex(int $index): void
     {
         $this->selectedIndex = $index;
         $this->dispatch('selectedCategoryFee', $index);
@@ -34,7 +32,7 @@ class MainScolarFeePage extends Component
         $this->dispatch('categoryFeeDataChanged', $this->categoryFeeSelected);
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.fee.scolar.main-scolar-fee-page', [
             'lisCategoryFee' => CategoryFee::query()

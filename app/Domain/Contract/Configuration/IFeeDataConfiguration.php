@@ -40,5 +40,5 @@ interface IFeeDataConfiguration
      * Recuperer la catégorie des frais pour chaque école et année scolaire
      * @return \App\Models\CategoryFee
      */
-    public static function getListCategoryFeeForCurrentSchool(): CategoryFee;
+    public static function getFirstCategoryFee(): CategoryFee;
 }

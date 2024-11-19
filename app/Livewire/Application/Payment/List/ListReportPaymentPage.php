@@ -38,18 +38,18 @@ class ListReportPaymentPage extends Component
      * @param int $index
      * @return void
      */
-    public function getSelectedCategoryFee(int $index)
+    public function getSelectedCategoryFee(int $index): void
     {
         $this->selectedCategoryFeeId = $index;
         $this->categoryFeeSelected = CategoryFee::find($index);
     }
 
-    public function updatedMonthFilter()
+    public function updatedMonthFilter(): void
     {
         $this->date_filter = '';
         $this->isByDate = false;
     }
-    public function updatedDateFilter()
+    public function updatedDateFilter(): void
     {
         $this->month_filter = "";
         $this->isByDate = true;
@@ -59,21 +59,20 @@ class ListReportPaymentPage extends Component
      * @param mixed $val
      * @return void
      */
-    public function updatedSectionFilter($val)
+    public function updatedSectionFilter($val): void
     {
         $this->selectedSection = $val;
     }
-
     /**
      * Summary of updatedOptionFilter
      * @param mixed $val
      * @return void
      */
-    public function updatedOptionFilter($val)
+    public function updatedOptionFilter($val): void
     {
         $this->selectedOption = $val;
     }
-    public function updatedClassRoomFilter($val)
+    public function updatedClassRoomFilter($val): void
     {
         $this->selectedClassRoom = $val;
     }
@@ -82,18 +81,18 @@ class ListReportPaymentPage extends Component
      * @param int $categoryFeeId
      * @return void
      */
-    public function mount(int $categoryFeeId)
+    public function mount(int $categoryFeeId): void
     {
         $this->selectedCategoryFeeId = $categoryFeeId;
-        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
+        $categoryFee = FeeDataConfiguration::getFirstCategoryFee();
         $this->date_filter = date('Y-m-d');
         $this->categoryFeeSelected = $categoryFee;
     }
 
-    public function sendSMS(Payment $payment)
+    public function sendSMS(Payment $payment): void
     {
         try {
-            $phone = $payment->registration->student->responsibleStudent->phone;
+            $phone = '+243971330007'; //$payment->registration->student->responsibleStudent->phone;
             SmsNoficationHelper::sendOrangeSMS($phone, "Test sms");
             $this->dispatch('updated', ['message' => AppMessage::SMS_SENT]);
         } catch (Exception $ex) {
@@ -102,7 +101,7 @@ class ListReportPaymentPage extends Component
     }
 
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.payment.list.list-report-payment-page', [
             'payments' => PaymentFeature::getList(

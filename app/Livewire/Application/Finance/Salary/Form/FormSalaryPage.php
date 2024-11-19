@@ -63,13 +63,13 @@ class FormSalaryPage extends Component
         $this->form->month = date('m');
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->created_at = date('Y-m-d');
         $this->form->month = date('m');
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.salary.form.form-salary-page');
     }

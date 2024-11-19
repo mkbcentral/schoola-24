@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domain\Features\Payment\PaymentFeature;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -92,5 +93,12 @@ class CategoryFee extends Model
             null,
             'CDF'
         );
+    }
+
+    public  function scopeFilter(Builder $query,array $filters): Builder
+    {
+        return $query->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->where('name', 'like', '%' . $filters['search'] . '%');
     }
 }

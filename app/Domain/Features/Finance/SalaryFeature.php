@@ -22,7 +22,7 @@ class SalaryFeature implements ISalary
         $total = 0;
         $salaries = Salary::query()
             ->when($date, function ($query, $val) {
-                return $query->whereDate('creared_at', $val);
+                return $query->whereDate('created_at', $val);
             })
             ->when($month, function ($query, $val) {
                 return $query->where('month', $val);
@@ -68,7 +68,7 @@ class SalaryFeature implements ISalary
             ->when(
                 $date,
                 function ($query, $val) {
-                    return $query->whereDate('creared_at', $val);
+                    return $query->whereDate('created_at', $val);
                 }
             )
             ->when(

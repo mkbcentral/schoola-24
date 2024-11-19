@@ -24,24 +24,24 @@ class ListScolarFeePage extends Component
         "selectedCategoryFee" => 'getSelectedCategoryFee'
     ];
 
-    public function newFee()
+    public function newFee(): void
     {
         $this->dispatch('dataFormResed');
     }
 
-    public function getSelectedCategoryFee(int $index)
+    public function getSelectedCategoryFee(int $index): void
     {
         $this->idCategorySelected = $index;
         $this->resetPage();
         $this->reset('q');
     }
 
-    public function edit(?ScolarFee $scolarFee)
+    public function edit(?ScolarFee $scolarFee): void
     {
         $this->dispatch('scolrFeeData', $scolarFee);
     }
 
-    public function delete(?ScolarFee $scolarFee)
+    public function delete(?ScolarFee $scolarFee): void
     {
         try {
             if ($scolarFee->payments->isEmpty()) {
@@ -55,10 +55,10 @@ class ListScolarFeePage extends Component
         }
     }
 
-    public function makeIsChange(?ScolarFee $scolarFee)
+    public function makeIsChange(?ScolarFee $scolarFee): void
     {
         try {
-            if ($scolarFee->is_changed == false) {
+            if (!$scolarFee->is_changed) {
                 $scolarFee->is_changed = true;
             } else {
                 $scolarFee->is_changed = false;
@@ -70,18 +70,18 @@ class ListScolarFeePage extends Component
         }
     }
 
-    public function refreshData()
+    public function refreshData(): void
     {
         $this->class_room_filter = 0;
         $this->option_filter = 0;
     }
 
-    public function mount(int $idCategoryFee)
+    public function mount(int $idCategoryFee): void
     {
         $this->idCategorySelected = $idCategoryFee;
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.fee.scolar.list.list-scolar-fee-page', [
             'scolrFees' => FeeDataConfiguration::getListScalarFee(

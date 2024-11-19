@@ -36,30 +36,29 @@ class ListStudentForControlPaymentByTranchPage extends Component
      * @param int $index
      * @return void
      */
-    public function getSelectedCategoryFee(int $index)
+    public function getSelectedCategoryFee(int $index): void
     {
         $this->selectedCategoryFeeId = $index;
         $this->categoryFeeSelected = CategoryFee::find($index);
     }
 
-    public function updatedOptionFilter($val)
+    public function updatedOptionFilter($val): void
     {
         $this->selectedOptionId = $val;
         $this->class_room_filter = ClassRoom::find($val)->id;
     }
 
-    public function mount(int $categoryFeeId)
+    public function mount(int $categoryFeeId): void
     {
         $this->selectedCategoryFeeId = $categoryFeeId;
-        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
-        $this->category_fee_filter = $categoryFee->id;
-        $this->categoryFeeSelected = $categoryFee;
+        $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()->id;
+        $this->categoryFeeSelected = FeeDataConfiguration::getFirstCategoryFee();
         $this->option_filter = SchoolDataFeature::getOptionFirstOption()->id;
         $this->selectedOptionId = SchoolDataFeature::getOptionFirstOption()->id;
         $this->class_room_filter = ClassRoom::find($this->selectedOptionId)->id;
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.payment.list.list-student-for-control-payment-by-tranch-page', [
             'registrations' => RegistrationFeature::getList(

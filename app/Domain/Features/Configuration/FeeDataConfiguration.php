@@ -12,33 +12,31 @@ use Illuminate\Support\Facades\Auth;
 
 class FeeDataConfiguration implements IFeeDataConfiguration
 {
-
     /**
      * @inheritDoc
      */
-    public static function getListCategoryFee(int $per_page): mixed
+    public static function getListCategoryFee(int $per_page,?string $search =''): mixed
     {
-
-        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE || Auth::user()->role->name == RoleType::SCHOOL_MONEY_COLLECTOR ){
+        $filters=['search'=>$search];
+        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE)
+        {
             return CategoryFee::query()
-                ->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->filter($filters)
                 ->paginate($per_page);
         }elseif (
             Auth::user()->role->name == RoleType::SCHOOL_MANAGER ||
-            Auth::user()->role->name == RoleType::SCHOOL_BOSS
+            Auth::user()->role->name == RoleType::SCHOOL_BOSS ||
+            Auth::user()->role->name == RoleType::SCHOOL_MONEY_COLLECTOR
         ){
             return CategoryFee::query()
-                ->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-                ->where('is_accessory',false)
+                ->filter($filters)
+                ->where('name', 'like', '%' . $search . '%')
                 ->paginate($per_page);
         }
         else{
             return CategoryFee::query()
-                ->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-                ->where('is_accessory',true)
+                ->filter($filters)
+                ->where('name', 'like', '%' . $search . '%')
                 ->paginate($per_page);
         }
     }
@@ -49,12 +47,21 @@ class FeeDataConfiguration implements IFeeDataConfiguration
     /**
      * @inheritDoc
      */
-    public static function getListCategoryFeeForCurrentSchool(): CategoryFee
+    public static function getFirstCategoryFee(): CategoryFee
     {
-        return CategoryFee::query()
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->first();
+        if (Auth::user()->role->name == RoleType::SCHOOL_GUARD){
+            return CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->where('is_accessory',true)
+                ->first();
+        }else{
+            return CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->first();
+        }
+
     }
     /**
      * @inheritDoc

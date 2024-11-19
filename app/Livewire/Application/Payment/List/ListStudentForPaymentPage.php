@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 class ListStudentForPaymentPage extends Component
 {
     use WithPagination;
-    public int $per_page = 10;
+    public int $per_page = 100;
     #[Url(as: 'q')]
     public $q = '';
     #[Url(as: 'sortBy')]

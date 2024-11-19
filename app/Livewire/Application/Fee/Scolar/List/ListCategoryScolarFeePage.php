@@ -40,7 +40,10 @@ class ListCategoryScolarFeePage extends Component
     public function render()
     {
         return view('livewire.application.fee.scolar.list.list-category-scolar-fee-page', [
-            'categoryFees' => FeeDataConfiguration::getListCategoryFee($this->per_page)
+            'categoryFees' => FeeDataConfiguration::getListCategoryFee(
+                $this->per_page,
+                $this->q
+            )
         ]);
     }
 }

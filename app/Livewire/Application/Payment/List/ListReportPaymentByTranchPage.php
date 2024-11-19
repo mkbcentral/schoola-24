@@ -34,18 +34,18 @@ class ListReportPaymentByTranchPage extends Component
      * @param int $index
      * @return void
      */
-    public function getSelectedCategoryFee(int $index)
+    public function getSelectedCategoryFee(int $index): void
     {
         $this->selectedCategoryFeeId = $index;
         $this->categoryFeeSelected = CategoryFee::find($index);
     }
 
-    public function updatedMonthFilter()
+    public function updatedMonthFilter(): void
     {
         $this->date_filter = '';
         $this->isByDate = false;
     }
-    public function updatedDateFilter()
+    public function updatedDateFilter(): void
     {
         $this->month_filter = "";
         $this->isByDate = true;
@@ -55,7 +55,7 @@ class ListReportPaymentByTranchPage extends Component
      * @param mixed $val
      * @return void
      */
-    public function updatedSectionFilter($val)
+    public function updatedSectionFilter($val): void
     {
         $this->selectedSection = $val;
     }
@@ -65,11 +65,11 @@ class ListReportPaymentByTranchPage extends Component
      * @param mixed $val
      * @return void
      */
-    public function updatedOptionFilter($val)
+    public function updatedOptionFilter($val): void
     {
         $this->selectedOption = $val;
     }
-    public function updatedClassRoomFilter($val)
+    public function updatedClassRoomFilter($val): void
     {
         $this->selectedClassRoom = $val;
     }
@@ -78,13 +78,13 @@ class ListReportPaymentByTranchPage extends Component
      * @param int $categoryFeeId
      * @return void
      */
-    public function mount(int $categoryFeeId)
+    public function mount(int $categoryFeeId): void
     {
         $this->selectedCategoryFeeId = $categoryFeeId;
-        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
+        $categoryFee = FeeDataConfiguration::getFirstCategoryFee();
         $this->categoryFeeSelected = $categoryFee;
     }
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.payment.list.list-report-payment-by-tranch-page', [
             'payments' => PaymentFeature::getList(

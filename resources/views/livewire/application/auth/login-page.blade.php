@@ -24,11 +24,6 @@
                         <span wire:loading.class='d-none'>Se connecter</span>
                     </x-form.button>
                 </div>
-
-                <div class="mt-2 d-flex justify-content-end align-items-center">
-                    <span class="p-2">Vous n'avez de compte ? </span>
-                    <a href="{{ route('register') }}" class="text-bold"> Créer un compte</a>
-                </div>
             </form>
         </div>
         <!-- /.card-body -->

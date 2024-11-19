@@ -6,16 +6,29 @@
         </div>
         @if ($salary != null)
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <div class="d-flex justify-content-center pb-2">
                         <x-widget.loading-circular-md wire:loading wire:target='getRegistration' />
                     </div>
-                    <div class="card">
+                    <div class="card p-2">
+                        <div>
+                            <span>
+                                <i class="bi bi-envelope-fill"></i>
+                                <span>Enveloppe salariale/ </span>
+                                <span>{{ format_fr_month_name($salary->month) }}</span>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="fw-bold">Date:</span>
+                            <span>{{ $salary->created_at->format('d/m/Y') }}</span>
+                        </div>
+                    </div>
+                    <div class="card mt-2">
                         <div class="card-header text-uppercase">
                             <div class="d-flex justify-content-between align-items-center">
-                                <H4> DETAILS SALAIRE</H4>
-                                <H4> Total: {{ app_format_number($salary->getAmount('USD'), 1) }} $ |
-                                    {{ app_format_number($salary->getAmount('CDF'), 1) }} Fc</H4>
+                                <h5> DETAILS SALAIRE</h5>
+                                <h5> Total: {{ app_format_number($salary->getAmount('USD'), 1) }} $ |
+                                    {{ app_format_number($salary->getAmount('CDF'), 1) }} Fc</h5>
                             </div>
                         </div>
                         <div class="card-body">
@@ -63,25 +76,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
-                    <div class="card p-2">
-                        <div>
-                            <span>
-                                <i class="bi bi-envelope-fill"></i>
-                                <span>Enveloppe salariale/ </span>
-                                <span>{{ format_fr_month_name($salary->month) }}</span>
-                            </span>
-                        </div>
-                        <div>
-                            <span class="fw-bold">Date:</span>
-                            <span>{{ $salary->created_at->format('d/m/Y') }}</span>
-                        </div>
-                    </div>
+                <div class="col-md-4">
                     <div class="mt-2">
-                        <h4><i
+                        <h5><i
                                 class="{{ $salaryDetailToEdit == null ? 'bi bi-plus-circle-fill' : 'bi bi-pencil-fill' }}"></i>
-                            {{ $salaryDetailToEdit == null ? 'CREATION' : 'EDITION' }}
-                        </h4>
+                            {{ $salaryDetailToEdit == null ? 'CREATION' : 'EDITION' }} DETAILS
+                        </h5>
                         <hr>
                         <form wire:submit='handlerSubmit'>
                             <div>

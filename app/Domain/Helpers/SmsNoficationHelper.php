@@ -13,7 +13,10 @@ class SmsNoficationHelper
         string $to,
         string $message
     ) {
-        $client = SMSClient::getInstance(env('SMS_ORANGE_CLIENT_ID'), env('SMS_ORANGE_APPLICATION_ID'));
+        $client = SMSClient::getInstance(
+            env('SMS_ORANGE_CLIENT_ID'),
+            env('SMS_ORANGE_APPLICATION_ID')
+        );
         $sms = new SMS($client);
         $sms->message($message)
             ->from('+243898337969')

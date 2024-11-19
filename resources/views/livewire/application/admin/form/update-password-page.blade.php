@@ -7,18 +7,18 @@
         <div class="row">
             <div class="mt-2">
                 <x-form.label value="{{ __('Ancien mot de passe') }}" />
-                <x-form.input type='password' wire:model='old_password' icon='bi bi-key-fill' :error="'old_password'" />
+                <x-form.input type='password' wire:model.blur='old_password' icon='bi bi-key-fill' :error="'old_password'" />
                 <x-errors.validation-error value='old_password' />
             </div>
             <div class="mt-2">
-                <x-form.label value="{{ __('Nouveau mot de passe') }}" />
-                <x-form.input type='password' wire:model='current_password' icon='bi bi-key-fill'
+                <x-form.label value="{{ __('Mot de passe actuel') }}" />
+                <x-form.input type='password' wire:model.blur='current_password' icon='bi bi-key-fill'
                               :error="'current_password'" />
                 <x-errors.validation-error value='current_password' />
             </div>
             <div class="mt-2">
-                <x-form.label value="{{ __('Confirmer mot de passe') }}" />
-                <x-form.input type='password' wire:model='confirm_password' icon='bi bi-key-fill'
+                <x-form.label value="{{ __('Confirmer le mot de passe') }}" />
+                <x-form.input type='password' wire:model.blur='confirm_password' icon='bi bi-key-fill'
                               :error="'confirm_password'" />
                 <x-errors.validation-error value='confirm_password' />
             </div>

@@ -36,22 +36,24 @@ class ListStudentForControlPaymentPage extends Component
      * @param int $index
      * @return void
      */
-    public function getSelectedCategoryFee(int $index)
+    public function getSelectedCategoryFee(int $index): void
     {
         $this->selectedCategoryFeeId = $index;
         $this->categoryFeeSelected = CategoryFee::find($index);
     }
 
-    public function updatedOptionFilter($val)
+    public function updatedOptionFilter($val): void
     {
         $this->selectedOptionId = $val;
         $this->class_room_filter = ClassRoom::find($val)->id;
     }
 
-    public function mount(int $categoryFeeId)
+    public function mount(int $categoryFeeId): void
     {
-        $this->selectedCategoryFeeId = $categoryFeeId;
-        $categoryFee = FeeDataConfiguration::getListCategoryFeeForCurrentSchool();
+        if (!empty($this)) {
+            $this->selectedCategoryFeeId = $categoryFeeId;
+        }
+        $categoryFee = FeeDataConfiguration::getFirstCategoryFee();
         $this->category_fee_filter = $categoryFee->id;
         $this->categoryFeeSelected = $categoryFee;
         $this->option_filter = SchoolDataFeature::getOptionFirstOption()->id;
