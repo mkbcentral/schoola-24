@@ -97,10 +97,14 @@
                                                         labelText='Attacher un sous menu'
                                                         href="{{ route('admin.attach.sub.menu', $user) }}"
                                                         class="" />
-                                                    <x-others.dropdown-link iconLink='bi bi-trash-fill'
-                                                        labelText='Supprimer' class="text-secondary"
+                                                    <x-others.dropdown-link iconLink='bi bi-key-fill'
+                                                        labelText='Réinitialiser le mot de passe' class="text-secondary"
                                                         wire:confirm="Est-vous sur de réaliser l'opération"
-                                                        href="#" wire:click='delete({{ $user }})' />
+                                                        href="#" wire:click='resetUserPassword({{ $user }})' />
+                                                    <x-others.dropdown-link iconLink='bi bi-trash-fill'
+                                                                            labelText='Supprimer' class="text-secondary"
+                                                                            wire:confirm="Est-vous sur de réaliser l'opération"
+                                                                            href="#" wire:click='delete({{ $user }})' />
                                                 </x-others.dropdown>
                                             </td>
                                         </tr>

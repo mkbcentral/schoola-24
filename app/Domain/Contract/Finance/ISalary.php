@@ -32,5 +32,5 @@ interface ISalary
      * @param mixed $currency
      * @return int|float
      */
-    public static function getDetailAmountToatl(?int $salaryId, ?string $currency): int|float;
+    public static function getDetailAmountTotal(?int $salaryId, ?string $currency): int|float;
 }

@@ -19,18 +19,9 @@ class MoneyBorrowingFeature implements IMoneyBorrowing
         string|null $currency
     ): float|int {
         $total = 0;
+        $filter = self::getFilters($date, $month, $currency);
         $moneyBorrowings = MoneyBorrowing::query()
-            ->when($date, function ($query, $val) {
-                return $query->whereDate('created_at', $val);
-            })
-            ->when($month, function ($query, $val) {
-                return $query->where('month', $val);
-            })
-            ->when($currency, function ($query, $val) {
-                return $query->where('currency', $val);
-            })
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+           ->filter($filter)
             ->get();
         foreach ($moneyBorrowings as $moneyBorrowing) {
             $total += $moneyBorrowing->amount;
@@ -47,18 +38,24 @@ class MoneyBorrowingFeature implements IMoneyBorrowing
         string|null $currency,
         int|null $per_page
     ): mixed {
+        $filter = self::getFilters($date, $month, $currency);
         return MoneyBorrowing::query()
-            ->when($date, function ($query, $val) {
-                return $query->whereDate('created_at', $val);
-            })
-            ->when($month, function ($query, $val) {
-                return $query->where('month', $val);
-            })
-            ->when($currency, function ($query, $val) {
-                return $query->where('currency', $val);
-            })
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->filter($filter)
             ->paginate($per_page);
+    }
+
+    /**
+     * @param mixed $date
+     * @param mixed $month
+     * @param mixed $currency
+     * @return array
+     */
+    public static function getFilters(mixed $date, mixed $month, mixed $currency): array
+    {
+        return [
+            'date' => $date,
+            'month' => $month,
+            'currency' => $currency
+        ];
     }
 }

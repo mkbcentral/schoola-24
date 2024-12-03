@@ -3,6 +3,7 @@
 namespace App\Livewire\Application\Admin\List;
 
 use App\Domain\Features\Admin\UserFeature;
+use App\Domain\Utils\AppMessage;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -45,21 +46,32 @@ class ListUserPage extends Component
     public function activateUser(User $user): void
     {
         try {
-            if ($user->is_active == true) {
-                $user->is_active = false;
-            } else {
-                $user->is_active = true;
-            }
+            $user->is_active = !$user->is_active;
             $user->update();
+            $this->dispatch('added', ['message' => AppMessage::ACTION_SUCCESS]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
 
-    public function render()
+    public function deleteUser(User $user): void{}
+    public function resetUserPassword(User $user): void{
+        try {
+            $defaultPassword='password';
+            $user->password=\Hash::make($defaultPassword);
+            $user->update();
+            $this->dispatch('added', ['message' => AppMessage::ACTION_SUCCESS]);
+        } catch (Exception $ex) {
+            $this->dispatch('error', ['message' => $ex->getMessage()]);
+        }
+
+    }
+
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.admin.list.list-user-page', [
-            'users' => Auth::user()->role->is_for_school == true ? UserFeature::getListSchoolUser(
+            'users' => Auth::user()->role->is_for_school ?
+                UserFeature::getListSchoolUser(
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,

@@ -8,7 +8,6 @@ use App\Models\School;
 
 class ResponsibleStudentFeature implements IResponsibleStudent
 {
-    private static string $keyToSearch = '';
     /**
      * @inheritDoc
      */
@@ -45,16 +44,14 @@ class ResponsibleStudentFeature implements IResponsibleStudent
         string $sortBy,
         bool $sortAsc,
         int $per_page = 20
-    ): mixed {
-        SELF::$keyToSearch = $q;
+    ): array|\Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
         return ResponsibleStudent::query()
-            ->when($q, function ($query) {
-                return $query->where(function ($query) {
-                    return $query->where('name', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('phone', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('other_phone', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('email', 'like', '%' . SELF::$keyToSearch . '%');
-                });
+            ->when($q, function ($query,$k) {
+                return $query->where('name', 'like', '%' . $k . '%')
+                    ->orWhere('phone', 'like', '%' . $k . '%')
+                    ->orWhere('other_phone', 'like', '%' . $k . '%')
+                    ->orWhere('email', 'like', '%' . $k . '%');
             })
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->with([

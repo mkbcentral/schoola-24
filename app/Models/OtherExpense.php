@@ -72,7 +72,7 @@ class OtherExpense extends Model
                     return $query->where('other_expenses.other_source_expense_id', $val);
                 }
             )->when(
-                $filters['categoryExenseId'],
+                $filters['categoryExpenseId'],
                 function ($query, $val) {
                     return $query->where('other_expenses.category_expense_id', $val);
                 }

@@ -29,17 +29,27 @@
                         <x-form.label value="{{ __('Option') }}" class="me-2" />
                         <x-widget.data.list-option type='text' wire:model.live='option_filter' :error="'form.option_id'" />
                     </div>
+                    <div class="d-flex align-items-center">
+                        <x-form.label value="{{ __('Classe') }}" class="me-2" />
+                        <x-widget.data.list-class-room-by-option optionId='{{ $selectedOptionId }}'
+                                                                 wire:model.live='class_room_filter' />
+                    </div>
                 </div>
             </div>
+
             <table class="table table-bordered table-sm table-hover mt-2">
                 <thead class="table-primary">
                     <tr class="">
                         <th class="text-center">
-                            <x-form.input-check-box idAndFor="select-all" wire:model.live='selectPageRows'
+                            <x-form.input-check-box
+                                idAndFor="select-all" wire:model.live='selectPageRows'
                                 color="primary" value='' />
                         </th>
                         <th class="text-center">N°</th>
-                        <th class="">CODE</th>
+                        <th wire:click="sortData('registrations.code')" class="cursor-hand">
+                            <span>CODE</span>
+                            <x-form.sort-icon sortField="registrations.code" :sortAsc="$sortAsc" :sortBy="$sortBy" />
+                        </th>
                         <th wire:click="sortData('students.name')" class="cursor-hand">
                             <span>NOM COMPLET</span>
                             <x-form.sort-icon sortField="students.name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
@@ -54,16 +64,19 @@
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
-                @if ($registrations->isEmpty())
+                <tbody>
+                @if ($registrations->count()==0)
                     <tr>
-                        <td colspan="7"><x-errors.data-empty /></td>
+                        <td colspan="9">
+                            <x-errors.data-empty/>
+                        </td>
                     </tr>
                 @else
                     @foreach ($registrations as $index => $registration)
                         <tr wire:key='{{ $registration->student->id }}' class=" ">
                             <td class="text-center {{ $registration->class_changed == true ? 'bg-danger' : '' }}">
                                 <x-form.input-check-box idAndFor="{{ $registration->id }}" color="primary"
-                                    wire:model.live='selectedRegistrations' value='{{ $registration->id }}' />
+                                                        wire:model.live='selectedRegistrations' value='{{ $registration->id }}' />
                             </td>
                             <td class="text-center {{ $registration->abandoned == true ? 'bg-warning' : '' }}">
                                 {{ $index + 1 }}
@@ -89,38 +102,41 @@
                             </td>
                             <td class="text-center">
                                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                    class="btn-secondary btn-sm">
+                                                   class="btn-secondary btn-sm">
                                     @can('manage-student')
                                         <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
-                                            data-bs-target="#form-edit-student" labelText='Editer' href="#"
-                                            wire:click='edit({{ $registration->student }})' />
+                                                                data-bs-target="#form-edit-student" labelText='Editer' href="#"
+                                                                wire:click='edit({{ $registration->student }})' />
                                         <x-others.dropdown-link iconLink='bi bi-arrow-left-right'
-                                            labelText='Basculuer la classe' data-bs-toggle="modal"
-                                            data-bs-target="#form-change-class-student"
-                                            wire:click='changeClassStudent({{ $registration }})' href="#" />
+                                                                labelText='Basculuer la classe' data-bs-toggle="modal"
+                                                                data-bs-target="#form-change-class-student"
+                                                                wire:click='changeClassStudent({{ $registration }})' href="#" />
                                         <x-others.dropdown-link iconLink='bi bi-journal-x' labelText='Marquer abandon'
-                                            data-bs-toggle="modal" data-bs-target="#form-give-up-student"
-                                            wire:click='openMakeGiveUpStudentFom({{ $registration }})' href="#" />
+                                                                data-bs-toggle="modal" data-bs-target="#form-give-up-student"
+                                                                wire:click='openMakeGiveUpStudentFom({{ $registration }})' href="#" />
                                         <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
-                                            href="#" wire:click='showDeleteDialog({{ $registration->student }})' />
+                                                                href="#" wire:click='showDeleteDialog({{ $registration->student }})' />
                                     @endcan
                                     <x-others.dropdown-link iconLink='bi bi-info-circle-fill' labelText='Voir détails'
-                                        href="{{ route('student.detail', $registration) }}" />
+                                                            href="{{ route('student.detail', $registration) }}" />
                                     @if (!$registration->qr_code)
                                         <x-others.dropdown-link wire:click='generateQRCode({{ $registration }})'
-                                            wire:confirm="Etês-vous sûre de réaliser l'opération"
-                                            iconLink='bi bi-qr-code-scan' labelText='Générer Qrcode' href="#" />
+                                                                wire:confirm="Etês-vous sûre de réaliser l'opération"
+                                                                iconLink='bi bi-qr-code-scan' labelText='Générer Qrcode' href="#" />
                                     @endif
                                 </x-others.dropdown>
                             </td>
                         </tr>
                     @endforeach
                 @endif
+                </tbody>
             </table>
-            <div class="d-flex justify-content-between align-items-center">
-                <span>{{ $registrations->links('livewire::bootstrap') }}</span>
-                <x-others.table-page-number wire:model.live='per_page' />
-            </div>
+            @if($registrations->count()>9)
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>{{ $registrations->links('livewire::bootstrap') }}</span>
+                    <x-others.table-page-number wire:model.live='per_page' />
+                </div>
+            @endif
         </div>
     </x-content.main-content-page>
     @push('js')

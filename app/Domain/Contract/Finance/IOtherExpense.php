@@ -9,7 +9,7 @@ interface IOtherExpense
      * @param mixed $date
      * @param mixed $month
      * @param mixed $otherSourceExpenseId
-     * @param mixed $categoryExenseId
+     * @param mixed $categoryExpenseId
      * @param mixed $currency
      * @param mixed $per_page
      * @return mixed
@@ -17,10 +17,10 @@ interface IOtherExpense
     public static function getList(
         ?string $date,
         ?string $month,
-        ?int $otherSourceExpenseId,
-        ?int $categoryExenseId,
+        ?int    $otherSourceExpenseId,
+        ?int    $categoryExpenseId,
         ?string $currency,
-        ?int $per_page
+        ?int    $per_page
     ): mixed;
 
     /**
@@ -28,15 +28,15 @@ interface IOtherExpense
      * @param mixed $date
      * @param mixed $month
      * @param mixed $otherSourceExpenseId
-     * @param mixed $categoryExenseId
+     * @param mixed $categoryExpenseId
      * @param mixed $currency
      * @return int|float
      */
     public static function getAmountTotal(
         ?string $date,
         ?string $month,
-        ?int $otherSourceExpenseId,
-        ?int $categoryExenseId,
+        ?int    $otherSourceExpenseId,
+        ?int    $categoryExpenseId,
         ?string $currency
     ): int|float;
 }

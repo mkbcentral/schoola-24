@@ -110,7 +110,7 @@ class SchoolDataPrinterController extends Controller
         bool $sortAsc
     ): mixed {
         $sortBy = 'students.name';
-        $registrationns = RegistrationFeature::getListOoldOrNew(
+        $registrationns = RegistrationFeature::getListOldOrNew(
             $date,
             null,
             null,
@@ -147,7 +147,7 @@ class SchoolDataPrinterController extends Controller
         bool $sortAsc
     ): mixed {
         $sortBy = 'students.name';
-        $registrationns = RegistrationFeature::getListOoldOrNew(
+        $registrationns = RegistrationFeature::getListOldOrNew(
             null,
             $month,
             null,

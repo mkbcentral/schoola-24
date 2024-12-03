@@ -7,6 +7,8 @@ use App\Models\ClassRoom;
 use App\Models\Option;
 use App\Models\School;
 use App\Models\Section;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class SchoolDataFeature implements ISchoolDataConfig
 {
@@ -18,7 +20,7 @@ class SchoolDataFeature implements ISchoolDataConfig
         ?string $sortBy,
         ?bool $sortAsc,
         int $per_page = 10,
-    ): mixed {
+    ): LengthAwarePaginator {
         return ClassRoom::query()
             ->join('options', 'class_rooms.option_id', '=', 'options.id')
             ->join('sections', 'options.section_id', '=', 'sections.id')
@@ -31,35 +33,31 @@ class SchoolDataFeature implements ISchoolDataConfig
             )
             ->with('option')
             ->select('class_rooms.*')
-            //->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->paginate($per_page);
     }
-
     /**
      * @inheritDoc
      */
-    public static function getOptionList(int $per_page = 10): mixed
+    public static function getOptionList(int $per_page = 10):LengthAwarePaginator
     {
         return Option::query()
             ->join('sections', 'options.section_id',  'sections.id')
             ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
-
             ->with('section')
             ->select('options.*')
             ->paginate($per_page);
     }
-
     /**
      * @inheritDoc
      */
-    public static function getSectionList(): mixed
+    public static function getSectionList(): Collection
     {
         return Section::query()
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->get();
     }
 
-    public static function getOptionFirstOption(int $per_page = 10): Option
+    public static function getFirstOption(): Option
     {
         return Option::query()
             ->join('sections', 'options.section_id',  'sections.id')

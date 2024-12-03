@@ -17,31 +17,49 @@ class ListStudentPage extends Component
     use WithPagination;
     protected $listeners = [
         'refreshListStudent' => '$refresh',
-        'deletedStudentListner' => 'delete',
+        'deletedStudentListener' => 'delete',
     ];
     public int $per_page = 10;
     public int  $option_filter = 0;
+    public int  $class_room_filter = 0;
+    public int $selectedOptionId = 0;
     #[Url(as: 'q')]
     public $q = '';
     #[Url(as: 'sortBy')]
-    public $sortBy = 'students.name';
+    public $sortBy = 'registrations.code';
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
 
     public ?Student $studentToDelete;
-    public  $selectedRegistrations;
+    public  $selectedRegistrations=[];
     public bool $selectPageRows = false;
+
+    /**
+     * Trier le manière (ASC/DESC)
+     * @param mixed $value
+     * @return void
+     */
+    public function sortData(mixed $value): void
+    {
+        if ($value == $this->sortBy) {
+            $this->sortAsc = !$this->sortAsc;
+        }
+        $this->sortBy = $value;
+        $this->resetPage();
+    }
+
 
     /**
      * Selectionner toutes les ligne de du table
      * @param mixed $value
      * @return void
      */
-    public function updatedSelectPageRows($value)
+    public function updatedSelectPageRows(mixed $value): void
     {
         if ($value) {
             $this->per_page = 1000;
-            $this->selectedRegistrations = $this->registrations->pluck('id')->map(function ($id) {
+            $this->selectedRegistrations = $this->registrations
+                ->pluck('id')->map(function ($id) {
                 return (string)$id;
             });
         } else {
@@ -55,19 +73,7 @@ class ListStudentPage extends Component
         if ($val == null) {
             $this->option_filter = 0;
         }
-    }
-    /**
-     * Trier le manière (ASC/DESC)
-     * @param mixed $value
-     * @return void
-     */
-    public function sortData($value): void
-    {
-        if ($value == $this->sortBy) {
-            $this->sortBy = !$this->sortBy;
-        }
-        $this->sortAsc = $value;
-        $this->resetPage();
+        $this->selectedOptionId = $val;
     }
 
     /**
@@ -75,7 +81,7 @@ class ListStudentPage extends Component
      * @param \App\Models\Student $student
      * @return void
      */
-    public function edit(Student $student)
+    public function edit(Student $student): void
     {
         $this->dispatch('studentData', $student);
     }
@@ -84,7 +90,7 @@ class ListStudentPage extends Component
      * @param \App\Models\Registration $registration
      * @return void
      */
-    public function openMakeGiveUpStudentFom(Registration $registration)
+    public function openMakeGiveUpStudentFom(Registration $registration): void
     {
         $this->dispatch('registrationData', $registration);
     }
@@ -93,7 +99,7 @@ class ListStudentPage extends Component
      * @param \App\Models\Registration $registration
      * @return void
      */
-    public function changeClassStudent(Registration $registration)
+    public function changeClassStudent(Registration $registration): void
     {
         $this->dispatch('registrationData', $registration);
     }
@@ -103,7 +109,7 @@ class ListStudentPage extends Component
      * @param mixed $registration
      * @return void
      */
-    public function openPaymentForm(?Registration $registration)
+    public function openPaymentForm(?Registration $registration): void
     {
         $this->dispatch('registrationData', $registration);
     }
@@ -138,7 +144,7 @@ class ListStudentPage extends Component
      * @param \App\Models\Student $student
      * @return void
      */
-    public function showDeleteDialog(Student $student)
+    public function showDeleteDialog(Student $student): void
     {
         $this->studentToDelete = $student;
         $this->dispatch('delete-student-dialog', $student);
@@ -148,12 +154,11 @@ class ListStudentPage extends Component
      * Supprimer un élève
      * @return void
      */
-    public function delete()
+    public function delete(): void
     {
         try {
-            if ($this->studentToDelete->registration->payments->isEmpty()) {
-                RegistrationFeature::delete($this->studentToDelete->registration);
-                StudentFeature::delete($this->studentToDelete);
+            $status=RegistrationFeature::delete($this->studentToDelete->registration);
+            if ($status) {
                 $this->dispatch('student-deleted', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {
                 $this->dispatch('delete-student-failed', ['message' => AppMessage::DATA_DELETED_FAILLED . ", car l'élève a des données"]);
@@ -170,11 +175,7 @@ class ListStudentPage extends Component
     public function generateQrcodeItems(): void
     {
         try {
-            $registrations = Registration::whereIn('id', $this->selectedRegistrations)->get();
-            foreach ($registrations as $registration) {
-                $qrcode = StudentFeature::generateStudentQRCode($registration);
-                $registration->update(['qr_code' => $qrcode]);
-            }
+            RegistrationFeature::generateQRCodes($this->selectedRegistrations);
             $this->dispatch('added', ['message' => AppMessage::QRCODE_GENERATED_SUCCESSFULLY]);
         } catch (Exception $ex) {
             $this->dispatch('delete-student-failed', ['message' => $ex->getMessage()]);
@@ -185,14 +186,14 @@ class ListStudentPage extends Component
      * Fonction magique (computed) qui permet d'avoir les regisations dans tout les composant
      * @return mixed
      */
-    public function getRegistrationsProperty()
+    public function getRegistrationsProperty(): mixed
     {
         return RegistrationFeature::getList(
             null,
             null,
             null,
             $this->option_filter,
-            null,
+            $this->class_room_filter,
             null,
             $this->q,
             $this->sortBy,
@@ -201,7 +202,7 @@ class ListStudentPage extends Component
         );
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.student.list.list-student-page', [
             'registrations' => $this->registrations,
@@ -209,8 +210,8 @@ class ListStudentPage extends Component
                 null,
                 null,
                 null,
-                null,
-                null,
+                $this->option_filter,
+                $this->class_room_filter,
                 null,
             )
         ]);

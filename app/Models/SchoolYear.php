@@ -28,11 +28,9 @@ class SchoolYear extends Model
 
     public static function DEFAULT_SCHOOL_YEAR_ID(): int
     {
-        $schoolyear = SchoolYear::query()
+        return  SchoolYear::query()
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->where('is_active', true)
-            ->first();
-
-        return $schoolyear->id;
+            ->first()->id;
     }
 }

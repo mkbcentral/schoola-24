@@ -8,7 +8,6 @@ use App\Models\User;
 
 class UserFeature implements IUser
 {
-    private static string $keyToSearch = '';
     /**
      * @inheritDoc
      */
@@ -18,17 +17,9 @@ class UserFeature implements IUser
         bool $sortAsc,
         int $per_page = 20
     ): mixed {
-        SELF::$keyToSearch = $q;
         return  User::query()
-            ->when($q, function ($query) {
-                return $query->where(function ($query) {
-                    return $query->where('name', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('phone', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('email', 'like', '%' . SELF::$keyToSearch . '%');
-                });
-            })
+            ->filter($q)
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->with(['role'])
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->paginate($per_page);
     }
@@ -44,19 +35,9 @@ class UserFeature implements IUser
         bool $sortAsc,
         int $per_page = 20
     ): mixed {
-        SELF::$keyToSearch = $q;
         return  User::query()
-            ->join('roles', 'roles.id', 'users.role_id')
-            ->when($q, function ($query) {
-                return $query->where(function ($query) {
-                    return $query->where('name', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('phone', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('email', 'like', '%' . SELF::$keyToSearch . '%');
-                });
-            })
+            ->filter($q)
             ->where('roles.is_for_school', false)
-            ->select('users.*')
-            ->with(['role'])
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->paginate($per_page);
     }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -112,5 +113,22 @@ class User extends Authenticatable
     public function multiAppLinks(): BelongsToMany
     {
         return $this->belongsToMany(MultiAppLink::class)->withPivot(('id'));
+    }
+
+
+    /**
+     * Scope for reusable query on user model
+     * @param Builder $query
+     * @param string $q
+     * @return Builder
+     */
+    public function  scopeFilter(Builder $query, string $q=''):Builder
+    {
+        return $query->join('roles', 'roles.id', 'users.role_id')
+        ->when($q, function ($query,$keyToSearch) {
+            return $query->where('name', 'like', '%' .  $keyToSearch. '%')
+                ->orWhere('phone', 'like', '%' . $keyToSearch . '%')
+                ->orWhere('email', 'like', '%' . $keyToSearch. '%');
+        })->select('users.*')->with(['role']);
     }
 }

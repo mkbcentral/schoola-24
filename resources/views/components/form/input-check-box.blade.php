@@ -6,7 +6,7 @@
     'text' => '',
     'textColor' => '',
 ])
-<div class="my-2">
+<div class="">
     <span class="text-bold text-md text-{{ $color }} mr-2">
         <i class="{{ $icon }}" aria-hidden="true"></i>
         {{ $label }}

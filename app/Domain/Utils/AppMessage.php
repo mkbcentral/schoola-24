@@ -12,6 +12,7 @@ class AppMessage
     const SMS_SENT = "Sms bien envoyé";
 
     const ACTION_FAILLED = "Echec de l'opération !";
+    const ACTION_SUCCESS = "Action bien réalisé!";
     const DATA_DELETED_FAILLED = "Impossible de réaliser l'opoération";
     const LOGGED_IN_FAILLED = "Email ou mot de password incorrect !";
     const LOGGED_IN_FAILLED_TO_UNACTIVATE_USER = "Désolé, votre compte est déactivé";

@@ -11,7 +11,7 @@
                 <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
             </div>
             <x-form.search-input wire:model.live='q' />
-            <div class="form-group d-flex align-items-center">
+            <div class="form-group d-flex align-items-center ms-2">
                 <div class="d-flex align-items-center">
                     <label for="my-select">Type Frais</label>
                     <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='category_fee_filter'
@@ -52,15 +52,19 @@
         @else
             <tbody>
                 @foreach ($payments as $index => $payment)
-                    <tr wire:key='{{ $payment->id }}' class=" ">
+                    <tr wire:key='{{ $payment->id }}'
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        data-bs-title="{{$payment->registration->student->name}}"
+                        >
                         <td class="text-center {{ $payment->is_paid == true ? 'bg-success' : ' bg-warning' }}">
                             {{ $index + 1 }}
                         </td>
-                        <td>{{ $payment->registration->student->name }}</td>
-                        <td>{{ $payment?->registration->classRoom?->getOriginalClassRoomName() }}</td>
+                        <td>{{ substr($payment->registration->student->name,0,18) }}...</td>
+                        <td>{{ substr($payment?->registration->classRoom?->getOriginalClassRoomName(),0,8) }}...</td>
                         <td>
                             {{ $payment->scolarFee->name }}/
-                            {{ format_fr_month_name($payment->month) }}
+                            {{ substr(format_fr_month_name($payment->month),0,3) }}...
                         </td>
                         <td class="text-end">{{ app_format_number($payment->getAmount(), 1) }}
                             {{ $payment->scolarFee->categoryFee->currency }}</td>

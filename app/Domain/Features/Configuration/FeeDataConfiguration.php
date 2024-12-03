@@ -12,43 +12,94 @@ use Illuminate\Support\Facades\Auth;
 
 class FeeDataConfiguration implements IFeeDataConfiguration
 {
-    /**
-     * @inheritDoc
-     */
-    public static function getListCategoryFee(int $per_page,?string $search =''): mixed
-    {
-        $filters=['search'=>$search];
-        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE)
-        {
-            return CategoryFee::query()
-                ->filter($filters)
-                ->paginate($per_page);
-        }elseif (
-            Auth::user()->role->name == RoleType::SCHOOL_MANAGER ||
-            Auth::user()->role->name == RoleType::SCHOOL_BOSS ||
-            Auth::user()->role->name == RoleType::SCHOOL_MONEY_COLLECTOR
-        ){
-            return CategoryFee::query()
-                ->filter($filters)
-                ->where('name', 'like', '%' . $search . '%')
-                ->paginate($per_page);
-        }
-        else{
-            return CategoryFee::query()
-                ->filter($filters)
-                ->where('name', 'like', '%' . $search . '%')
-                ->paginate($per_page);
-        }
-    }
-    /**
-     * @inheritDoc
-     */
 
     /**
-     * @inheritDoc
+     * @param int $per_page
+     * @param string|null $search
+     * @return mixed
+     */
+    public static function getListCategoryFee(int $per_page, ?string $search = ''): mixed
+    {
+        // TODO: Implement getListCategoryFee() method.
+        $filters=['search'=>$search];
+        return CategoryFee::query()
+            ->filter($filters)
+            ->where('name', 'like', '%' . $search . '%')
+            ->paginate($per_page);
+
+    }
+
+    /**
+     * @param int $per_page
+     * @param string|null $search
+     * @return mixed
+     */
+    public static function getListCategoryFeeForSpecificUser(int $per_page, ?string $search = ''): mixed
+    {
+        // TODO: Implement getListCategoryFeeForSpecificUser() method.
+        $filters=['search'=>$search];
+        if (Auth::user()->role->name==RoleType::SCHOOL_GUARD){
+            return CategoryFee::query()
+                ->filter($filters)
+                ->where('name', 'like', '%' . $search . '%')
+                ->where('is_accessory', true)
+                ->paginate($per_page);
+        }else if (
+            Auth::user()->role->name==RoleType::SCHOOL_MANAGER ||
+            Auth::user()->role->name==RoleType::SCHOOL_BOSS){
+            return CategoryFee::query()
+                ->filter($filters)
+                ->where('name', 'like', '%' . $search . '%')
+                ->where('is_accessory', false)
+                ->paginate($per_page);
+        }else{
+            return CategoryFee::query()
+                ->filter($filters)
+                ->where('name', 'like', '%' . $search . '%')
+                ->paginate($per_page);
+        }
+
+
+    }
+
+    /**
+     * @param int|null $categoryId
+     * @param int|null $optionId
+     * @param int|null $classRoomId
+     * @param int $per_page
+     * @return mixed
+     */
+    public static function getListScalarFee(?int $categoryId, ?int $optionId, ?int $classRoomId, int $per_page = 10): mixed
+    {
+        // TODO: Implement getListScalarFee() method.
+        $filters = self::getFilters($categoryId, $optionId, $classRoomId);
+        return ScolarFee::query()
+            ->filter($filters)
+            ->paginate($per_page);
+
+    }
+
+    /**
+     * @param int|null $categoryId
+     * @param int|null $optionId
+     * @param int|null $classRoomId
+     * @return mixed
+     */
+    public static function getListScalarFeeNotPaginate(?int $categoryId, ?int $optionId, ?int $classRoomId,): mixed
+    {
+        // TODO: Implement getListScalarFeeNotPaginate() method.
+        $filters = self::getFilters($categoryId, $optionId, $classRoomId);
+        return ScolarFee::query()
+            ->filter($filters)
+            ->get();
+    }
+
+    /**
+     * @return CategoryFee
      */
     public static function getFirstCategoryFee(): CategoryFee
     {
+        // TODO: Implement getFirstCategoryFee() method.
         if (Auth::user()->role->name == RoleType::SCHOOL_GUARD){
             return CategoryFee::query()
                 ->where('school_id', School::DEFAULT_SCHOOL_ID())
@@ -64,57 +115,20 @@ class FeeDataConfiguration implements IFeeDataConfiguration
 
     }
     /**
-     * @inheritDoc
+     * @param int|null $categoryId
+     * @param int|null $optionId
+     * @param int|null $classRoomId
+     * @return int[]|null[]
      */
-    public static function getListScalarFee(
-        int|null $categoryId,
-        int|null $optionId,
-        int|null $classRoomId,
-        int $per_page = 10
-    ): mixed {
-        return ScolarFee::query()
-            ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
-            ->join('class_rooms', 'class_rooms.id', 'scolar_fees.class_room_id')
-            ->join('options', 'class_rooms.option_id', 'options.id')
-            ->where('category_fee_id', $categoryId)
-            ->when(
-                $optionId,
-                function ($query, $f) {
-                    return $query->where('class_rooms.option_id', $f);
-                }
-            )
-            ->when(
-                $classRoomId,
-                function ($query, $f) {
-                    return $query->where('scolar_fees.class_room_id', $f);
-                }
-            )
-            ->where('category_fees.school_id', School::DEFAULT_SCHOOL_ID())
-            ->select('scolar_fees.*')
-            ->paginate($per_page);
-    }
-
-    public static function getListScalarFeeNotPaginate(?int $categoryId, ?int $optionId, ?int $classRoomId,): mixed
+    public static function getFilters(
+        ?int $categoryId,
+        ?int $optionId,
+        ?int $classRoomId): array
     {
-        return ScolarFee::query()
-            ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
-            ->join('class_rooms', 'class_rooms.id', 'scolar_fees.class_room_id')
-            ->join('options', 'class_rooms.option_id', 'options.id')
-            ->where('category_fee_id', $categoryId)
-            ->when(
-                $optionId,
-                function ($query, $f) {
-                    return $query->where('class_rooms.option_id', $f);
-                }
-            )
-            ->when(
-                $classRoomId,
-                function ($query, $f) {
-                    return $query->where('scolar_fees.class_room_id', $f);
-                }
-            )
-            ->where('category_fees.school_id', School::DEFAULT_SCHOOL_ID())
-            ->select('scolar_fees.*')
-            ->get();
+        return [
+            'category_fee_id' => $categoryId
+            , 'option_id' => $optionId,
+            'class_room_id' => $classRoomId,
+        ];
     }
 }

@@ -58,4 +58,26 @@ class ScolarFee extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function  scopeFilter($query, array $filters)
+    {
+        return $query->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
+            ->join('class_rooms', 'class_rooms.id', 'scolar_fees.class_room_id')
+            ->join('options', 'class_rooms.option_id', 'options.id')
+            ->where('category_fee_id', $filters['category_fee_id'])
+            ->when(
+                $filters['option_id'],
+                function ($query, $f) {
+                    return $query->where('class_rooms.option_id', $f);
+                }
+            )
+            ->when(
+                $filters['class_room_id'],
+                function ($query, $f) {
+                    return $query->where('scolar_fees.class_room_id', $f);
+                }
+            )
+            ->where('category_fees.school_id', School::DEFAULT_SCHOOL_ID())
+            ->select('scolar_fees.*');
+    }
 }

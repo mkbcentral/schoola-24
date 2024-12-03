@@ -29,4 +29,19 @@ class MoneyBorrowing extends Model
     {
         return $this->belongsTo(School::class, 'school_id');
     }
+
+    public function scopeFilter($query, array $filters )
+    {
+        return $query->when($filters['date'], function ($query, $val) {
+            return $query->whereDate('created_at', $val);
+        })
+            ->when($filters['month'], function ($query, $val) {
+                return $query->where('month', $val);
+            })
+            ->when($filters['currency'], function ($query, $val) {
+                return $query->where('currency', $val);
+            })
+            ->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID());
+    }
 }

@@ -77,7 +77,7 @@ class ExpenseFee extends Model
                     return $query->where('expense_fees.category_fee_id', $val);
                 }
             )->when(
-                $filters['categoryExenseId'],
+                $filters['categoryExpenseId'],
                 function ($query, $val) {
                     return $query->where('expense_fees.category_expense_id', $val);
                 }

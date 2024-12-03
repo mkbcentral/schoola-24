@@ -53,8 +53,8 @@ class ListStudentForControlPaymentByTranchPage extends Component
         $this->selectedCategoryFeeId = $categoryFeeId;
         $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()->id;
         $this->categoryFeeSelected = FeeDataConfiguration::getFirstCategoryFee();
-        $this->option_filter = SchoolDataFeature::getOptionFirstOption()->id;
-        $this->selectedOptionId = SchoolDataFeature::getOptionFirstOption()->id;
+        $this->option_filter = SchoolDataFeature::getFirstOption()->id;
+        $this->selectedOptionId = SchoolDataFeature::getFirstOption()->id;
         $this->class_room_filter = ClassRoom::find($this->selectedOptionId)->id;
     }
 

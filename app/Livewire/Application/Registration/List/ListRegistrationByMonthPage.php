@@ -53,7 +53,7 @@ class ListRegistrationByMonthPage extends Component
     public function render()
     {
         return view('livewire.application.registration.list.list-registration-by-month-page', [
-            'registrations' => RegistrationFeature::getListOoldOrNew(
+            'registrations' => RegistrationFeature::getListOldOrNew(
                 null,
                 $this->monthFilter,
                 null,

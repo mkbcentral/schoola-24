@@ -50,6 +50,18 @@ class Salary extends Model
 
     public function getAmount(string $currency): int|float
     {
-        return SalaryFeature::getDetailAmountToatl($this->id, $currency);
+        return SalaryFeature::getDetailAmountTotal($this->id, $currency);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        return $query ->when($filters['date'], function ($query, $val) {
+            return $query->whereDate('created_at', $val);
+        })
+            ->when($filters['month'], function ($query, $val) {
+                return $query->where('month', $val);
+            })
+            ->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID());
     }
 }

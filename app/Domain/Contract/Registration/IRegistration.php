@@ -97,7 +97,7 @@ interface  IRegistration
      * @param mixed $per_page
      * @return mixed
      */
-    public static function getListOoldOrNew(
+    public static function getListOldOrNew(
         ?string $date,
         ?string $month,
         ?int $sectionId,
@@ -176,4 +176,6 @@ interface  IRegistration
         ?int $responsibleId,
         ?bool $isOld,
     ): int|float;
+
+    public  static function generateQRCodes(array $items): void;
 }

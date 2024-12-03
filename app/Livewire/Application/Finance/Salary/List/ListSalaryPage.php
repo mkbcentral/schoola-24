@@ -13,7 +13,7 @@ class ListSalaryPage extends Component
 {
     use WithPagination;
     protected $listeners = [
-        'SalaryListRefred' => '$refresh',
+        'SalaryListReferred' => '$refresh',
         'getSalaryDataDetail' => 'getSalary',
     ];
     public ?string $date_filter = '';
@@ -22,6 +22,11 @@ class ListSalaryPage extends Component
     public ?int $per_page = 10;
 
     public function getSalary(): void {}
+
+    public function newSalary(): void
+    {
+        $this->dispatch('initialSalaryForm');
+    }
 
     public function updatedMonthFilter(): void
     {

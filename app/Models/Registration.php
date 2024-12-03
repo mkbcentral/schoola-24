@@ -14,6 +14,7 @@ class Registration extends Model
 {
     use HasFactory;
 
+    public mixed $isRegistered;
     protected $fillable = [
         'code',
         'registration_number',
@@ -134,109 +135,61 @@ class Registration extends Model
      */
     public function scopeFilter(Builder $query, array $filters): Builder
     {
-        return $this->reusableFilterQuery($query, $filters)
-            ->when($filters['q'], function ($query, $q) {
-                return $query->where('students.name', 'like', '%' . $q . '%');
-            })
-            ->select('registrations.*', 'students.name')
-            ->orderBy($filters['sort_by'], $filters['sort_asc'] ? 'ASC' : 'DESC');
+        return $query->join('students', 'students.id', 'registrations.student_id')
+                ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
+                ->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
+                ->join("options", "options.id", "=", "class_rooms.option_id")
+                ->join("sections", "sections.id", "=", "options.section_id")
+                ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->when($filters['date'], function ($query, $date) {
+                    return $query->whereDate('registrations.created_at', $date);
+                })
+                ->when($filters['month'], function ($query, $month) {
+                    return $query->whereMonth('registrations.created_at', $month);
+                })
+                ->when($filters['section_id'], function ($query, $sectionId) {
+                    return $query->where('sections.id', $sectionId);
+                })
+                ->when($filters['option_id'], function ($query, $optionId) {
+                    return $query->where('options.id', $optionId);
+                })
+                ->when($filters['class_room_id'], function ($query, $classRoomId) {
+                    return $query->where('class_rooms.id', $classRoomId);
+                })
+                ->when($filters['responsible_student_id'], function ($query, $responsibleStudentId) {
+                    return $query->where('students.responsible_student_id', $responsibleStudentId);
+                })
+                ->when($filters['is_old'], function ($query, $optionId) {
+                    return $query->where('registrations.is_old', $optionId);
+                })
+                ->when($filters['q'], function ($query, $q) {
+                    return $query->where('students.name', 'like', '%' . $q . '%');
+                })
+                ->with(['student', 'registrationFee', 'classRoom', 'schoolYear', 'payments', 'rate'])
+                ->Select('registrations.*', 'students.name');
     }
-    /**
-     * Summary of scopeFilterOldOrnew
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $filters
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeFilterOldOrnew(Builder $query, array $filters): Builder
-    {
-        return $this->reusableFilterQuery($query, $filters)
-            ->where('registrations.is_old', $filters['is_old'])
-            ->select('registrations.*', 'students.name')
-            ->orderBy($filters['sort_by'], $filters['sort_asc'] ? 'ASC' : 'DESC');
-    }
-
-    /**
-     * Summary of scopeFilter
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $filters
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeFilterNotSorted(Builder $query, array $filters): Builder
-    {
-        return  $this->reusableFilterQuery($query, $filters)
-            ->where('registrations.is_old', $filters['is_old']);
-    }
-
-    public function scopeFilterCounterAll(Builder $query, array $filters): Builder
-    {
-        return $this->reusableFilterQuery($query, $filters);
-    }
-
-    public function reusableFilterQuery(Builder $query, array $filters): Builder
-    {
-        return $query
-            ->join('students', 'students.id', 'registrations.student_id')
-            ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
-            ->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
-            ->join("options", "options.id", "=", "class_rooms.option_id")
-            ->join("sections", "sections.id", "=", "options.section_id")
-            ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->when($filters['date'], function ($query, $date) {
-                return $query->whereDate('registrations.created_at', $date);
-            })
-            ->when($filters['month'], function ($query, $month) {
-                return $query->whereMonth('registrations.created_at', $month);
-            })
-            ->when($filters['section_id'], function ($query, $sectionId) {
-                return $query->where('sections.id', $sectionId);
-            })
-            ->when($filters['option_id'], function ($query, $optionId) {
-                return $query->where('options.id', $optionId);
-            })
-            ->when($filters['class_room_id'], function ($query, $classRoomId) {
-                return $query->where('class_rooms.id', $classRoomId);
-            })
-            ->when($filters['responsible_student_id'], function ($query, $classRoomId) {
-                return $query->where('students.responsible_student_id', $classRoomId);
-            })->with(
-                [
-                    'student',
-                    'registrationFee',
-                    'classRoom',
-                    'schoolYear',
-                    'payments',
-                    'rate'
-                ]
-            );
-    }
-
     public function getStatusPayment(int $registrationId, $categoryFeeId, string $month): bool
     {
-        $statuse = false;
+        $status = false;
         $payment = PaymentFeature::getSinglePaymentForStudentWithMonth($registrationId, $categoryFeeId, $month);
         if ($payment) {
-            $statuse = true;
-        } else {
-            $statuse = false;
+            $status = true;
         }
-        return $statuse;
+        return $status;
     }
 
     public function getStatusPaymentByTranch(int $registrationId, $categoryFeeId, int $scolarFeeId): bool
     {
-        $statuse = false;
+        $status = false;
         $payment = PaymentFeature::getSinglePaymentForStudentWithTranche(
             $registrationId,
             $categoryFeeId,
             $scolarFeeId
         );
         if ($payment) {
-            $statuse = true;
-        } else {
-            $statuse = false;
+            $status = true;
         }
-
-        return $statuse;
+        return $status;
     }
 }

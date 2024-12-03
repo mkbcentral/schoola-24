@@ -23,7 +23,7 @@ class ExpenseFeeFeature implements IExpenseFee
             'date' => $date,
             'month' => $month,
             'categoryFeeId' => $categoryFeeId,
-            'categoryExenseId' => $categoryExenseId,
+            'categoryExpenseId' => $categoryExenseId,
             'currency' => $currency,
         ];
         $total = 0;
@@ -51,7 +51,7 @@ class ExpenseFeeFeature implements IExpenseFee
             'date' => $date,
             'month' => $month,
             'categoryFeeId' => $categoryFeeId,
-            'categoryExenseId' => $categoryExenseId,
+            'categoryExpenseId' => $categoryExenseId,
             'currency' => $currency,
         ];
         return ExpenseFee::query()

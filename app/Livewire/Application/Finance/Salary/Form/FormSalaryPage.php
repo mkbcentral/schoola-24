@@ -11,10 +11,17 @@ use Livewire\Component;
 class FormSalaryPage extends Component
 {
     protected $listeners = [
-        'salaryData' => 'getSalary'
+        'salaryData' => 'getSalary',
+        'initialSalaryForm' => 'initForm',
     ];
     public ?Salary $salary = null;
     public SalaryForm $form;
+
+    public function initForm(): void
+    {
+        $this->form->created_at = date('Y-m-d');
+        $this->form->month = date('m');
+    }
 
     public function getSalary(Salary $salary): void
     {
@@ -50,7 +57,7 @@ class FormSalaryPage extends Component
         }
         $this->form->reset();
         $this->salary = null;
-        $this->dispatch('SalaryListRefred');
+        $this->dispatch('SalaryListReferred');
         $this->form->created_at = date('Y-m-d');
         $this->form->month = date('m');
     }

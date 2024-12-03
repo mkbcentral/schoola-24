@@ -53,15 +53,14 @@ class ListStudentForControlPaymentPage extends Component
         if (!empty($this)) {
             $this->selectedCategoryFeeId = $categoryFeeId;
         }
-        $categoryFee = FeeDataConfiguration::getFirstCategoryFee();
-        $this->category_fee_filter = $categoryFee->id;
-        $this->categoryFeeSelected = $categoryFee;
-        $this->option_filter = SchoolDataFeature::getOptionFirstOption()->id;
-        $this->selectedOptionId = SchoolDataFeature::getOptionFirstOption()->id;
+        $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()->id;
+        $this->categoryFeeSelected = FeeDataConfiguration::getFirstCategoryFee();
+        $this->option_filter = SchoolDataFeature::getFirstOption()->id;
+        $this->selectedOptionId = SchoolDataFeature::getFirstOption()->id;
         $this->class_room_filter = ClassRoom::find($this->selectedOptionId)->id;
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.payment.list.list-student-for-control-payment-page', [
             'registrations' => RegistrationFeature::getList(
@@ -75,7 +74,6 @@ class ListStudentForControlPaymentPage extends Component
                 $this->sortBy,
                 $this->sortAsc,
                 100
-
             ),
 
         ]);

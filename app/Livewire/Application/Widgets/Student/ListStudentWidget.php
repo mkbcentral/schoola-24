@@ -105,12 +105,11 @@ class ListStudentWidget extends Component
      * Supprimer un élève
      * @return void
      */
-    public function delete()
+    public function delete(): void
     {
         try {
-            if ($this->studentToDelete->registration->payments->isEmpty()) {
-                RegistrationFeature::delete($this->studentToDelete->registration);
-                StudentFeature::delete($this->studentToDelete);
+            $status=RegistrationFeature::delete($this->studentToDelete->registration);
+            if ($status) {
                 $this->dispatch('student-deleted', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {
                 $this->dispatch('delete-student-failed', ['message' => AppMessage::DATA_DELETED_FAILLED . ", car l'élève a des données"]);
@@ -127,11 +126,7 @@ class ListStudentWidget extends Component
     public function generateQrcodeItems(): void
     {
         try {
-            $registrations = Registration::whereIn('id', $this->selectedRegistrations)->get();
-            foreach ($registrations as $registration) {
-                $qrcode = StudentFeature::generateStudentQRCode($registration);
-                $registration->update(['qr_code' => $qrcode]);
-            }
+            RegistrationFeature::generateQRCodes($this->selectedRegistrations);
             $this->dispatch('added', ['message' => AppMessage::QRCODE_GENERATED_SUCCESSFULLY]);
         } catch (Exception $ex) {
             $this->dispatch('delete-student-failed', ['message' => $ex->getMessage()]);
@@ -139,12 +134,12 @@ class ListStudentWidget extends Component
     }
 
 
-    public function mount(mixed  $registrations)
+    public function mount(mixed  $registrations): void
     {
         $this->registrations = $registrations;
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.widgets.student.list-student-widget');
     }

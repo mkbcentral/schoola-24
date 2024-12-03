@@ -57,7 +57,7 @@ class ListSalaryDetailPage extends Component
         }
         $this->form->reset();
         $this->salaryDetailToEdit = null;
-        $this->dispatch('SalaryListRefred');
+        $this->dispatch('SalaryListReferred');
     }
 
     public function cancelUpdate(): void

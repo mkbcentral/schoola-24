@@ -7,12 +7,25 @@ use App\Models\CategoryFee;
 interface IFeeDataConfiguration
 {
     /**
-     * Retouter la liste des catégories des frais scolaire
+     * Retouner la liste des catégories des frais scolaire
      * @param int $per_page
+     * @param string|null $search
      * @return mixed
      */
     public static function getListCategoryFee(
-        int $per_page
+        int $per_page,
+        ?string $search =''
+    ): mixed;
+
+    /**
+     * Retourner la liste de categories en fonction du role du user
+     * @param int $per_page
+     * @param string|null $search
+     * @return mixed
+     */
+    public static function getListCategoryFeeForSpecificUser(
+        int $per_page,
+        ?string $search =''
     ): mixed;
 
     /**
@@ -30,12 +43,18 @@ interface IFeeDataConfiguration
         int $per_page = 10
     ): mixed;
 
+    /**
+     * Retourner la liste des frais not paginées
+     * @param int|null $categoryId
+     * @param int|null $optionId
+     * @param int|null $classRoomId
+     * @return mixed
+     */
     public static function getListScalarFeeNotPaginate(
         ?int $categoryId,
         ?int $optionId,
         ?int $classRoomId,
     ): mixed;
-
     /**
      * Recuperer la catégorie des frais pour chaque école et année scolaire
      * @return \App\Models\CategoryFee

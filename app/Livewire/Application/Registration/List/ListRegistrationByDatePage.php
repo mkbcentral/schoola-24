@@ -51,7 +51,7 @@ class ListRegistrationByDatePage extends Component
     public function render()
     {
         return view('livewire.application.registration.list.list-registration-by-date-page', [
-            'registrations' => RegistrationFeature::getListOoldOrNew(
+            'registrations' => RegistrationFeature::getListOldOrNew(
                 $this->dateFilter,
                 null,
                 null,

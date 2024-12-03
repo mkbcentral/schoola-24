@@ -44,10 +44,10 @@
                 @foreach ($registrations as $index => $registration)
                     <tr wire:key='{{ $registration->student->id }}' class=" ">
 
-                        <td class="text-center {{ $registration->abandoned == true ? 'bg-warning' : '' }}">
+                        <td class="text-center {{ $registration->abandoned ? 'bg-warning' : '' }}">
                             {{ $index + 1 }}
                         </td>
-                        <td>{{ $registration->student->name }}/{{ $registration->classRoom->getOriginalClassRoomName() }}
+                        <td>{{ $registration->student->name }}/{{ substr($registration->classRoom->getOriginalClassRoomName(),0,8) }}
                         </td>
                         @foreach ($months as $month)
                             @php

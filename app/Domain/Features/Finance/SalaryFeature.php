@@ -10,7 +10,6 @@ use App\Models\SchoolYear;
 
 class SalaryFeature implements ISalary
 {
-
     /**
      * @inheritDoc
      */
@@ -20,15 +19,9 @@ class SalaryFeature implements ISalary
         string|null $currency
     ): float|int {
         $total = 0;
+        $filters = self::getFilters($date, $month);
         $salaries = Salary::query()
-            ->when($date, function ($query, $val) {
-                return $query->whereDate('created_at', $val);
-            })
-            ->when($month, function ($query, $val) {
-                return $query->where('month', $val);
-            })
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+           ->filter($filters)
             ->get();
         foreach ($salaries as $salary) {
             foreach ($salary->salaryDetails()->where('currency', $currency)->get() as $salaryDetail) {
@@ -41,7 +34,7 @@ class SalaryFeature implements ISalary
     /**
      * @inheritDoc
      */
-    public static function getDetailAmountToatl(
+    public static function getDetailAmountTotal(
         ?int $salaryId,
         ?string $currency
     ): float|int {
@@ -64,21 +57,22 @@ class SalaryFeature implements ISalary
         string|null $month,
         int|null $per_page
     ): mixed {
+        $filters = self::getFilters($date, $month);
         return Salary::query()
-            ->when(
-                $date,
-                function ($query, $val) {
-                    return $query->whereDate('created_at', $val);
-                }
-            )
-            ->when(
-                $month,
-                function ($query, $val) {
-                    return $query->where('month', $val);
-                }
-            )
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->filter($filters)
             ->paginate($per_page);
+    }
+
+    /**
+     * @param mixed $date
+     * @param mixed $month
+     * @return array
+     */
+    public static function getFilters(mixed $date, mixed $month): array
+    {
+        return [
+            'date' => $date,
+            'month' => $month,
+        ];
     }
 }
