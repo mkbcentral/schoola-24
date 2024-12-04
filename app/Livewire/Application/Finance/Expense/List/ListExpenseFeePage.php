@@ -12,13 +12,16 @@ class ListExpenseFeePage extends Component
 {
     use WithPagination;
     protected $listeners = [
-        'expenseFeeListRefred' => '$refresh'
+        'expenseFeeListRefreshed' => '$refresh'
     ];
     public ?string $date_filter = null,
         $month_filter = '',
         $currency_filter = '';
     public int  $category_fee_id_filter = 0, $category_expense_id_filter = 0, $per_page = 10;
-
+    public  function newExpenseFee():void
+    {
+        $this->dispatch('initialExpenseForm');
+    }
     public function updatedMonthFilter(): void
     {
         $this->date_filter = null;

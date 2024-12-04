@@ -11,9 +11,14 @@ use Livewire\Component;
 
 class ListRatePage extends Component
 {
-    public string $amount;
+    public float $amount=0;
     public ?Rate $rateSelected = null;
 
+    public function initForm(): void
+    {
+        $this->rateSelected = null;
+        $this->amount = 0;
+    }
 
     public function save(): void
     {
@@ -29,13 +34,13 @@ class ListRatePage extends Component
         }
     }
 
-    public function edit(?Rate $rate)
+    public function edit(?Rate $rate): void
     {
         $this->rateSelected = $rate;
         $this->amount = $rate->amount;
     }
 
-    public function update()
+    public function update(): void
     {
         $inputs = $this->validate([
             'amount' => 'required|numeric'
@@ -60,10 +65,10 @@ class ListRatePage extends Component
         $this->amount = '';
     }
 
-    public function changeStatus(Rate $rate)
+    public function changeStatus(Rate $rate): void
     {
         try {
-            if ($rate->is_changed == true) {
+            if ($rate->is_changed) {
                 $rate->is_changed = false;
             } else {
                 $rate->is_changed = true;
@@ -74,7 +79,6 @@ class ListRatePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-
     public function delete(?Rate $rate): void
     {
         try {
@@ -88,13 +92,12 @@ class ListRatePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-
     public function cancelUpdate(): void
     {
         $this->rateSelected = null;
         $this->amount = '';
     }
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.rate.list.list-rate-page', [
             'rates' => Rate::query()

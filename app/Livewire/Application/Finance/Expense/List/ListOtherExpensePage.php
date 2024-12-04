@@ -13,7 +13,7 @@ class ListOtherExpensePage extends Component
 {
     use WithPagination;
     protected $listeners = [
-        'otherExpenseListRefred' => '$refresh'
+        'otherExpenseListRefreshed' => '$refresh'
     ];
     public ?string $date_filter = null;
     public ?string    $month_filter = '';
@@ -22,6 +22,10 @@ class ListOtherExpensePage extends Component
     public int $category_expense_id_filter = 0;
     public int $per_page = 25;
 
+    public  function newOtherExpenseFee():void
+    {
+        $this->dispatch('initialOtherExpenseForm');
+    }
     public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
@@ -47,7 +51,7 @@ class ListOtherExpensePage extends Component
 
     public function  mount(): void
     {
-        $this->month_filter=date('10');
+        $this->month_filter=date('m');
     }
 
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View

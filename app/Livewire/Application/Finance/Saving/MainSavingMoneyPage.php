@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class MainSavingMoneyPage extends Component
 {
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.saving.main-saving-money-page');
     }

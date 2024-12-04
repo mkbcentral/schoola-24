@@ -12,18 +12,23 @@ class ListBankDepositPage extends Component
 {
     use WithPagination;
     protected $listeners = [
-        'bankDepositListRefred' => '$refresh'
+        'bankDepositListRefreshed' => '$refresh'
     ];
     public ?string $date_filter = '';
     public ?string $month_filter = '';
     public ?string $currency_filter = '';
     public ?int $per_page = 10;
 
-    public function updatedMonthFilter()
+    public  function newBankDeposit(): void
+    {
+        $this->dispatch('initialFormBankDeposit');
+    }
+
+    public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
     }
-    public function updatedDateFilter()
+    public function updatedDateFilter(): void
     {
         $this->month_filter = "";
     }
@@ -34,7 +39,7 @@ class ListBankDepositPage extends Component
         $this->dispatch('bankDepositData', $bankDeposit);
     }
 
-    public function delete(BankDeposit $bankDeposit)
+    public function delete(BankDeposit $bankDeposit): void
     {
         try {
             $bankDeposit->delete();
@@ -43,12 +48,12 @@ class ListBankDepositPage extends Component
         }
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->month_filter = date('m');
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.bank.list.list-bank-deposit-page', [
             'bankDeposits' => BankDepositFeature::getList(

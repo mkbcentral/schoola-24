@@ -8,35 +8,43 @@
             Fc
         </h2>
     </div>
-    <div class="d-flex mt-2">
-        <div class="d-flex align-items-center me-2">
-            <x-form.label value="{{ __('Mois') }}" class="fw-bold me-2" />
-            <x-widget.list-month-fr wire:model.live='month_filter' :error="'month_filter'" />
-        </div>
-        <div class="d-flex align-items-center  me-2">
-            <x-form.label value="{{ __('Date') }}" class="fw-bold me-2" />
-            <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
-        </div>
-        <div class="d-flex align-items-center  me-2">
-            <x-form.label value="{{ __('Source') }}" class="fw-bold me-2" />
-            <x-widget.data.list-other-source-expense type='text' wire:model.live='other_source_expense_id_filter'
-                :error="'other_source_expense_id_filter'" />
-        </div>
-        <div class="d-flex align-items-center  me-2">
-            <x-form.label value="{{ __('Categorie') }}" class="fw-bold me-2" />
-            <x-widget.data.list-category-expense type='text' wire:model.live='category_expense_id_filter'
-                :error="'category_expense_id_filter'" />
-        </div>
-        <div class="d-flex align-items-center form-group">
-            <x-form.label value="{{ __('Dévise') }}" class="fw-bold me-2" />
-            <select id="my-select" class="form-control form-select" name="" wire:model.live='currency_filter'>
-                <option disabled>Choisir</option>
-                <option value=''>Tout</option>
-                <option value="USD">USD</option>
-                <option value="CDF">CDF</option>
-            </select>
-        </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex mt-2">
+            <div class="d-flex align-items-center me-2">
+                <x-form.label value="{{ __('Mois') }}" class="fw-bold me-2" />
+                <x-widget.list-month-fr wire:model.live='month_filter' :error="'month_filter'" />
+            </div>
+            <div class="d-flex align-items-center  me-2">
+                <x-form.label value="{{ __('Date') }}" class="fw-bold me-2" />
+                <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
+            </div>
+            <div class="d-flex align-items-center  me-2">
+                <x-form.label value="{{ __('Source') }}" class="fw-bold me-2" />
+                <x-widget.data.list-other-source-expense type='text' wire:model.live='other_source_expense_id_filter'
+                                                         :error="'other_source_expense_id_filter'" />
+            </div>
+            <div class="d-flex align-items-center  me-2">
+                <x-form.label value="{{ __('Categorie') }}" class="fw-bold me-2" />
+                <x-widget.data.list-category-expense type='text' wire:model.live='category_expense_id_filter'
+                                                     :error="'category_expense_id_filter'" />
+            </div>
+            <div class="d-flex align-items-center form-group">
+                <x-form.label value="{{ __('Dévise') }}" class="fw-bold me-2" />
+                <select id="my-select" class="form-control form-select" name="" wire:model.live='currency_filter'>
+                    <option disabled>Choisir</option>
+                    <option value=''>Tout</option>
+                    <option value="USD">USD</option>
+                    <option value="CDF">CDF</option>
+                </select>
+            </div>
 
+        </div>
+        @can('view-payment')
+            <x-form.app-button
+                wire:click='newOtherExpenseFee'
+                data-bs-toggle="modal" data-bs-target="#form-other-expense-fee"
+                textButton='Nouveau' icon="bi bi-plus-circle" class="app-btn" />
+        @endcan
     </div>
     <table class="table table-bordered table-hover mt-2">
         <thead class="table-primary">
@@ -94,7 +102,9 @@
                             @can('manage-payment')
                                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                                     class="btn-secondary btn-sm">
-                                    <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer' href="#"
+                                    <x-others.dropdown-link
+                                        iconLink='bi bi-pencil-fill' labelText='Editer' href="#"
+                                        data-bs-toggle="modal" data-bs-target="#form-other-expense-fee"
                                         wire:click='edit({{ $otherExpense }})' />
                                     <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer' href="#"
                                         wire:confirm="Voulez-vous vraiment supprimer ?"
@@ -108,4 +118,5 @@
         @endif
     </table>
     <span>{{ $otherExpenses->links('livewire::bootstrap') }}</span>
+    <livewire:application.finance.expense.form.form-other-expense-page />
 </div>

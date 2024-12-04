@@ -11,11 +11,17 @@ use Livewire\Component;
 class FormSavingMoneyPage extends Component
 {
     protected $listeners = [
-        'savingMoneyData' => 'getSavingMoney'
+        'savingMoneyData' => 'getSavingMoney',
+        'initialSavingMoneyForm' => 'initSavingMoneyForm',
     ];
     public ?SavingMoney $savingMoney = null;
     public SavingMoneyForm $form;
 
+    public function initSavingMoneyForm():void
+    {
+        $this->form->reset();
+        $this->form->created_at = date('Y-m-d');
+    }
     public function getSavingMoney(SavingMoney $savingMoney): void
     {
         $this->savingMoney = $savingMoney;
@@ -50,7 +56,7 @@ class FormSavingMoneyPage extends Component
         }
         $this->form->reset();
         $this->savingMoney = null;
-        $this->dispatch('savingMoneyListRefred');
+        $this->dispatch('savingMoneyListRefreshed');
         $this->form->created_at = date('Y-m-d');
     }
 
@@ -61,11 +67,12 @@ class FormSavingMoneyPage extends Component
         $this->form->created_at = date('Y-m-d');
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->created_at = date('Y-m-d');
+        $this->form->month=date('m');
     }
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.saving.form.form-saving-money-page');
     }

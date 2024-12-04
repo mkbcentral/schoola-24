@@ -12,29 +12,30 @@ class ListSavingMoneyPage extends Component
 {
     use WithPagination;
     protected $listeners = [
-        'savingMoneyListRefred' => '$refresh'
+        'savingMoneyListRefreshed' => '$refresh'
     ];
     public ?string $date_filter = '';
     public ?string $month_filter = '';
     public ?string  $currency_filter = '';
     public ?int $per_page = 10;
 
-    public function updatedMonthFilter()
+    public function newSavingMoney()
+    {
+
+    }
+    public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
     }
-    public function updatedDateFilter()
+    public function updatedDateFilter(): void
     {
         $this->month_filter = "";
     }
-
-
     public function edit(?SavingMoney $savingMoney): void
     {
         $this->dispatch('savingMoneyData', $savingMoney);
     }
-
-    public function delete(SavingMoney $savingMoney)
+    public function delete(SavingMoney $savingMoney): void
     {
         try {
             $savingMoney->delete();
@@ -42,14 +43,12 @@ class ListSavingMoneyPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-
-    public function mount()
+    public function mount(): void
     {
         $this->month_filter = date('m');
     }
 
-
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.saving.list.list-saving-money-page', [
             'savingMoneys' => SavingMoneyFeature::getList(

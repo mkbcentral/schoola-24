@@ -10,17 +10,23 @@ use Livewire\Component;
 
 class FormCategorySalaryPage extends Component
 {
-    protected $listeners = ["categorySalaryData" => "getCategorySalary"];
+    protected $listeners = [
+        "categorySalaryData" => "getCategorySalary",
+        'initialCatSalaryForm'=>'initSalaryForm',
+    ];
     public ?CategorySalary $categorySalarySelected = null;
     public CategorySalaryForm $form;
-
-    public function getCategorySalary(CategorySalary $categorySalary)
+    public function initSalaryForm(): void
+    {
+        $this->categorySalarySelected = null;
+        $this->form->reset();
+    }
+    public function getCategorySalary(CategorySalary $categorySalary): void
     {
         $this->categorySalarySelected = $categorySalary;
         $this->form->fill($categorySalary->toArray());
     }
-
-    public function save()
+    public function save(): void
     {
         $input = $this->validate();
         try {
@@ -30,8 +36,7 @@ class FormCategorySalaryPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-
-    public function update()
+    public function update(): void
     {
         $input = $this->validate();
         try {
@@ -41,24 +46,23 @@ class FormCategorySalaryPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-
-    public function handlerSubmit()
+    public function handlerSubmit(): void
     {
         if ($this->categorySalarySelected == null) {
             $this->save();
         } else {
             $this->update();
         }
-        $this->dispatch('catSalaryataRefreshed');
+        $this->dispatch('catSalaryDataRefreshed');
         $this->form->reset();
     }
 
-    public function cancelUpdate()
+    public function cancelUpdate(): void
     {
         $this->categorySalarySelected = null;
         $this->form->reset();
     }
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.salary.form.form-category-salary-page');
     }

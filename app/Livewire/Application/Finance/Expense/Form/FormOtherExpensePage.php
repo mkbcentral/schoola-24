@@ -11,11 +11,26 @@ use Livewire\Component;
 class FormOtherExpensePage extends Component
 {
     protected $listeners = [
-        'otherExpenseData' => 'getOtherExpense'
+        'otherExpenseData' => 'getOtherExpense',
+        'initialOtherExpenseForm'=>'initOtherExpenseForm',
     ];
     public ?OtherExpense $otherExpense = null;
     public OtherExpenseForm $form;
 
+    /**
+     * @return void
+     */
+    public function initFormField(): void
+    {
+        $this->form->reset();
+        $this->otherExpense = null;
+        $this->form->created_at = date('Y-m-d');
+        $this->form->month = date('m');
+    }
+    public function initOtherExpenseForm(): void
+    {
+        $this->initFormField();
+    }
     public function getOtherExpense(OtherExpense $otherExpense): void
     {
         $this->otherExpense = $otherExpense;
@@ -48,10 +63,8 @@ class FormOtherExpensePage extends Component
         } else {
             $this->update();
         }
-        $this->form->reset();
-        $this->otherExpense = null;
-        $this->dispatch('otherExpenseListRefred');
-        $this->form->created_at = date('Y-m-d');
+        $this->dispatch('otherExpenseListRefreshed');
+        $this->initFormField();
     }
 
     public function cancelUpdate(): void
@@ -65,8 +78,9 @@ class FormOtherExpensePage extends Component
     {
         $this->form->created_at = date('Y-m-d');
     }
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.expense.form.form-other-expense-page');
     }
+
 }

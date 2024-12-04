@@ -12,27 +12,31 @@ class ListBorrowingPage extends Component
 {
     use WithPagination;
     protected $listeners = [
-        'moneyBorrowingListRefred' => '$refresh'
+        'moneyBorrowingListRefreshed' => '$refresh'
     ];
     public ?string $date_filter = null;
     public ?string $month_filter = '';
     public ?string  $currency_filter = '';
     public ?int $per_page = 10;
 
-    public function updatedMonthFilter()
+    public  function newBorrowing(): void
+    {
+        $this->dispatch('initialBorrowingForm');
+    }
+    public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
     }
-    public function updatedDateFilter()
+    public function updatedDateFilter(): void
     {
         $this->month_filter = "";
     }
-    public function edit(?MoneyBorrowing $moneyBorrowing)
+    public function edit(?MoneyBorrowing $moneyBorrowing): void
     {
         $this->dispatch('moneyBorrowingData', $moneyBorrowing);
     }
 
-    public function delete(?MoneyBorrowing $moneyBorrowing)
+    public function delete(?MoneyBorrowing $moneyBorrowing): void
     {
         try {
             $moneyBorrowing->delete();
@@ -41,12 +45,12 @@ class ListBorrowingPage extends Component
         }
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->month_filter = date('m');
     }
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.borrowing.list.list-borrowing-page', [
             'moneyBorrowings' => MoneyBorrowingFeature::getList(

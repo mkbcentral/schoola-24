@@ -11,12 +11,19 @@ use Livewire\Component;
 class FormExpensePage extends Component
 {
     protected $listeners = [
-        'expenseFeeData' => 'getExepenseFee'
+        'expenseFeeData' => 'getExpenseFee',
+        'initialExpenseForm' => 'initExpenseForm',
     ];
     public ?ExpenseFee $expenseFee = null;
     public ExpenseFeeForm $form;
-
-    public function getExepenseFee(ExpenseFee $expenseFee): void
+    public function initExpenseForm(): void
+    {
+        $this->form->reset();
+        $this->expenseFee = null;
+        $this->form->created_at = date('Y-m-d');
+        $this->form->month=date('m');
+    }
+    public function getExpenseFee(ExpenseFee $expenseFee): void
     {
         $this->expenseFee = $expenseFee;
         $this->form->fill($expenseFee->toArray());
@@ -50,22 +57,21 @@ class FormExpensePage extends Component
         }
         $this->form->reset();
         $this->expenseFee = null;
-        $this->dispatch('expenseFeeListRefred');
+        $this->dispatch('expenseFeeListRefreshed');
         $this->form->created_at = date('Y-m-d');
+        $this->form->month=date('m');
     }
-
     public function cancelUpdate(): void
     {
         $this->expenseFee = null;
         $this->form->reset();
         $this->form->created_at = date('Y-m-d');
     }
-
     public function mount(): void
     {
         $this->form->created_at = date('Y-m-d');
     }
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.expense.form.form-expense-page');
     }

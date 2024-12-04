@@ -11,10 +11,25 @@ use Livewire\Component;
 class FormBankDepositPage extends Component
 {
     protected $listeners = [
-        'bankDepositData' => 'getBankDeposit'
+        'bankDepositData' => 'getBankDeposit',
+        'initialFormBankDeposit' => 'initBankDepositForm',
     ];
     public ?BankDeposit $bankDeposit = null;
     public BankDepositForm $form;
+
+
+    /**
+     * @return void
+     */
+    public function initFormField(): void
+    {
+        $this->form->created_at = date('Y-m-d');
+        $this->form->month = date('m');
+    }
+    public function initBankDepositForm(): void
+    {
+        $this->initFormField();
+    }
 
     public function getBankDeposit(BankDeposit $bankDeposit): void
     {
@@ -50,27 +65,27 @@ class FormBankDepositPage extends Component
         }
         $this->form->reset();
         $this->bankDeposit = null;
-        $this->dispatch('bankDepositListRefred');
-        $this->form->created_at = date('Y-m-d');
-        $this->form->month = date('m');
+        $this->dispatch('bankDepositListRefreshed');
+        $this->initFormField();
     }
 
     public function cancelUpdate(): void
     {
         $this->bankDeposit = null;
         $this->form->reset();
-        $this->form->created_at = date('Y-m-d');
-        $this->form->month = date('m');
+        $this->initFormField();
     }
+
+
 
     public function mount()
     {
-        $this->form->created_at = date('Y-m-d');
-        $this->form->month = date('m');
+        $this->initFormField();
     }
 
     public function render()
     {
         return view('livewire.application.finance.bank.form.form-bank-deposit-page');
     }
+
 }
