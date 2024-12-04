@@ -8,6 +8,7 @@
             return $query->where('option_id', $key);
         })
         ->select('class_rooms.*')
+        ->with('option')
         ->get();
 @endphp
 

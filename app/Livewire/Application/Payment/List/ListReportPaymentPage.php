@@ -8,7 +8,7 @@ use Livewire\Component;
 use App\Models\CategoryFee;
 use Livewire\WithPagination;
 use App\Domain\Utils\AppMessage;
-use App\Domain\Helpers\SmsNoficationHelper;
+use App\Domain\Helpers\SmsNotificationHelper;
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Domain\Features\Configuration\FeeDataConfiguration;
 
@@ -59,7 +59,7 @@ class ListReportPaymentPage extends Component
      * @param mixed $val
      * @return void
      */
-    public function updatedSectionFilter($val): void
+    public function updatedSectionFilter(mixed $val): void
     {
         $this->selectedSection = $val;
     }
@@ -68,7 +68,7 @@ class ListReportPaymentPage extends Component
      * @param mixed $val
      * @return void
      */
-    public function updatedOptionFilter($val): void
+    public function updatedOptionFilter(mixed $val): void
     {
         $this->selectedOption = $val;
     }
@@ -93,7 +93,7 @@ class ListReportPaymentPage extends Component
     {
         try {
             $phone = '+243971330007'; //$payment->registration->student->responsibleStudent->phone;
-            SmsNoficationHelper::sendOrangeSMS($phone, "Test sms");
+            SmsNotificationHelper::sendOrangeSMS($phone, "Test sms");
             $this->dispatch('updated', ['message' => AppMessage::SMS_SENT]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);

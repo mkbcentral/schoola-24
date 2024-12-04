@@ -21,7 +21,7 @@ class ListBankDepositPage extends Component
 
     public  function newBankDeposit(): void
     {
-        $this->dispatch('initialFormBankDeposit');
+        $this->dispatch('initialFormBankDeposit');s
     }
 
     public function updatedMonthFilter(): void

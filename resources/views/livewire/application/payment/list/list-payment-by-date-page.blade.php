@@ -92,9 +92,11 @@
             </tbody>
         @endif
     </table>
-    <div class="d-flex justify-content-between align-items-center">
-        <span>{{ $payments->links('livewire::bootstrap') }}</span>
-        <x-others.table-page-number wire:model.live='per_page' />
-    </div>
+    @if($payments->count()>9)
+        <div class="d-flex justify-content-between align-items-center">
+            <span>{{ $payments->links('livewire::bootstrap') }}</span>
+            <x-others.table-page-number wire:model.live='per_page' />
+        </div>
+    @endif
     <livewire:application.payment.form.form-edit-payment-page>
 </div>

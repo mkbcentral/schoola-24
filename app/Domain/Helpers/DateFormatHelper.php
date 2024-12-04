@@ -29,7 +29,7 @@ class DateFormatHelper
     }
 
 
-    public static function getScoolFrMonths(): array
+    public static function getSchoolFrMonths(): array
     {
         return [
             ['name' => 'JUILLET', 'number' => '07'],
@@ -45,22 +45,5 @@ class DateFormatHelper
             ['name' => 'MAI', 'number' => '05'],
             ['name' => 'JUIN', 'number' => '06'],
         ];
-    }
-
-    /**
-     * Get list date for month
-     * @param mixed $month
-     * @param mixed $year
-     * @return array
-     */
-    public static function getListDateForMonth($month, $year): array
-    {
-        $days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        $dates = array();
-        for ($i = 1; $i <= $days; $i++) {
-            $date = Carbon::createFromDate($year, $month, $i)->format('Y-m-d');
-            $dates[] = $date;
-        }
-        return $dates;
     }
 }

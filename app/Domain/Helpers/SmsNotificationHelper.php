@@ -7,12 +7,13 @@ namespace App\Domain\Helpers;
 use Mediumart\Orange\SMS\SMS;
 use Mediumart\Orange\SMS\Http\SMSClient;
 
-class SmsNoficationHelper
+class SmsNotificationHelper
 {
     public static function sendOrangeSMS(
         string $to,
         string $message
-    ) {
+    ): void
+    {
         $client = SMSClient::getInstance(
             env('SMS_ORANGE_CLIENT_ID'),
             env('SMS_ORANGE_APPLICATION_ID')

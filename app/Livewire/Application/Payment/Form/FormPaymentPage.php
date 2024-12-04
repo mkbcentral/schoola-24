@@ -18,9 +18,24 @@ class FormPaymentPage extends Component
     public ?Registration $registration;
     public $selectedCategoryFeeId, $selectedIdClassRoom = 0;
     public ?ScolarFee $scolarFee = null;
-
     public PaymentForm $form;
-    public function updatedFormCategoryFeeId($val)
+
+
+    /**
+     * @return void
+     */
+    public function initFormFields(): void
+    {
+        $this->form->reset();
+        $this->form->created_at = date('Y-m-d');
+        $this->form->month = date('m');
+    }
+
+    /**
+     * @param $val
+     * @return void
+     */
+    public function updatedFormCategoryFeeId($val): void
     {
         $this->selectedCategoryFeeId = $val;
         $this->scolarFee = ScolarFee::query()
@@ -28,35 +43,40 @@ class FormPaymentPage extends Component
             ->where('class_room_id', $this->registration->class_room_id)
             ->first();
     }
-    public function getRegistration(?Registration $registration)
+
+    /**
+     * @param Registration|null $registration
+     * @return void
+     */
+    public function getRegistration(?Registration $registration): void
     {
         $this->registration = $registration;
         $this->selectedIdClassRoom = $registration->classRoom->id;
-        $this->form->reset();
-        $this->form->created_at = date('Y-m-d');
+        $this->initFormFields();
     }
-    public function save()
+    public function save(): void
     {
         $this->validate();
         try {
-            $this->form->create($this->registration->id);
+            $this->form->create($this->registration->id,$this->scolarFee);
             $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
             $this->dispatch('refreshPaymentList');
-            $this->form->reset();
-            $this->form->created_at = date('Y-m-d');
+            $this->initFormFields();
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->created_at = date('Y-m-d');
+        $this->form->month = date('m');
     }
 
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.payment.form.form-payment-page');
     }
+
 }

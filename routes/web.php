@@ -76,7 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('payment')->group(function () {
             Route::get('new-payment', NewPaymentPage::class)->name('payment.new');
             Route::get('regularization', MainRegularizationPaymentPage::class)->name('payment.regularization');
-            Route::get('rapport', MainPaymentPage::class)->name('payment.rappport');
+            Route::get('rapport', MainPaymentPage::class)->name('payment.rapport');
             Route::get('control', MainControlPaymentPage::class)->name('payment.control');
         });
         //Route work on finance
@@ -138,10 +138,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
          * Route d'impression de paiemnts
          */
         Route::controller(PrintPaymentController::class)->group(function () {
-            Route::get('payemets-by-date/{date}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByDate')->name('print.payment.date');
-            Route::get('payemets-by-month/{month}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByMonth')->name('print.payment.month');
-            Route::get('payemets-slip-by-date/{date}', 'printPaymentSlipByDate')->name('print.payment.slip.date');
-            Route::get('payemets-slip-by-month/{month}', 'printPaymentSlipByMonth')->name('print.payment.slip.month');
+            Route::get('payments-by-date/{date}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByDate')->name('print.payment.date');
+            Route::get('payments-by-month/{month}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByMonth')->name('print.payment.month');
+            Route::get('payments-slip-by-date/{date}', 'printPaymentSlipByDate')->name('print.payment.slip.date');
+            Route::get('payments-slip-by-month/{month}', 'printPaymentSlipByMonth')->name('print.payment.slip.month');
         });
     });
 });

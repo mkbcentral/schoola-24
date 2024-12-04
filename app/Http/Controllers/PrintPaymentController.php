@@ -42,6 +42,7 @@ class PrintPaymentController extends Controller
             $optionId,
             $classRoomId,
             true,
+            null,
             1000
         );
         $pdf = App::make('dompdf.wrapper');
@@ -85,6 +86,7 @@ class PrintPaymentController extends Controller
             $optionId,
             $classRoomId,
             true,
+            null,
             1000
         );
         $pdf = App::make('dompdf.wrapper');

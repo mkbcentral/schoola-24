@@ -1,6 +1,6 @@
 <div>
     @php
-        $months = App\Domain\Helpers\DateFormatHelper::getScoolFrMonths();
+        $months = App\Domain\Helpers\DateFormatHelper::getSchoolFrMonths();
         $paymentStatus = false;
     @endphp
     <div class="d-flex justify-content-between align-items-center">

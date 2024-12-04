@@ -4,6 +4,7 @@ namespace App\Livewire\Forms;
 
 use App\Domain\Features\Payment\PaymentFeature;
 use App\Models\Payment;
+use App\Models\ScolarFee;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 
@@ -11,22 +12,19 @@ class PaymentForm extends Form
 {
     #[Rule('required', message: "Mois obligation", onUpdate: false)]
     public $month = '';
-    #[Rule('required', message: "TYpe frais obligatoire", onUpdate: false)]
-    public $scolar_fee_id = '';
     #[Rule('required', message: "Categorie obligatoire", onUpdate: false)]
     public $category_fee_id = '';
-
     #[Rule('required', message: "Date création obligatoire", onUpdate: false)]
     #[Rule('date', message: "Format date invalide", onUpdate: false)]
     public $created_at = '';
 
-    public function create(int  $registrationId): Payment|null
+    public function create(int  $registrationId,ScolarFee $scolarFee): Payment|null
     {
         $input = [
             'month' => $this->month,
-            'scolar_fee_id' => $this->scolar_fee_id,
+            'scolar_fee_id' => $scolarFee->id,
             'registration_id' => $registrationId,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
         ];
         return PaymentFeature::create($input);
     }

@@ -1,5 +1,7 @@
 <div>
-    <x-modal.build-modal-fixed idModal='form-payment' size='xl' headerLabel="PAYEMENT FRAIS"
+    <x-modal.build-modal-fixed
+        idModal='form-payment' size='xl'
+        headerLabel="PAYEMENT FRAIS"
         headerLabelIcon='bi bi-arrow-left-right'>
         <div class="d-flex justify-content-center pb-2">
             <x-widget.loading-circular-md wire:loading />
@@ -20,7 +22,7 @@
                     <form wire:submit='save'>
                         <div class="">
                             <x-form.label value="{{ __('Mois') }}" class="me-2" />
-                            <x-widget.list-month-fr wire:model.live='form.month' :error="'form.month'" />
+                            <x-widget.list-month-fr wire:model='form.month' :error="'form.month'" />
                             <x-errors.validation-error value='form.month' />
                         </div>
                         <div class="mt-2">
@@ -30,14 +32,8 @@
                             <x-errors.validation-error value='form.category_fee_id' />
                         </div>
                         <div class="mt-2">
-                            <x-form.label value="{{ __('Frais') }}" class="me-2" />
-                            <x-widget.data.list-fee-by-category selectedCategoryId='{{ $selectedCategoryFeeId }}'
-                                classRoomId='{{ $selectedIdClassRoom }}' wire:model.live='form.scolar_fee_id' />
-                            <x-errors.validation-error value='form.scolar_fee_id' />
-                        </div>
-                        <div class="mt-2">
                             <x-form.label value="{{ __('Date paiement') }}" />
-                            <x-form.input type='date' wire:model.blur='form.created_at' :error="'form.created_at'" />
+                            <x-form.input type='date' wire:model='form.created_at' :error="'form.created_at'" />
                             <x-errors.validation-error value='form.created_at' />
                         </div>
                         @if ($scolarFee != null)
@@ -46,8 +42,10 @@
                             </h3>
                         @endif
                         <div class="mt-4">
-                            <x-form.app-button type='submit' textButton="Payer" icon="bi bi-arrow-left-righ"
-                                class="app-btn" />
+                           @if($scolarFee)
+                                <x-form.app-button type='submit' textButton="Payer" icon="bi bi-arrow-left-right"
+                                                   class="app-btn" />
+                           @endif
                         </div>
                     </form>
 
@@ -89,7 +87,6 @@
                                                     {{ $payment->scolarFee->name }}
                                                 </td>
                                                 <td class="text-end"> {{ format_fr_month_name($payment->month) }}</td>
-
                                             </tr>
                                         @endforeach
                                     </tbody>
