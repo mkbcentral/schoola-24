@@ -38,13 +38,13 @@
                 <x-errors.validation-error value='form.is_paid_for_registration' />
             </div>
             <div>
-                <x-form.input-check-box idAndFor="isForDash" color="primary"
-                                        text="A afficher su le dashboard ?" wire:model='form.is_for_dash' :error="'form.is_for_dash'" />
+                <x-form.input-check-box idAndFor="isForDash" color="primary" text="A afficher su le dashboard ?"
+                    wire:model='form.is_for_dash' :error="'form.is_for_dash'" />
                 <x-errors.validation-error value='form.is_for_dash' />
             </div>
             <div>
-                <x-form.input-check-box idAndFor="isAccessory" color="primary"
-                                        text="Est un frais des accessoires ?" wire:model='form.is_accessory' :error="'form.is_accessory'" />
+                <x-form.input-check-box idAndFor="isAccessory" color="primary" text="Est un frais des accessoires ?"
+                    wire:model='form.is_accessory' :error="'form.is_accessory'" />
                 <x-errors.validation-error value='form.is_accessory' />
             </div>
             <div class="d-flex justify-content-between mt-4">
@@ -54,7 +54,7 @@
                 @endif
                 <x-form.app-button type='submit' textButton="Sauvegarder"
                     icon="{{ $categoryFeeSelected == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}"
-                    class="app-btn ml-2" />
+                    class="btn-primary ml-2" />
 
             </div>
         </form>

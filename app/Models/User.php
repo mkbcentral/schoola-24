@@ -122,13 +122,13 @@ class User extends Authenticatable
      * @param string $q
      * @return Builder
      */
-    public function  scopeFilter(Builder $query, string $q=''):Builder
+    public function  scopeFilter(Builder $query, string $q = ''): Builder
     {
         return $query->join('roles', 'roles.id', 'users.role_id')
-        ->when($q, function ($query,$keyToSearch) {
-            return $query->where('name', 'like', '%' .  $keyToSearch. '%')
-                ->orWhere('phone', 'like', '%' . $keyToSearch . '%')
-                ->orWhere('email', 'like', '%' . $keyToSearch. '%');
-        })->select('users.*')->with(['role']);
+            ->when($q, function ($query, $keyToSearch) {
+                return $query->where('name', 'like', '%' .  $keyToSearch . '%')
+                    ->orWhere('phone', 'like', '%' . $keyToSearch . '%')
+                    ->orWhere('email', 'like', '%' . $keyToSearch . '%');
+            })->select('users.*')->with(['role']);
     }
 }

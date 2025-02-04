@@ -46,7 +46,7 @@ class ClassRoom extends Model
 
     public function getOriginalClassRoomName(): string
     {
-        return $this->name . '/' . $this->option->name;
+        return $this->name . '-' . $this->option->name;
     }
 
     public  function getRegistrationCountForCurrentSchoolYear(string $month = ""): int|float

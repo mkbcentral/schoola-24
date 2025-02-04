@@ -45,7 +45,7 @@
                 </div>
                 <div class="mt-4">
                     <x-form.app-button type='submit' textButton="Modifier" icon="bi bi-arrow-left-righ"
-                        class="app-btn" />
+                        class="btn-primary" />
                 </div>
             </form>
         @endif

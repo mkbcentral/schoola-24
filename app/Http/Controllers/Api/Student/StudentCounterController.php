@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api\Student;
 
 use App\Domain\Features\Configuration\SchoolDataFeature;
 use App\Domain\Features\Registration\RegistrationFeature;
+use App\Exceptions\CustomExceptionHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OptionResource;
+use App\Http\Resources\RegistrationResource;
+use App\Models\ClassRoom;
+use App\Models\Option;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -101,6 +105,31 @@ class StudentCounterController extends Controller
             return response()->json([
                 'error' => $ex->getMessage()
             ]);
+        }
+    }
+
+    public function getListStudentByCalssRoom(Request $request,  $classRoomId)
+    {
+        try {
+
+            $students = RegistrationFeature::getList(
+                null,
+                null,
+                null,
+                null,
+                $classRoomId,
+                null,
+                null,
+                'students.name',
+                true,
+                1000
+            );
+            return response()->json([
+                'students' => RegistrationResource::collection($students)
+            ]);
+        } catch (Exception $exception) {
+            $handler = new CustomExceptionHandler();
+            return $handler->render(request(), $exception);
         }
     }
 }

@@ -41,7 +41,7 @@
                                                     <td>{{ $categoryRegistrationFee->name }}</td>
                                                     <td class="text-center">
                                                         <x-form.app-button type='button' icon="bi bi-pencil-fill"
-                                                            class="btn-sm app-btn"
+                                                            class="btn-sm btn-primary"
                                                             wire:click='edit({{ $categoryRegistrationFee }})' />
                                                         <x-form.app-button
                                                             wire:confirm="Est-vous sur de réaliser l'opération"

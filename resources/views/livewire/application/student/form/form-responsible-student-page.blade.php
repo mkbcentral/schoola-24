@@ -48,7 +48,7 @@
                 <x-form.app-button type='submit'
                     textButton="{{ $responsibleStudent == null ? 'Sauvegarder' : 'Mettre àjour' }}"
                     icon="{{ $responsibleStudent == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}"
-                    class="app-btn" />
+                    class="btn-primary" />
             </div>
         </form>
 

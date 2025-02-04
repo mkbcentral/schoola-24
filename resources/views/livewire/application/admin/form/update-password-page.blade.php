@@ -13,19 +13,19 @@
             <div class="mt-2">
                 <x-form.label value="{{ __('Mot de passe actuel') }}" />
                 <x-form.input type='password' wire:model.blur='current_password' icon='bi bi-key-fill'
-                              :error="'current_password'" />
+                    :error="'current_password'" />
                 <x-errors.validation-error value='current_password' />
             </div>
             <div class="mt-2">
                 <x-form.label value="{{ __('Confirmer le mot de passe') }}" />
                 <x-form.input type='password' wire:model.blur='confirm_password' icon='bi bi-key-fill'
-                              :error="'confirm_password'" />
+                    :error="'confirm_password'" />
                 <x-errors.validation-error value='confirm_password' />
             </div>
         </div>
 
         <div class="d-flex justify-content-end mt-4">
-            <x-form.app-button type='submit' textButton="Mettre àjour" icon="bi bi-arrow-repeat" class="app-btn" />
+            <x-form.app-button type='submit' textButton="Mettre àjour" icon="bi bi-arrow-repeat" class="btn-primary" />
         </div>
     </form>
 </div>

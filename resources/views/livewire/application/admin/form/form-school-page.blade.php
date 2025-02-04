@@ -70,7 +70,8 @@
                         class="btn-danger" />
                 @endif
                 <x-form.app-button type='submit' textButton="Sauvegarder"
-                    icon="{{ $school == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}" class="app-btn ml-2" />
+                    icon="{{ $school == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}"
+                    class="btn-primary ml-2" />
 
             </div>
         </form>

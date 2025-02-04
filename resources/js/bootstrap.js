@@ -8,18 +8,18 @@ window.$ = jQuery;
 
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.js";
 window.bootstrap = bootstrap;
-import "admin-lte/dist/js/adminlte.js";
 
-//Import seletec2
+// Import select2
 import select2 from "select2";
 select2();
 
-//Import sweetalert2
+// Import sweetalert2
 import Swal from "sweetalert2";
 window.Swal = Swal;
 
-import ApexCharts from "apexcharts";
+import ApexCharts from 'apexcharts'
 window.ApexCharts = ApexCharts;
 
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+

@@ -9,52 +9,46 @@
                 <div class="d-flex justify-content-center pb-2">
                     <x-widget.loading-circular-md wire:loading />
                 </div>
-                <x-form.app-button
-                    wire:click='newCategorySalary'
-                    data-bs-toggle="modal" data-bs-target="#form-category-salary"
-                    textButton='Nouveau' icon="bi bi-plus-circle" class="app-btn" />
+                <x-form.app-button wire:click='newCategorySalary' data-bs-toggle="modal"
+                    data-bs-target="#form-category-salary" textButton='Nouveau' icon="bi bi-plus-circle"
+                    class="btn-primary" />
             </div>
             <table class="table table-bordered table-hover table-sm mt-2">
                 <thead class="bg-app">
-                <tr class="cursor-hand">
-                    <th class="text-center">#</th>
-                    <th>
-                        CATEGORIE
-                    </th>
-                    <th class="text-center">Actions</th>
-                </tr>
+                    <tr class="cursor-hand">
+                        <th class="text-center">#</th>
+                        <th>
+                            CATEGORIE
+                        </th>
+                        <th class="text-center">Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @if ($categorySalaries->isEmpty())
-                    <tr>
-                        <td colspan="5"><x-errors.data-empty /></td>
-                    </tr>
-                @else
-                    @foreach ($categorySalaries as $index => $categorySalary)
-                        <tr wire:key='{{ $categorySalary->id }}'>
-                            <td class="text-center">{{ $index + 1 }}</td>
-                            <td>{{ $categorySalary->name }}</td>
-                            <td class="text-center">
-                                @can('manage-payment')
-                                    <x-others.dropdown
-                                        wire:ignore.self icon="bi bi-three-dots-vertical"
-                                        class="btn-secondary btn-sm">
-                                        <x-others.dropdown-link
-                                            iconLink='bi bi-pencil-fill'
-                                            labelText='Editer' href="#"
-                                            wire:click='edit({{ $categorySalary }})'
-                                            data-bs-toggle="modal" data-bs-target="#form-category-salary"
-                                        />
-                                        <x-others.dropdown-link
-                                            iconLink='bi bi-trash-fill' labelText='Supprimer' href="#"
-                                            wire:confirm="Voulez-vous vraiment supprimer ?"
-                                            wire:click='delete({{ $categorySalary }})' />
-                                    </x-others.dropdown>
-                                @endcan
-                            </td>
+                    @if ($categorySalaries->isEmpty())
+                        <tr>
+                            <td colspan="5"><x-errors.data-empty /></td>
                         </tr>
-                    @endforeach
-                @endif
+                    @else
+                        @foreach ($categorySalaries as $index => $categorySalary)
+                            <tr wire:key='{{ $categorySalary->id }}'>
+                                <td class="text-center">{{ $index + 1 }}</td>
+                                <td>{{ $categorySalary->name }}</td>
+                                <td class="text-center">
+                                    @can('manage-payment')
+                                        <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                                            class="btn-secondary btn-sm">
+                                            <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'
+                                                href="#" wire:click='edit({{ $categorySalary }})'
+                                                data-bs-toggle="modal" data-bs-target="#form-category-salary" />
+                                            <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
+                                                href="#" wire:confirm="Voulez-vous vraiment supprimer ?"
+                                                wire:click='delete({{ $categorySalary }})' />
+                                        </x-others.dropdown>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
 
                 </tbody>
             </table>

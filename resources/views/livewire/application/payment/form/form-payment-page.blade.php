@@ -1,7 +1,5 @@
 <div>
-    <x-modal.build-modal-fixed
-        idModal='form-payment' size='xl'
-        headerLabel="PAYEMENT FRAIS"
+    <x-modal.build-modal-fixed idModal='form-payment' size='lg' headerLabel="PAYEMENT FRAIS"
         headerLabelIcon='bi bi-arrow-left-right'>
         <div class="d-flex justify-content-center pb-2">
             <x-widget.loading-circular-md wire:loading />
@@ -19,7 +17,7 @@
                             <span>{{ $registration->classRoom->getOriginalClassRoomName() }}</span>
                         </div>
                     </div>
-                    <form wire:submit='save'>
+                    <form wire:submit.prevent='save'>
                         <div class="">
                             <x-form.label value="{{ __('Mois') }}" class="me-2" />
                             <x-widget.list-month-fr wire:model='form.month' :error="'form.month'" />
@@ -42,10 +40,10 @@
                             </h3>
                         @endif
                         <div class="mt-4">
-                           @if($scolarFee)
+                            @if ($scolarFee)
                                 <x-form.app-button type='submit' textButton="Payer" icon="bi bi-arrow-left-right"
-                                                   class="app-btn" />
-                           @endif
+                                    class="btn-primary" />
+                            @endif
                         </div>
                     </form>
 
@@ -98,4 +96,5 @@
             </div>
         @endif
     </x-modal.build-modal-fixed>
+
 </div>

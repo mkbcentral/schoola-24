@@ -12,11 +12,11 @@
                 <div class="d-flex">
                     <x-form.search-input wire:model.live='q' />
                     <x-form.app-button type='button' wire:click='refreshData' textButton=''
-                        icon="bi bi-arrow-clockwise" class="app-btn ms-1" />
+                        icon="bi bi-arrow-clockwise" class="btn-primary ms-1" />
                 </div>
                 <x-form.app-button wire:click='openNewResponsibleStudent' data-bs-toggle="modal"
                     data-bs-target="#form-responsible-student" textButton='Nouveau responsable' icon="bi bi-plus-circle"
-                    class="app-btn" />
+                    class="btn-primary" />
             </div>
             <table class="table table-bordered table-hover table-sm mt-2">
                 <thead class="text-bg-primary">
@@ -46,8 +46,9 @@
                                 </td>
                                 <td class="text-center">
                                     <x-form.app-button type='button' icon="bi bi-person-fill-add"
-                                        class="btn-sm app-btn" wire:click='addNewInscription({{ $responsibleStudent }})'
-                                        data-bs-toggle="modal" data-bs-target="#form-student" />
+                                        class="btn-sm btn-primary"
+                                        wire:click='addNewInscription({{ $responsibleStudent }})' data-bs-toggle="modal"
+                                        data-bs-target="#form-student" />
                                     <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                                         class="btn-secondary btn-sm">
                                         <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'

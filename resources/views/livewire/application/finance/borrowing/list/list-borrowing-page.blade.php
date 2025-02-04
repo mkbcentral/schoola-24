@@ -27,10 +27,8 @@
             Total: {{ app_format_number($total_usd, 1) }} $ | {{ app_format_number($total_cdf, 1) }}
             Fc
         </h3>
-        <x-form.app-button
-            wire:click='newBorrowing'
-            data-bs-toggle="modal" data-bs-target="#form-borrowing"
-            textButton='Nouveau' icon="bi bi-plus-circle" class="app-btn" />
+        <x-form.app-button wire:click='newBorrowing' data-bs-toggle="modal" data-bs-target="#form-borrowing"
+            textButton='Nouveau' icon="bi bi-plus-circle" class="btn-primary" />
     </div>
 
     <table class="table table-bordered table-hover table-sm mt-2">
@@ -81,8 +79,7 @@
                             @can('manage-payment')
                                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                                     class="btn-secondary btn-sm">
-                                    <x-others.dropdown-link
-                                        iconLink='bi bi-pencil-fill' labelText='Editer' href="#"
+                                    <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer' href="#"
                                         data-bs-toggle="modal" data-bs-target="#form-borrowing"
                                         wire:click='edit({{ $moneyBorrowing }})' />
                                     <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer' href="#"
@@ -96,7 +93,7 @@
             </tbody>
         @endif
     </table>
-    @if($moneyBorrowings->count()>10)
+    @if ($moneyBorrowings->count() > 10)
         <div class="d-flex justify-content-between">
             <span>{{ $moneyBorrowings->links('livewire::bootstrap') }}</span>
             <x-others.table-page-number wire:model.live='per_page' />

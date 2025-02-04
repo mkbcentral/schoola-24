@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 class Payment extends Model
 {
@@ -194,5 +195,58 @@ class Payment extends Model
             ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
             ->where('responsible_students.school_id', School::DEFAULT_SCHOOL_ID())
             ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID());
+    }
+
+    public static function getTotalAmountByCategoryForMonthOrDate(string|null $month, string|null $date)
+    {
+        return self::join('scolar_fees', 'payments.scolar_fee_id', '=', 'scolar_fees.id')
+            ->join('category_fees', 'scolar_fees.category_fee_id', '=', 'category_fees.id')
+            ->join('rates', 'payments.rate_id', '=', 'rates.id')
+            ->select(
+                'category_fees.name as category_name',
+                DB::raw('SUM(scolar_fees.amount) as total_amount'),
+                'category_fees.currency as currency'
+            )
+            ->when($month, function ($query, $month) {
+                return $query->where('payments.month', $month);
+            })
+            ->when($date, function ($query, $date) {
+                return $query->whereDate('payments.created_at', $date);
+            })
+            ->where('payments.is_paid', true)
+            ->groupBy('category_fees.name', 'category_fees.currency')
+            ->get();
+    }
+
+    public static function getListReceiptsYear(int $categoryId): mixed
+    {
+        return Payment::join('scolar_fees', 'payments.scolar_fee_id', 'scolar_fees.id')
+            ->join('category_fees', 'scolar_fees.category_fee_id', 'category_fees.id')
+            ->join('rates', 'payments.rate_id', 'rates.id')
+            ->select(
+                'category_fees.name as category_name',
+                DB::raw('payments.month as month'),
+                DB::raw('SUM(scolar_fees.amount) as total_amount'),
+                'category_fees.currency as currency_name'
+            )
+            ->where('category_fees.id', $categoryId) // Remplacez 1 par l'ID de la catégorie souhaitée
+            ->groupBy('category_fees.name', 'payments.month', 'category_fees.currency')
+            ->where('payments.is_paid', true)
+            ->get();
+    }
+
+    public static function getPaymentsByMonthAndCategory(int $categoryId): mixed
+    {
+        return self::join('scolar_fees', 'payments.scolar_fee_id', '=', 'scolar_fees.id')
+            ->join('category_fees', 'scolar_fees.category_fee_id', '=', 'category_fees.id')
+            ->select(
+                DB::raw('payments.month as month'),
+                'category_fees.name as category_name',
+                DB::raw('SUM(scolar_fees.amount) as total_amount')
+            )
+            ->where('payments.is_paid', true)
+            ->where('category_fees.id', $categoryId)
+            ->groupBy(DB::raw('payments.month'), 'category_fees.name')
+            ->get();
     }
 }

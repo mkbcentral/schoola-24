@@ -1,6 +1,5 @@
 <div>
-    <x-modal.build-modal-fixed
-        idModal='form-expense-fee' size='md'
+    <x-modal.build-modal-fixed idModal='form-expense-fee' size='md'
         headerLabel="{{ $expenseFee == null ? 'CREATION DEPENSE' : 'MODIFICATION DEPENSE' }}"
         headerLabelIcon="{{ $expenseFee == null ? 'bi bi-plus-circle-fill' : 'bi bi-pencil-fill' }}">
         <div class="d-flex justify-content-center pb-2">
@@ -32,15 +31,14 @@
             <div class="row">
                 <div class="mt-2 col">
                     <x-form.label value="{{ __('Type frais') }}" class="fw-bold" />
-                    <x-widget.data.list-cat-scolar-fee
-                        type='text' wire:model='form.category_fee_id'
+                    <x-widget.data.list-cat-scolar-fee type='text' wire:model='form.category_fee_id'
                         :error="'form.category_fee_id'" />
                     <x-errors.validation-error value='form.category_fee_id' />
                 </div>
                 <div class="mt-2 col">
                     <x-form.label value="{{ __('Categorie dépense') }}" class="me-2" class="fw-bold" />
                     <x-widget.data.list-category-expense type='text' wire:model='form.category_expense_id'
-                                                         :error="'form.category_expense_id'" />
+                        :error="'form.category_expense_id'" />
                     <x-errors.validation-error value='form.category_expense_id' />
                 </div>
             </div>
@@ -53,14 +51,12 @@
                 <div>
                     @if ($expenseFee != null)
                         <x-form.app-button type='button' textButton="Annuer" icon="bi bi-x-lg"
-                                           wire:click='cancelUpdate' class="btn-danger" />
+                            wire:click='cancelUpdate' class="btn-danger" />
                     @endif
                 </div>
-                <x-form.app-button
-                    type='submit' textButton="Sauvegarder'"
-                    icon="bi bi-arrow-left-right" class="app-btn" />
+                <x-form.app-button type='submit' textButton="Sauvegarder'" icon="bi bi-arrow-left-right"
+                    class="btn-primary" />
             </div>
         </form>
     </x-modal.build-modal-fixed>
 </div>
-

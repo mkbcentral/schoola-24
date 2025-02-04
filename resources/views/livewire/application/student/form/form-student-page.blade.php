@@ -74,7 +74,7 @@
 
                 <div class="d-flex justify-content-end align-items-center mt-4">
                     <x-form.app-button type='submit' textButton="Sauvegarder" icon="bi bi-floppy-fill"
-                        class="app-btn" />
+                        class="btn-primary" />
                 </div>
             </form>
         @endif

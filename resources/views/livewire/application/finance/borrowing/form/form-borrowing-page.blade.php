@@ -1,6 +1,5 @@
 <div>
-    <x-modal.build-modal-fixed
-        idModal='form-borrowing' size='md'
+    <x-modal.build-modal-fixed idModal='form-borrowing' size='md'
         headerLabel=" {{ $moneyBorrowing == null ? 'CREATION EMPRUNT' : 'MODIFICATION EMPRUNT' }}"
         headerLabelIcon="{{ $moneyBorrowing == null ? 'bi bi-plus-circle-fill' : 'bi bi-pencil-fill' }}">
         <div class="d-flex justify-content-center pb-2">
@@ -38,11 +37,11 @@
                 <div>
                     @if ($moneyBorrowing != null)
                         <x-form.app-button type='button' textButton="Annuer" icon="bi bi-x-lg"
-                                           wire:click='cancelUpdate' class="btn-danger" />
+                            wire:click='cancelUpdate' class="btn-danger" />
                     @endif
                 </div>
                 <x-form.app-button type='submit' textButton="Sauvegarder'" icon="bi bi-arrow-left-righ"
-                                   class="app-btn" />
+                    class="btn-primary" />
             </div>
         </form>
     </x-modal.build-modal-fixed>

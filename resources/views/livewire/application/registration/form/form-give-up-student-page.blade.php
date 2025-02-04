@@ -18,7 +18,7 @@
                 </div>
                 <div class="d-flex justify-content-end mt-4">
                     <x-form.app-button type='submit' textButton="Marquer abandon" icon="bi bi-journal-x"
-                        class="app-btn" />
+                        class="btn-primary" />
                 </div>
             </form>
         @endif

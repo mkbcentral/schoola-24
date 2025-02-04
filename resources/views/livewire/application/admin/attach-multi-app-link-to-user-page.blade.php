@@ -33,7 +33,7 @@
             @endforeach
             <div class="d-flex justify-content-end mt-4">
                 <x-form.app-button type='button' wire:click='attachLinks' textButton="Attribuer"
-                    icon="bi bi-floppy-fill" class="app-btn" />
+                    icon="bi bi-floppy-fill" class="btn-primary" />
             </div>
         </div>
     </x-content.main-content-page>

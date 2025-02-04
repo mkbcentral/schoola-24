@@ -69,7 +69,7 @@
                 @can('manage-student')
                     <x-form.app-button wire:click='edit({{ $registration->student }})' data-bs-toggle="modal"
                         data-bs-target="#form-edit-student" textButton='Modifier' icon="bi bi-pencil-fill"
-                        class="app-btn" />
+                        class="btn-primary" />
                 @endcan
             </div>
         </div>

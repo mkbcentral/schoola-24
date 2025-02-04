@@ -46,7 +46,7 @@
                                         <td>{{ $classRoom?->option?->name }}</td>
                                         <td class="text-center">
                                             <x-form.app-button type='button' icon="bi bi-pencil-fill"
-                                                class="btn-sm app-btn" wire:click='edit({{ $classRoom }})' />
+                                                class="btn-sm btn-primary" wire:click='edit({{ $classRoom }})' />
                                             <x-form.app-button type='button' icon="bi bi-trash-fill"
                                                 class="btn-secondary btn-sm" wire:confirm='Etês-vous sûr de supprimer ?'
                                                 wire:click='delete({{ $classRoom }})' />

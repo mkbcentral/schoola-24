@@ -28,7 +28,7 @@
                         @endif
                     </div>
                     <x-form.app-button type='submit' textButton="Sauvegarder'" icon="bi bi-arrow-left-righ"
-                        class="app-btn" />
+                        class="btn-primary" />
                 </div>
             </form>
         </div>

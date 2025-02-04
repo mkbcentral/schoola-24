@@ -22,3 +22,17 @@
         </div>
     </div>
 </div>
+@push('js')
+    <script type="module">
+        var modalElement = document.getElementById('{{ $idModal }}');
+        var modal = new bootstrap.Modal(modalElement);
+
+        modalElement.addEventListener('hidden.bs.modal', function() {
+            modalElement.setAttribute('inert', 'true');
+        });
+
+        modalElement.addEventListener('shown.bs.modal', function() {
+            modalElement.removeAttribute('inert');
+        });
+    </script>
+@endpush

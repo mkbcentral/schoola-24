@@ -136,38 +136,38 @@ class Registration extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query->join('students', 'students.id', 'registrations.student_id')
-                ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
-                ->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
-                ->join("options", "options.id", "=", "class_rooms.option_id")
-                ->join("sections", "sections.id", "=", "options.section_id")
-                ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-                ->when($filters['date'], function ($query, $date) {
-                    return $query->whereDate('registrations.created_at', $date);
-                })
-                ->when($filters['month'], function ($query, $month) {
-                    return $query->whereMonth('registrations.created_at', $month);
-                })
-                ->when($filters['section_id'], function ($query, $sectionId) {
-                    return $query->where('sections.id', $sectionId);
-                })
-                ->when($filters['option_id'], function ($query, $optionId) {
-                    return $query->where('options.id', $optionId);
-                })
-                ->when($filters['class_room_id'], function ($query, $classRoomId) {
-                    return $query->where('class_rooms.id', $classRoomId);
-                })
-                ->when($filters['responsible_student_id'], function ($query, $responsibleStudentId) {
-                    return $query->where('students.responsible_student_id', $responsibleStudentId);
-                })
-                ->when($filters['is_old'], function ($query, $optionId) {
-                    return $query->where('registrations.is_old', $optionId);
-                })
-                ->when($filters['q'], function ($query, $q) {
-                    return $query->where('students.name', 'like', '%' . $q . '%');
-                })
-                ->with(['student', 'registrationFee', 'classRoom', 'schoolYear', 'payments', 'rate'])
-                ->Select('registrations.*', 'students.name');
+            ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
+            ->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
+            ->join("options", "options.id", "=", "class_rooms.option_id")
+            ->join("sections", "sections.id", "=", "options.section_id")
+            ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->when($filters['date'], function ($query, $date) {
+                return $query->whereDate('registrations.created_at', $date);
+            })
+            ->when($filters['month'], function ($query, $month) {
+                return $query->whereMonth('registrations.created_at', $month);
+            })
+            ->when($filters['section_id'], function ($query, $sectionId) {
+                return $query->where('sections.id', $sectionId);
+            })
+            ->when($filters['option_id'], function ($query, $optionId) {
+                return $query->where('options.id', $optionId);
+            })
+            ->when($filters['class_room_id'], function ($query, $classRoomId) {
+                return $query->where('class_rooms.id', $classRoomId);
+            })
+            ->when($filters['responsible_student_id'], function ($query, $responsibleStudentId) {
+                return $query->where('students.responsible_student_id', $responsibleStudentId);
+            })
+            ->when($filters['is_old'], function ($query, $optionId) {
+                return $query->where('registrations.is_old', $optionId);
+            })
+            ->when($filters['q'], function ($query, $q) {
+                return $query->where('students.name', 'like', '%' . $q . '%');
+            })
+            ->with(['student', 'registrationFee', 'classRoom', 'schoolYear', 'payments', 'rate'])
+            ->Select('registrations.*', 'students.name');
     }
     public function getStatusPayment(int $registrationId, $categoryFeeId, string $month): bool
     {
@@ -191,5 +191,22 @@ class Registration extends Model
             $status = true;
         }
         return $status;
+    }
+
+
+    public static function countByGender(): array
+    {
+        $maleCount = self::whereHas('student', function ($query) {
+            $query->where('gender', 'M');
+        })->count();
+
+        $femaleCount = self::whereHas('student', function ($query) {
+            $query->where('gender', 'F');
+        })->count();
+
+        return [
+            'male' => $maleCount,
+            'female' => $femaleCount,
+        ];
     }
 }

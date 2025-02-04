@@ -29,7 +29,7 @@
                     <x-form.app-button type='submit'
                         textButton="{{ $classRoomSelected == null ? 'Sauvegarder' : 'Modifier' }}"
                         icon="{{ $classRoomSelected == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}"
-                        class="app-btn ml-2" />
+                        class="btn-primary ml-2" />
                 </div>
             </form>
         </div>

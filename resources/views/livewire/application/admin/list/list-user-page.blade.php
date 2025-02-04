@@ -10,7 +10,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <x-others.list-title title=' Liste des utilisateurs' icon='bi bi-person-lines-fill' />
                         <x-form.app-button wire:click='addNewUser' textButton='Nouveau' icon="bi bi-plus-circle"
-                            data-bs-toggle="modal" data-bs-target="#form-user" class="app-btn" />
+                            data-bs-toggle="modal" data-bs-target="#form-user" class="btn-primary" />
                     </div>
                     <div class="mt-2">
                         <div class="d-flex justify-content-center pb-2">
@@ -100,11 +100,12 @@
                                                     <x-others.dropdown-link iconLink='bi bi-key-fill'
                                                         labelText='Réinitialiser le mot de passe' class="text-secondary"
                                                         wire:confirm="Est-vous sur de réaliser l'opération"
-                                                        href="#" wire:click='resetUserPassword({{ $user }})' />
+                                                        href="#"
+                                                        wire:click='resetUserPassword({{ $user }})' />
                                                     <x-others.dropdown-link iconLink='bi bi-trash-fill'
-                                                                            labelText='Supprimer' class="text-secondary"
-                                                                            wire:confirm="Est-vous sur de réaliser l'opération"
-                                                                            href="#" wire:click='delete({{ $user }})' />
+                                                        labelText='Supprimer' class="text-secondary"
+                                                        wire:confirm="Est-vous sur de réaliser l'opération"
+                                                        href="#" wire:click='delete({{ $user }})' />
                                                 </x-others.dropdown>
                                             </td>
                                         </tr>

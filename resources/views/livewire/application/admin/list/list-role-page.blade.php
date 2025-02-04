@@ -40,7 +40,8 @@
                                                 <td>{{ $role->name }}</td>
                                                 <td class="text-center">
                                                     <x-form.app-button type='button' icon="bi bi-pencil-fill"
-                                                        class="btn-sm app-btn" wire:click='edit({{ $role }})' />
+                                                        class="btn-sm btn-primary"
+                                                        wire:click='edit({{ $role }})' />
                                                     <x-form.app-button
                                                         wire:confirm="Est-vous sur de réaliser l'opération"
                                                         type='button' icon="bi bi-trash-fill" class="btn-danger btn-sm"

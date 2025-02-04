@@ -18,14 +18,13 @@ class LoginPage extends Component
         $this->validate();
         try {
             if ($this->form->login()) {
-                if (!Auth::user()->is_active){
+                if (!Auth::user()->is_active) {
                     Auth::logout();
                     $this->dispatch('error', ['message' => AppMessage::LOGGED_IN_FAILLED_TO_UNACTIVATE_USER]);
-                }else{
+                } else {
                     $this->dispatch('added', ['message' => AppMessage::LOGGED_IN_SUCCESS]);
                     $this->redirect('/');;
                 }
-
             } else {
                 $this->dispatch('error', ['message' => AppMessage::LOGGED_IN_FAILLED]);
             }

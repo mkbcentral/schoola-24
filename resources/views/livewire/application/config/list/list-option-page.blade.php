@@ -33,7 +33,7 @@
                                         <td>{{ $option?->section?->name }}</td>
                                         <td class="text-center">
                                             <x-form.app-button type='button' icon="bi bi-pencil-fill"
-                                                class="btn-sm app-btn" wire:click='edit({{ $option }})' />
+                                                class="btn-sm btn-primary" wire:click='edit({{ $option }})' />
                                             <x-form.app-button type='button' icon="bi bi-trash-fill"
                                                 class="btn-secondary btn-sm" wire:confirm='Etês-vous sûr de supprimer ?'
                                                 wire:click='delete({{ $option }})' />

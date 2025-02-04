@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\Payment;
 
 use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Domain\Features\Payment\PaymentFeature;
+use App\Exceptions\CustomExceptionHandler;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PaymentResource;
 use App\Models\Registration;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,7 +25,7 @@ class PaymentRepportPaymentController extends Controller
             $payments = [];
 
             foreach ($categories as $category) {
-                $amount=PaymentFeature::getTotal(
+                $amount = PaymentFeature::getTotal(
                     $request->date,
                     null,
                     $category->id,
@@ -36,14 +38,13 @@ class PaymentRepportPaymentController extends Controller
                     null,
                     'CDF'
                 );
-                if ($amount > 0){
+                if ($amount > 0) {
                     $payments[] = [
                         'name' => $category->name,
-                        'amount' => $amount ,
+                        'amount' => $amount,
                         'currency' => $category->currency
                     ];
                 }
-
             }
             return response()->json([
                 'payments' => $payments
@@ -65,7 +66,7 @@ class PaymentRepportPaymentController extends Controller
             $categories = FeeDataConfiguration::getListCategoryFee(100);
             $payments = [];
             foreach ($categories as $category) {
-                $amount=PaymentFeature::getTotal(
+                $amount = PaymentFeature::getTotal(
                     null,
                     $request->month,
                     $category->id,
@@ -78,7 +79,7 @@ class PaymentRepportPaymentController extends Controller
                     null,
                     'CDF'
                 );
-                if ($amount > 0){
+                if ($amount > 0) {
                     $payments[] = [
                         'name' => $category->name,
                         'amount' =>  $amount,
@@ -124,6 +125,20 @@ class PaymentRepportPaymentController extends Controller
             return response()->json([
                 'error' => $ex->getMessage()
             ]);
+        }
+    }
+
+    public  function  getStudentPayments(Request $request, $registrationId)
+    {
+        try {
+            $registration = Registration::find($registrationId);
+            $payments = $registration->payments()->orderBy('created_at', 'desc')->get();
+            return response()->json([
+                'payments' => PaymentResource::collection($payments)
+            ]);
+        } catch (Exception $exception) {
+            $handler = new CustomExceptionHandler();
+            return $handler->render(request(), $exception);
         }
     }
 }

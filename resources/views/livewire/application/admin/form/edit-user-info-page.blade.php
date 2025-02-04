@@ -23,7 +23,7 @@
         </div>
 
         <div class="d-flex justify-content-end mt-4">
-            <x-form.app-button type='submit' textButton="Mettre àjour" icon="bi bi-arrow-repeat" class="app-btn" />
+            <x-form.app-button type='submit' textButton="Mettre àjour" icon="bi bi-arrow-repeat" class="btn-primary" />
         </div>
     </form>
 </div>

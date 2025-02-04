@@ -27,7 +27,7 @@
                 @endif
                 <x-form.app-button type='submit' textButton="Sauvegarder"
                     icon="{{ $roleSelected == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}"
-                    class="app-btn ml-2" />
+                    class="btn-primary ml-2" />
 
             </div>
         </form>

@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end mt-4">
-                <x-form.app-button type='submit' textButton="Créer compte" icon="" class="app-btn" />
+                <x-form.app-button type='submit' textButton="Créer compte" icon="" class="btn-primary" />
             </div>
         </form>
 

@@ -63,7 +63,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <x-form.app-button type='button' icon="bi bi-pencil-fill"
-                                                    class="btn-sm app-btn" wire:click='edit({{ $salaryDetail }})' />
+                                                    class="btn-sm btn-primary" wire:click='edit({{ $salaryDetail }})' />
                                                 <x-form.app-button type='button' icon="bi bi-trash-fill"
                                                     class="btn-danger btn-sm"
                                                     wire:confirm='Etês-vous sûr de supprimer ?'
@@ -107,7 +107,7 @@
                             </div>
                             <div class="d-flex justify-content-end mt-4">
                                 <x-form.app-button type='submit' textButton="Sauvegarder" icon="bi bi-arrow-left-righ"
-                                    class="app-btn" />
+                                    class="btn-primary" />
                             </div>
                         </form>
                     </div>

@@ -31,7 +31,7 @@
                                         <td>{{ $section->name }}</td>
                                         <td class="text-center">
                                             <x-form.app-button type='button' icon="bi bi-pencil-fill"
-                                                class="btn-sm app-btn" wire:click='edit({{ $section }})' />
+                                                class="btn-sm btn-primary" wire:click='edit({{ $section }})' />
                                             <x-form.app-button type='button'
                                                 wire:confirm='Etês-vous sûre de supprimer ?' icon="bi bi-trash-fill"
                                                 class="btn-secondary btn-sm" wire:click='delete({{ $section }})' />

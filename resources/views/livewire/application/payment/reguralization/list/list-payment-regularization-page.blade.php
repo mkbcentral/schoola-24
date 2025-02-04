@@ -4,7 +4,8 @@
     </div>
     <div class="d-flex justify-content-between">
         <x-form.app-button wire:click='newPayment' data-bs-toggle="modal" data-bs-target="#form-payment-regularization"
-            textButton='Nouveau paiement' icon="bi bi-plus-circle" class="app-btn" />
+            textButton='Nouveau paiement' icon="bi bi-plus-circle
+            " class="btn-primary" />
         <h3 class="text-primary text-uppercase text-end">
             Total: {{ app_format_number($total, 1) }} {{ $currency }}
         </h3>

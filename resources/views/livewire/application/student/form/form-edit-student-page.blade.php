@@ -65,7 +65,8 @@
                             wire:model.live='form.is_old' :error="'form.is_old'" />
                         <x-errors.validation-error value='form.is_old' />
                     </div>
-                    <x-form.app-button type='submit' textButton="Modifier" icon="bi bi-pencil-fill" class="app-btn" />
+                    <x-form.app-button type='submit' textButton="Modifier" icon="bi bi-pencil-fill"
+                        class="btn-primary" />
                 </div>
             </form>
         @endif

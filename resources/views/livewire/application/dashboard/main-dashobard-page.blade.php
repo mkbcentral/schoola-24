@@ -2,35 +2,20 @@
     <x-navigation.bread-crumb icon='bi bi-bar-chart-fill' label="Dashboard">
         <x-navigation.bread-crumb-item label='Dashboard' />
     </x-navigation.bread-crumb>
-    <x-content.main-content-page>
-        <div class="d-flex justify-content-between align-items-center">
-            @can('view-school-access')
-                <div>
-                    <x-form.label value="{{ __('Date') }}" class="fw-bold" />
-                    <x-form.input type='date' wire:model.live='date_filter' icon='bi bi-calendar-date-fill'
-                        :error="'date_filter'" />
-                </div>
-                <x-widget.loading-circular-md wire:loading />
-                <div>
-                    <x-form.label value="{{ __('Mois') }}" class="fw-bold" />
-                    <x-widget.list-month-fr wire:model.live='month_filter' :error="'month_filter'" />
-                </div>
-            @endcan
-
+    <livewire:application.dashboard.payment.dash-other-info-page />
+    <div class="row">
+        <div class="col-md-5">
+            <livewire:application.dashboard.payment.dash-payment-date-or-month-page />
         </div>
-        <div class="row row-cols-2 row-cols-lg-2 g-2 gy-0  g-lg-2 mb-0 mt-2">
-            @can('view-school-access')
-                @can('view-payment')
-                    <div class="col-md-6  mt-2 p-2">
-                        <livewire:application.dashboard.payment.dash-payment-page :date="$date_filter" />
-                    </div>
-                @endcan
-                <div class="col-md-6 mt-2 p-2">
-                    <livewire:application.dashboard.registration.dash-registration-count-page :date="$date_filter" />
-                    <livewire:application.dashboard.registration.dash-registration-by-class-room-page :date="$date_filter" />
-                    <livewire:application.dashboard.registration.dash-registration-count-by-section-page />
-                </div>
-            @endcan
+        <div class="col-md-7">
+            <livewire:application.dashboard.expense.dash-date-cost-expense-page />
+            <livewire:application.dashboard.expense.dash-date-other-expense-page />
         </div>
-    </x-content.main-content-page>
+    </div>
+    <div class="row">
+        <livewire:application.dashboard.dash-synthese-page />
+    </div>
+    <livewire:application.dashboard.payment.dash-payment-page />
+    <livewire:application.dashboard.expense.dash-exepense-page />
+    <livewire:application.dashboard.expense.dash-other-expense-page />
 </div>

@@ -24,7 +24,7 @@
                  <x-form.app-button type='submit'
                      textButton="{{ $sectionSelected == null ? 'Sauvegarder' : 'Modifier' }}"
                      icon="{{ $sectionSelected == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}"
-                     class="app-btn" />
+                     class="btn-primary" />
              </div>
          </form>
      </div>

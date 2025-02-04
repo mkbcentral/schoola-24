@@ -50,7 +50,7 @@
             </div>
             <div class="d-flex justify-content-end mt-4">
                 <x-form.app-button type='submit' textButton="{{ $user == null ? 'Sauvegarder' : 'Mettre àjour' }}"
-                    icon="{{ $user == null ? 'fa fa-save' : 'fa fa-sync' }}" class="app-btn" />
+                    icon="{{ $user == null ? 'fa fa-save' : 'fa fa-sync' }}" class="btn-primary" />
             </div>
         </form>
 

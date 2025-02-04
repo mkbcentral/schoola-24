@@ -26,6 +26,7 @@ use App\Livewire\Application\Finance\Expense\MainExpensePage;
 use App\Livewire\Application\Finance\Expense\MainOtherExpensePage;
 use App\Livewire\Application\Finance\Expense\MainOtherSourceExpensePage;
 use App\Livewire\Application\Finance\Rate\MainRatePage;
+use App\Livewire\Application\Finance\Recipe\MainOtherRecipePage;
 use App\Livewire\Application\Finance\Salary\List\ListCategorySalaryPage;
 use App\Livewire\Application\Finance\Salary\MainSalaryPage;
 use App\Livewire\Application\Finance\Saving\MainSavingMoneyPage;
@@ -39,6 +40,7 @@ use App\Livewire\Application\Payment\Reguralization\MainRegularizationPaymentPag
 use App\Livewire\Application\Registration\List\ListRegistrationByClassRoomPage;
 use App\Livewire\Application\Registration\List\ListRegistrationByDatePage;
 use App\Livewire\Application\Registration\List\ListRegistrationByMonthPage;
+use App\Livewire\Application\Setting\MainSettingPage;
 use App\Livewire\Application\Student\DetailStudentPage;
 use App\Livewire\Application\Student\List\ListResponsibleStudentPage;
 use App\Livewire\Application\Student\List\ListStudentPage;
@@ -47,75 +49,80 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['access.chercker'])->group(function () {
-        Route::get('/', MainDashobardPage::class)->name('dashboard.main');
+        Route::get('/', MainDashobardPage::class)->name('dashboard.main')->lazy();
         //Routes load on registration group
         Route::prefix('registration')->group(function () {
-            Route::get('/responsible-sudent', ListResponsibleStudentPage::class)->name('responsible.main');
-            Route::get('/students', ListStudentPage::class)->name('student.list');
+            Route::get('/responsible-sudent', ListResponsibleStudentPage::class)->name('responsible.main')->lazy();
+            Route::get('/students', ListStudentPage::class)->name('student.list')->lazy();
         });
         //Routes work on confiiguration group
         Route::prefix('configuration')->group(function () {
-            Route::get('section', ListSectionPage::class)->name('school.section');
-            Route::get('option', ListOptionPage::class)->name('school.option');
-            Route::get('class-room', ListClassRoomPage::class)->name('school.class-room');
+            Route::get('section', ListSectionPage::class)->name('school.section')->lazy();
+            Route::get('option', ListOptionPage::class)->name('school.option')->lazy();
+            Route::get('class-room', ListClassRoomPage::class)->name('school.class-room')->lazy();
         });
         //Routes work on sttings school fees
         Route::prefix('fee-setting')->group(function () {
-            Route::get('/registration', ListRegistrationFeePage::class)->name('fee.registration');
-            Route::get('/scolar', MainScolarFeePage::class)->name('fee.scolar');
-            Route::get('/category-scolar', ListCategoryScolarFeePage::class)->name('category.fee.scolar');
-            Route::get('/category-registration', ListCategoryRegistrationFeePage::class)->name('category.fee.registration');
+            Route::get('/registration', ListRegistrationFeePage::class)->name('fee.registration')->lazy();
+            Route::get('/scolar', MainScolarFeePage::class)->name('fee.scolar')->lazy();
+            Route::get('/category-scolar', ListCategoryScolarFeePage::class)->name('category.fee.scolar')->lazy();
+            Route::get('/category-registration', ListCategoryRegistrationFeePage::class)->name('category.fee.registration')->lazy();
         });
         //Routes work on administration
         Route::prefix('administration')->group(function () {
-            Route::get('users', ListUserPage::class)->name('admin.main');
-            Route::get('roles', ListRolePage::class)->name('admin.role');
-            Route::get('schools', ListSchoolPage::class)->name('admin.schools');
+            Route::get('users', ListUserPage::class)->name('admin.main')->lazy();
+            Route::get('roles', ListRolePage::class)->name('admin.role')->lazy();
+            Route::get('schools', ListSchoolPage::class)->name('admin.schools')->lazy();
         });
         //Routes work on payments
         Route::prefix('payment')->group(function () {
-            Route::get('new-payment', NewPaymentPage::class)->name('payment.new');
-            Route::get('regularization', MainRegularizationPaymentPage::class)->name('payment.regularization');
-            Route::get('rapport', MainPaymentPage::class)->name('payment.rapport');
-            Route::get('control', MainControlPaymentPage::class)->name('payment.control');
+            Route::get('new-payment', NewPaymentPage::class)->name('payment.new')->lazy();
+            Route::get('regularization', MainRegularizationPaymentPage::class)->name('payment.regularization')->lazy();
+            Route::get('rapport', MainPaymentPage::class)->name('payment.rappport')->lazy();
+            Route::get('control', MainControlPaymentPage::class)->name('payment.control')->lazy();
         });
         //Route work on finance
         Route::prefix('finance')->group(function () {
-            Route::get('bank', MainBankPage::class)->name('finance.bank');
-            Route::get('saving-money', MainSavingMoneyPage::class)->name('finance.saving.money');
-            Route::get('salary', MainSalaryPage::class)->name('finance.salary');
-            Route::get('salary/category', ListCategorySalaryPage::class)->name('finance.salary.category');
-            Route::get('money-borrowing', MainMoneyBorrowingPage::class)->name('finance.money.borrowing');
-            Route::get('rate', MainRatePage::class)->name('finance.rate');
+            Route::get('bank', MainBankPage::class)->name('finance.bank')->lazy();
+            Route::get('saving-money', MainSavingMoneyPage::class)->name('finance.saving.money')->lazy();
+            Route::get('salary', MainSalaryPage::class)->name('finance.salary')->lazy();
+            Route::get('salary/category', ListCategorySalaryPage::class)->name('finance.salary.category')->lazy();
+            Route::get('money-borrowing', MainMoneyBorrowingPage::class)->name('finance.money.borrowing')->lazy();
+            Route::get('rate', MainRatePage::class)->name('finance.rate')->lazy();
+            Route::get('other-recipes', MainOtherRecipePage::class)->name('finance.recipe')->lazy();
         });
         //Routes work on expense
         Route::prefix('expense')->group(function () {
-            Route::get('category', MainCateoryExpensePage::class)->name('expense.category');
-            Route::get('other-source', MainOtherSourceExpensePage::class)->name('expense.other.source');
-            Route::get('fee', MainExpensePage::class)->name('expense.fee');
-            Route::get('other', MainOtherExpensePage::class)->name('expense.other');
+            Route::get('category', MainCateoryExpensePage::class)->name('expense.category')->lazy();
+            Route::get('other-source', MainOtherSourceExpensePage::class)->name('expense.other.source')->lazy();
+            Route::get('fee', MainExpensePage::class)->name('expense.fee')->lazy();
+            Route::get('other', MainOtherExpensePage::class)->name('expense.other')->lazy();
         });
         //Routes work on navigation
         Route::prefix('navigation')->group(function () {
-            Route::get('single', MainSingleAppLinkPage::class)->name('navigation.single');
-            Route::get('multi', MainMultiAppLinkPage::class)->name('navigation.multi');
-            Route::get('sub', MainSubLinkPage::class)->name('navigation.sub');
+            Route::get('single', MainSingleAppLinkPage::class)->name('navigation.single')->lazy();
+            Route::get('multi', MainMultiAppLinkPage::class)->name('navigation.multi')->lazy();
+            Route::get('sub', MainSubLinkPage::class)->name('navigation.sub')->lazy();
         });
     });
 
-    Route::get('registration/student/{registration}', DetailStudentPage::class)->name('student.detail');
-    Route::get('registration/registration-date/{isOld}/{dateFilter}', ListRegistrationByDatePage::class)->name('registration.date');
-    Route::get('registration/registration-month/{isOld}/{monthFilter}', ListRegistrationByMonthPage::class)->name('registration.month');
-    Route::get('registration/registration-by-class-room/{classRoomId}', ListRegistrationByClassRoomPage::class)->name('registration.by.class-room');
+    Route::get('registration/student/{registration}', DetailStudentPage::class)->name('student.detail')->lazy();
+    Route::get('registration/registration-date/{isOld}/{dateFilter}', ListRegistrationByDatePage::class)->name('registration.date')->lazy();
+    Route::get('registration/registration-month/{isOld}/{monthFilter}', ListRegistrationByMonthPage::class)->name('registration.month')->lazy();
+    Route::get('registration/registration-by-class-room/{classRoomId}', ListRegistrationByClassRoomPage::class)->name('registration.by.class-room')->lazy();
 
-    Route::get('administration/attach-single-menu/{user}', AttacheSingleMenuToUserPage::class)->name('admin.attach.single.menu');
-    Route::get('administration/attach-multi-menu/{user}', AttachMultiAppLinkToUserPage::class)->name('admin.attach.multi.menu');
-    Route::get('administration/attach-sub-menu/{user}', AttacheSubMenuToUserPage::class)->name('admin.attach.sub.menu');
-    Route::get('administration/configure-school/{school}', ConfigureSchoolPage::class)->name('admin.school.configure');
+    Route::get('administration/attach-single-menu/{user}', AttacheSingleMenuToUserPage::class)->name('admin.attach.single.menu')->lazy();
+    Route::get('administration/attach-multi-menu/{user}', AttachMultiAppLinkToUserPage::class)->name('admin.attach.multi.menu')->lazy();
+    Route::get('administration/attach-sub-menu/{user}', AttacheSubMenuToUserPage::class)->name('admin.attach.sub.menu')->lazy();
+    Route::get('administration/configure-school/{school}', ConfigureSchoolPage::class)->name('admin.school.configure')->lazy();
     Route::get('administration/user-profile', UserProfilePage::class)->name('admin.user.profile');
     //Routes work to print receipt
     Route::controller(PrintPaymentReceiptController::class)->group(function () {
-        Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt');
+        Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt')->lazy();
+    });
+
+    Route::prefix('settings')->group(function () {
+        Route::get('main', MainSettingPage::class)->name('settings.main')->lazy();
     });
 
     Route::prefix('print')->group(function () {

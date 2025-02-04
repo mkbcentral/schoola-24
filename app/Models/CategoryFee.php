@@ -95,7 +95,7 @@ class CategoryFee extends Model
         );
     }
 
-    public  function scopeFilter(Builder $query,array $filters): Builder
+    public  function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())

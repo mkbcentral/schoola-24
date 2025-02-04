@@ -6,7 +6,7 @@
                     Liste des frais d'inscription
                 </h5>
                 <x-form.app-button wire:click='newFee' data-bs-toggle="modal" data-bs-target="#form-scolar-fee"
-                    textButton='Nouveau frais' icon="bi bi-plus-circle" class="app-btn" />
+                    textButton='Nouveau frais' icon="bi bi-plus-circle" class="btn-primary" />
             </div>
             <div class="mt-2">
                 <div class="d-flex justify-content-center pb-2">
@@ -26,7 +26,7 @@
                                 wire:model.live='class_room_filter' :error="'class_room_filter'" />
                         </div>
                         <x-form.app-button type='button' wire:click='refreshData' textButton=''
-                            icon="bi bi-arrow-clockwise" class="app-btn ms-1" />
+                            icon="bi bi-arrow-clockwise" class="btn-primary ms-1" />
                     </div>
                 </div>
                 <table class="table table-bordered table-hover table-sm mt-2">
@@ -58,7 +58,7 @@
                                     <td class="text-center">
                                         <x-form.app-button type='button' icon="bi bi-pencil-fill"
                                             data-bs-toggle="modal" data-bs-target="#form-scolar-fee"
-                                            class="btn-sm app-btn" wire:click='edit({{ $scolarFee }})' />
+                                            class="btn-sm btn-primary" wire:click='edit({{ $scolarFee }})' />
                                         <x-form.app-button type='button' icon="bi bi-x-circle-fill"
                                             wire:confirm="Est-vous sur de réaliser l'opération" class="btn-sm bg-danger"
                                             wire:click='makeIsChange({{ $scolarFee }})' />

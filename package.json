@@ -12,7 +12,6 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
-        "admin-lte": "^4.0.0-beta1",
         "alpinejs": "^3.14.1",
         "apexcharts": "^3.53.0",
         "bootstrap": "^5.3.3",

@@ -28,7 +28,8 @@
                  @endif
                  <x-form.app-button type='submit'
                      textButton="{{ $optionSelected == null ? 'Sauvegarder' : 'Modifier' }}"
-                     icon="{{ $optionSelected == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}" class="app-btn" />
+                     icon="{{ $optionSelected == null ? 'bi bi-floppy-fill' : 'bi bi-pencil-fill' }}"
+                     class="btn-primary" />
 
              </div>
          </form>

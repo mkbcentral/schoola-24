@@ -15,11 +15,11 @@ class LoginController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'required',
+                'login' => 'required',
                 'password' => 'required',
             ]);
-            $user = User::where('email', $request->email)
-                ->orWhere('phone', $request->email)
+            $user = User::where('email', $request->login)
+                ->orWhere('phone', $request->login)
                 ->first();
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response([

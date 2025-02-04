@@ -24,7 +24,7 @@ class RegistrationFeature implements IRegistration
         if ($registration->payments->isEmpty()) {
             RegistrationFeature::delete($registration);
             StudentFeature::delete($registration->student);
-           $status = true;
+            $status = true;
         }
         return $status;
     }
@@ -77,7 +77,7 @@ class RegistrationFeature implements IRegistration
         int|null $responsibleId,
         bool|null $isOld
     ): int|float {
-        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, $isOld,null,null,null);
+        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, $isOld, null, null, null);
         return Registration::query()
             ->filter($filters)
             ->count();
@@ -93,7 +93,7 @@ class RegistrationFeature implements IRegistration
         int|null $classRoomId,
         int|null $responsibleId
     ): float|int {
-        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId,null,null,null,'');
+        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, null, null, null, '');
         return Registration::query()
             ->filter($filters)
             ->count();
@@ -135,8 +135,7 @@ class RegistrationFeature implements IRegistration
         string|null $sortBy,
         bool|null $sortAsc,
         int|null $per_page
-    ): array|\Illuminate\Pagination\LengthAwarePaginator
-    {
+    ): array|\Illuminate\Pagination\LengthAwarePaginator {
         $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, null, null, null, $q);
         return Registration::query()
             ->filter($filters)
@@ -158,9 +157,8 @@ class RegistrationFeature implements IRegistration
         string|null $sortBy,
         bool|null $sortAsc,
         int|null $per_page
-    ): array|\Illuminate\Pagination\LengthAwarePaginator
-    {
-        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, $isOld,null,null, $q);
+    ): array|\Illuminate\Pagination\LengthAwarePaginator {
+        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, $isOld, null, null, $q);
         return Registration::query()
             ->filter($filters)
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
@@ -184,7 +182,7 @@ class RegistrationFeature implements IRegistration
         ];
     }
 
-    public static function generateQRCodes( array $items): void
+    public static function generateQRCodes(array $items): void
     {
         $registrations = Registration::whereIn('id', $items)->get();
         foreach ($registrations as $registration) {

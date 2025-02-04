@@ -38,7 +38,7 @@
                     <div class="d-flex align-items-center">
                         <x-form.app-button wire:click='newUserAdmin' textButton="Envoyer mail du compte"
                             data-bs-toggle="modal" data-bs-target="#form-user-config" icon="bi bi-envelope-arrow-up"
-                            class="app-btn mt-2 me-2" />
+                            class="btn-primary mt-2 me-2" />
                         <x-others.dropdown icon="bi bi-sliders" class="btn-link">
                             <x-others.dropdown-link iconLink='bi bi-link' labelText='Attacher un simple menu'
                                 href="{{ route('admin.attach.single.menu', $user) }}" class="" />
@@ -51,7 +51,7 @@
                 </div>
             @else
                 <x-form.app-button wire:click='newUserAdmin' textButton="Ouvrir compte admin" data-bs-toggle="modal"
-                    data-bs-target="#form-user-admin" icon="bi bi-person-fill-gear" class="app-btn mt-2" />
+                    data-bs-target="#form-user-admin" icon="bi bi-person-fill-gear" class="btn-primary mt-2" />
             @endif
         </div>
         <livewire:application.admin.form.form-school-page />

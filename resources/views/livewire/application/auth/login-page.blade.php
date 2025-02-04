@@ -1,32 +1,25 @@
-<div class="login-box">
-    <div class="card">
-        <div class="card-header text-center">
-            <img class="" src="{{ asset('images/logo.svg') }}" alt="Logo" width="">
-        </div>
-        <div class="card-body">
-            <h4 class="text-app text-uppercase text-center text-bold align-items-center">
-                <i class="bi bi-person-workspace"></i> se connecter
-            </h4>
-            <form wire:submit='login' class="mt-4">
-                <div>
-                    <x-form.label value="{{ __('Adresse email') }}" class="text-secondary" />
-                    <x-form.input type='email' wire:model='form.email' :error="'form.email'" style="height: 45px" />
-                    <x-errors.validation-error value='form.email' />
-                </div>
-                <div class="mt-2">
-                    <x-form.label value="{{ __('Mot de passe') }}" class="text-secondary" />
-                    <x-form.input type='password' wire:model='form.password' :error="'form.password'" style="height: 45px" />
-                    <x-errors.validation-error value='form.password' />
-                </div>
-                <div class="mt-4">
-                    <x-form.button class="app-btn w-100" type='submit'>
-                        <x-widget.loading-circular-md wire:loading wire:target='login' />
-                        <span wire:loading.class='d-none'>Se connecter</span>
-                    </x-form.button>
-                </div>
-            </form>
-        </div>
-        <!-- /.card-body -->
+<form id="loginForm" wire:submit='login'>
+    <div class="mb-2">
+        <x-form.auth-form-field type='email' wire:model='form.email' :error="'form.email'" placeholder="Adresse email" />
+        <x-errors.validation-error value='form.email' />
     </div>
-    <!-- /.card -->
-</div>
+
+    <div class="mb-3">
+        <x-form.auth-form-password wire:model='form.password' :error="'form.password'" placeholder="Mot de passe" />
+        <x-errors.validation-error value='form.password' />
+    </div>
+
+    <div class="d-flex justify-content-between mb-3">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Se souvernir de moi</label>
+        </div>
+        <a href="#" class="text-primary" style="font-size: 0.8rem;">Mot de pass oublié?</a>
+    </div>
+    <button type="submit" class="btn btn-primary btn-login">
+        <x-widget.loading-circular-md size="sm" wire:loading wire:target='login' />
+        <span wire:loading.class="d-none"> Se Connecter</span>
+
+    </button>
+
+</form>

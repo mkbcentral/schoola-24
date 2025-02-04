@@ -17,9 +17,8 @@
             Total: {{ app_format_number($total_usd, 1) }} $ | {{ app_format_number($total_cdf, 1) }}
             Fc
         </h2>
-        <x-form.app-button
-            wire:click='newSalary' data-bs-toggle="modal" data-bs-target="#form-salary"
-            textButton='Nouveau' icon="bi bi-plus-circle" class="app-btn" />
+        <x-form.app-button wire:click='newSalary' data-bs-toggle="modal" data-bs-target="#form-salary"
+            textButton='Nouveau' icon="bi bi-plus-circle" class="btn-primary" />
     </div>
     <table class="table table-bordered table-hover mt-2">
         <thead class="table-primary">
@@ -62,7 +61,8 @@
                                         href="#" wire:click='edit({{ $salary }})' data-bs-toggle="modal"
                                         data-bs-target="#salary-detail-page" />
                                     <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Edit' href="#"
-                                        wire:click='edit({{ $salary }})' data-bs-toggle="modal" data-bs-target="#form-salary" />
+                                        wire:click='edit({{ $salary }})' data-bs-toggle="modal"
+                                        data-bs-target="#form-salary" />
                                     <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer' href="#"
                                         wire:confirm="Voulez-vous vraiment supprimer ?"
                                         wire:click='delete({{ $salary }})' />
@@ -74,7 +74,7 @@
             </tbody>
         @endif
     </table>
-    @if($salaries->count() >10)
+    @if ($salaries->count() > 10)
         <div class="d-flex justify-content-between">
             <span>{{ $salaries->links('livewire::bootstrap') }}</span>
             <x-others.table-page-number wire:model.live='per_page' />

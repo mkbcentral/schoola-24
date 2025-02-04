@@ -12,7 +12,7 @@
                             <button class="nav-link {{ $selectedIndex == $categoryFee->id ? 'active' : '' }}"
                                 wire:click='changeIndex({{ $categoryFee->id }})' id="home-tab" data-bs-toggle="tab"
                                 data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                aria-selected="true"><i class="bi bi-folder-fill"></i>
+                                aria-selected="true"><i class="bi bi-folder"></i>
                                 {{ $categoryFee->name }}</button>
                         </li>
                     @endforeach

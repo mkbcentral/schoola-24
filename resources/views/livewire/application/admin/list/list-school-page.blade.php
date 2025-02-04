@@ -7,7 +7,7 @@
         <div>
             <div class="d-flex justify-content-end">
                 <x-form.app-button wire:click='openFormSchoolModal' data-bs-toggle="modal" data-bs-target="#form-school"
-                    textButton='Nouvelle école' icon="bi bi-house-add-fill" class="app-btn" />
+                    textButton='Nouvelle école' icon="bi bi-house-add-fill" class="btn-primary" />
             </div>
             <div class="row row-cols-2 row-cols-lg-3 g-3 g-lg-3 mt-2">
                 @foreach ($schoools as $school)

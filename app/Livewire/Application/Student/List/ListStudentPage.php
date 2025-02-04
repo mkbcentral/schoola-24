@@ -31,7 +31,7 @@ class ListStudentPage extends Component
     public $sortAsc = true;
 
     public ?Student $studentToDelete;
-    public  $selectedRegistrations=[];
+    public  $selectedRegistrations = [];
     public bool $selectPageRows = false;
 
     /**
@@ -60,8 +60,8 @@ class ListStudentPage extends Component
             $this->per_page = 1000;
             $this->selectedRegistrations = $this->registrations
                 ->pluck('id')->map(function ($id) {
-                return (string)$id;
-            });
+                    return (string)$id;
+                });
         } else {
             $this->reset(['selectedRegistrations', 'selectPageRows']);
             $this->per_page = 10;
@@ -157,7 +157,7 @@ class ListStudentPage extends Component
     public function delete(): void
     {
         try {
-            $status=RegistrationFeature::delete($this->studentToDelete->registration);
+            $status = RegistrationFeature::delete($this->studentToDelete->registration);
             if ($status) {
                 $this->dispatch('student-deleted', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {
@@ -201,6 +201,8 @@ class ListStudentPage extends Component
             $this->per_page
         );
     }
+
+    public function mount() {}
 
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {

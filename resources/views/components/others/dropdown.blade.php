@@ -1,11 +1,14 @@
  @props(['title' => '', 'icon' => ''])
- <div class="btn-group">
-     <button type="button" {{ $attributes->merge(['class' => 'btn dropdown-icon']) }} class=""
+ <div class="dropdown">
+     <button {{ $attributes->merge([
+         'class' => 'btn btn-secondary dropdown-toggle',
+     ]) }} type="button"
          data-bs-toggle="dropdown" aria-expanded="false">
          <i class="fw-bold {{ $icon }}" aria-hidden="true"></i>
          {{ $title }}
      </button>
-     <div class="dropdown-menu" role="menu" style="">
+     <ul class="dropdown-menu dropdown-menu-end" style="">
          {{ $slot }}
-     </div>
+     </ul>
+
  </div>
