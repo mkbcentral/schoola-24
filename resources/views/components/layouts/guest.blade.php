@@ -7,6 +7,7 @@
     <title>{{ config('app.name') }}</title>
     <script src="{{ asset('moment/moment.min.js') }}"></script>
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/Vector-white.svg') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @vite(['resources/sass/guest.scss', 'resources/js/app.js'])
     @stack('style')
 </head>
