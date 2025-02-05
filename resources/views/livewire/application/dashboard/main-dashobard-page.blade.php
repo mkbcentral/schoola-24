@@ -4,7 +4,7 @@
     </x-navigation.bread-crumb>
 
     <div class="row">
-        @if (Auth::user()->role->name == 'SCHOOL_SECRETARY')
+        @if (Auth::user()->role->name == 'SCHOOL_SECRETARY' || Auth::user()->role->name == 'SCHOOL_GUARD')
             <livewire:application.dashboard.registration.student-info-card-page />
         @else
             <div class="col-md-5">
