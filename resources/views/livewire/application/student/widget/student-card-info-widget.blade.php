@@ -40,7 +40,7 @@
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <strong>Nom:</strong> {{ $registration->student->name }}
+                    <strong>Nom:</strong> {{ $registration?->student->name }}
                 </li>
                 <li class="list-group-item">
                     <strong>Genre:</strong> {{ $registration->student->gender }}

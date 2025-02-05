@@ -2,11 +2,13 @@
     <x-navigation.bread-crumb icon='bi bi-bar-chart-fill' label="Dashboard">
         <x-navigation.bread-crumb-item label='Dashboard' />
     </x-navigation.bread-crumb>
-    <livewire:application.dashboard.payment.dash-other-info-page />
+
     <div class="row">
         @if (Auth::user()->role->name == 'SCHOOL_SECRETARY')
+            <livewire:application.dashboard.registration.student-info-card-page />
         @else
             <div class="col-md-5">
+                <livewire:application.dashboard.payment.dash-other-info-page />
                 <livewire:application.dashboard.payment.dash-payment-date-or-month-page />
             </div>
         @endif
