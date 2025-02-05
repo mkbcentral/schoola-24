@@ -7,7 +7,7 @@
         @if (Auth::user()->role->name == 'SCHOOL_SECRETARY' || Auth::user()->role->name == 'SCHOOL_GUARD')
             <livewire:application.dashboard.registration.student-info-card-page />
         @else
-            <div class="col-md-5">
+            <div class="col-md-12">
                 <livewire:application.dashboard.payment.dash-other-info-page />
                 <livewire:application.dashboard.payment.dash-payment-date-or-month-page />
             </div>
@@ -19,7 +19,6 @@
                 <livewire:application.dashboard.expense.dash-date-other-expense-page />
             </div>
         @endif
-
     </div>
     @if (Auth::user()->role->name == 'SCHOOL_FINANCE' || Auth::user()->role->name == 'SCHOOL_BOSS')
         <div class="row">
