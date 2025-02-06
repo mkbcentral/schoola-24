@@ -1,5 +1,5 @@
 @php
-      $categoryFees = \App\Domain\Features\Configuration\FeeDataConfiguration::getListCategoryFeeForSpecificUser(00);
+    $categoryFees = \App\Domain\Features\Configuration\FeeDataConfiguration::getListCategoryFeeForSpecificUser(100);
 @endphp
 
 <select id="my-select" class="form-select form-control" {{ $attributes }}>

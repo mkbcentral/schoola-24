@@ -1,27 +1,27 @@
 <div>
-    <x-navigation.bread-crumb icon='bi bi-bar-chart-fill' label="Settings">
-        <x-navigation.bread-crumb-item label='Settings' />
+    <x-navigation.bread-crumb icon='bi bi-bar-chart-fill' label="Paramètres">
+        <x-navigation.bread-crumb-item label='Paramètres' />
     </x-navigation.bread-crumb>
     <div class="row">
         <div class="col-md-3">
             <div class="list-group settings-nav mb-4">
                 <a href="#general" class="list-group-item list-group-item-action active" data-bs-toggle="list">
-                    <i class="bi bi-gear-fill me-2"></i> General Settings
+                    <i class="bi bi-gear-fill me-2"></i> Paramètres généraux
                 </a>
                 <a href="#appearance" class="list-group-item list-group-item-action" data-bs-toggle="list">
-                    <i class="bi bi-palette me-2"></i> Appearance
+                    <i class="bi bi-palette me-2"></i> Apparence
                 </a>
                 <a href="#notifications" class="list-group-item list-group-item-action" data-bs-toggle="list">
                     <i class="bi bi-bell me-2"></i> Notifications
                 </a>
                 <a href="#privacy" class="list-group-item list-group-item-action" data-bs-toggle="list">
-                    <i class="bi bi-shield-lock me-2"></i> Privacy & Security
+                    <i class="bi bi-shield-lock me-2"></i> Confidentialité et sécurité
                 </a>
                 <a href="#integration" class="list-group-item list-group-item-action" data-bs-toggle="list">
                     <i class="bi bi-puzzle me-2"></i> Integrations
                 </a>
                 <a href="#backup" class="list-group-item list-group-item-action" data-bs-toggle="list">
-                    <i class="bi bi-cloud-arrow-up me-2"></i> Backup & Restore
+                    <i class="bi bi-cloud-arrow-up me-2"></i> Backup & Restoration
                 </a>
             </div>
         </div>
@@ -69,17 +69,17 @@
                 <div class="tab-pane fade" id="appearance">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Appearance Settings</h5>
+                            <h5 class="card-title">Paramètres d'apparence</h5>
                             <div class="mb-4">
                                 <label class="form-label d-block">Theme</label>
                                 <div class="btn-group" role="group">
                                     <input type="radio" class="btn-check" name="theme" id="lightTheme">
                                     <label class="btn btn-outline-primary" for="lightTheme">
-                                        <i class="bi bi-sun-fill me-2"></i>Light
+                                        <i class="bi bi-sun-fill me-2"></i>Clair
                                     </label>
                                     <input type="radio" class="btn-check" name="theme" id="darkTheme">
                                     <label class="btn btn-outline-primary" for="darkTheme">
-                                        <i class="bi bi-moon-stars-fill me-2"></i>Dark
+                                        <i class="bi bi-moon-stars-fill me-2"></i>Sombre
                                     </label>
                                     <input type="radio" class="btn-check" name="theme" id="autoTheme">
                                     <label class="btn btn-outline-primary" for="autoTheme">
@@ -87,22 +87,22 @@
                                     </label>
                                 </div>
                                 <small class="form-text text-muted d-block mt-2">
-                                    Auto theme follows your system preferences
+                                    Le thème automatique suit vos préférences système
                                 </small>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Primary Color</label>
+                                <label class="form-label">Couleur primaire</label>
                                 <input type="color" class="form-control form-control-color" value="#0d6efd">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Font Size</label>
+                                <label class="form-label">Taille de la police</label>
                                 <select class="form-select">
-                                    <option>Small</option>
-                                    <option selected>Medium</option>
+                                    <option>Petit</option>
+                                    <option selected>Moyen</option>
                                     <option>Large</option>
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-primary">Apply Changes</button>
+                            <button type="button" class="btn btn-primary">Appliquer</button>
                         </div>
                     </div>
                 </div>

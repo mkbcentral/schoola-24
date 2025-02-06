@@ -3,8 +3,8 @@
         $total_cdf = 0;
         $total_usd = 0;
     @endphp
-    <x-modal.build-modal-fixed idModal='dialog-other-expense' size='fullscreen'
-        headerLabel="DEPENSES ANNUELLES SUR LE FRAIS SCOLAIRE" headerLabelIcon="bi bi-person-fill-add">
+    <x-modal.build-modal-fixed idModal='dialog-other-expense' size='fullscreen' headerLabel="AUTRES DEPENSES ANNUELLES"
+        headerLabelIcon="bi bi-person-fill-add">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="d-flex ">

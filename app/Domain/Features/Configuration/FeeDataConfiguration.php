@@ -99,7 +99,7 @@ class FeeDataConfiguration implements IFeeDataConfiguration
      */
     public static function getFirstCategoryFee(): CategoryFee
     {
-        // TODO: Implement getFirstCategoryFee() method.
+       
         if (Auth::user()->role->name == RoleType::SCHOOL_GUARD){
             return CategoryFee::query()
                 ->where('school_id', School::DEFAULT_SCHOOL_ID())

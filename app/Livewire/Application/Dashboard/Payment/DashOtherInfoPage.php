@@ -24,6 +24,9 @@ class DashOtherInfoPage extends Component
             'expense' => ExpenseFee::getTotalExpenses()->first(),
             'otherExpense' => OtherExpense::getTotalExpenses()->first(),
             'count_all' => Registration::count(),
+            'registrations' => Registration::selectRaw('is_old, COUNT(*) as total, CASE WHEN is_old = true THEN "ancien" ELSE "nouveau" END as status')
+                ->groupBy('is_old')
+                ->get(),
         ]);
     }
 }

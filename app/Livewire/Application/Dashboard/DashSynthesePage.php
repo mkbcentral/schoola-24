@@ -25,7 +25,7 @@ class DashSynthesePage extends Component
 
     public function mount(): void
     {
-        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE) {
+        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE || Auth::user()->role->name == RoleType::SCHOOL_BOSS) {
             $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()->id;
         } else {
             $this->category_fee_filter = CategoryFee::query()->where('school_id', School::DEFAULT_SCHOOL_ID())

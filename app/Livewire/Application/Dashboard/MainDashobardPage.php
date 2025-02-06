@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Application\Dashboard;
 
+use App\Models\Registration;
 use Livewire\Component;
 
 class MainDashobardPage extends Component

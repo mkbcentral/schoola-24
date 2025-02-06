@@ -209,4 +209,33 @@ class Registration extends Model
             'female' => $femaleCount,
         ];
     }
+    public static function countStudentByOption(): array
+    {
+        return self::join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
+            ->join('options', 'options.id', '=', 'class_rooms.option_id')
+            ->selectRaw('options.name as option_name, COUNT(*) as student_count')
+            ->groupBy('options.name')
+            ->pluck('student_count', 'option_name')
+            ->toArray();
+    }
+    public static function countStudentBySection(): array
+    {
+        return self::join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
+            ->join('options', 'options.id', '=', 'class_rooms.option_id')
+            ->join('sections', 'sections.id', '=', 'options.section_id')
+            ->selectRaw('sections.name as section_name, COUNT(*) as student_count')
+            ->groupBy('sections.name')
+            ->pluck('student_count', 'section_name')
+            ->toArray();
+    }
+    public static function countStudentByClassRoom(int $optionId): array
+    {
+        return self::join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
+            ->join('options', 'options.id', '=', 'class_rooms.option_id')
+            ->where('options.id', $optionId)
+            ->selectRaw('CONCAT(class_rooms.name, " - ", options.name) as class_room_option_name, COUNT(*) as student_count')
+            ->groupBy('class_room_option_name')
+            ->pluck('student_count', 'class_room_option_name')
+            ->toArray();
+    }
 }

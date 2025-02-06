@@ -12,7 +12,7 @@
         @endforeach
         @foreach (Auth::user()->multiAppLinks as $multiAppLink)
             <x-navigation.dropdown-link wire:ignore.self label='{{ $multiAppLink->name }}'
-                icon='"{{ $multiAppLink->icon }}' class="text-white " idItem='{{ $multiAppLink->name }}'>
+                icon='{{ $multiAppLink->icon }}' class="text-white" idItem="{{ Str::slug($multiAppLink->name, '-') }}">
                 @foreach (Auth::user()->subLinks()->where('multi_app_link_id', $multiAppLink->id)->get() as $subLink)
                     <x-navigation.nav-link linkLabel='{{ $subLink->name }}' icon='{{ $subLink->icon }}'
                         href="{{ route($subLink->route) }}" :active="request()->routeIs([$subLink->route])" :show="request()->routeIs([$subLink->route])" />

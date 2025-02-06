@@ -1,5 +1,4 @@
 <div>
-
     <div class="row mb-4">
         @if (Auth::user()->role->name == 'SCHOOL_FINANCE' || Auth::user()->role->name == 'SCHOOL_BOSS')
             <div class="col-md-3">
@@ -33,6 +32,13 @@
                 <x-widget.card-info label="Total élèves" icon="bi-people" :value="$count_all" link="student.list"
                     linkLabel="Voir détail" bg="bg-primary" />
             </div>
+            @foreach ($registrations as $registration)
+                <div class="col-md-3">
+                    <x-widget.card-info label="{{ $registration->is_old ? 'Nouveau' : 'Ancien' }}"
+                        icon="bi-person-workspace" :value="$registration->total" link="student.list" linkLabel="Voir détail"
+                        bg="{{ $registration->is_old ? 'bg-success' : 'bg-danger' }}" />
+                </div>
+            @endforeach
         @endif
     </div>
 </div>

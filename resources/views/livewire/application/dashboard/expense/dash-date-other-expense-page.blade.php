@@ -16,7 +16,7 @@
                 </div>
                 <div class="d-flex align-items-center  me-2">
                     <x-form.label value="{{ __('Categorie') }}" class="fw-bold me-2" />
-                    <x-widget.data.list-category-expense type='text' wire:model.live='categoryExpense_id_filter'
+                    <x-widget.data.list-category-expense type='text' wire:model.live='categoryExpenseIdFilter'
                         :error="'categoryExpenseIdFilter'" />
                 </div>
             </div>
