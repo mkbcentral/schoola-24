@@ -1,4 +1,4 @@
-<div wire:poll.45s class="card">
+<div wire:poll.15s class="card">
     <div class="card-body">
         <h3 class="text-primary text-uppercase text-end">
             Total: {{ app_format_number($total_payments, 1) }}
@@ -34,62 +34,59 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">PAIEMENTS JOURNALIERS</h5>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>N°</th>
-                                <th>NOMS </th>
-                                <th>CLASSE</th>
-                                <th>MOIS</th>
-                                <th>MONTANT</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+            <div class="p-3">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>NOMS </th>
+                            <th>CLASSE</th>
+                            <th>MOIS</th>
+                            <th>MONTANT</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($payments as $index => $payment)
+                            <tr class="">
+                                <td>{{ $index + 1 }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="ms-2"> {{ $payment->registration->student->name }}</div>
+                                    </div>
+                                </td>
+                                <td>{{ $payment?->registration->classRoom?->getOriginalClassRoomName() }}</td>
+                                <td>{{ $payment->month }}</td>
+                                <td>{{ app_format_number($payment->getAmount(), 1) }}
+                                    {{ $payment->scolarFee->categoryFee->currency }}</td>
+                                <td><span
+                                        class="badge {{ $payment->is_paid == true ? 'bg-success' : ' bg-warning' }} bg-success">{{ $payment->is_paid == true ? 'SUCCESS' : 'PENDING' }}</span>
+                                </td>
+                                <td>
+                                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                                        class=" btn-sm">
+                                        <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'
+                                            data-bs-toggle="modal" data-bs-target="#form-edit-payment" href="#"
+                                            wire:click='edit({{ $payment }})' class="text-primary" />
+                                        <x-others.dropdown-link
+                                            iconLink="{{ $payment->is_paid == true ? 'bi bi-x-circle-fill' : 'bi bi-check-all' }}"
+                                            labelText="{{ $payment->is_paid == true ? 'Annumer' : 'Valider' }}"
+                                            class="text-primary" wire:confirm="Etês-vous sûre de réaliser l'action"
+                                            href="#" wire:click='makeIsPaid({{ $payment }})' />
+                                        <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
+                                            class="text-primary" target='_blanck'
+                                            href="{{ route('print.payment.receipt', $payment) }}" />
+                                        <hr class="dropdown-divider">
+                                        <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
+                                            class="text-secondary" wire:confirm='Etês-vous sûre de supprimer'
+                                            href="#" wire:click='delete({{ $payment }})' />
+                                    </x-others.dropdown>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($payments as $index => $payment)
-                                <tr class="">
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="ms-2"> {{ $payment->registration->student->name }}</div>
-                                        </div>
-                                    </td>
-                                    <td>{{ $payment?->registration->classRoom?->getOriginalClassRoomName() }}</td>
-                                    <td>{{ $payment->month }}</td>
-                                    <td>{{ app_format_number($payment->getAmount(), 1) }}
-                                        {{ $payment->scolarFee->categoryFee->currency }}</td>
-                                    <td><span
-                                            class="badge {{ $payment->is_paid == true ? 'bg-success' : ' bg-warning' }} bg-success">{{ $payment->is_paid == true ? 'SUCCESS' : 'PENDING' }}</span>
-                                    </td>
-                                    <td>
-                                        <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                            class=" btn-sm">
-                                            <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'
-                                                data-bs-toggle="modal" data-bs-target="#form-edit-payment"
-                                                href="#" wire:click='edit({{ $payment }})'
-                                                class="text-primary" />
-                                            <x-others.dropdown-link
-                                                iconLink="{{ $payment->is_paid == true ? 'bi bi-x-circle-fill' : 'bi bi-check-all' }}"
-                                                labelText="{{ $payment->is_paid == true ? 'Annumer' : 'Valider' }}"
-                                                class="text-primary" wire:confirm="Etês-vous sûre de réaliser l'action"
-                                                href="#" wire:click='makeIsPaid({{ $payment }})' />
-                                            <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
-                                                class="text-primary" target='_blanck'
-                                                href="{{ route('print.payment.receipt', $payment) }}" />
-                                            <hr class="dropdown-divider">
-                                            <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
-                                                class="text-secondary" wire:confirm='Etês-vous sûre de supprimer'
-                                                href="#" wire:click='delete({{ $payment }})' />
-                                        </x-others.dropdown>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

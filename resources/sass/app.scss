@@ -248,10 +248,6 @@ body {
     border-bottom: 1px solid var(--card-border);
 }
 
-.table tbody tr {
-    position: relative;
-}
-
 .table tbody tr:hover {
     background-color: var(--sidebar-hover-bg);
 }
