@@ -8,11 +8,11 @@
             </div>
             <div class="col-md-3">
                 <x-widget.card-info data-bs-toggle="modal" data-bs-target="#dialog-cost-expense"
-                    label="Depense sur le frais" icon="bi-wallet2" :value="app_format_number($expense->total_usd, 1)" link=""
+                    label="Depense sur le frais" icon="bi-wallet2" :value="app_format_number($expense->total_usd, 1) $" link=""
                     linkLabel="Voir détail" bg="bg-danger" />
             </div>
             <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#dialog-other-expense">
-                <x-widget.card-info label="Autres dépenses" icon="bi-wallet2" :value="app_format_number($otherExpense->total_usd, 1)" link=""
+                <x-widget.card-info label="Autres dépenses" icon="bi-wallet2" :value="app_format_number($otherExpense->total_usd, 1) $" link=""
                     linkLabel="Voir détail" bg="bg-success" />
             </div>
             <div class="col-md-3">

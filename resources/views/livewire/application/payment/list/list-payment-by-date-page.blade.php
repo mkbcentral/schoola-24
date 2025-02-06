@@ -1,4 +1,4 @@
-<div wire:poll.15s class="card">
+<div wire:poll.45s class="card">
     <div class="card-body">
         <h3 class="text-primary text-uppercase text-end">
             Total: {{ app_format_number($total_payments, 1) }}

@@ -53,8 +53,8 @@
                                             <td class="text-center">{{ $index + 1 }}</td>
                                             <td class="text-center">
                                                 <img src="{{ asset($user->avatar == null ? 'images/defautl-user.jpg' : 'storage/' . $user->avatar) }}"
-                                                    alt="avatar-{{ $user->id }}"
-                                                    class="img-circle img-size-32 mr-2">
+                                                    alt="avatar-{{ $user->id }}" width="40px" height="40px"
+                                                    class="mr-2">
                                             </td>
                                             <td>{{ $user->name }}</td>
                                             <td class="">{{ $user->email }}</td>
