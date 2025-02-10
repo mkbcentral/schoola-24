@@ -32,6 +32,21 @@ class ListStudentForControlPaymentByTranchPage extends Component
     public $sortAsc = true;
 
     /**
+     * Trier le manière (ASC/DESC)
+     * @param mixed $value
+     * @return void
+     */
+    public function sortData(mixed $value): void
+    {
+        if ($value == $this->sortBy) {
+            $this->sortAsc = !$this->sortAsc;
+        }
+        $this->sortBy = $value;
+        $this->resetPage();
+    }
+
+
+    /**
      * Recuprer le categorie de frais selectionné
      * @param int $index
      * @return void

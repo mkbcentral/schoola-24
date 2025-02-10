@@ -4,17 +4,6 @@
             <i class="bi bi-list"></i>
         </button>
         <div class="d-flex align-items-center">
-            <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                    <i class="bi bi-bell"></i>
-                    <span class="badge bg-danger">3</span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">New student registration</a></li>
-                    <li><a class="dropdown-item" href="#">Teacher meeting at 3 PM</a></li>
-                    <li><a class="dropdown-item" href="#">Fee payment reminder</a></li>
-                </ul>
-            </div>
             <div class="dropdown ms-3">
                 <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="userDropdown"
                     data-bs-toggle="dropdown">
