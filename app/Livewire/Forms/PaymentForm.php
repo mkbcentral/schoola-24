@@ -18,7 +18,7 @@ class PaymentForm extends Form
     #[Rule('date', message: "Format date invalide", onUpdate: false)]
     public $created_at = '';
 
-    public function create(int  $registrationId,ScolarFee $scolarFee): Payment|null
+    public function create(int  $registrationId, ScolarFee $scolarFee): Payment|null
     {
         $input = [
             'month' => $this->month,
@@ -28,11 +28,11 @@ class PaymentForm extends Form
         ];
         return PaymentFeature::create($input);
     }
-    public function update(?Payment $payment): void
+    public function update(?Payment $payment, $scolar_fee_id): void
     {
         $input = [
             'month' => $this->month,
-            'scolar_fee_id' => $this->scolar_fee_id,
+            'scolar_fee_id' => $scolar_fee_id,
             'created_at' => $this->created_at,
         ];
         $payment->update($input);

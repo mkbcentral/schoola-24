@@ -18,7 +18,7 @@ class FormEditPaymentPage extends Component
     ];
     public PaymentForm $form;
     public ?Payment $payment = null;
-    public $selectedCategoryFeeId, $selectedIdClassRoom = 0;
+    public $selectedCategoryFeeId, $selectedIdClassRoom = 0, $scolar_fee_id = 0;
 
 
     public function getPayment(?Payment $payment)
@@ -28,7 +28,7 @@ class FormEditPaymentPage extends Component
         $this->payment = $payment;
         $this->form->month = $payment->month;
         $this->form->category_fee_id = $payment->scolarFee->category_fee_id;
-        $this->form->scolar_fee_id = $payment->scolar_fee_id;
+        $this->scolar_fee_id = $payment->scolar_fee_id;
         $this->form->created_at = $payment->created_at->format('Y-m-d');
     }
 
@@ -41,7 +41,7 @@ class FormEditPaymentPage extends Component
     {
         $this->validate();
         try {
-            $this->form->update($this->payment);
+            $this->form->update($this->payment, $this->scolar_fee_id);
             $this->dispatch('updated', ['message' => AppMessage::DATA_UPDATED_SUCCESS]);
             $this->dispatch('refreshPaymentList');
         } catch (Exception $ex) {

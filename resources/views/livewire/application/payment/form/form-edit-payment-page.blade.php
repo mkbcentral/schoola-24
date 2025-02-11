@@ -30,13 +30,13 @@
                 </div>
                 <div class="mt-2">
                     <x-form.label value="{{ __('Frais') }}" class="me-2" />
-                    <select id="my-select" class="form-control" wire:model.live='form.scolar_fee_id'>
+                    <select id="my-select" class="form-control" wire:model.live='scolar_fee_id'>
                         <option value="">Choisir...</option>
                         @foreach ($scolarFees as $scolarFee)
                             <option class="text-uppercase" value="{{ $scolarFee->id }}">{{ $scolarFee->name }}</option>
                         @endforeach
                     </select>
-                    <x-errors.validation-error value='form.scolar_fee_id' />
+                    <x-errors.validation-error value='scolar_fee_id' />
                 </div>
                 <div class="">
                     <x-form.label value="{{ __('Date paiement') }}" />
