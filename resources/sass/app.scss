@@ -514,6 +514,12 @@ body {
 
 [data-bs-theme="dark"] .dropdown-item:hover {
     background-color: #2c3034;
+    color: #FFFF;
+}
+
+[data-bs-theme="dark"] .dropdown-item:focus {
+    background-color: #2c3034;
+    color: #FFFF;
 }
 
 [data-bs-theme="dark"] .form-control,

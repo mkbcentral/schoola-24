@@ -9,6 +9,7 @@ class OtherRecipe extends Model
     protected $fillable = [
         'description',
         'amount',
-        'user_id'
+        'user_id',
+        'created_at'
     ];
 }

@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class ListOtherRecipePage extends Component
 {
-    public string $description = '', $month_filter = '';
+    public string $description = '', $month_filter = '', $created_at;
     public float $amount = 0;
     public ?OtherRecipe $otherRecipeSelsected = null;
 
@@ -44,7 +44,8 @@ class ListOtherRecipePage extends Component
     {
         $inputs = $this->validate([
             'amount' => 'required|numeric',
-            'description' => 'required'
+            'description' => 'required',
+            'created_at' => 'required|date'
         ]);
         try {
             $this->otherRecipeSelsected->update($inputs);
@@ -63,6 +64,7 @@ class ListOtherRecipePage extends Component
         }
         $this->description = '';
         $this->amount = 0;
+        $this->created_at = date('Y-m-d');
         $this->otherRecipeSelsected = null;
     }
 
@@ -81,6 +83,15 @@ class ListOtherRecipePage extends Component
     public function mount()
     {
         $this->month_filter = date('m');
+        $this->created_at = date('Y-m-d');
+    }
+
+    public function cancelUpdate()
+    {
+        $this->description = '';
+        $this->amount = 0;
+        $this->created_at = date('Y-m-d');
+        $this->otherRecipeSelsected = null;
     }
 
     public function render()
@@ -88,8 +99,7 @@ class ListOtherRecipePage extends Component
         return view(
             'livewire.application.finance.recipe.list.list-other-recipe-page',
             [
-                'otherRecipes' => OtherRecipe::where('user_id', Auth::id())
-                    ->whereMonth('created_at', $this->month_filter)
+                'otherRecipes' => OtherRecipe::whereMonth('created_at', $this->month_filter)
                     ->get()
             ]
         );

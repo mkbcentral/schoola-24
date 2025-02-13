@@ -26,7 +26,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $recipe->created_at->format('d/m/Y') }}</td>
                     <td>{{ $recipe->description }}</td>
-                    <td class="text-end">{{ $recipe->amount }}</td>
+                    <td class="text-end">{{ app_format_number($recipe->amount, 1) }}</td>
                     <td class="text-center">
                         <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                             class="btn-secondary btn-sm">
@@ -41,7 +41,7 @@
             @endforeach
         </tbody>
     </table>
-    <div wire:ignore.self class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+    <div wire:ignore.self class="offcanvas offcanvas-end bg-dark" tabindex="-1" id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasRightLabel">
@@ -60,11 +60,16 @@
                     <x-form.input type='text' wire:model='amount' :error="'amount'" />
                     <x-errors.validation-error value='amount' />
                 </div>
+                <div>
+                    <x-form.label value="{{ __('Date opération') }}" class="text-secondary" />
+                    <x-form.input type='date' wire:model='created_at' :error="'created_at'" />
+                    <x-errors.validation-error value='created_at' />
+                </div>
                 <div class="d-flex justify-content-between mt-4">
                     <div>
                         @if ($otherRecipeSelsected != null)
                             <x-form.app-button wire:click='cancelUpdate' type='button' textButton="Annuler"
-                                icon="bi bi-x" class="btn-danger" />
+                                icon="bi bi-x" class="btn-danger" data-bs-dismiss="offcanvas" aria-label="Close" />
                         @endif
                     </div>
                     <x-form.app-button type='submit' textButton="Sauvegarder" icon="bi bi-arrow-left-righ"
