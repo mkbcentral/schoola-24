@@ -73,7 +73,7 @@ class ListOtherRecipePage extends Component
     public function delete(?OtherRecipe $otherRecipe): void
     {
         try {
-            $otherRecipe->desc->delete();
+            $otherRecipe->delete();
             $this->dispatch('updated', ['message' => AppMessage::DATA_UPDATED_SUCCESS]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
