@@ -128,10 +128,10 @@ class PaymentRepportPaymentController extends Controller
         }
     }
 
-    public  function  getStudentPayments(Request $request, $registrationId)
+    public  function  getStudentPayments(Request $request, Registration $registration)
     {
+        // api/student/paymentp-infos/{registration}
         try {
-            $registration = Registration::find($registrationId);
             $payments = $registration->payments()->orderBy('created_at', 'desc')->get();
             return response()->json([
                 'payments' => PaymentResource::collection($payments)

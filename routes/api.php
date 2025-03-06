@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('payment/report/date/{date}', 'getPaymentByDate');
         Route::get('payment/report/month/{month}', 'getPaymentByMonth');
         //Route::get('student/payments/{code}', action: 'getStudentPayment');
-        Route::get('student/paymentp-infos/{id}', action: 'getStudentPayments');
+        Route::get('student/paymentp-infos/{registration}', action: 'getStudentPayments');
     });
 
     Route::post('payment/make-payment/{id}', MakePaymentController::class);
