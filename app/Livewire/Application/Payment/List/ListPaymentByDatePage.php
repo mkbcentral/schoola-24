@@ -4,6 +4,7 @@ namespace App\Livewire\Application\Payment\List;
 
 use App\Domain\Features\Configuration\FeeDataConfiguration;
 use App\Domain\Features\Payment\PaymentFeature;
+use App\Domain\Helpers\SmsNotificationHelper;
 use App\Domain\Utils\AppMessage;
 use App\Enums\RoleType;
 use App\Models\CategoryFee;
@@ -31,12 +32,12 @@ class ListPaymentByDatePage extends Component
     public function mount(): void
     {
         $this->date_filter = date('Y-m-d');
-        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE){
+        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE) {
             $categoryFee = FeeDataConfiguration::getFirstCategoryFee();
-        }else{
-            $categoryFee=CategoryFee::query()->where('school_id',School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id',School::DEFAULT_SCHOOL_ID())
-                ->where('is_accessory',true)
+        } else {
+            $categoryFee = CategoryFee::query()->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', School::DEFAULT_SCHOOL_ID())
+                ->where('is_accessory', true)
                 ->first();
         }
         $this->category_fee_filter = $categoryFee->id;
@@ -82,6 +83,33 @@ class ListPaymentByDatePage extends Component
         }
     }
 
+    public function sendSms(Payment $payment): void
+    {
+
+        try {
+            if ($payment->smsPayment == null) {
+                //$phone = '+243898337969';
+                $phone =  $payment->registration->student->responsibleStudent->phone;
+                $phone = str_replace([' ', '(', ')', '-'], '', $phone);
+                $message = "C.S AQUILA, Cher parent, votre enfant "
+                    . $payment->registration->student->name . " est en ordre avec le frais "
+                    . $payment->scolarFee->name . ' Montant : ' . $payment->scolarFee->amount . " "
+                    .  $payment->scolarFee->categoryFee->currency . " "
+                    . format_fr_month_name($payment->month) . " , Merci pour votre confiance.";
+                SmsNotificationHelper::sendOrangeSMS($phone, $message);
+                $payment->smsPayment()->create([
+                    'receiver' => $phone,
+                    'message' => $message
+                ]);
+                $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
+            } else {
+                $this->dispatch('updated', ['message' => 'Message déjà envoyé']);
+            }
+        } catch (Exception $ex) {
+            $this->dispatch('error', ['message' => $ex->getMessage()]);
+        }
+    }
+
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.payment.list.list-payment-by-date-page', [
@@ -95,7 +123,7 @@ class ListPaymentByDatePage extends Component
                 null,
                 null,
                 null,
-                 Auth::id(),
+                Auth::id(),
                 $this->per_page
             ),
             'total_payments' => PaymentFeature::getTotal(

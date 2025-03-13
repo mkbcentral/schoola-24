@@ -69,7 +69,7 @@ class Payment extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function SmsPayment(): HasOne
+    public function smsPayment(): HasOne
     {
         return $this->hasOne(SmsPayment::class);
     }

@@ -54,6 +54,9 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="ms-2"> {{ $payment->registration->student->name }}</div>
+                                        @if ($payment->smsPayment)
+                                            <i class="bi bi-chat-fill text-info"></i>
+                                        @endif
                                     </div>
                                 </td>
                                 <td>{{ $payment?->registration->classRoom?->getOriginalClassRoomName() }}</td>
@@ -77,6 +80,11 @@
                                         <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
                                             class="text-primary" target='_blanck'
                                             href="{{ route('print.payment.receipt', $payment) }}" />
+                                        @if ($payment->is_paid == true)
+                                            <x-others.dropdown-link iconLink='bi bi-chat-left-text-fill'
+                                                wire:click='sendSms({{ $payment }})' labelText='Envoyer sms'
+                                                class="text-primary" href="#" />
+                                        @endif
                                         <hr class="dropdown-divider">
                                         <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
                                             class="text-secondary" wire:confirm='Etês-vous sûre de supprimer'

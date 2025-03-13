@@ -2,7 +2,6 @@
     <x-navigation.bread-crumb icon='bi bi-bar-chart-fill' label="Dashboard">
         <x-navigation.bread-crumb-item label='Dashboard' />
     </x-navigation.bread-crumb>
-
     @if (Auth::user()->role->name == 'SCHOOL_MANAGER')
         <livewire:application.dashboard.payment.dash-other-info-page />
         <div class="row">

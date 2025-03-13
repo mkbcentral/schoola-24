@@ -12,11 +12,10 @@ class SmsNotificationHelper
     public static function sendOrangeSMS(
         string $to,
         string $message
-    ): void
-    {
+    ): void {
         $client = SMSClient::getInstance(
-            env('SMS_ORANGE_CLIENT_ID'),
-            env('SMS_ORANGE_APPLICATION_ID')
+            env('SMS_ORANGE_CLEINT_ID'),
+            env('SMS_ORANGE_CLIENT_SECRET')
         );
         $sms = new SMS($client);
         $sms->message($message)
