@@ -1,6 +1,6 @@
 <x-print-layout>
-
     <div class="">
+        <x-widget.school-header-infos />
         <h3 class="text-center">EFFECTIF PAR OPTION</h3>
         @foreach ($options as $index => $option)
             <h5>{{ $index + 1 }}.{{ $option->name }}</h5>

@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex justify-content-end">
             <h3 class="text-primary text-uppercase">Total: {{ app_format_number($total_payments, 1) }}
-                {{ $categoryFeeSelected->currency }}</h3>
+                {{ $categoryFeeSelected?->currency }}</h3>
         </div>
         <div class="d-flex">
             <div class="d-flex align-items-center me-2">

@@ -15,20 +15,20 @@ class MainScolarFeePage extends Component
         "refreshIndex" => 'changeIndex'
     ];
     public int $selectedIndex = 0;
-    public ?CategoryFee $categoryFeeSelected;
+    public ?CategoryFee $categoryFeeSelected = null;
 
 
     public function mount(): void
     {
         $this->categoryFeeSelected = FeeDataConfiguration::getFirstCategoryFee();
-        $this->selectedIndex = $this->categoryFeeSelected->id;
+        $this->selectedIndex = $this->categoryFeeSelected?->id ?? 0;
     }
 
     public function changeIndex(int $index): void
     {
         $this->selectedIndex = $index;
         $this->dispatch('selectedCategoryFee', $index);
-        $this->categoryFeeSelected = CategoryFee::findOrFail($index);
+        $this->categoryFeeSelected = CategoryFee::find($index) ?? null;
         $this->dispatch('categoryFeeDataChanged', $this->categoryFeeSelected);
     }
 

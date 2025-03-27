@@ -15,13 +15,13 @@
         </div>
         <div class="card-body">
             <canvas id="expensesChart"></canvas>
-            <div class="table-responsive">
+            <div class="table-responsive mt-4">
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
                             <th>Mois</th>
                             <th>Catégorie</th>
-                            <th class="text-end">Paiements</th>
+                            <th class="text-end">Recettes</th>
                             <th class="text-end">Dépenses</th>
                             <th class="text-end">Solde</th>
                         </tr>

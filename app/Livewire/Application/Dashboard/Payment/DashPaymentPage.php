@@ -25,7 +25,7 @@ class DashPaymentPage extends Component
             Auth::user()->role->name == RoleType::SCHOOL_BOSS ||
             Auth::user()->role->name == RoleType::SCHOOL_MANAGER
         ) {
-            $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()->id;
+            $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()?->id ?? 0;
         } else {
             $this->category_fee_filter = CategoryFee::query()->where('school_id', School::DEFAULT_SCHOOL_ID())
                 ->where('school_year_id', School::DEFAULT_SCHOOL_ID())

@@ -1,5 +1,5 @@
 <x-print-layout>
-
+    <x-widget.school-header-infos />
     <div class="">
         <h4 class="text-center">EFFECTIF / {{ $classRoom->getOriginalClassRoomName() }}</h4>
         <h6>Total:

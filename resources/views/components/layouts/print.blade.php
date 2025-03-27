@@ -7,14 +7,18 @@
     <title>{{ config('app.name') }}</title>
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/Vector-white.svg') }}">
     <link rel="stylesheet" href="{{ public_path('bootstrap-4.6.2-dist/css/bootstrap.min.css') }}">
+    <style>
+        .page-break {
+            page-break-after: always;
+        }
+
+        .avoid-page-break {
+            page-break-inside: avoid;
+        }
+    </style>
 </head>
 
 <body class="antialiased">
-    <div class="text-center">
-        <img src="{{ public_path('aquila.jpg') }}" alt="Logo" width="80px" height="80px">
-        <h5 class="mt-2">{{ Auth::user()->school->name }}</h5>
-        <hr>
-    </div>
     {{ $slot }}
 </body>
 

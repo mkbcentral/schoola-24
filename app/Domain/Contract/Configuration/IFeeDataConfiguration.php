@@ -14,7 +14,7 @@ interface IFeeDataConfiguration
      */
     public static function getListCategoryFee(
         int $per_page,
-        ?string $search =''
+        ?string $search = ''
     ): mixed;
 
     /**
@@ -25,7 +25,7 @@ interface IFeeDataConfiguration
      */
     public static function getListCategoryFeeForSpecificUser(
         int $per_page,
-        ?string $search =''
+        ?string $search = ''
     ): mixed;
 
     /**
@@ -59,5 +59,5 @@ interface IFeeDataConfiguration
      * Recuperer la catégorie des frais pour chaque école et année scolaire
      * @return \App\Models\CategoryFee
      */
-    public static function getFirstCategoryFee(): CategoryFee;
+    public static function getFirstCategoryFee(): ?CategoryFee;
 }

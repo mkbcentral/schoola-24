@@ -35,9 +35,9 @@
                             <x-errors.validation-error value='form.created_at' />
                         </div>
                         @if ($scolarFee != null)
-                            <h3 class="mt-2">Montant:
+                            <h5 class="mt-2 text-danger">Montant:
                                 {{ app_format_number($scolarFee->amount, 1) . ' ' . $scolarFee->categoryFee->currency }}
-                            </h3>
+                                </h3>
                         @endif
                         <div class="mt-4">
                             @if ($scolarFee)
@@ -49,49 +49,7 @@
 
                 </div>
                 <div class="col-md-8">
-                    <div class="d-flex justify-content-center pb-2">
-                        <x-widget.loading-circular-md wire:loading wire:target='getRegistration' />
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            DETAILS PAIEMET
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered table-sm table-hover mt-2">
-                                <thead class="table-primary">
-                                    <tr class="">
-                                        <th class="text-center">N°</th>
-                                        <th class="">
-                                            DATE PAIEMENT
-                                        </th>
-                                        <th>TYPE FRAIS</th>
-                                        <th class="text-end">MONTANT</th>
-                                    </tr>
-                                </thead>
-                                @if ($registration->payments->isEmpty())
-                                    <tr>
-                                        <td colspan="7"><x-errors.data-empty /></td>
-                                    </tr>
-                                @else
-                                    <tbody>
-                                        @foreach ($registration->payments()->where('is_paid', true)->get() as $index => $payment)
-                                            <tr wire:key='{{ $payment->id }}' class=" ">
-                                                <td class="text-center">
-                                                    {{ $index + 1 }}
-                                                </td>
-                                                <td>{{ $payment->created_at->format('d/m/Y') }}
-                                                </td>
-                                                <td>
-                                                    {{ $payment->scolarFee->name }}
-                                                </td>
-                                                <td class="text-end"> {{ format_fr_month_name($payment->month) }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                @endif
-                            </table>
-                        </div>
-                    </div>
+                    <livewire:application.payment.list.list-payment-by-student :registration="$registration" />
                 </div>
             </div>
         @endif

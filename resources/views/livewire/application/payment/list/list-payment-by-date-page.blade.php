@@ -2,8 +2,8 @@
     <div class="card-body">
         <h3 class="text-primary text-uppercase text-end">
             Total: {{ app_format_number($total_payments, 1) }}
-            {{ $categoryFeeSelected->currency }}
-            ({{ $categoryFeeSelected->name }})
+            {{ $categoryFeeSelected?->currency }}
+            ({{ $categoryFeeSelected?->name }})
         </h3>
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center me-2">

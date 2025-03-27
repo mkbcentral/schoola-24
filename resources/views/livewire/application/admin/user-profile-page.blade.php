@@ -1,7 +1,7 @@
 <div>
     <div class="profile-header text-center">
         <livewire:application.admin.form.update-user-avatar-page />
-        <h3 id="username" class="display-4">{{ Auth::user()->name }}</h3>
+        <h5 id="username" class="display-4">{{ Auth::user()->name }}</h5>
         <span>{{ Auth::user()->email }}</span><br>
         <span>{{ Auth::user()->phone }}</span><br>
         <span>{{ Auth::user()->role->name }}</span>

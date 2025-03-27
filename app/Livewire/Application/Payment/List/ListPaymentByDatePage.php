@@ -40,8 +40,8 @@ class ListPaymentByDatePage extends Component
                 ->where('is_accessory', true)
                 ->first();
         }
-        $this->category_fee_filter = $categoryFee->id;
-        $this->categoryFeeSelected = $categoryFee;
+        $this->category_fee_filter = $categoryFee->id ?? 0;
+        $this->categoryFeeSelected = $categoryFee ?? null;
     }
 
     public function updatedCategoryFeeFilter($val): void

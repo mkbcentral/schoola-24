@@ -3,6 +3,7 @@
         $total = 0;
     @endphp
     <div class="">
+        <x-widget.school-header-infos />
         <h4 class="text-center">RAPPORT DES PAIMENTS MENSUELS</h4>
         <span><strong>Type frais:</strong></span><span>{{ $categoryFee->name }}</span><br>
         <span><strong>Mois :</strong></span><span>{{ format_fr_month_name($month) }}</span><br>

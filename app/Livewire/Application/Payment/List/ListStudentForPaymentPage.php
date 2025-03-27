@@ -30,7 +30,9 @@ class ListStudentForPaymentPage extends Component
     public function openPaymentForm(?Registration $registration)
     {
         $this->dispatch('registrationData', $registration);
+        $this->dispatch('registrationPyaments', $registration);
     }
+
     public function refreshData(): void
     {
         $this->reset();

@@ -30,7 +30,7 @@
                     <x-form.sort-icon sortField="students.name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
                 </th>
                 @foreach ($months as $month)
-                    <th class="text-center">{{ $month['name'] }}</th>
+                    <th class="text-center">{{ substr($month['name'], 0, 4) }}.</th>
                 @endforeach
 
             </tr>
@@ -47,7 +47,7 @@
                         <td class="text-center {{ $registration->abandoned ? 'bg-warning' : '' }}">
                             {{ $index + 1 }}
                         </td>
-                        <td>{{ $registration->student->name }}/{{ substr($registration->classRoom->getOriginalClassRoomName(),0,8) }}
+                        <td>{{ $registration->student->name }}/{{ substr($registration->classRoom->getOriginalClassRoomName(), 0, 8) }}
                         </td>
                         @foreach ($months as $month)
                             @php

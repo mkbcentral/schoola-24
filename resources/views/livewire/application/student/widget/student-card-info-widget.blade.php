@@ -76,6 +76,11 @@
         <div class="text-center">
             <img src="{{ asset($registration->qr_code) }}" width="120">
         </div>
+        <div class="text-center mb-4 mt-4">
+            <a target="_blank" href="{{ route('print.student.payemnts', $registration) }}" class="btn btn-primary"><i
+                    class="bi bi-printer-fill"></i> Imprimer
+                détail</a>
+        </div>
     </div>
 
     <livewire:application.student.form.form-edit-student-page />

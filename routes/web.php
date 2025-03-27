@@ -3,6 +3,7 @@
 use App\Http\Controllers\PrintPaymentController;
 use App\Http\Controllers\PrintPaymentReceiptController;
 use App\Http\Controllers\SchoolDataPrinterController;
+use App\Http\Controllers\StudentPrinterController;
 use App\Livewire\Application\Admin\AttacheSingleMenuToUserPage;
 use App\Livewire\Application\Admin\AttacheSubMenuToUserPage;
 use App\Livewire\Application\Admin\AttachMultiAppLinkToUserPage;
@@ -107,6 +108,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::get('registration/student/{registration}', DetailStudentPage::class)->name('student.detail')->lazy();
+
     Route::get('registration/registration-date/{isOld}/{dateFilter}', ListRegistrationByDatePage::class)->name('registration.date')->lazy();
     Route::get('registration/registration-month/{isOld}/{monthFilter}', ListRegistrationByMonthPage::class)->name('registration.month')->lazy();
     Route::get('registration/registration-by-class-room/{classRoomId}', ListRegistrationByClassRoomPage::class)->name('registration.by.class-room')->lazy();
@@ -141,6 +143,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('students-by-month/{month}/{isOld}/{sortAsc}', 'printListStudentByMonth')
                 ->name('print.students.by.month');
         });
+        Route::controller(StudentPrinterController::class)->group(function () {
+            Route::get('student-payemnts/{registration}', 'printStudentPayments')->name('print.student.payemnts');
+            Route::get('student-payemnt-by-classroom/{classRoom}', 'printStudentPaymentsByClassRoom')
+                ->name('print.student.payemnts.by.classroom');
+        });
         /**
          * Route d'impression de paiemnts
          */
@@ -148,6 +155,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('payments-by-date/{date}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByDate')->name('print.payment.date');
             Route::get('payments-by-month/{month}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByMonth')->name('print.payment.month');
             Route::get('payments-slip-by-date/{date}', 'printPaymentSlipByDate')->name('print.payment.slip.date');
+            Route::get('payments-slip-by-month/{month}', 'printPaymentSlipByMonth')->name('print.payment.slip.month');
             Route::get('payments-slip-by-month/{month}', 'printPaymentSlipByMonth')->name('print.payment.slip.month');
         });
     });

@@ -4,6 +4,7 @@
         $total_cdf = 0;
     @endphp
     <div class="">
+        <x-widget.school-header-infos />
         <h4 class="text-center">BORDEREAU DE VERSEMENT JOURNALIER</h4>
         <span><strong>Date opération: </strong>{{ (new DateTime($date))->format('d/m/Y') }}</span>
         <table class="table table-bordered table-sm ">

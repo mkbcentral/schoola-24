@@ -106,6 +106,7 @@
 </head>
 
 <body>
+    <x-widget.school-header-infos />
     <div class="container my-4">
         <table class="table">
             <tbody>

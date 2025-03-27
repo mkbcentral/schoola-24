@@ -202,6 +202,8 @@ class Payment extends Model
         return self::join('scolar_fees', 'payments.scolar_fee_id', '=', 'scolar_fees.id')
             ->join('category_fees', 'scolar_fees.category_fee_id', '=', 'category_fees.id')
             ->join('rates', 'payments.rate_id', '=', 'rates.id')
+            ->join('registrations', 'payments.registration_id', 'registrations.id')
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->select(
                 'category_fees.name as category_name',
                 DB::raw('SUM(scolar_fees.amount) as total_amount'),
@@ -223,6 +225,8 @@ class Payment extends Model
         return Payment::join('scolar_fees', 'payments.scolar_fee_id', 'scolar_fees.id')
             ->join('category_fees', 'scolar_fees.category_fee_id', 'category_fees.id')
             ->join('rates', 'payments.rate_id', 'rates.id')
+            ->join('registrations', 'payments.registration_id', 'registrations.id')
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->select(
                 'category_fees.name as category_name',
                 DB::raw('payments.month as month'),
@@ -239,6 +243,8 @@ class Payment extends Model
     {
         return self::join('scolar_fees', 'payments.scolar_fee_id', '=', 'scolar_fees.id')
             ->join('category_fees', 'scolar_fees.category_fee_id', '=', 'category_fees.id')
+            ->join('registrations', 'payments.registration_id', 'registrations.id')
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->select(
                 DB::raw('payments.month as month'),
                 'category_fees.name as category_name',

@@ -13,7 +13,13 @@ class SchoolYear extends Model
 
     protected $fillable = [
         'name',
+        'is_active',
         'school_id'
+    ];
+
+    //cast is_active to boolean
+    protected $casts = [
+        'is_active' => 'boolean'
     ];
 
     /**
@@ -32,5 +38,13 @@ class SchoolYear extends Model
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->where('is_active', true)
             ->first()->id;
+    }
+
+    public static function DEFAULT_SCHOOL_YEAR_NAME(): string
+    {
+        return  SchoolYear::query()
+            ->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->where('is_active', true)
+            ->first()->name;
     }
 }

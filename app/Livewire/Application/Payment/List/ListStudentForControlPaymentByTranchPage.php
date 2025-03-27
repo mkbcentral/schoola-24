@@ -54,7 +54,7 @@ class ListStudentForControlPaymentByTranchPage extends Component
     public function getSelectedCategoryFee(int $index): void
     {
         $this->selectedCategoryFeeId = $index;
-        $this->categoryFeeSelected = CategoryFee::find($index);
+        $this->categoryFeeSelected = CategoryFee::find($index) ?? null;
     }
 
     public function updatedOptionFilter($val): void

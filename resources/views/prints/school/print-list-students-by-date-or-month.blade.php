@@ -1,5 +1,5 @@
 <x-print-layout>
-
+    <x-widget.school-header-infos />
     <div class="">
         <h6>
             Type: {{ $isOld == true ? 'Réinscription' : 'Inscriptions' }}

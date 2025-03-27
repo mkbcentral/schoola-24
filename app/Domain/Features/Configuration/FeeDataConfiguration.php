@@ -21,12 +21,11 @@ class FeeDataConfiguration implements IFeeDataConfiguration
     public static function getListCategoryFee(int $per_page, ?string $search = ''): mixed
     {
         // TODO: Implement getListCategoryFee() method.
-        $filters=['search'=>$search];
+        $filters = ['search' => $search];
         return CategoryFee::query()
             ->filter($filters)
             ->where('name', 'like', '%' . $search . '%')
             ->paginate($per_page);
-
     }
 
     /**
@@ -37,29 +36,28 @@ class FeeDataConfiguration implements IFeeDataConfiguration
     public static function getListCategoryFeeForSpecificUser(int $per_page, ?string $search = ''): mixed
     {
         // TODO: Implement getListCategoryFeeForSpecificUser() method.
-        $filters=['search'=>$search];
-        if (Auth::user()->role->name==RoleType::SCHOOL_GUARD){
+        $filters = ['search' => $search];
+        if (Auth::user()->role->name == RoleType::SCHOOL_GUARD) {
             return CategoryFee::query()
                 ->filter($filters)
                 ->where('name', 'like', '%' . $search . '%')
                 ->where('is_accessory', true)
                 ->paginate($per_page);
-        }else if (
-            Auth::user()->role->name==RoleType::SCHOOL_MANAGER ||
-            Auth::user()->role->name==RoleType::SCHOOL_BOSS){
+        } else if (
+            Auth::user()->role->name == RoleType::SCHOOL_MANAGER ||
+            Auth::user()->role->name == RoleType::SCHOOL_BOSS
+        ) {
             return CategoryFee::query()
                 ->filter($filters)
                 ->where('name', 'like', '%' . $search . '%')
                 ->where('is_accessory', false)
                 ->paginate($per_page);
-        }else{
+        } else {
             return CategoryFee::query()
                 ->filter($filters)
                 ->where('name', 'like', '%' . $search . '%')
                 ->paginate($per_page);
         }
-
-
     }
 
     /**
@@ -76,7 +74,6 @@ class FeeDataConfiguration implements IFeeDataConfiguration
         return ScolarFee::query()
             ->filter($filters)
             ->paginate($per_page);
-
     }
 
     /**
@@ -94,25 +91,21 @@ class FeeDataConfiguration implements IFeeDataConfiguration
             ->get();
     }
 
-    /**
-     * @return CategoryFee
-     */
-    public static function getFirstCategoryFee(): CategoryFee
-    {
-       
-        if (Auth::user()->role->name == RoleType::SCHOOL_GUARD){
-            return CategoryFee::query()
-                ->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-                ->where('is_accessory',true)
-                ->first();
-        }else{
-            return CategoryFee::query()
-                ->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-                ->first();
-        }
 
+    public static function getFirstCategoryFee(): ?CategoryFee
+    {
+        if (Auth::user()->role->name == RoleType::SCHOOL_GUARD) {
+            return CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->where('is_accessory', true)
+                ->first() ?? null;
+        } else {
+            return CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->first() ?? null;
+        }
     }
     /**
      * @param int|null $categoryId
@@ -123,11 +116,11 @@ class FeeDataConfiguration implements IFeeDataConfiguration
     public static function getFilters(
         ?int $categoryId,
         ?int $optionId,
-        ?int $classRoomId): array
-    {
+        ?int $classRoomId
+    ): array {
         return [
-            'category_fee_id' => $categoryId
-            , 'option_id' => $optionId,
+            'category_fee_id' => $categoryId,
+            'option_id' => $optionId,
             'class_room_id' => $classRoomId,
         ];
     }

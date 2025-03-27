@@ -1,5 +1,5 @@
 <?php
-function app_format_number(int|float $value, $interval): string
+function app_format_number(int|float|null $value, $interval): string
 {
-    return number_format($value, $interval, ',', ' ');
+    return number_format($value ?? 0, $interval, ',', ' ');
 }

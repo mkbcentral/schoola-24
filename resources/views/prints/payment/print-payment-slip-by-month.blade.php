@@ -4,6 +4,7 @@
         $total_cdf = 0;
     @endphp
     <div class="">
+        <x-widget.school-header-infos />
         <h4 class="text-center">BORDEREAU DE VERSEMENT MENSUEL</h4>
         <span><strong>Mois opération: </strong>{{ format_fr_month_name($month) }}</span>
         <table class="table table-bordered table-sm ">

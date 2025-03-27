@@ -1,39 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Theme initialization
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+document.addEventListener('DOMContentLoaded', function () {    
 
-    let initialTheme = savedTheme;
-    if (!savedTheme || savedTheme === 'auto') {
-        initialTheme = prefersDark ? 'dark' : 'light';
-    }
-
-    document.documentElement.setAttribute('data-bs-theme', initialTheme);
-
-    // Theme management
-    const themeSwitch = document.querySelector('.theme-switch');
-    const currentThemeSpan = document.querySelector('.current-theme');
-
-    if (themeSwitch && currentThemeSpan) {
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        currentThemeSpan.textContent = capitalizeFirstLetter(initialTheme);
-
-        // Theme switch handler
-        themeSwitch.addEventListener('click', function (e) {
-            e.preventDefault();
-            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-            document.documentElement.setAttribute('data-bs-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            currentThemeSpan.textContent = capitalizeFirstLetter(newTheme);
-        });
-    }
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
 
     // Apply theme to charts based on current theme
     function getChartTheme() {
@@ -149,44 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {
     popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl);
     });
-
-    // Handle form submission
-    const addStudentForm = document.getElementById('addStudentForm');
-    if (addStudentForm) {
-        addStudentForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            // Here you would typically send the form data to your backend
-            // For now, we'll just close the modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addStudentModal'));
-            modal.hide();
-
-            // Show success message
-            const toastContainer = document.createElement('div');
-            toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-            toastContainer.innerHTML = `
-        <div class="toast" role="alert">
-          <div class="toast-header bg-success text-white">
-            <strong class="me-auto">Success</strong>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
-          </div>
-          <div class="toast-body">
-            Student added successfully!
-          </div>
-        </div>
-      `;
-            document.body.appendChild(toastContainer);
-            const toastElement = toastContainer.querySelector('.toast');
-            const toast = new bootstrap.Toast(toastElement);
-            toast.show();
-
-            // Remove toast container after toast is hidden
-            toastElement.addEventListener('hidden.bs.toast', function () {
-                toastContainer.remove();
-            });
-        });
-    }
-
-
 });
 
 // Add smooth scrolling to all links

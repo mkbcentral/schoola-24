@@ -995,3 +995,7 @@ body {
     background: var(--bs-primary);
     color: white;
 }
+
+.page-break {
+    page-break-after: always;
+}

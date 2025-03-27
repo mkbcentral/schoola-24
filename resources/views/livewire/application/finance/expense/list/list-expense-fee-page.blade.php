@@ -4,7 +4,7 @@
             <x-widget.loading-circular-md wire:loading />
         </div>
         <div class="d-flex justify-content-between">
-            <h2 class="fw-bold text-secondary">
+            <h2 class="fw-bold text-primary">
                 Total: {{ app_format_number($total_usd, 1) }} $ | {{ app_format_number($total_cdf, 1) }}
                 Fc
             </h2>
@@ -47,7 +47,7 @@
             </div>
 
         </div>
-        <table class="table table-striped table-sm table-hover mt-2">
+        <table class="table table-bordered table-sm table-hover mt-2">
             <thead class="table-primary">
                 <tr class="">
                     <th class="text-center">N°</th>

@@ -18,6 +18,12 @@ class DashSynthesePage extends Component
     public $balances;
     public int $category_fee_filter = 0;
 
+    /**
+     * Méthode appelée lorsque le filtre de catégorie de frais est mis à jour.
+     * Cette méthode déclenche un événement 'refresh-expenses' avec les paramètres des soldes actuels.
+     *
+     * @return void
+     */
     public function updatedCategoryFeeFilter()
     {
         $this->dispatch('refresh-expenses', params: $this->balances);
@@ -26,7 +32,7 @@ class DashSynthesePage extends Component
     public function mount(): void
     {
         if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE || Auth::user()->role->name == RoleType::SCHOOL_BOSS) {
-            $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()->id;
+            $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()?->id ?? 0;
         } else {
             $this->category_fee_filter = CategoryFee::query()->where('school_id', School::DEFAULT_SCHOOL_ID())
                 ->where('school_year_id', School::DEFAULT_SCHOOL_ID())
@@ -35,6 +41,12 @@ class DashSynthesePage extends Component
         }
     }
 
+    /**
+     * Calcule les soldes en fonction des paiements et des dépenses.
+     * Cette méthode met à jour la propriété $balances et déclenche un événement 'refresh-expenses'.
+     *
+     * @return void
+     */
     public function calculateBalances()
     {
         $balances = [];

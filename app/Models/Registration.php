@@ -197,11 +197,14 @@ class Registration extends Model
     public static function countByGender(): array
     {
         $maleCount = self::whereHas('student', function ($query) {
-            $query->where('gender', 'M');
+            $query->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->where('gender', 'M');
         })->count();
 
         $femaleCount = self::whereHas('student', function ($query) {
-            $query->where('gender', 'F');
+            $query
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->where('gender', 'F');
         })->count();
 
         return [
@@ -215,6 +218,7 @@ class Registration extends Model
             ->join('options', 'options.id', '=', 'class_rooms.option_id')
             ->selectRaw('options.name as option_name, COUNT(*) as student_count')
             ->groupBy('options.name')
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->pluck('student_count', 'option_name')
             ->toArray();
     }
@@ -224,6 +228,7 @@ class Registration extends Model
             ->join('options', 'options.id', '=', 'class_rooms.option_id')
             ->join('sections', 'sections.id', '=', 'options.section_id')
             ->selectRaw('sections.name as section_name, COUNT(*) as student_count')
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->groupBy('sections.name')
             ->pluck('student_count', 'section_name')
             ->toArray();
@@ -235,6 +240,7 @@ class Registration extends Model
             ->where('options.id', $optionId)
             ->selectRaw('CONCAT(class_rooms.name, " - ", options.name) as class_room_option_name, COUNT(*) as student_count')
             ->groupBy('class_room_option_name')
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->pluck('student_count', 'class_room_option_name')
             ->toArray();
     }

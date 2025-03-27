@@ -20,14 +20,14 @@ class MainPaymentPage extends Component
     public function mount(): void
     {
         $this->categoryFeeSelected = FeeDataConfiguration::getFirstCategoryFee();
-        $this->selectedIndex =  $this->categoryFeeSelected->id;
+        $this->selectedIndex =  $this->categoryFeeSelected->id ?? 0;
     }
 
     public function changeIndex(int $index): void
     {
         $this->selectedIndex = $index;
         $this->dispatch('selectedCategoryFee', $index);
-        $this->categoryFeeSelected = CategoryFee::find($index);
+        $this->categoryFeeSelected = CategoryFee::find($index) ?? null;
     }
 
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View

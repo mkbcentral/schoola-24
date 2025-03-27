@@ -1,5 +1,5 @@
- @props(['label' => '', 'value' => 0])
- <div class="card h-100 border-0 shadow-sm">
+ @props(['label' => '', 'value' => 0, 'bg' => ''])
+ <div class="card h-100 border-0 shadow-sm {{ $bg }}">
      <div class="card-body">
          <div class="d-flex align-items-center">
              <div class="flex-shrink-0">
