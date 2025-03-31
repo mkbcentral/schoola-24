@@ -21,11 +21,14 @@
                             <thead class="table-dark" style="border: 1px solid black;">
                                 <tr class="cursor-hand bg-app" style="border: 1px solid black;">
                                     <td style="border: 1px solid black;">{{ $month['name'] }}</td>
+                                    <td></td>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 0.9em; border: 1px solid black;">
                                 @foreach ($payments as $payment)
                                     <tr style="border: 1px solid black;">
+                                        <td style="border: 1px solid black;">
+                                            {{ $payment->created_at->format('d/m/Y') }}</td>
                                         <td style="border: 1px solid black;">{{ $payment->scolarFee->name }}</td>
                                     </tr>
                                 @endforeach

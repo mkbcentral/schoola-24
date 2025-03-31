@@ -4,7 +4,7 @@
         <div class="company-info">
             <strong>{{ Auth::user()->school->type }}{{ Auth::user()->school->name }}</strong><br>
             Golf Plateau Q.MUKUNTO C/ANNEXE<br>
-            Phone: (243) 995 738 922 | 995 238 274<br>
+            Phone: (243) 850 135 215 | 995 238 274<br>
             Email: contact-aquila@gmail.com
         </div>
 
