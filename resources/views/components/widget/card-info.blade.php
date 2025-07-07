@@ -1,7 +1,7 @@
 @props([
     'label' => '',
     'icon' => '',
-    'value' => 0,
+    'value' => '',
     'link' => '',
     'linkLabel' => '',
     'bg' => '',

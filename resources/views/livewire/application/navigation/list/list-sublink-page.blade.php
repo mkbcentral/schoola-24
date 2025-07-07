@@ -25,7 +25,7 @@
                 @foreach ($subLinks as $index => $subLink)
                     <tr wire:key='{{ $subLink->id }}' class=" ">
                         <td class="text-center ">
-                            <i class="bi bi-link"></i>
+                            {{ $index + 1 }}
                         </td>
                         <td>{{ $subLink->name }}</td>
                         <td>{{ $subLink->icon }}</td>

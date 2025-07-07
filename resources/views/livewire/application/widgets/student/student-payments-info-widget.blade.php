@@ -13,19 +13,15 @@
     </style>
 @endpush
 <div>
-    <h4><i class="bi bi-info-circle-fill"></i> Infos de payments</h4>
+    <h4 class="text-primary"><i class="bi bi-info-circle-fill"></i> Infos de payments</h4>
     <hr>
-    <div class="row">
+    <div class="row w-100">
         @foreach ($months as $month)
             @php
-                $payments = $registration
-                    ->payments()
-                    ->where('month', $month['number'])
-                    ->where('is_paid', true)
-                    ->get();
+                $payments = $registration->payments()->where('month', $month['number'])->where('is_paid', true)->get();
             @endphp
             @if (!$payments->isEmpty())
-                <div class="col-md-4 ">
+                <div class="col-md-6">
                     <div class="card info-card">
                         <div class="card-header bg-info text-uppercase">
                             <h5>{{ $month['name'] }}</h5>

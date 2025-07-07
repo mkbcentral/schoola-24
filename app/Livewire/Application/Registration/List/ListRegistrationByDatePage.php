@@ -15,8 +15,8 @@ class ListRegistrationByDatePage extends Component
     protected $listeners = [
         'deletedStudentListner' => 'delete',
     ];
-    public bool $isOld;
-    public string $dateFilter;
+    public bool $isOld = false;
+    public string $dateFilter = '';
 
     public int $per_page = 20;
     public int  $option_filter = 0;
@@ -47,7 +47,10 @@ class ListRegistrationByDatePage extends Component
     {
         $this->dispatch('registrationData', $registration);
     }
-    public function mount() {}
+    public function mount()
+    {
+        $this->dateFilter = date('Y-m-d');
+    }
     public function render()
     {
         return view('livewire.application.registration.list.list-registration-by-date-page', [

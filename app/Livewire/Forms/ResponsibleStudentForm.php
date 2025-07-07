@@ -27,10 +27,10 @@ class ResponsibleStudentForm extends Form
     #[Rule('email', message: 'Format email invalide', onUpdate: false)]
     public $email = '';
 
-    public function create(array $input = [])
+    public function create(array $input = []): ResponsibleStudent
     {
         $input['school_id'] = School::DEFAULT_SCHOOL_ID();
-        ResponsibleStudentFeature::create($input);
+        return ResponsibleStudentFeature::create($input);
     }
 
     public function update(ResponsibleStudent $responsibleStudent, array $input = [])

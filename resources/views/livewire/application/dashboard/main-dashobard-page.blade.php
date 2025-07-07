@@ -36,6 +36,7 @@
             </div>
         </div>
         <livewire:application.dashboard.dash-synthese-page />
+        <livewire:application.finance.budget.budget-forecast-page />
     @endif
 
     <livewire:application.dashboard.payment.dash-payment-page />

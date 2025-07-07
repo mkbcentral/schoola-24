@@ -41,30 +41,14 @@
                 class="btn-secondary btn-sm ms-2">
                 @if ($isByDate == true)
                     <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer rapport journalier'
-                        href="{{ route('print.payment.date', [
-                            $date_filter,
-                            $selectedCategoryFeeId,
-                            $scolary_fee_filter,
-                            $section_filter,
-                            $selectedOption,
-                            $class_room_filter,
-                        ]) }}"
-                        target='_blank' />
+                        href="" target='_blank' />
                     <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Bordereau de versement journalier'
-                        href="{{ route('print.payment.slip.date', [$date_filter]) }}" target='_blank' />
+                        href="" target='_blank' />
                 @else
                     <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer rapport mensuel'
-                        href="{{ route('print.payment.month', [
-                            $month_filter,
-                            $selectedCategoryFeeId,
-                            $scolary_fee_filter,
-                            $section_filter,
-                            $selectedOption,
-                            $class_room_filter,
-                        ]) }}"
-                        target='_blank' />
+                        href="" target='_blank' />
                     <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Bordereau de versement mensuel'
-                        href="{{ route('print.payment.slip.month', [$month_filter]) }}" target='_blank' />
+                        href="" target='_blank' />
                 @endif
             </x-others.dropdown>
         </div>

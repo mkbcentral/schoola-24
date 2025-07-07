@@ -29,7 +29,7 @@ class ListReportPaymentPage extends Component
     public ?int $selectedSection = 0;
     public ?int $selectedOption = 0;
     public ?int $selectedClassRoom = 0;
-    public ?int $per_page = 20;
+    public ?int $per_page = 1000;
     public bool $isByDate = true;
 
 

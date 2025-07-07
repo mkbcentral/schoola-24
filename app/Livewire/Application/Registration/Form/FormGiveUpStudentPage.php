@@ -34,7 +34,7 @@ class FormGiveUpStudentPage extends Component
                 'month' => $this->month
             ]);
             $this->registration->abandoned = true;
-            $this->registration->update();
+            $this->registration->save();
             $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
             $this->dispatch('refreshListStudent');
         } catch (Exception $ex) {

@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Application\Student\Form;
 
+use App\Domain\Features\Student\ResponsibleStudentFeature;
 use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\ResponsibleStudentForm;
 use App\Models\ResponsibleStudent;
+use App\Models\School;
 use Exception;
 use Livewire\Component;
 
@@ -30,7 +32,9 @@ class FormResponsibleStudentPage extends Component
     public function save()
     {
         $input = $this->validate();
-        $this->form->create($input);
+        $input['school_id'] = School::DEFAULT_SCHOOL_ID();
+        $responsibleStudent = ResponsibleStudentFeature::create($input);
+        $this->dispatch('responsibleStudentDataOnReg', $responsibleStudent->id);
         $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
         $this->dispatch('close-form-responsible-student');
         try {

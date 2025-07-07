@@ -54,17 +54,17 @@ class ListUserPage extends Component
         }
     }
 
-    public function deleteUser(User $user): void{}
-    public function resetUserPassword(User $user): void{
+    public function deleteUser(User $user): void {}
+    public function resetUserPassword(User $user): void
+    {
         try {
-            $defaultPassword='password';
-            $user->password=\Hash::make($defaultPassword);
+            $defaultPassword = 'password';
+            $user->password = \Hash::make($defaultPassword);
             $user->update();
             $this->dispatch('added', ['message' => AppMessage::ACTION_SUCCESS]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
-
     }
 
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
@@ -72,16 +72,16 @@ class ListUserPage extends Component
         return view('livewire.application.admin.list.list-user-page', [
             'users' => Auth::user()->role->is_for_school ?
                 UserFeature::getListSchoolUser(
-                $this->q,
-                $this->sortBy,
-                $this->sortAsc,
-                $this->per_page
-            ) : UserFeature::getListAppUser(
-                $this->q,
-                $this->sortBy,
-                $this->sortAsc,
-                $this->per_page
-            ),
+                    $this->q,
+                    $this->sortBy,
+                    $this->sortAsc,
+                    $this->per_page
+                ) : UserFeature::getListAppUser(
+                    $this->q,
+                    $this->sortBy,
+                    $this->sortAsc,
+                    $this->per_page
+                ),
         ]);
     }
 }

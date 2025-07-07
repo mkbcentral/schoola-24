@@ -36,12 +36,30 @@ class CheckRedirectUserRoute
     public function userAccessRoutes(): array
     {
         $routes = [];
-        foreach (auth()->user()->singleAppLinks as $singleAppLink) {
-            $routes[] = $singleAppLink->route;
+        if (
+            (auth()->user()->singleAppLinks->isEmpty()
+                && auth()->user()->subLinks->isEmpty())
+            && auth()->user()->role->name === RoleType::ADMIN_SCHOOL
+        ) {
+            $routes = [
+                'dashboard.main',
+                'admin.main',
+                'admin.role',
+                'main.schools',
+                'navigation.single',
+                'navigation.sub',
+                'navigation.multi'
+            ];
+        } else {
+            foreach (auth()->user()->singleAppLinks as $singleAppLink) {
+                $routes[] = $singleAppLink->route;
+            }
+            foreach (auth()->user()->subLinks as $subLink) {
+                $routes[] = $subLink->route;
+            }
         }
-        foreach (auth()->user()->subLinks as $subLink) {
-            $routes[] = $subLink->route;
-        }
+
+
         return [
             RoleType::SCHOOL_FINANCE => $routes,
             RoleType::SCHOOL_SECRETARY => $routes,

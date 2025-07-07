@@ -5,10 +5,10 @@
     <div>
         <div> <x-form.search-input wire:model.live='q' /></div>
     </div>
-    <table class="table table-striped table-sm table-hover mt-2">
+    <table class="table table-bordered table-sm table-hover mt-2">
         <thead class="table-primary">
-            <tr class="">
-                <th>N°</th>
+            <tr>
+                <th class="text-center">N°</th>
                 <th>DESCRIPTION</th>
                 <th>ICONE</th>
                 <th class="text-center">Actions</th>
@@ -22,8 +22,8 @@
             <tbody>
                 @foreach ($multiAppLinks as $index => $multiAppLink)
                     <tr wire:key='{{ $multiAppLink->id }}' class=" ">
-                        <td>
-                            <i class="bi bi-link"></i>
+                        <td class="text-center ">
+                            {{ $index + 1 }}
                         </td>
                         <td>{{ $multiAppLink->name }}</td>
                         <td>{{ $multiAppLink->icon }}</td>

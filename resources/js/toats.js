@@ -1,17 +1,30 @@
 import toastr from 'toastr';
-window.$(document).ready(function () {
+
+$(function () {
     toastr.options = {
-        "positionClass": "toast-top-right",
-        "progressBar": true
+        positionClass: "toast-top-right",
+        progressBar: true,
+        closeButton: true,
+        timeOut: 4000,
+        showMethod: 'fadeIn',
+        hideMethod: 'fadeOut',
+        showDuration: 300,
+        hideDuration: 300,
+        toastClass: 'custom-toastr'
     };
-    window.addEventListener('added', function (event) {
-        toastr.success(event.detail[0].message, 'Validation');
-    });
-    window.addEventListener('updated', function (event) {
-        toastr.info(event.detail[0].message, 'Validation');
-    });
-    window.addEventListener('error', function (event) {
-        toastr.error(event.detail[0].message, 'Alert !');
+
+    const toastMap = {
+        added: { method: 'success', title: 'Validation' },
+        updated: { method: 'info', title: 'Validation' },
+        error: { method: 'error', title: 'Alert !' }
+    };
+
+    Object.keys(toastMap).forEach(eventType => {
+        window.addEventListener(eventType, function (event) {
+            const detail = event.detail && event.detail[0];
+            if (detail && detail.message) {
+                toastr[toastMap[eventType].method](detail.message, toastMap[eventType].title);
+            }
+        });
     });
 });
-

@@ -13,13 +13,19 @@ class AuthFeature implements AuthContract
      */
     public static function login(array $credentials): bool
     {
-        return Auth::attempt($credentials);
+        $loginField = filter_var($credentials['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        return Auth::attempt([
+            $loginField => $credentials['login'],
+            'password' => $credentials['password'],
+        ]);
     }
+
+
+
+
 
     /**
      * @inheritDoc
      */
-    public static function register(array $inputs)
-    {
-    }
+    public static function register(array $inputs) {}
 }

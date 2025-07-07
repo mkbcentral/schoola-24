@@ -70,10 +70,12 @@
 
                 </tbody>
             </table>
-            <div class="d-flex justify-content-between align-items-center">
-                <span>{{ $responsibleStudents->links('livewire::bootstrap') }}</span>
-                <x-others.table-page-number wire:model.live='per_page' />
-            </div>
+            @if (!$responsibleStudents->isEmpty())
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>{{ $responsibleStudents->links('livewire::bootstrap') }}</span>
+                    <x-others.table-page-number wire:model.live='per_page' />
+                </div>
+            @endif
         </div>
         @push('js')
             <script type="module">

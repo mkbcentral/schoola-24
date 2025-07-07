@@ -12,7 +12,7 @@ class UserForm extends Form
     #[Rule('required', message: 'Nom utilisateur obligatoire', onUpdate: false)]
     public $name = '';
 
-    #[Rule('required', message: 'Nom utilisateur obligatoire', onUpdate: false)]
+    #[Rule('required', message: 'Pseudo obligatoire', onUpdate: false)]
     public $username = '';
 
     #[Rule('required', message: 'N° Tél obligation', onUpdate: false)]

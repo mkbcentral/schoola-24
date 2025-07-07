@@ -123,20 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
         attributeFilter: ['data-bs-theme']
     });
 
-    // Handle table row dropdown states
-    const dropdowns = document.querySelectorAll('.table .dropdown');
-
-    dropdowns.forEach(dropdown => {
-        dropdown.addEventListener('show.bs.dropdown', function () {
-            // Add class to parent row when dropdown opens
-            this.closest('tr').classList.add('dropdown-open');
-        });
-
-        dropdown.addEventListener('hide.bs.dropdown', function () {
-            // Remove class from parent row when dropdown closes
-            this.closest('tr').classList.remove('dropdown-open');
-        });
-    });
+    
 
     // Sidebar toggle
     const sidebarCollapse = document.getElementById('sidebarCollapse');
@@ -150,53 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Initialize all tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
 
-    // Initialize all popovers
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl);
-    });
 
-    // Handle form submission
-    const addStudentForm = document.getElementById('addStudentForm');
-    if (addStudentForm) {
-        addStudentForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            // Here you would typically send the form data to your backend
-            // For now, we'll just close the modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addStudentModal'));
-            modal.hide();
-
-            // Show success message
-            const toastContainer = document.createElement('div');
-            toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-            toastContainer.innerHTML = `
-        <div class="toast" role="alert">
-          <div class="toast-header bg-success text-white">
-            <strong class="me-auto">Success</strong>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
-          </div>
-          <div class="toast-body">
-            Student added successfully!
-          </div>
-        </div>
-      `;
-            document.body.appendChild(toastContainer);
-            const toastElement = toastContainer.querySelector('.toast');
-            const toast = new bootstrap.Toast(toastElement);
-            toast.show();
-
-            // Remove toast container after toast is hidden
-            toastElement.addEventListener('hidden.bs.toast', function () {
-                toastContainer.remove();
-            });
-        });
-    }
 
 });
 

@@ -29,7 +29,10 @@
                     <x-form.sort-icon sortField="students.name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
                 </th>
                 @foreach ($scolarFees as $scolarFee)
-                    <th class="text-ellipsis">{{ $scolarFee->name }}</th>
+                    <th class="text-ellipsis" style="cursor: pointer" data-bs-toggle="modal"
+                        data-bs-target="#payment-student-status"
+                        wire:click="openListStatusDetails({{ $scolarFee->id }})">
+                        {{ $scolarFee->name }}</th>
                 @endforeach
 
             </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,5 +32,20 @@ class CategoryExpense extends Model
     public function expenseFee(): HasMany
     {
         return $this->hasMany(ExpenseFee::class);
+    }
+
+    //get monthly amounts for the category
+    /**
+     * Get the total amount for this category for a specific month.
+     *
+     * @param string $month Format: 'YYYY-MM'
+     * @return float|int
+     */
+    public function getMonthlyAmount($month): float|int
+    {
+        return $this->expenseFee()
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->where('month', $month)
+            ->sum('amount');
     }
 }

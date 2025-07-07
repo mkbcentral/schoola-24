@@ -9,7 +9,7 @@ use Livewire\Component;
 class DashStudentCounterPage extends Component
 {
     public int $selectedSection = 0;
-    public Option $selectedOption;
+    public ?Option $selectedOption;
 
     //change selected option
     public function changeOption($name)
@@ -21,7 +21,7 @@ class DashStudentCounterPage extends Component
     public function mount()
     {
         $this->selectedSection = 0;
-        $this->selectedOption = Option::first();
+        $this->selectedOption = Option::first() ?? null;
     }
     public function render()
     {

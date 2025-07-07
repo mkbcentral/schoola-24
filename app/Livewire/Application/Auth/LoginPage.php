@@ -29,9 +29,13 @@ class LoginPage extends Component
                 $this->dispatch('error', ['message' => AppMessage::LOGGED_IN_FAILLED]);
             }
         } catch (\Exception $ex) {
-            $this->dispatch('error', ['message' => $ex->getMessage()]);
+            $this->dispatch('error', ['message' => AppMessage::EXECPTIONçERROR]);
         }
     }
+
+
+
+
     public function render()
     {
         return view('livewire.application.auth.login-page');

@@ -4,7 +4,6 @@
         <x-navigation.bread-crumb-item label='Dasnboard' isLinked=true link="dashboard.main" />
     </x-navigation.bread-crumb>
     <div class="">
-
         <livewire:application.dashboard.registration.student-info-card-page />
         <div class="d-flex justify-content-between mt-3">
             <div class="d-flex align-items-center">
@@ -120,14 +119,26 @@
                                                 href="#"
                                                 wire:click='showDeleteDialog({{ $registration->student }})' />
                                         @endcan
-                                        <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
-                                            labelText='Voir détails'
-                                            href="{{ route('student.detail', $registration) }}" />
+
                                         @if (!$registration->qr_code)
                                             <x-others.dropdown-link wire:click='generateQRCode({{ $registration }})'
                                                 wire:confirm="Etês-vous sûre de réaliser l'opération"
                                                 iconLink='bi bi-qr-code-scan' labelText='Générer Qrcode'
                                                 href="#" />
+                                        @endif
+                                        @if (Auth::user()->role->name == 'SCHOOL_FINANCE')
+                                            <x-others.dropdown-link iconLink='bi bi-journal-x'
+                                                labelText='Marquer abandon' data-bs-toggle="modal"
+                                                data-bs-target="#form-give-up-student"
+                                                wire:click='openMakeGiveUpStudentFom({{ $registration }})'
+                                                href="#" />
+                                            <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
+                                                labelText='Voir détails'
+                                                href="{{ route('student.detail', $registration) }}" />
+                                        @else
+                                            <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
+                                                labelText='Voir détails'
+                                                href="{{ route('student.detail', $registration) }}" />
                                         @endif
                                     </x-others.dropdown>
                                 </td>

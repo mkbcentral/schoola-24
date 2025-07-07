@@ -45,7 +45,7 @@ class FormUserPage extends Component
             $this->form->update($this->user, $input);
             $this->dispatch('updated', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
         } catch (Exception $ex) {
-            $this->dispatch('error', ['message' => $ex->getMessage()]);
+            $this->dispatch('error', ['message' => AppMessage::EXECPTIONçERROR]);
         }
     }
 

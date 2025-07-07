@@ -130,7 +130,7 @@
         <div class="company-info">
             <strong>COMPLEXE SCOLAIRE AQUILA</strong><br>
             Golf Plateau Q.MUKUNTO C/ANNEXE<br>
-            Phone: (243) 971330007<br>
+            Phone: (243) 9850135215 <br>
             Email: contact@aquila.com
         </div>
         <div class="transaction-info"><br>

@@ -11,11 +11,13 @@ use Livewire\WithPagination;
 class ListReportPaymentByTranchPage extends Component
 {
     use WithPagination;
+
     protected $listeners = [
         "selectedCategoryFee" => 'getSelectedCategoryFee'
     ];
+
     public int $selectedCategoryFeeId = 0;
-    public ?CategoryFee $categoryFeeSelected;
+    public ?CategoryFee $categoryFeeSelected = null;
     public ?string $date_filter = '';
     public string $month_filter = '';
     public int $option_filter = 0;
@@ -25,19 +27,16 @@ class ListReportPaymentByTranchPage extends Component
     public ?int $selectedSection = 0;
     public ?int $selectedOption = 0;
     public ?int $selectedClassRoom = 0;
-    public ?int $per_page = 20;
+    public ?int $per_page = 1000;
     public bool $isByDate = true;
 
-
     /**
-     * Recuprer le categorie de frais selectionné
-     * @param int $index
-     * @return void
+     * Récupère la catégorie de frais sélectionnée
      */
     public function getSelectedCategoryFee(int $index): void
     {
         $this->selectedCategoryFeeId = $index;
-        $this->categoryFeeSelected = CategoryFee::find($index);
+        $this->categoryFeeSelected = CategoryFee::find($index) ?? null;
     }
 
     public function updatedMonthFilter(): void
@@ -45,46 +44,38 @@ class ListReportPaymentByTranchPage extends Component
         $this->date_filter = '';
         $this->isByDate = false;
     }
+
     public function updatedDateFilter(): void
     {
-        $this->month_filter = "";
+        $this->month_filter = '';
         $this->isByDate = true;
     }
-    /**
-     * Summary of updatedSectionFilter
-     * @param mixed $val
-     * @return void
-     */
+
     public function updatedSectionFilter($val): void
     {
         $this->selectedSection = $val;
     }
 
-    /**
-     * Summary of updatedOptionFilter
-     * @param mixed $val
-     * @return void
-     */
     public function updatedOptionFilter($val): void
     {
         $this->selectedOption = $val;
     }
+
     public function updatedClassRoomFilter($val): void
     {
         $this->selectedClassRoom = $val;
     }
+
     /**
-     * Summary of mount
-     * @param int $categoryFeeId
-     * @return void
+     * Initialise le composant avec la catégorie de frais sélectionnée
      */
     public function mount(int $categoryFeeId): void
     {
         $this->selectedCategoryFeeId = $categoryFeeId;
-        $categoryFee = FeeDataConfiguration::getFirstCategoryFee();
-        $this->categoryFeeSelected = $categoryFee;
+        $this->categoryFeeSelected = CategoryFee::find($categoryFeeId) ?? FeeDataConfiguration::getFirstCategoryFee();
     }
-    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+
+    public function render()
     {
         return view('livewire.application.payment.list.list-report-payment-by-tranch-page', [
             'payments' => PaymentFeature::getList(
@@ -98,7 +89,6 @@ class ListReportPaymentByTranchPage extends Component
                 $this->class_room_filter,
                 true,
                 null,
-
                 $this->per_page
             ),
             'scolarFees' => FeeDataConfiguration::getListScalarFee(

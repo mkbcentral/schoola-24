@@ -9,8 +9,11 @@
             <div class="col-md-4">
                 <livewire:application.student.widget.student-card-info-widget :registration="$registration" />
             </div>
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <livewire:application.widgets.student.student-payments-info-widget :registration="$registration" />
+            </div>
+            <div class="col-md-4">
+                <livewire:application.widgets.student.student-payment-debts-info-widget :registration="$registration" />
             </div>
 
     </x-content.main-content-page>

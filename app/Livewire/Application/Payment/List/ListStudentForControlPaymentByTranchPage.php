@@ -63,6 +63,17 @@ class ListStudentForControlPaymentByTranchPage extends Component
         $this->class_room_filter = ClassRoom::find($val)->id;
     }
 
+    public function openListStatusDetails($id): void
+    {
+        $this->selectedCategoryFeeId = $id;
+        $this->dispatch(
+            'statusTranchDetails',
+            $this->selectedOptionId,
+            $this->class_room_filter,
+            $this->selectedCategoryFeeId
+        );
+    }
+
     public function mount(int $categoryFeeId): void
     {
         $this->selectedCategoryFeeId = $categoryFeeId;

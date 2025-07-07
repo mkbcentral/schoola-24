@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-6">
                     <div>
-                        <x-form.label value="{{ __('Nom de l\' utilisateur') }}" />
+                        <x-form.label value="{{ __('Pseudo') }}" />
                         <x-form.input type='text' wire:model.blur='form.username' :error="'form.username'"
                             style="height: 40px" />
                         <x-errors.validation-error value='form.username' />

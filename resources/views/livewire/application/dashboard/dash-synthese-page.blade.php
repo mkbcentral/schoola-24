@@ -6,7 +6,7 @@
     @endphp
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h4>Synthèse finance</h4>
+            <h4 class="text-uppercase">SYNTHÈSE FINANCIÈRE SUR LES FRAIS SCOLAIRES</h4>
             <div class="d-flex align-items-center">
                 <label for="my-select">Categorie</label>
                 <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='category_fee_filter'

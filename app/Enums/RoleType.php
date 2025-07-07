@@ -22,5 +22,22 @@ final class RoleType extends Enum
     const SCHOOL_DIRECTOR = 'SCHOOL_DIRECTOR';
     const SCHOOL_BOSS = 'SCHOOL_BOSS';
     const APP_ADMIN = 'APP_ADMIN';
-    const SCHOOL_GUARD='SCHOOL_GUARD';
+    const SCHOOL_GUARD = 'SCHOOL_GUARD';
+
+    //get the roles as an array
+    public static function getRoles(): array
+    {
+        return [
+            ['name' => self::ADMIN_SCHOOL],
+            ['name' => self::SCHOOL_MANAGER],
+            ['name' => self::SCHOOL_FINANCE],
+            ['name' => self::SCHOOL_SECRETARY],
+            ['name' => self::SCHOOL_MONEY_COLLECTOR],
+            ['name' => self::SCHOOL_TEACHER],
+            ['name' => self::SCHOOL_DIRECTOR],
+            ['name' => self::SCHOOL_BOSS],
+            ['name' => self::APP_ADMIN],
+            ['name' => self::SCHOOL_GUARD],
+        ];
+    }
 }

@@ -133,115 +133,117 @@ class Registration extends Model
      * @param array $filters
      * @return \Illuminate\Database\Eloquent\Builder
      */
+    // Scope for filtering registrations with reusable joins and conditions
     public function scopeFilter(Builder $query, array $filters): Builder
     {
-        return $query->join('students', 'students.id', 'registrations.student_id')
-            ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
-            ->join("class_rooms", "class_rooms.id", "=", "registrations.class_room_id")
-            ->join("options", "options.id", "=", "class_rooms.option_id")
-            ->join("sections", "sections.id", "=", "options.section_id")
+        return $this->applyJoins($query)
             ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
             ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->when($filters['date'], function ($query, $date) {
-                return $query->whereDate('registrations.created_at', $date);
-            })
-            ->when($filters['month'], function ($query, $month) {
-                return $query->whereMonth('registrations.created_at', $month);
-            })
-            ->when($filters['section_id'], function ($query, $sectionId) {
-                return $query->where('sections.id', $sectionId);
-            })
-            ->when($filters['option_id'], function ($query, $optionId) {
-                return $query->where('options.id', $optionId);
-            })
-            ->when($filters['class_room_id'], function ($query, $classRoomId) {
-                return $query->where('class_rooms.id', $classRoomId);
-            })
-            ->when($filters['responsible_student_id'], function ($query, $responsibleStudentId) {
-                return $query->where('students.responsible_student_id', $responsibleStudentId);
-            })
-            ->when($filters['is_old'], function ($query, $optionId) {
-                return $query->where('registrations.is_old', $optionId);
-            })
-            ->when($filters['q'], function ($query, $q) {
-                return $query->where('students.name', 'like', '%' . $q . '%');
-            })
+            ->when($filters['date'] ?? null, fn($q, $date) => $q->whereDate('registrations.created_at', $date))
+            ->when($filters['month'] ?? null, fn($q, $month) => $q->whereMonth('registrations.created_at', $month))
+            ->when($filters['section_id'] ?? null, fn($q, $sectionId) => $q->where('sections.id', $sectionId))
+            ->when($filters['option_id'] ?? null, fn($q, $optionId) => $q->where('options.id', $optionId))
+            ->when($filters['class_room_id'] ?? null, fn($q, $classRoomId) => $q->where('class_rooms.id', $classRoomId))
+            ->when($filters['responsible_student_id'] ?? null, fn($q, $responsibleStudentId) => $q->where('students.responsible_student_id', $responsibleStudentId))
+            ->when(isset($filters['is_old']), fn($q) => $q->where('registrations.is_old', $filters['is_old']))
+            ->when($filters['q'] ?? null, fn($q, $qVal) => $q->where('students.name', 'like', '%' . $qVal . '%'))
             ->with(['student', 'registrationFee', 'classRoom', 'schoolYear', 'payments', 'rate'])
-            ->Select('registrations.*', 'students.name');
+            ->select('registrations.*', 'students.name');
     }
+
+    // Centralized method for common joins
+    protected function applyJoins(Builder $query): Builder
+    {
+        return $query
+            ->join('students', 'students.id', '=', 'registrations.student_id')
+            ->join('responsible_students', 'responsible_students.id', '=', 'students.responsible_student_id')
+            ->join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
+            ->join('options', 'options.id', '=', 'class_rooms.option_id')
+            ->join('sections', 'sections.id', '=', 'options.section_id');
+    }
+
+
+    /**
+     * Compte le nombre d'inscriptions d'élèves groupées par un champ spécifique.
+     *
+     * Cette méthode effectue une requête sur la table des inscriptions, en joignant les tables
+     * 'class_rooms', 'options' et 'sections' pour permettre le groupement par un champ donné.
+     * Elle retourne un tableau associatif où la clé est la valeur du champ de groupement
+     * (spécifié par $groupField et nommé $groupAlias) et la valeur est le nombre d'élèves
+     * correspondants à ce groupe.
+     *
+     * @param string $groupField   Le nom du champ sur lequel effectuer le groupement (ex: 'sections.id').
+     * @param string $groupAlias   L'alias à utiliser pour le champ de groupement dans le résultat.
+     * @return array               Tableau associatif [valeur du groupe => nombre d'élèves].
+     */
+    protected static function countByGroup(string $groupField, string $groupAlias): array
+    {
+        return self::query()
+            ->join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
+            ->join('options', 'options.id', '=', 'class_rooms.option_id')
+            ->join('sections', 'sections.id', '=', 'options.section_id')
+            ->selectRaw("$groupField as $groupAlias, COUNT(*) as student_count")
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->groupBy($groupField)
+            ->pluck('student_count', $groupAlias)
+            ->toArray();
+    }
+
+    public static function countByGender(): array
+    {
+        $counts = self::whereHas('student', function ($query) {
+            $query->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID());
+        })
+            ->with(['student' => function ($query) {
+                $query->select('id', 'gender');
+            }])
+            ->get()
+            ->groupBy(fn($registration) => $registration->student->gender ?? 'unknown')
+            ->map(fn($group) => $group->count())
+            ->toArray();
+
+        return [
+            'male' => $counts['M'] ?? 0,
+            'female' => $counts['F'] ?? 0,
+        ];
+    }
+
+    public static function countStudentByOption(): array
+    {
+        return self::countByGroup('options.name', 'option_name');
+    }
+
+    public static function countStudentBySection(): array
+    {
+        return self::countByGroup('sections.name', 'section_name');
+    }
+
+    public static function countStudentByClassRoom(int $optionId): array
+    {
+        return self::query()
+            ->join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
+            ->join('options', 'options.id', '=', 'class_rooms.option_id')
+            ->where('options.id', $optionId)
+            ->selectRaw('CONCAT(class_rooms.name, " - ", options.name) as class_room_option_name, COUNT(*) as student_count')
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->groupBy('class_room_option_name')
+            ->pluck('student_count', 'class_room_option_name')
+            ->toArray();
+    }
+
     public function getStatusPayment(int $registrationId, $categoryFeeId, string $month): bool
     {
-        $status = false;
         $payment = PaymentFeature::getSinglePaymentForStudentWithMonth($registrationId, $categoryFeeId, $month);
-        if ($payment) {
-            $status = true;
-        }
-        return $status;
+        return (bool) $payment;
     }
 
     public function getStatusPaymentByTranch(int $registrationId, $categoryFeeId, int $scolarFeeId): bool
     {
-        $status = false;
         $payment = PaymentFeature::getSinglePaymentForStudentWithTranche(
             $registrationId,
             $categoryFeeId,
             $scolarFeeId
         );
-        if ($payment) {
-            $status = true;
-        }
-        return $status;
-    }
-
-
-    public static function countByGender(): array
-    {
-        $maleCount = self::whereHas('student', function ($query) {
-            $query->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-                ->where('gender', 'M');
-        })->count();
-
-        $femaleCount = self::whereHas('student', function ($query) {
-            $query
-                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-                ->where('gender', 'F');
-        })->count();
-
-        return [
-            'male' => $maleCount,
-            'female' => $femaleCount,
-        ];
-    }
-    public static function countStudentByOption(): array
-    {
-        return self::join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
-            ->join('options', 'options.id', '=', 'class_rooms.option_id')
-            ->selectRaw('options.name as option_name, COUNT(*) as student_count')
-            ->groupBy('options.name')
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->pluck('student_count', 'option_name')
-            ->toArray();
-    }
-    public static function countStudentBySection(): array
-    {
-        return self::join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
-            ->join('options', 'options.id', '=', 'class_rooms.option_id')
-            ->join('sections', 'sections.id', '=', 'options.section_id')
-            ->selectRaw('sections.name as section_name, COUNT(*) as student_count')
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->groupBy('sections.name')
-            ->pluck('student_count', 'section_name')
-            ->toArray();
-    }
-    public static function countStudentByClassRoom(int $optionId): array
-    {
-        return self::join('class_rooms', 'class_rooms.id', '=', 'registrations.class_room_id')
-            ->join('options', 'options.id', '=', 'class_rooms.option_id')
-            ->where('options.id', $optionId)
-            ->selectRaw('CONCAT(class_rooms.name, " - ", options.name) as class_room_option_name, COUNT(*) as student_count')
-            ->groupBy('class_room_option_name')
-            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->pluck('student_count', 'class_room_option_name')
-            ->toArray();
+        return (bool) $payment;
     }
 }

@@ -1,7 +1,7 @@
 <form id="loginForm" wire:submit='login'>
     <div class="mb-2">
-        <x-form.auth-form-field type='email' wire:model='form.email' :error="'form.email'" placeholder="Adresse email" />
-        <x-errors.validation-error value='form.email' />
+        <x-form.auth-form-field wire:model='form.login' :error="'form.login'" placeholder="Adresse login" />
+        <x-errors.validation-error value='form.login' />
     </div>
 
     <div class="mb-3 mt-4">

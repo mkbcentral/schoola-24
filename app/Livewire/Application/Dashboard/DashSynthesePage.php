@@ -26,7 +26,11 @@ class DashSynthesePage extends Component
      */
     public function updatedCategoryFeeFilter()
     {
-        $this->dispatch('refresh-expenses', params: $this->balances);
+        // Recharge les paiements et dépenses selon la nouvelle catégorie sélectionnée
+        $this->payments = Payment::getPaymentsByMonthAndCategory($this->category_fee_filter);
+        $this->expenses = ExpenseFee::getExpensesByMonthAndCategory($this->category_fee_filter);
+        // Recalcule les balances
+        $this->calculateBalances();
     }
 
     public function mount(): void

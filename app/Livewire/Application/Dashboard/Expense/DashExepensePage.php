@@ -23,7 +23,7 @@ class DashExepensePage extends Component
             $this->category_fee_filter =  CategoryFee::query()->where('school_id', School::DEFAULT_SCHOOL_ID())
                 ->where('school_year_id', School::DEFAULT_SCHOOL_ID())
                 ->where('is_accessory', true)
-                ->first()->id;
+                ->first()->id ?? 0;
         }
     }
     public function render()

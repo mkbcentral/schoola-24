@@ -46,38 +46,48 @@
         </div>
         <div class="col-md-5">
 
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="text-primary text-uppercase"> Détail {{ $selectedOption->name }}</h5>
-                </div>
-                <div class="card-body">
-                    <table class="table table-light table-sm">
-                        <thead>
-                            <tr>
-                                <th>Classe</th>
-                                <th class="text-center">Effectif</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($selectedOption->classRooms as $classRoom)
+            @if ($options != [])
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="text-primary text-uppercase"> Détail {{ $selectedOption?->name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-light table-sm">
+                            <thead>
                                 <tr>
-                                    <td>{{ $classRoom->getOriginalClassRoomName() }}</td>
-                                    <td class="text-center">{{ $classRoom->registrations->count() }}</td>
-                                    <td class="text-center">
-                                        <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                            class=" btn-sm">
-                                            <x-others.dropdown-link iconLink='bi bi-wallet2' target="_blank"
-                                                labelText='Imprimer les paiements'
-                                                href="{{ route('print.student.payemnts.by.classroom', $classRoom->id) }}" />
-                                        </x-others.dropdown>
-                                    </td>
+                                    <th>Classe</th>
+                                    <th class="text-center">Effectif</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @if ($selectedOption?->classRooms == null)
+                                    <tr>
+                                        <td colspan="3" class="text-center">
+                                            <span class="text-muted">Aucune classe pour cette option</span>
+                                        </td>
+                                    </tr>
+                                @else
+                                    @foreach ($selectedOption?->classRooms as $classRoom)
+                                        <tr>
+                                            <td>{{ $classRoom->getOriginalClassRoomName() }}</td>
+                                            <td class="text-center">{{ $classRoom->registrations->count() }}</td>
+                                            <td class="text-center">
+                                                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                                                    class=" btn-sm">
+                                                    <x-others.dropdown-link iconLink='bi bi-wallet2' target="_blank"
+                                                        labelText='Imprimer les paiements'
+                                                        href="{{ route('print.student.payemnts.by.classroom', $classRoom->id) }}" />
+                                                </x-others.dropdown>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 </div>

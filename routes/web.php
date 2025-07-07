@@ -22,6 +22,7 @@ use App\Livewire\Application\Fee\Scolar\List\ListCategoryScolarFeePage;
 use App\Livewire\Application\Fee\Scolar\MainScolarFeePage;
 use App\Livewire\Application\Finance\Bank\MainBankPage;
 use App\Livewire\Application\Finance\Borrowing\MainMoneyBorrowingPage;
+use App\Livewire\Application\Finance\Budget\BudgetForecastPage;
 use App\Livewire\Application\Finance\Expense\MainCateoryExpensePage;
 use App\Livewire\Application\Finance\Expense\MainExpensePage;
 use App\Livewire\Application\Finance\Expense\MainOtherExpensePage;
@@ -41,11 +42,15 @@ use App\Livewire\Application\Payment\Reguralization\MainRegularizationPaymentPag
 use App\Livewire\Application\Registration\List\ListRegistrationByClassRoomPage;
 use App\Livewire\Application\Registration\List\ListRegistrationByDatePage;
 use App\Livewire\Application\Registration\List\ListRegistrationByMonthPage;
+use App\Livewire\Application\Registration\MainRegistrationPage;
+use App\Livewire\Application\Report\ReportStudentEnrollmentReport;
 use App\Livewire\Application\Setting\MainSettingPage;
 use App\Livewire\Application\Student\DetailStudentPage;
 use App\Livewire\Application\Student\List\ListResponsibleStudentPage;
+use App\Livewire\Application\Student\List\ListStudentByResponsiblePage;
 use App\Livewire\Application\Student\List\ListStudentPage;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -53,7 +58,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', MainDashobardPage::class)->name('dashboard.main')->lazy();
         //Routes load on registration group
         Route::prefix('registration')->group(function () {
-            Route::get('/responsible-sudent', ListResponsibleStudentPage::class)->name('responsible.main')->lazy();
+            Route::get('/responsible-student', MainRegistrationPage::class)->name('responsible.main')->lazy();
             Route::get('/students', ListStudentPage::class)->name('student.list')->lazy();
         });
         //Routes work on confiiguration group
@@ -91,6 +96,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('money-borrowing', MainMoneyBorrowingPage::class)->name('finance.money.borrowing')->lazy();
             Route::get('rate', MainRatePage::class)->name('finance.rate')->lazy();
             Route::get('other-recipes', MainOtherRecipePage::class)->name('finance.recipe')->lazy();
+            Route::get('budget-forecast', BudgetForecastPage::class)->name('finance.budget.forecast')->lazy();
         });
         //Routes work on expense
         Route::prefix('expense')->group(function () {
@@ -104,6 +110,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('single', MainSingleAppLinkPage::class)->name('navigation.single')->lazy();
             Route::get('multi', MainMultiAppLinkPage::class)->name('navigation.multi')->lazy();
             Route::get('sub', MainSubLinkPage::class)->name('navigation.sub')->lazy();
+        });
+
+        Route::prefix('rapport')->group(function () {
+            //repport des effectifs Route::get('students-by-class-room/{classRoomId}', ListStudentByClassRoomPage::class)->name('students.by.class.room')->lazy();
+            Route::get('student-enrollment', ReportStudentEnrollmentReport::class)->name('rapport.student.enrollment')->lazy();
         });
     });
 

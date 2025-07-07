@@ -17,7 +17,6 @@ class EditUserInfoPage extends Component
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
-        $this->phone = Auth::user()->phone;
     }
 
     public function update(): void
@@ -25,7 +24,6 @@ class EditUserInfoPage extends Component
         $inputs = $this->validate([
             'name' => ['required'],
             'email' => ['required', 'email'],
-            'phone' => ['required'],
         ]);
         try {
             Auth::user()->update($inputs);

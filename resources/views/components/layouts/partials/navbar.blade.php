@@ -5,7 +5,6 @@
         </button>
         <livewire:application.widgets.school-year-label />
         <div class="d-flex align-items-center">
-
             <div class="dropdown ms-3">
                 <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="userDropdown"
                     data-bs-toggle="dropdown">

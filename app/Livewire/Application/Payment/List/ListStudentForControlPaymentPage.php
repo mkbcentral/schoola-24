@@ -14,42 +14,44 @@ use Livewire\WithPagination;
 class ListStudentForControlPaymentPage extends Component
 {
     use WithPagination;
+
     protected $listeners = [
         "selectedCategoryFee" => 'getSelectedCategoryFee'
     ];
+
     public int $category_fee_filter = 0;
-    public ?CategoryFee $categoryFeeSelected;
+    public ?CategoryFee $categoryFeeSelected = null;
     public int $selectedCategoryFeeId = 0;
     public int $option_filter = 0;
     public int $selectedOptionId = 0;
     public int $class_room_filter = 0;
+    public string $selectedMonth = '';
 
     #[Url(as: 'q')]
-    public $q = '';
+    public string $q = '';
+
     #[Url(as: 'sortBy')]
-    public $sortBy = 'students.name';
+    public string $sortBy = 'students.name';
+
     #[Url(as: 'sortAsc')]
-    public $sortAsc = true;
+    public bool $sortAsc = true;
 
     /**
-     * Trier le manière (ASC/DESC)
-     * @param mixed $value
-     * @return void
+     * Change le tri (ASC/DESC) ou la colonne de tri.
      */
     public function sortData(mixed $value): void
     {
-        if ($value == $this->sortBy) {
+        if ($value === $this->sortBy) {
             $this->sortAsc = !$this->sortAsc;
+        } else {
+            $this->sortBy = $value;
+            $this->sortAsc = true;
         }
-        $this->sortBy = $value;
         $this->resetPage();
     }
 
-
     /**
-     * Recuprer le categorie de frais selectionné
-     * @param int $index
-     * @return void
+     * Récupère la catégorie de frais sélectionnée.
      */
     public function getSelectedCategoryFee(int $index): void
     {
@@ -57,25 +59,48 @@ class ListStudentForControlPaymentPage extends Component
         $this->categoryFeeSelected = CategoryFee::find($index) ?? null;
     }
 
+    /**
+     * Met à jour la classe sélectionnée lors du changement d'option.
+     */
     public function updatedOptionFilter($val): void
     {
-        $this->selectedOptionId = $val;
-        $this->class_room_filter = ClassRoom::find($val)->id;
+        $this->selectedOptionId = (int)$val;
+        $classRoom = ClassRoom::find($this->selectedOptionId);
+        $this->class_room_filter = $classRoom?->id ?? 0;
     }
 
+    /**
+     * Initialisation du composant.
+     */
     public function mount(int $categoryFeeId): void
     {
-        if (!empty($this)) {
-            $this->selectedCategoryFeeId = $categoryFeeId;
-        }
-        $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()->id ?? 0;
-        $this->categoryFeeSelected = FeeDataConfiguration::getFirstCategoryFee();
-        $this->option_filter = SchoolDataFeature::getFirstOption()->id;
-        $this->selectedOptionId = SchoolDataFeature::getFirstOption()->id;
-        $this->class_room_filter = ClassRoom::find($this->selectedOptionId)->id;
+        $firstCategoryFee = FeeDataConfiguration::getFirstCategoryFee();
+        $firstOption = SchoolDataFeature::getFirstOption();
+
+        $this->selectedCategoryFeeId = $categoryFeeId ?: ($firstCategoryFee->id ?? 0);
+        $this->category_fee_filter = $firstCategoryFee->id ?? 0;
+        $this->categoryFeeSelected = $firstCategoryFee;
+
+        $this->option_filter = $firstOption->id ?? 0;
+        $this->selectedOptionId = $firstOption->id ?? 0;
+
+        $classRoom = ClassRoom::find($this->selectedOptionId);
+        $this->class_room_filter = $classRoom?->id ?? 0;
     }
 
-    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+    public function openListStatusDetails($m): void
+    {
+        $this->selectedMonth = $m;
+        $this->dispatch(
+            'statusDetails',
+            $this->selectedMonth,
+            $this->selectedOptionId,
+            $this->class_room_filter,
+            $this->selectedCategoryFeeId
+        );
+    }
+
+    public function render()
     {
         return view('livewire.application.payment.list.list-student-for-control-payment-page', [
             'registrations' => RegistrationFeature::getList(
@@ -90,7 +115,6 @@ class ListStudentForControlPaymentPage extends Component
                 $this->sortAsc,
                 100
             ),
-
         ]);
     }
 }

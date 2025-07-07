@@ -24,7 +24,7 @@
                 @foreach ($singleAppLinks as $index => $singleAppLink)
                     <tr wire:key='{{ $singleAppLink->id }}' class=" ">
                         <td class="text-center ">
-                            <i class="bi bi-link"></i>
+                            {{ $index + 1 }}
                         </td>
                         <td>{{ $singleAppLink->name }}</td>
                         <td>{{ $singleAppLink->icon }}</td>
