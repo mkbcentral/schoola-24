@@ -35,7 +35,7 @@
                 <livewire:application.dashboard.expense.dash-date-other-expense-page />
             </div>
         </div>
-        <livewire:application.dashboard.dash-synthese-page />
+        <livewire:application.dashboard.dash-synthese-all-page />
         <livewire:application.finance.budget.budget-forecast-page />
     @endif
 

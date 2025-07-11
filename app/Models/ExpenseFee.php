@@ -126,16 +126,25 @@ class ExpenseFee extends Model
 
     public static function getExpensesByMonthAndCategory(int $categoryId)
     {
-        return self::join('category_fees', 'expense_fees.category_fee_id', '=', 'category_fees.id')
+        return self::join(
+            'category_fees',
+            'expense_fees.category_fee_id',
+            '=',
+            'category_fees.id'
+        )
             ->select(
                 DB::raw('expense_fees.month as month'),
                 'category_fees.name as category_name',
                 DB::raw('SUM(CASE WHEN expense_fees.currency = "CDF" THEN expense_fees.amount / 2850 ELSE expense_fees.amount END) as total_amount')
             )
-            ->where('category_fees.id', $categoryId)
+            ->where("category_fees.id",  $categoryId)
             ->groupBy(DB::raw('expense_fees.month'), 'category_fees.name')
             ->get();
     }
+
+
+
+
     public static function getTotalExpenses()
     {
         return self::join('category_expenses', 'expense_fees.category_expense_id', 'category_expenses.id')
