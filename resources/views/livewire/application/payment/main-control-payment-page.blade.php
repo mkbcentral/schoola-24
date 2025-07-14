@@ -25,11 +25,9 @@
                         @if ($categoryFeeSelected?->is_paid_in_installment)
                             <livewire:application.payment.list.list-student-for-control-payment-by-tranch-page
                                 :categoryFeeId='$selectedIndex' />
-                            <livewire:application.payment.list.list-payment-status-by-month />
                         @else
                             <livewire:application.payment.list.list-student-for-control-payment-page
                                 :categoryFeeId='$selectedIndex' />
-                            <livewire:application.payment.list.list-payment-status-by-tranch />
                         @endif
 
                     </div>

@@ -59,40 +59,5 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="text-uppercase">SYNTHÈSE FINANCIÈRE SUR LES FRAIS SCOLAIRES</h4>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive mt-4">
-                <table class="table table-responsive table-sm">
-                    <thead>
-                        <tr>
-                            <th>MOIS</th>
-                            <th>SOLDE</th>
-                            <th class="text-end">EMPRUNTS</th>
-                            <th class="text-end">RESTE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($balances as $month => $categories)
-                            @foreach ($categories as $category => $data)
-                                @php
-                                    $totalBalance += $data['balance'];
-                                @endphp
-                                <tr>
-                                    <td class="text-uppercase">
-                                        {{ $month }}
-                                    </td>
-                                    <td class="text-end">{{ number_format($data['balance'], 2) }}</td>
-                                    <td class="text-end">{{ number_format(0, 2) }}</td>
-                                    <td class="text-end">{{ number_format(0, 2) }}</td>
-                                </tr>
-                            @endforeach
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+
 </div>
