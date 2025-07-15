@@ -23,6 +23,7 @@
                             <th>Catégorie</th>
                             <th class="text-end">Recettes</th>
                             <th class="text-end">Dépenses</th>
+                            <th class="text-end">Emprunt</th>
                             <th class="text-end">Solde</th>
                         </tr>
                     </thead>
@@ -41,6 +42,7 @@
                                     <td>{{ $category }}</td>
                                     <td class="text-end">{{ number_format($data['payments'], 2) }}</td>
                                     <td class="text-end">{{ number_format($data['expenses'], 2) }}</td>
+                                    <td class="text-end">{{ number_format($data['other_expenses'], 2) }}</td>
                                     <td class="text-end">{{ number_format($data['balance'], 2) }}</td>
                                 </tr>
                             @endforeach

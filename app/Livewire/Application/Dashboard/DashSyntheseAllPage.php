@@ -88,14 +88,16 @@ class DashSyntheseAllPage extends Component
         }
 
         // Dépenses OtherExpense par mois (global, pas par catégorie)
-        $otherExpensesByMonth = \App\Models\OtherExpense::selectRaw('month, SUM(amount) as total_amount, currency')
-            ->groupBy('month', 'currency')
+        $otherExpensesByMonth = \App\Models\OtherExpense::selectRaw("
+            month,
+            SUM(CASE WHEN currency = 'CDF' THEN amount / 2850 ELSE 0 END) as cdf_total,
+            SUM(CASE WHEN currency = 'USD' THEN amount ELSE 0 END) as usd_total
+            ")
+            ->groupBy('month')
+            ->where('other_source_expense_id', 2)
             ->get()
             ->map(function ($item) {
-                // Si la devise est CDF, on divise le montant par 2850
-                if ($item->currency === 'CDF') {
-                    $item->total_amount = $item->total_amount / 2850;
-                }
+                $item->total_amount = $item->cdf_total + $item->usd_total;
                 return $item;
             })
             ->keyBy(function ($item) {
