@@ -1,26 +1,32 @@
 {
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
-    "file": "assets/bootstrap-icons-BOrJxbIo.woff",
+    "file": "assets/bootstrap-icons-BeopsB42.woff",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
-    "file": "assets/bootstrap-icons-BtvjY1KL.woff2",
+    "file": "assets/bootstrap-icons-mSm7cUeB.woff2",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-Bzj1El3c.js",
+    "file": "assets/app-BYwqzOUv.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-NAZcdSsU.css",
+    "file": "assets/app-DhCU4ICQ.css",
     "src": "resources/sass/app.scss",
-    "isEntry": true
+    "isEntry": true,
+    "names": [
+      "app.css"
+    ]
   },
   "resources/sass/guest.scss": {
-    "file": "assets/guest-Ck9EjjsU.css",
+    "file": "assets/guest-ONkJBjqP.css",
     "src": "resources/sass/guest.scss",
-    "isEntry": true
+    "isEntry": true,
+    "names": [
+      "guest.css"
+    ]
   }
 }
