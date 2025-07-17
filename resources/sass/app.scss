@@ -839,6 +839,12 @@ body {
     border-top: 1px solid var(--card-border);
 }
 
+.table .dropdown-menu {
+    left: auto !important;
+    right: 0 !important;
+    transform: translateX(0) !important;
+}
+
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;
