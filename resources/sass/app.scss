@@ -226,7 +226,7 @@ body {
     vertical-align: middle;
     font-size: 0.92rem;
     border-radius: 0.375rem;
-    overflow: hidden;
+    overflow: visible;
     background-color: var(--card-bg);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
@@ -241,6 +241,12 @@ body {
     padding: 0.85rem 0.75rem;
     letter-spacing: 0.7px;
     vertical-align: middle;
+}
+
+.table tbody tr:only-child .dropdown-menu {
+    left: auto !important;
+    right: 0 !important;
+    transform: translateX(0) !important;
 }
 
 [data-bs-theme="dark"] .table thead th {
@@ -350,7 +356,7 @@ body {
 
 .table-responsive {
     border-radius: 0.375rem;
-    overflow: auto;
+    overflow: visible;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
     background: none;
 }
@@ -800,6 +806,12 @@ body {
     border: 1px solid var(--card-border);
     border-radius: 0.375rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    position: absolute;
+    inset: auto !important;
+    transform: translateY(0) !important;
+    z-index: 1060;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .table .dropdown-item {
@@ -819,7 +831,7 @@ body {
 }
 
 .table .dropdown-item:hover {
-    background-color: var(--sidebar-hover-bg);
+    background-color: #f2f2f2;
 }
 
 .table .dropdown-divider {

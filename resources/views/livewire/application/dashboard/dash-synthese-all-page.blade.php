@@ -2,6 +2,7 @@
     @php
         $totalPayments = 0;
         $totalExpenses = 0;
+        $totalOtherExpenses = 0;
         $totalBalance = 0;
     @endphp
     <div class="card">
@@ -33,6 +34,7 @@
                                 @php
                                     $totalPayments += $data['payments'];
                                     $totalExpenses += $data['expenses'];
+                                    $totalOtherExpenses += $data['other_expenses'];
                                     $totalBalance += $data['balance'];
                                 @endphp
                                 <tr>
@@ -53,6 +55,7 @@
                             <th colspan="2" class="text-end">Total Général</th>
                             <th class="text-end">{{ number_format($totalPayments, 2) }}</th>
                             <th class="text-end">{{ number_format($totalExpenses, 2) }}</th>
+                            <th class="text-end">{{ number_format($totalOtherExpenses, 2) }}</th>
                             <th class="text-end">{{ number_format($totalBalance, 2) }}</th>
                         </tr>
                     </tfoot>
@@ -60,6 +63,4 @@
             </div>
         </div>
     </div>
-
-
 </div>

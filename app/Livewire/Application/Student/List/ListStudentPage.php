@@ -19,7 +19,7 @@ class ListStudentPage extends Component
         'refreshListStudent' => '$refresh',
         'deletedStudentListener' => 'delete',
     ];
-    public int $per_page = 10;
+    public int $per_page = 1;
     public int  $option_filter = 0;
     public int  $class_room_filter = 0;
     public int $selectedOptionId = 0;
