@@ -5,6 +5,7 @@ namespace App\Livewire\Application\Fee\Scolar\Form;
 use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\ScolarFeeForm;
 use App\Models\CategoryFee;
+use App\Models\ClassRoom;
 use App\Models\ScolarFee;
 use Exception;
 use Livewire\Component;
@@ -22,6 +23,14 @@ class FormScolarFeePage extends Component
     public int $option_filter = 0;
     public int $selectedOption = 0;
     public ScolarFeeForm $form;
+    public bool $isAllClasse = false;
+
+    //updated isAllClasse
+    public function updatedIsAllClasse($val)
+    {
+        $this->isAllClasse = $val;
+    }
+
     public function resetFormData()
     {
         $this->scolarFeeSelected = null;
@@ -57,11 +66,26 @@ class FormScolarFeePage extends Component
 
     public function save()
     {
-        $input = $this->validate();
-        $input['category_fee_id'] = $this->categoryFeeSelected->id;
-        $this->form->create($input);
-        $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
+
+
         try {
+            if ($this->isAllClasse == true) {
+                $classRooms = ClassRoom::where('option_id', $this->selectedOption)->get();
+                foreach ($classRooms as $classRoom) {
+                    ScolarFee::create([
+                        'name' => $this->form->name,
+                        'amount' => $this->form->amount,
+                        'category_fee_id' => $this->categoryFeeSelected->id,
+                        'class_room_id' => $classRoom->id
+                    ]);
+                }
+                $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
+            } else {
+                $inputs = $this->validate();
+                $inputs['category_fee_id'] = $this->categoryFeeSelected->id;
+                $this->form->create($inputs);
+                $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
+            }
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }

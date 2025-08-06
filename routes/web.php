@@ -15,6 +15,7 @@ use App\Livewire\Application\Admin\UserProfilePage;
 use App\Livewire\Application\Config\List\ListClassRoomPage;
 use App\Livewire\Application\Config\List\ListOptionPage;
 use App\Livewire\Application\Config\List\ListSectionPage;
+use App\Livewire\Application\Config\List\SchoolYearList;
 use App\Livewire\Application\Dashboard\MainDashobardPage;
 use App\Livewire\Application\Fee\Registration\List\ListCategoryRegistrationFeePage;
 use App\Livewire\Application\Fee\Registration\List\ListRegistrationFeePage;
@@ -58,7 +59,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', MainDashobardPage::class)->name('dashboard.main')->lazy();
         //Routes load on registration group
         Route::prefix('registration')->group(function () {
-            Route::get('/responsible-student', MainRegistrationPage::class)->name('responsible.main')->lazy();
+            Route::get('/new', MainRegistrationPage::class)->name('responsible.main')->lazy();
+            Route::get('/day', ListRegistrationByDatePage::class)->name('registration.day')->lazy();
             Route::get('/students', ListStudentPage::class)->name('student.list')->lazy();
         });
         //Routes work on confiiguration group
@@ -66,6 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('section', ListSectionPage::class)->name('school.section')->lazy();
             Route::get('option', ListOptionPage::class)->name('school.option')->lazy();
             Route::get('class-room', ListClassRoomPage::class)->name('school.class-room')->lazy();
+            Route::get('school-year', SchoolYearList::class)->name('school.year')->lazy();
         });
         //Routes work on sttings school fees
         Route::prefix('fee-setting')->group(function () {
@@ -158,6 +161,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('student-payemnts/{registration}', 'printStudentPayments')->name('print.student.payemnts');
             Route::get('student-payemnt-by-classroom/{classRoom}', 'printStudentPaymentsByClassRoom')
                 ->name('print.student.payemnts.by.classroom');
+            //print all student list
+            Route::get('all-student-list/{optionId}/{classRoomId}', 'printAllStudentList')
+                ->name('print.all.student.list');
         });
         /**
          * Route d'impression de paiemnts

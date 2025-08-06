@@ -50,4 +50,14 @@ class Student extends Model
     {
         return $this->age <= 1 ? $this->age . ' An' : $this->age . ' Ans';
     }
+
+    public function getLastClassRoomName()
+    {
+        $lastSchoolYear = SchoolYear::where('is_last_year', true)->first();
+        $registration = Registration::query()
+            ->where('student_id', $this->id)
+            ->where('school_year_id', $lastSchoolYear->id)
+            ->first();
+        return $registration ? $registration->classRoom->getOriginalClassRoomName() : '';
+    }
 }

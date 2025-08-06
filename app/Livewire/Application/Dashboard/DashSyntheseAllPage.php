@@ -8,6 +8,7 @@ use App\Models\CategoryFee;
 use App\Models\ExpenseFee;
 use App\Models\Payment;
 use App\Models\School;
+use App\Models\SchoolYear;
 use Auth;
 use Livewire\Component;
 
@@ -95,6 +96,7 @@ class DashSyntheseAllPage extends Component
             ")
             ->groupBy('month')
             ->where('other_source_expense_id', 2)
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->get()
             ->map(function ($item) {
                 $item->total_amount = $item->cdf_total + $item->usd_total;

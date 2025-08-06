@@ -18,7 +18,6 @@ class StudentInfoCardPage extends Component
                 ->groupBy('is_old')
                 ->get(),
             'genders' => Registration::countByGender()
-
         ]);
     }
 }

@@ -35,7 +35,7 @@ class MainScolarFeePage extends Component
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.fee.scolar.main-scolar-fee-page', [
-            'lisCategoryFee' => CategoryFee::query()
+            'listCategoryFee' => CategoryFee::query()
                 ->where('school_id', School::DEFAULT_SCHOOL_ID())
                 ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
                 ->get(),

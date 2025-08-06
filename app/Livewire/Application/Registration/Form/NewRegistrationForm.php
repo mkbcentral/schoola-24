@@ -7,29 +7,30 @@ use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\RegistrationForm;
 use App\Models\ResponsibleStudent;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class NewRegistrationForm extends Component
 {
+
+    public $responsible_student_id;
     public ?ResponsibleStudent $responsibleStudent = null;
     public RegistrationForm $form;
     public $selectedOption = 0;
     public bool $isOldSelected = false;
     public string $gender = '';
-    protected $listeners = [
-        "responsibleStudentDataOnReg" => "getResponsibleStudent",
-    ];
+    public   $responsibleStudentList = [];
+
     public function updatedFormOptionId($val)
     {
         $this->selectedOption = $val;
     }
-    public function updatedFormIsOld($val)
+    public function updatedResponsibleStudentId($value)
     {
-        $this->isOldSelected = $val;
-    }
-    public function getResponsibleStudent(?ResponsibleStudent $responsibleStudent)
-    {
-        $this->responsibleStudent = $responsibleStudent;
+        $this->responsibleStudent = ResponsibleStudent::find($value);
+        if ($this->responsibleStudent) {
+            $this->responsible_student_id = $this->responsibleStudent->id;
+        }
     }
     public function save()
     {
@@ -42,6 +43,7 @@ class NewRegistrationForm extends Component
             $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
             $this->dispatch('close-form-student');
             OtherPaymentFeature::createPaymentForRegistration($registration);
+            $this->reset(['form', 'responsible_student_id', 'responsibleStudent', 'selectedOption', 'isOldSelected', 'gender']);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
@@ -54,10 +56,12 @@ class NewRegistrationForm extends Component
     public function mount()
     {
         $this->form->created_at = date('Y-m-d');
+        $this->responsibleStudentList = ResponsibleStudent::orderBy('name', 'asc')->get();
     }
 
     public function render()
     {
+
         return view('livewire.application.registration.form.new-registration-form');
     }
 }

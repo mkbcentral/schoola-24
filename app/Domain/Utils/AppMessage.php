@@ -10,7 +10,7 @@ class AppMessage
     const DATA_UPDATED_SUCCESS = "Donnée bien mises à jour";
     const DATA_DELETED_SUCCESS = "Donnée bien rétirée";
     const SMS_SENT = "Sms bien envoyé";
-    const EXECPTIONçERROR = "Le serveur a rencontré un problème";
+    const EXECPTION_ERROR = "Le serveur a rencontré un problème";
 
     const ACTION_FAILLED = "Echec de l'opération !";
     const ACTION_SUCCESS = "Action bien réalisé!";

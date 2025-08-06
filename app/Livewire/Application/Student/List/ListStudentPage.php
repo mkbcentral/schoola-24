@@ -23,6 +23,7 @@ class ListStudentPage extends Component
     public int  $option_filter = 0;
     public int  $class_room_filter = 0;
     public int $selectedOptionId = 0;
+    public ?bool $isOld = null;
     #[Url(as: 'q')]
     public $q = '';
     #[Url(as: 'sortBy')]
@@ -182,6 +183,16 @@ class ListStudentPage extends Component
         }
     }
 
+    public function mekeIsOld()
+    {
+        $this->isOld = true;
+    }
+    public function mekeIsNew()
+    {
+        $this->isOld = false;
+    }
+
+
     /**
      * Fonction magique (computed) qui permet d'avoir les regisations dans tout les composant
      * @return mixed
@@ -198,7 +209,10 @@ class ListStudentPage extends Component
             $this->q,
             $this->sortBy,
             $this->sortAsc,
-            $this->per_page
+            $this->isOld,
+            $this->per_page,
+
+
         );
     }
 

@@ -9,7 +9,7 @@
             <form wire:submit='update'>
                 <div class="row">
                     <div class="col-md-6">
-                        <x-form.label value="{{ __('Nom responsable') }}" />
+                        <x-form.label value="{{ __('Nom de l\'élève') }}" />
                         <x-form.input type='text' wire:model.blur='form.name' :error="'form.name'" />
                         <x-errors.validation-error value='form.name' />
                     </div>

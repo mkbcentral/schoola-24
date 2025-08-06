@@ -29,6 +29,30 @@ body {
     flex-direction: column;
 }
 
+.main-bg {
+    background-color: var(--sidebar-bg);
+    color: #fff;
+}
+
+.btn-main {
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background-color: var(--sidebar-bg);
+    color: #fff;
+}
+
+.btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+    background-color: var(--sidebar-hover-bg);
+    color: #fff;
+}
+
 #sidebar.active {
     margin-left: -250px;
 }
@@ -232,7 +256,6 @@ body {
 }
 
 .table thead th {
-    background-color: var(--sidebar-bg);
     border-bottom: 2px solid var(--card-border);
     color: #fff;
     font-weight: 700;
@@ -241,6 +264,7 @@ body {
     padding: 0.85rem 0.75rem;
     letter-spacing: 0.7px;
     vertical-align: middle;
+    background-color: rgb(100, 100, 100);
 }
 
 .table tbody tr:only-child .dropdown-menu {
@@ -259,19 +283,15 @@ body {
     vertical-align: middle;
     border-bottom: 1px solid var(--card-border);
     background-color: transparent;
-    transition: background 0.2s;
+
 }
 
 .table tbody tr:hover {
     background-color: #f2f6fc;
-    transition: background 0.2s;
     cursor: pointer;
 }
 
-.table tbody tr:hover td:first-child {
-    padding-left: 1.1rem;
-    transition: padding 0.2s;
-}
+
 
 .table .avatar-circle {
     width: 28px;
@@ -387,13 +407,12 @@ body {
 }
 
 .modal-header {
-    background-color: var(--sidebar-bg);
-    color: #fff;
     border-bottom: 1px solid var(--card-border);
 }
 
 .modal-header .btn-close {
-    filter: brightness(0) invert(1);
+    filter: none;
+    color: #dc3545;
 }
 
 .form-label {

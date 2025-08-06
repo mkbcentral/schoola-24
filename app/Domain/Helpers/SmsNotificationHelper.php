@@ -18,9 +18,9 @@ class SmsNotificationHelper
             env('SMS_ORANGE_CLIENT_SECRET')
         );
         $sms = new SMS($client);
-        $sms->message($message)
-            ->from('+243898337969')
-            ->to($to)
+        $sms->message($message)  //Message à envoyé
+            ->from('+243898337969') //Le numéro d'envoir (Ex. ton numero orange)
+            ->to($to) //Le numero du destinataire
             ->send();
     }
 

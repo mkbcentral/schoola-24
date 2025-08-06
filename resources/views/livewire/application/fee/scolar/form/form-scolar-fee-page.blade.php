@@ -40,6 +40,12 @@
                     <x-errors.validation-error value='form.class_room_id' />
                 </div>
             </div>
+            <div class="form-check mt-2">
+                <label class="form-check-label">
+                    <input wire:model.live='isAllClasse' type="checkbox" class="form-check-input" id="">
+                    Appliquer à toutes les classes
+                </label>
+            </div>
             <div class="d-flex justify-content-between mt-4">
                 @if ($scolarFeeSelected != null)
                     <x-form.app-button wire:click='cancelUpdate' type='button' textButton="Annuler" icon="bi bi-x"

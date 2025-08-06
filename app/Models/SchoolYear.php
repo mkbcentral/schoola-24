@@ -14,7 +14,8 @@ class SchoolYear extends Model
     protected $fillable = [
         'name',
         'is_active',
-        'school_id'
+        'school_id',
+        'user_id'
     ];
 
     //cast is_active to boolean

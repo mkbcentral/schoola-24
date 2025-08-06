@@ -113,6 +113,7 @@ class ListStudentForControlPaymentPage extends Component
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,
+                null,
                 100
             ),
         ]);

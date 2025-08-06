@@ -10,6 +10,7 @@
         ->join('options', 'registration_fees.option_id', '=', 'options.id')
         ->join('sections', 'options.section_id', '=', 'sections.id')
         ->where('sections.school_id', App\Models\School::DEFAULT_SCHOOL_ID())
+        ->where('school_year_id', App\Models\SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
         ->where('options.id', $optionId)
         ->where('category_registration_fees.is_old', $isOld == '' ? 0 : $isOld)
         ->select('registration_fees.*')

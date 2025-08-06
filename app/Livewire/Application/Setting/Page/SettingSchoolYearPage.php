@@ -5,6 +5,7 @@ namespace App\Livewire\Application\Setting\Page;
 use App\Domain\Utils\AppMessage;
 use App\Models\School;
 use App\Models\SchoolYear;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SettingSchoolYearPage extends Component
@@ -24,6 +25,7 @@ class SettingSchoolYearPage extends Component
         $schoolYear = SchoolYear::query()->where('id', $val)->first();
         if ($schoolYear) {
             $schoolYear->is_active = true;
+            $schoolYear->user_id = Auth::id();
             $schoolYear->save();
         }
         $this->dispatch('refreshSchoolYearLabel');
@@ -32,7 +34,8 @@ class SettingSchoolYearPage extends Component
     public function render()
     {
         return view('livewire.application.setting.page.setting-school-year-page', [
-            'schoolYears' => SchoolYear::query()->orderBy('id', 'desc')->get()
+            'schoolYears' => SchoolYear::latest()
+                ->get()
         ]);
     }
 }

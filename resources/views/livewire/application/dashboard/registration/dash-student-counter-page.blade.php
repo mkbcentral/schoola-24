@@ -71,7 +71,9 @@
                                     @foreach ($selectedOption?->classRooms as $classRoom)
                                         <tr>
                                             <td>{{ $classRoom->getOriginalClassRoomName() }}</td>
-                                            <td class="text-center">{{ $classRoom->registrations->count() }}</td>
+                                            <td class="text-center">
+                                                {{ $classRoom->registrations()->where('school_year_id', App\Models\SchoolYear::DEFAULT_SCHOOL_YEAR_ID())->count() }}
+                                            </td>
                                             <td class="text-center">
                                                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
                                                     class=" btn-sm">

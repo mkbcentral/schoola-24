@@ -48,7 +48,8 @@ class CheckRedirectUserRoute
                 'main.schools',
                 'navigation.single',
                 'navigation.sub',
-                'navigation.multi'
+                'navigation.multi',
+                'registration.day'
             ];
         } else {
             foreach (auth()->user()->singleAppLinks as $singleAppLink) {

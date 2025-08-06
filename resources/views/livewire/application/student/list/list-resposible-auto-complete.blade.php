@@ -1,6 +1,4 @@
-    @php
-        $responsibleStudents = \App\Models\ResponsibleStudent::orderBy('name', 'asc')->get();
-    @endphp
+<div>
     @props(['error' => '', 'model' => null])
     <div x-data="{
         open: false,
@@ -56,3 +54,5 @@
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
+
+</div>

@@ -66,6 +66,7 @@ interface  IRegistration
      * @param mixed $q
      * @param mixed $sortBy
      * @param mixed $sortAsc
+     * @param mixed $isOld
      * @param mixed $per_page
      * @return mixed
      */
@@ -79,6 +80,7 @@ interface  IRegistration
         ?string $q,
         ?string $sortBy,
         ?bool   $sortAsc,
+        ?bool   $isOld,
         ?int $per_page
     ): mixed;
 

@@ -50,8 +50,8 @@ class ListStudentForPaymentPage extends Component
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,
+                null,
                 $this->per_page
-
             ),
         ]);
     }

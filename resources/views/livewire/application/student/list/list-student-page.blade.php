@@ -5,21 +5,19 @@
     </x-navigation.bread-crumb>
     <div class="">
         <livewire:application.dashboard.registration.student-info-card-page />
-        <div class="d-flex justify-content-between mt-3">
+        <div class="d-flex justify-content-between mt-2">
             <div class="d-flex align-items-center">
                 <x-form.search-input wire:model.live='q' />
-                <x-form.app-button type='button' wire:click='refreshData' textButton='' icon="bi bi-arrow-clockwise"
-                    class="btn-primary ms-1" />
-                @if ($selectedRegistrations != [])
-                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-secondary ms-2">
+                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="ms-2">
+                    <x-others.dropdown-link wire:click='refreshData' iconLink='bi bi-arrow-repeat'
+                        labelText='Actualiser' href="#" />
+                    @if ($selectedRegistrations != [])
                         <x-others.dropdown-link wire:click='generateQrcodeItems'
                             wire:confirm="Etês-vous sûre de réaliser l'opération" iconLink='bi bi-qr-code-scan'
                             labelText='Générer Qrcode' href="#" />
-                    </x-others.dropdown>
-                @endif
-            </div>
-            <div>
-                <h4> Nbre Total: {{ $counter <= 1 ? $counter . 'Elève' : $counter . ' Elèves' }}</h4>
+                    @endif
+                </x-others.dropdown>
+
             </div>
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
@@ -31,6 +29,11 @@
                     <x-widget.data.list-class-room-by-option optionId='{{ $selectedOptionId }}'
                         wire:model.live='class_room_filter' />
                 </div>
+                <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" class=" ms-2">
+                    <x-others.dropdown-link iconLink='bi bi-file-earmark-check-fill' target='_blank'
+                        labelText='Liste  des élèves'
+                        href="{{ route('print.all.student.list', ['optionId' => $selectedOptionId, 'classRoomId' => $class_room_filter]) }}" />
+                </x-others.dropdown>
             </div>
         </div>
         <div class="d-flex justify-content-center pb-2">
@@ -147,6 +150,7 @@
                     @endif
                 </tbody>
             </table>
+
         </div>
         @if ($registrations->count() > 9)
             <div class="d-flex justify-content-between align-items-center mt-2">

@@ -13,10 +13,10 @@
             </div>
             <div class="col-md-7">
                 <livewire:application.dashboard.expense.dash-date-cost-expense-page />
-                <livewire:application.dashboard.expense.dash-date-other-expense-page />
-                <livewire:application.dashboard.registration.dash-student-counter-page />
             </div>
         </div>
+        <livewire:application.dashboard.expense.dash-date-other-expense-page />
+        <livewire:application.dashboard.registration.dash-student-counter-page />
     @endif
 
     @if (Auth::user()->role->name == 'SCHOOL_SECRETARY' || Auth::user()->role->name == 'SCHOOL_GUARD')

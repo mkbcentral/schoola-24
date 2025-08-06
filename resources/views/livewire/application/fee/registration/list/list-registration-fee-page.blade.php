@@ -9,7 +9,7 @@
                 <div class="col-md-8">
                     <div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="text-uppercase"><i class="fa fa-list" aria-hidden="true"></i>
+                            <h5 class="text-uppercase"><i class="bi bi-list" aria-hidden="true"></i>
                                 Liste des frais d'inscription
                             </h5>
                         </div>
@@ -25,7 +25,7 @@
                                         :error="'option_filter'" />
                                 </div>
                             </div>
-                            <table class="table table-bordered table-hover table-sm">
+                            <table class="table table-bordered  table-hover table-sm mt-2">
                                 <thead class="bg-app">
                                     <tr class="cursor-hand">
                                         <th class="text-center">#</th>

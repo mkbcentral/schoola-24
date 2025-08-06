@@ -58,7 +58,8 @@ class FormPaymentPage extends Component
     {
         $this->validate();
         try {
-            $this->form->create($this->registration->id,$this->scolarFee);
+
+            $this->form->create($this->registration->id, $this->scolarFee);
             $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
             $this->dispatch('refreshPaymentList');
             $this->initFormFields();
@@ -78,5 +79,4 @@ class FormPaymentPage extends Component
     {
         return view('livewire.application.payment.form.form-payment-page');
     }
-
 }

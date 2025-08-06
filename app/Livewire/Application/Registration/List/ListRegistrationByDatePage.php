@@ -15,7 +15,7 @@ class ListRegistrationByDatePage extends Component
     protected $listeners = [
         'deletedStudentListner' => 'delete',
     ];
-    public bool $isOld = false;
+    public ?bool $isOld = null;
     public string $dateFilter = '';
 
     public int $per_page = 20;

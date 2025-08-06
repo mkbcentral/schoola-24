@@ -134,9 +134,21 @@ class RegistrationFeature implements IRegistration
         string|null $q,
         string|null $sortBy,
         bool|null $sortAsc,
+        bool|null $isOld,
         int|null $per_page
     ): array|\Illuminate\Pagination\LengthAwarePaginator {
-        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, null, null, null, $q);
+        $filters = self::getFilters(
+            $sectionId,
+            $date,
+            $month,
+            $optionId,
+            $classRoomId,
+            $responsibleId,
+            $isOld,
+            null,
+            null,
+            $q
+        );
         return Registration::query()
             ->filter($filters)
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')

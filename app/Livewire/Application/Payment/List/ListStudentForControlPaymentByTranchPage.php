@@ -97,8 +97,8 @@ class ListStudentForControlPaymentByTranchPage extends Component
                 $this->q,
                 $this->sortBy,
                 $this->sortAsc,
+                null,
                 100
-
             ),
             'scolarFees' => FeeDataConfiguration::getListScalarFee(
                 $this->selectedCategoryFeeId,
