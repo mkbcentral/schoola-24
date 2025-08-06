@@ -45,7 +45,7 @@
                 </div>
                 <div class="d-flex justify-content-end align-items-center mt-3">
                     <x-form.app-button type='submit' class="btn-main mt-3" icon='bi bi-check' textButton='Se Connecter'
-                        tooltipText='Se Connecter' />
+                        tooltipText='Sauvegarder' />
                 </div>
             </div>
         @endif
