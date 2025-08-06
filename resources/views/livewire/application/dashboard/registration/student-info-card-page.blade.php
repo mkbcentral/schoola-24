@@ -6,7 +6,7 @@
         </div>
         @foreach ($registrations as $registration)
             <div class="col-md-3">
-                <x-widget.card-info label="{{ $registration->is_old ? 'Nouveau' : 'Ancien' }}" icon="bi-person-workspace"
+                <x-widget.card-info label="{{ $registration->is_old ? 'Ancien' : 'Nouveau' }}" icon="bi-person-workspace"
                     :value="$registration->total" link="student.list" linkLabel="Voir détail"
                     iconColor="{{ $registration->is_old ? 'success' : 'danger' }}" />
             </div>
