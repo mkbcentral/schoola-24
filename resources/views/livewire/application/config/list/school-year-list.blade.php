@@ -1,5 +1,5 @@
 <div>
-    <x-navigation.bread-crumb icon='bi bi-houses-fill' label="Classes">
+    <x-navigation.bread-crumb icon='bi bi-houses-fill' label="Année scolaire">
         <x-navigation.bread-crumb-item label='Année scolaire' />
         <x-navigation.bread-crumb-item label='Dasnboard' isLinked=true link="dashboard.main" />
     </x-navigation.bread-crumb>
