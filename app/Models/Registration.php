@@ -233,7 +233,11 @@ class Registration extends Model
 
     public function getStatusPayment(int $registrationId, $categoryFeeId, string $month): bool
     {
-        $payment = PaymentFeature::getSinglePaymentForStudentWithMonth($registrationId, $categoryFeeId, $month);
+        $payment = PaymentFeature::getSinglePaymentForStudentWithMonth(
+            $registrationId,
+            $categoryFeeId,
+            $month
+        );
         return (bool) $payment;
     }
 

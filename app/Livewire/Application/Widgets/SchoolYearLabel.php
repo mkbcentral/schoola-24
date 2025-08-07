@@ -14,8 +14,18 @@ class SchoolYearLabel extends Component
 
     public function render()
     {
+        $workOnYear = Auth::user()->work_on_year;
+        $schoolYear = SchoolYear::query()
+            ->where('school_id', School::DEFAULT_SCHOOL_ID())
+            ->when(
+                $workOnYear,
+                fn($query, $workOnYear) => $query->where('id', $workOnYear),
+                fn($query) => $query->where('is_active', true)
+            )
+            ->first();
+
         return view('livewire.application.widgets.school-year-label', [
-            'schoolYears' => SchoolYear::orderBy('is_active', 'desc')->get(),
+            'schoolYear' => $schoolYear,
         ]);
     }
 }

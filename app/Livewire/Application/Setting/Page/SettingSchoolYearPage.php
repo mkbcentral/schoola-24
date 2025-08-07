@@ -27,6 +27,10 @@ class SettingSchoolYearPage extends Component
             $schoolYear->is_active = true;
             $schoolYear->user_id = Auth::id();
             $schoolYear->save();
+            $user = Auth::user();
+            $user->update([
+                'work_on_year' => $schoolYear->id
+            ]);
         }
         $this->dispatch('refreshSchoolYearLabel');
         $this->dispatch('updated', ['message', AppMessage::DATA_UPDATED_SUCCESS]);

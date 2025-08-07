@@ -31,7 +31,8 @@ class User extends Authenticatable
         'password',
         'is_active',
         'is_on_line',
-        'school_id'
+        'school_id',
+        'work_on_year'
     ];
 
     /**

@@ -39,6 +39,10 @@
                                             {{ $index + 1 }}
                                         </td>
                                         <td>{{ $registration->student->name }}/{{ $registration?->classRoom?->getOriginalClassRoomName() }}
+                                            <span
+                                                class="badge text-uppercase bg-{{ $registration->is_old ? 'warning' : 'info' }}">
+                                                {{ $registration->is_old ? 'Ancien' : 'Nouveau' }}
+                                            </span>
                                         </td>
                                         <td class="text-center">{{ $registration->student->gender }}</td>
                                         <td class="text-center">

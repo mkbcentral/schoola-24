@@ -1,4 +1,11 @@
 <div>
+    @php
+        $months = collect(App\Domain\Helpers\DateFormatHelper::getSchoolFrMonths())
+            ->reject(fn($month) => in_array(strtoupper($month['name']), ['JUILLET', 'AOUT']))
+            ->values()
+            ->all();
+        $paymentStatus = false;
+    @endphp
     <x-modal.build-modal-fixed idModal='form-payment' size='lg' headerLabel="PAYEMENT FRAIS"
         headerLabelIcon='bi bi-arrow-left-right'>
         <div class="d-flex justify-content-center pb-2">
