@@ -231,11 +231,12 @@ class Registration extends Model
             ->toArray();
     }
 
-    public function getStatusPayment(int $registrationId, $categoryFeeId, string $month): bool
+    public function getStatusPayment(int $registrationId, $categoryFeeId, $schoolYearId, string $month): bool
     {
         $payment = PaymentFeature::getSinglePaymentForStudentWithMonth(
             $registrationId,
             $categoryFeeId,
+            $schoolYearId,
             $month
         );
         return (bool) $payment;

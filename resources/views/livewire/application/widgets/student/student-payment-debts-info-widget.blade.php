@@ -40,6 +40,7 @@
                                     $paymentStatus = $registration->getStatusPayment(
                                         $registration->id,
                                         $selectedCategoryFee->id,
+                                        App\Models\SchoolYear::DEFAULT_SCHOOL_YEAR_ID(),
                                         $month['number'],
                                     );
                                 @endphp

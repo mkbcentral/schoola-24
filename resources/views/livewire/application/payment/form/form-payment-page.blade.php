@@ -57,6 +57,30 @@
                 </div>
                 <div class="col-md-8">
                     <livewire:application.payment.list.list-payment-by-student :registration="$registration" />
+                    <div wire:loading.class='d-none'>
+                        @if ($lastRegistration)
+                            <div class="card mt-2">
+                                <div class="card-body">
+                                    <h5>Liste dettes du miverval sur de l'année passée</h5>
+                                    <ul>
+                                        @foreach ($months as $month)
+                                            @php
+                                                $paymentStatus = $lastRegistration->getStatusPayment(
+                                                    $lastRegistration->id,
+                                                    1,
+                                                    1,
+                                                    $month['number'],
+                                                );
+                                            @endphp
+                                            @if ($paymentStatus == false)
+                                                <li>{{ $month['name'] }}</li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         @endif

@@ -92,6 +92,10 @@ class Payment extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $this->reusableScopeData($query)
+            ->where(
+                'registrations.school_year_id',
+                SchoolYear::DEFAULT_SCHOOL_YEAR_ID()
+            )
             ->when(
                 $filters['date'],
                 function ($query, $f) {
@@ -194,7 +198,7 @@ class Payment extends Model
             ->join('scolar_fees', 'payments.scolar_fee_id', 'scolar_fees.id')
             ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
             ->where('responsible_students.school_id', School::DEFAULT_SCHOOL_ID())
-            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID());
+        ;
     }
 
     public static function getTotalAmountByCategoryForMonthOrDate(string|null $month, string|null $date)

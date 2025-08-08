@@ -116,6 +116,7 @@ class PaymentFeature implements IPayment
     public static function getSinglePaymentForStudentWithMonth(
         int $registrationId,
         int $categoryFeeId,
+        int $schoolYearId,
         string $month
     ): ?Payment {
         return Payment::query()
@@ -124,6 +125,10 @@ class PaymentFeature implements IPayment
             ->where('category_fees.id', $categoryFeeId)
             ->where('registrations.id', $registrationId)
             ->where('payments.is_paid', true)
+            ->where(
+                'registrations.school_year_id',
+                $schoolYearId
+            )
             ->with([
                 'rate',
                 'scolarFee',
