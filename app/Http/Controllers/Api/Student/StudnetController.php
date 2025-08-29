@@ -25,6 +25,7 @@ class StudnetController extends Controller
                 $search,
                 'students.name',
                 true,
+                null,
                 1000
             );
             return response()->json([

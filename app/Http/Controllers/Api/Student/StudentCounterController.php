@@ -122,6 +122,7 @@ class StudentCounterController extends Controller
                 null,
                 'students.name',
                 true,
+                null,
                 1000
             );
             return response()->json([
