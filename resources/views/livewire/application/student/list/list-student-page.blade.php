@@ -67,6 +67,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @if ($registrations->count() == 0)
                         <tr>
                             <td colspan="9">
@@ -109,7 +110,7 @@
                                         @can('manage-student')
                                             <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
                                                 data-bs-target="#form-edit-student" labelText='Editer' href="#"
-                                                wire:click='edit({{ $registration->student }})' />
+                                                wire:click='edit({{ $registration->student }},{{ $registration }})' />
                                             <x-others.dropdown-link iconLink='bi bi-arrow-left-right'
                                                 labelText='Basculuer la classe' data-bs-toggle="modal"
                                                 data-bs-target="#form-change-class-student"

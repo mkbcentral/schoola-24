@@ -10,49 +10,20 @@ use Livewire\WithPagination;
 
 class ListStudentForPaymentPage extends Component
 {
-    use WithPagination;
-    public int $per_page = 100;
-    #[Url(as: 'q')]
-    public $q = '';
-    #[Url(as: 'sortBy')]
-    public $sortBy = 'students.name';
-    #[Url(as: 'sortAsc')]
-    public $sortAsc = true;
-
-    public function sortData($value): void
+    public $registration_id = 0;
+    public function updatedRegistrationId($val)
     {
-        if ($value == $this->sortBy) {
-            $this->sortAsc = !$this->sortAsc;
+        $registration = Registration::find($val);
+        if ($registration) {
+            //open modal
+            $this->dispatch('open-form-payment');
+            $this->dispatch('registrationData', $registration);
+            $this->dispatch('registrationPyaments', $registration);
         }
-        $this->sortBy = $value;
-    }
-
-    public function openPaymentForm(?Registration $registration)
-    {
-        $this->dispatch('registrationData', $registration);
-        $this->dispatch('registrationPyaments', $registration);
-    }
-
-    public function refreshData(): void
-    {
-        $this->reset();
     }
     public function render()
     {
-        return view('livewire.application.payment.list.list-student-for-payment-page', [
-            'registrations' => RegistrationFeature::getList(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                $this->q,
-                $this->sortBy,
-                $this->sortAsc,
-                null,
-                $this->per_page
-            ),
-        ]);
+
+        return view('livewire.application.payment.list.list-student-for-payment-page');
     }
 }

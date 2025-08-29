@@ -13,10 +13,11 @@
                 <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='category_fee_filter'
                     :error="'category_fee_filter'" />
             </div>
+            <button class="btn btn-primary mt-2" onclick="printTable()">Imprimer le tableau</button>
         </div>
         <div class="card-body">
             <canvas id="expensesChart"></canvas>
-            <div class="table-responsive mt-4">
+            <div class="table-responsive mt-4" id="printable-table">
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -60,7 +61,12 @@
                         </tr>
                     </tfoot>
                 </table>
+
             </div>
         </div>
+
     </div>
+    @push('js')
+        <script></script>
+    @endpush
 </div>

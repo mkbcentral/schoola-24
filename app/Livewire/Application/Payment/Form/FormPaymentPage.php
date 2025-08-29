@@ -56,11 +56,9 @@ class FormPaymentPage extends Component
         $this->registration = $registration;
         $this->selectedIdClassRoom = $registration->classRoom->id;
         $this->initFormFields();
-        //$lastSChoolyear = SchoolYear::query()->where('is_last_year', true)->first();
         $this->lastRegistration = Registration::query()
             ->where('school_year_id', 1)
             ->where('student_id', $registration->student_id)->first();
-        ///dd($this->lastRegistration);
     }
     public function save(): void
     {

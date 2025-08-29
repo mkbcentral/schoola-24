@@ -72,32 +72,35 @@
                     </tr>
                 @else
                     <tbody>
-                        @foreach ($paymentsRegularizations as $index => $paymentsRegularization)
-                            <tr wire:key='{{ $paymentsRegularization->id }}' class=" ">
+                        @foreach ($paymentsRegularizations as $index => $paymentRegularization)
+                            <tr wire:key='{{ $paymentRegularization->id }}' class=" ">
                                 <td class="text-center">
                                     {{ $index + 1 }}
                                 </td>
-                                <td>{{ $paymentsRegularization->created_at->format('d/m/Y') }}</td>
-                                <td>{{ $paymentsRegularization->name }}/{{ $paymentsRegularization->classRoom->getOriginalClassRoomName() }}
+                                <td>{{ $paymentRegularization->created_at->format('d/m/Y') }}</td>
+                                <td>{{ $paymentRegularization->name }}/{{ $paymentRegularization->classRoom->getOriginalClassRoomName() }}
                                 </td>
-                                <td>{{ $paymentsRegularization->categoryFee->name }}</td>
+                                <td>{{ $paymentRegularization->categoryFee->name }}</td>
                                 <td class="text-end">
-                                    {{ format_fr_month_name($paymentsRegularization->month) }}
+                                    {{ format_fr_month_name($paymentRegularization->month) }}
                                 </td>
-                                <td class="text-end">{{ app_format_number($paymentsRegularization->amount, 1) }}
-                                    {{ $paymentsRegularization->categoryFee->currency }}</td>
+                                <td class="text-end">{{ app_format_number($paymentRegularization->amount, 1) }}
+                                    {{ $paymentRegularization->categoryFee->currency }}</td>
                                 <td class="text-center">
                                     @can('manage-payment')
                                         <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                            class="btn-secondary btn-sm">
+                                            class="btn-outline-secondary btn-sm">
                                             <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
                                                 data-bs-target="#form-payment-regularization" labelText='Editer'
-                                                href="#" wire:click='edit({{ $paymentsRegularization }})'
+                                                href="#" wire:click='edit({{ $paymentRegularization }})'
                                                 class="text-primary" />
+                                            <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer'
+                                                class="text-primary" target='_blanck'
+                                                href="{{ route('print.reguralization.receipt', $paymentRegularization) }}" />
                                             <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
                                                 class="text-primary" href="#"
                                                 wire:confirm="Voulez-vous vraiment supprimer ?"
-                                                wire:click='delete({{ $paymentsRegularization }})' />
+                                                wire:click='delete({{ $paymentRegularization }})' />
                                         </x-others.dropdown>
                                     @endcan
                                 </td>

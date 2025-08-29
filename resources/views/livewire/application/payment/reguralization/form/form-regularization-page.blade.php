@@ -1,5 +1,5 @@
 <div>
-    <x-modal.build-modal-fixed idModal='form-payment-regularization' size='md'
+    <x-modal.build-modal-fixed idModal='form-payment-regularization' size='xl'
         headerLabel="{{ $paymentRegularization == null ? 'CREATION PAYEMENT' : 'MODIFICATION PAIEMENT' }} "
         headerLabelIcon="{{ $paymentRegularization == null ? 'bi bi-plus-circle-fill' : 'bi bi-pencil-fill' }} ">
         <div class="d-flex justify-content-center pb-2">
@@ -7,42 +7,46 @@
         </div>
         <div class="row">
             <form wire:submit='handlerSubmit'>
+                <x-widget.data.list-student-select-widget model="student_id" :error="$errors->first('student_id')" name="student_id"
+                    class="w-100 mb-2" />
                 <div class="row">
                     <div class="col">
                         <x-form.label value="{{ __('Nom élève') }}" />
-                        <x-form.input type='text' wire:model.blur='form.name' :error="'form.name'" />
+                        <x-form.input type='text' disabled wire:model.blur='form.name' :error="'form.name'" />
                         <x-errors.validation-error value='form.name' />
                     </div>
                     <div class="col">
-                        <x-form.label value="{{ __('Mois') }}" class="me-2" />
-                        <x-widget.list-month-fr wire:model.live='form.month' :error="'form.month'" />
-                        <x-errors.validation-error value='form.month' />
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col">
-                        <x-form.label value="{{ __('Montant') }}" />
-                        <x-form.input type='text' wire:model.blur='form.amount' :error="'form.amount'" />
-                        <x-errors.validation-error value='form.amount' />
-                    </div>
-                    <div class="col">
                         <x-form.label value="{{ __('TYpe de frais') }}" />
-                        <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='form.category_fee_id'
-                            :error="'form.category_fee_id'" />
+                        <select id="my-select" class="form-select form-control" wire:model.live='form.category_fee_id'>
+                            <option value="0">Choisir...</option>
+                            @foreach ($categoryFees as $cat)
+                                <option class="text-uppercase" value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+
                         <x-errors.validation-error value='form.category_fee_id' />
                     </div>
+
                 </div>
                 <div class="row mt-2">
                     <div class="col">
-                        <x-form.label value="{{ __('Option') }}" class="me-2" />
-                        <x-widget.data.list-option wire:model.live='form.option_id' />
-                        <x-errors.validation-error value='form.option_id' />
+                        <x-form.label value="{{ __('Mois de regularisation') }}" class="me-2" />
+                        <select id="my-select" class="form-select form-control" wire:model.live='form.month'>
+                            <option value="">Choisir...</option>
+                            @foreach ($listMonths as $month)
+                                <option class="text-uppercase" value="{{ $month['number'] }}">{{ $month['name'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-errors.validation-error value='form.month' />
                     </div>
                     <div class="col">
-                        <x-form.label value="{{ __('Classe') }}" class="me-2" />
-                        <x-widget.data.list-class-room-by-option optionId='{{ $selectedOptionId }}'
-                            wire:model.live='form.class_room_id' />
-                        <x-errors.validation-error value='form.class_room_id' />
+                        <x-form.label value="{{ __('Montant') }}" />
+                        <div class="d-flex align-items-center">
+                            <x-form.input type='text' wire:model.blur='form.amount' :error="'form.amount'" />
+                            <h4>{{ $this->scolarFee?->categoryFee?->currency }}</h4>
+                        </div>
+                        <x-errors.validation-error value='form.amount' />
                     </div>
                 </div>
                 <div class="mt-2">

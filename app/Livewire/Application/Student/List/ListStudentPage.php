@@ -82,9 +82,9 @@ class ListStudentPage extends Component
      * @param \App\Models\Student $student
      * @return void
      */
-    public function edit(Student $student): void
+    public function edit(Student $student, Registration $registration): void
     {
-        $this->dispatch('studentData', $student);
+        $this->dispatch('studentData', $student, $registration);
     }
     /**
      * Ouvrir le formulaire pour marquer abandon

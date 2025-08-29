@@ -419,4 +419,3 @@ window.addEventListener('refresh-budget-forecast-monthly', e => {
 
 
 
-

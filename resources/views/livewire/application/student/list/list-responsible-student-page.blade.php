@@ -45,12 +45,8 @@
                                 <td>{{ $responsibleStudent->phone . ' | ' . $responsibleStudent->other_phone }}
                                 </td>
                                 <td class="text-center">
-                                    <x-form.app-button type='button' icon="bi bi-person-fill-add"
-                                        class="btn-sm btn-primary"
-                                        wire:click='addNewInscription({{ $responsibleStudent }})' data-bs-toggle="modal"
-                                        data-bs-target="#form-student" />
                                     <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                        class="btn-secondary btn-sm">
+                                        class="btn-outline-secondary btn-sm">
                                         <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'
                                             data-bs-toggle="modal" data-bs-target="#form-responsible-student"
                                             href="#" wire:click='edit({{ $responsibleStudent }})'
@@ -113,7 +109,6 @@
             </script>
         @endpush
         <livewire:application.student.form.form-responsible-student-page />
-        <livewire:application.student.form.form-student-page />
         <livewire:application.student.list.list-student-by-responsible-page />
     </x-content.main-content-page>
 </div>

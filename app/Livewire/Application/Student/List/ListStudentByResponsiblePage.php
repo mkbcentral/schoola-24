@@ -39,6 +39,7 @@ class ListStudentByResponsiblePage extends Component
                 $this->sortBy,
                 $this->sortAsc,
                 100,
+                100
             ),
         ]);
     }

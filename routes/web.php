@@ -57,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['access.chercker'])->group(function () {
         Route::get('/', MainDashobardPage::class)->name('dashboard.main')->lazy();
+        Route::get('/responsables', ListResponsibleStudentPage::class)->name('responsable.main')->lazy();
         //Routes load on registration group
         Route::prefix('registration')->group(function () {
             Route::get('/new', MainRegistrationPage::class)->name('responsible.main')->lazy();
@@ -134,7 +135,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('administration/user-profile', UserProfilePage::class)->name('admin.user.profile');
     //Routes work to print receipt
     Route::controller(PrintPaymentReceiptController::class)->group(function () {
-        Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt')->lazy();
+        Route::get('/print-receipt/{payment}', 'printReceipt')->name('print.payment.receipt');
+        //print.reguralization.receipt
+        Route::get('/print-reguralization-receipt/{paymentRegularization}', 'printRegReceipt')->name('print.reguralization.receipt');
     });
 
     Route::prefix('settings')->group(function () {

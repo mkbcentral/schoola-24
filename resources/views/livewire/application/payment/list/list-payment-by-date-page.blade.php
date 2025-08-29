@@ -1,36 +1,35 @@
 <div wire:poll.30s>
-    <h3 class="text-primary text-uppercase text-end">
-        Total: {{ app_format_number($total_payments, 1) }}
-        {{ $categoryFeeSelected?->currency }}
-        ({{ $categoryFeeSelected?->name }})
-    </h3>
-    <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center me-2">
-            <x-form.label value="{{ __('Date') }}" class="me-2" />
-            <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
-        </div>
-        <x-form.search-input wire:model.live='q' />
-        <div class="form-group d-flex align-items-center ms-2">
-            <div class="d-flex align-items-center">
-                <label for="my-select">Type Frais</label>
-                <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='category_fee_filter'
-                    :error="'category_fee_filter'" />
-            </div>
-            <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" class="ms-2">
-                <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer rapport'
-                    href="{{ route('print.payment.date', [$date_filter, $category_fee_filter, 0, 0, 0, 0]) }}"
-                    target='_blank' />
-                <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Bordereau de versement'
-                    href="{{ route('print.payment.slip.date', [$date_filter]) }}" target='_blank' />
-            </x-others.dropdown>
-        </div>
-    </div>
-    <div class="card">
+
+    <div class="card ">
+        
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title mb-0">PAIEMENTS JOURNALIERS</h5>
+            <div class="d-flex align-items-center me-2">
+                <div class="d-flex me-2 align-items-center">
+                    <x-form.label value="{{ __('Date') }}" class="me-2" />
+                    <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
+                </div>
+                <x-form.search-input wire:model.live='q' />
+                 <div class="d-flex align-items-center ms-2">
+                    <label for="my-select">Type Frais</label>
+                    <x-widget.data.list-cat-scolar-fee type='text' wire:model.live='category_fee_filter'
+                        :error="'category_fee_filter'" />
+                </div>
+                <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" class="ms-2">
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Imprimer rapport'
+                        href="{{ route('print.payment.date', [$date_filter, $category_fee_filter, 0, 0, 0, 0]) }}"
+                        target='_blank' />
+                    <x-others.dropdown-link iconLink='bi bi-printer-fill' labelText='Bordereau de versement'
+                        href="{{ route('print.payment.slip.date', [$date_filter]) }}" target='_blank' />
+                </x-others.dropdown>
+            </div>
+            <h3 class="text-primary text-uppercase text-end">
+                Total: {{ app_format_number($total_payments, 1) }}
+                {{ $categoryFeeSelected?->currency }}
+                ({{ $categoryFeeSelected?->name }})
+            </h3>
         </div>
         <div class="card-body">
-            <div class="d-flex justify-content-center pb-2">
+            <div class="d-flex justify-content-center ">
                 <x-widget.loading-circular-md wire:loading />
             </div>
             <div class="table-responsive">

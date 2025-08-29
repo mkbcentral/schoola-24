@@ -20,8 +20,7 @@ class FormPaymentRegularization extends Form
     public $amount = '';
     #[Rule('required', message: "Categorie frais obligatoire", onUpdate: false)]
     public $category_fee_id = '';
-    #[Rule('required', message: "Option obligatoire", onUpdate: false)]
-    public $option_id = '';
+
     #[Rule('required', message: "Classe obligatoire", onUpdate: false)]
     public $class_room_id = '';
 

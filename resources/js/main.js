@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
         attributeFilter: ['data-bs-theme']
     });
 
-    
+
 
     // Sidebar toggle
     const sidebarCollapse = document.getElementById('sidebarCollapse');
@@ -157,3 +157,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+  window.addEventListener('open-form-payment', e => {
+            new bootstrap.Modal(document.getElementById('form-payment')).show();
+  });
+

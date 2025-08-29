@@ -40,7 +40,14 @@ class RegistrationFeature implements IRegistration
      */
     public static function update(Registration $registration, array $input): bool
     {
-        return $registration->update($input);
+        return $registration->update(
+            [
+                'registration_fee_id' => $input['registration_fee_id'],
+                'class_room_id' => $input['class_room_id'],
+                'is_old' => $input['is_old'],
+                'created_at' => $input['created_at'],
+            ]
+        );
     }
     /**
      * @inheritDoc

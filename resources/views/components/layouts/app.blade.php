@@ -28,6 +28,19 @@
     </div>
     {{-- Ensure no inline <script> tags are present here --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script>
+        function printTable() {
+
+            console.log('printing   ')
+
+            const printContents = document.getElementById('printable-table').innerHTML;
+            const originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
     @stack('js')
 </body>
 

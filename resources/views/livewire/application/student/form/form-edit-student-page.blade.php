@@ -34,24 +34,20 @@
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <x-form.label value="{{ __('Option') }}" />
-                        <x-widget.data.list-option type='text' wire:model.live='form.option_id' :error="'form.option_id'" />
-                        <x-errors.validation-error value='form.option_id' />
+                        <x-widget.data.list-option type='text' wire:model.live='selectedOption' :error="'selectedOption'" />
                     </div>
                     <div class="col-md-6">
                         <x-form.label value="{{ __('Classe') }}" />
-                        <x-widget.data.list-class-room-by-option optionId="{{ $selectedOption }}" type='text'
-                            wire:model.blur='form.class_room_id' :error="'form.class_room_id'" />
+                        <select id="my-select" class="form-control" wire:model.blur='form.class_room_id'>
+                            <option>Choisir</option>
+                            @foreach ($classRooms as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                         <x-errors.validation-error value='form.class_room_id' />
                     </div>
                 </div>
                 <div class="row mt-2">
-                    <div class="col">
-                        <x-form.label value="{{ __('Type inscription') }}" />
-                        <x-widget.data.list-registration-fee-by-option optionId='{{ $selectedOption }}'
-                            isOld="{{ $isOldSelected }}" type='text' wire:model.blur='form.registration_fee_id'
-                            :error="'form.registration_fee_id'" />
-                        <x-errors.validation-error value='form.registration_fee_id' />
-                    </div>
                     <div class="col">
                         <x-form.label value="{{ __('Date inscription') }}" />
                         <x-form.input type='date' wire:model.blur='form.created_at' :error="'form.created_at'" />
@@ -59,12 +55,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <div>
-                        <x-form.input-check-box idAndFor="isOld" color="primary" text="Pour une réinscription ?"
-                            wire:model.live='form.is_old' :error="'form.is_old'" />
-                        <x-errors.validation-error value='form.is_old' />
-                    </div>
+                <div class="d-flex justify-content-end mt-4">
                     <x-form.app-button type='submit' textButton="Modifier" icon="bi bi-pencil-fill"
                         class="btn-primary" />
                 </div>

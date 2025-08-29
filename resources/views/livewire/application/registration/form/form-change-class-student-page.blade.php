@@ -29,7 +29,7 @@
                     <x-errors.validation-error value='class_room_id' />
                 </div>
                 <div class="d-flex justify-content-end mt-4">
-                    <x-form.app-button type='submit' textButton="Marquer abandon" icon="bi bi-arrow-left-right"
+                    <x-form.app-button type='submit' textButton="Basculer de classe" icon="bi bi-arrow-left-right"
                         class="btn-primary" />
                 </div>
             </form>

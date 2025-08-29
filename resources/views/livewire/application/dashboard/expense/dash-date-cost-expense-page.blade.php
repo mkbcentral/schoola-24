@@ -18,6 +18,7 @@
                     <x-form.label value="{{ __('Type dépenses') }}" class="fw-bold me-2" />
                     <x-widget.data.list-category-expense type='text' wire:model.live='category_expense_id_filter'
                         :error="'category_expense_id_filter'" />
+
                 </div>
             </div>
             <div class="row mt-2">
