@@ -26,7 +26,7 @@
                             <span>NOM COMPLET</span>
                             <x-form.sort-icon sortField="name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
                         </th>
-                        <th class="text-center">NBRE ELEVES</th>
+                        <th class="text-center">NBRE ENFANT</th>
                         <th>CONTACT</th>
                         <th class="text-center">Actions</th>
                     </tr>
