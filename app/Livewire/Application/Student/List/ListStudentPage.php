@@ -17,7 +17,6 @@ class ListStudentPage extends Component
     use WithPagination;
     protected $listeners = [
         'refreshListStudent' => '$refresh',
-        'deletedStudentListener' => 'delete',
     ];
     public int $per_page = 10;
     public int  $option_filter = 0;
@@ -140,25 +139,16 @@ class ListStudentPage extends Component
         $this->resetPage();
     }
 
-    /**
-     * Afficher la confirmation pour supprimer un élève
-     * @param \App\Models\Student $student
-     * @return void
-     */
-    public function showDeleteDialog(Student $student): void
-    {
-        $this->studentToDelete = $student;
-        $this->dispatch('delete-student-dialog', $student);
-    }
 
     /**
      * Supprimer un élève
      * @return void
      */
-    public function delete(): void
+    public function delete(Student $student): void
     {
         try {
-            $status = RegistrationFeature::delete($this->studentToDelete->registration);
+            $status = RegistrationFeature::delete($student->registration);
+            dd($status);
             if ($status) {
                 $this->dispatch('student-deleted', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {

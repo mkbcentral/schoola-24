@@ -34,6 +34,7 @@ class StudentPrinterController extends Controller
             null,
             'name',
             true,
+            null,
             1000
         );
         $months = DateFormatHelper::getSchoolFrMonths();
@@ -54,6 +55,7 @@ class StudentPrinterController extends Controller
             null,
             'name',
             true,
+            null,
             1000
         );
         $option = Option::find($optionId);

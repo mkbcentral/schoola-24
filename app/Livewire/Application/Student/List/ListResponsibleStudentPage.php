@@ -8,9 +8,11 @@ use App\Models\ResponsibleStudent;
 use Exception;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListResponsibleStudentPage extends Component
 {
+    use WithPagination;
     protected $listeners = [
         'refreshListResponsibleStudent' => '$refresh',
         'deletedResponsibleStudentListner' => 'delete',

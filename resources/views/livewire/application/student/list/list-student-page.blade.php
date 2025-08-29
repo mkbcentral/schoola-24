@@ -120,8 +120,8 @@
                                                 wire:click='openMakeGiveUpStudentFom({{ $registration }})'
                                                 href="#" />
                                             <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
-                                                href="#"
-                                                wire:click='showDeleteDialog({{ $registration->student }})' />
+                                                wire:confirm="Etês-vous sûre de supprimer ?" href="#"
+                                                wire:click='delete({{ $registration->student }})' />
                                         @endcan
 
                                         @if (!$registration->qr_code)
