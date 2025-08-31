@@ -77,7 +77,8 @@
             </div>
         </form>
     @else
-        <div class="alert alert-info mt-3">
+        <div class="alert alert-info mt-3 text-center">
+            <i class="bi bi-exclamation-circle me-2"></i>
             <strong>Aucun responsable sélectionné</strong>
         </div>
     @endif

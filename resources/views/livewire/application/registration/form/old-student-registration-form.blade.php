@@ -48,6 +48,11 @@
                         tooltipText='Sauvegarder' />
                 </div>
             </div>
+        @else
+            <div class="alert alert-info mt-3 text-center">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                <strong>Aucun élève sélectionné</strong>
+            </div>
         @endif
     </form>
 </div>

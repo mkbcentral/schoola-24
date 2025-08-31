@@ -5,67 +5,72 @@
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
         <div class="mt-2">
-            <div class="d-flex justify-content-center pb-2">
-                <x-widget.loading-circular-md wire:loading />
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex">
-                    <x-form.search-input wire:model.live='q' />
-                    <x-form.app-button type='button' wire:click='refreshData' textButton=''
-                        icon="bi bi-arrow-clockwise" class="btn-primary ms-1" />
+            <div>
+                <div class="d-flex justify-content-center pb-2">
+                    <x-widget.loading-circular-md wire:loading />
                 </div>
-                <x-form.app-button wire:click='openNewResponsibleStudent' data-bs-toggle="modal"
-                    data-bs-target="#form-responsible-student" textButton='Nouveau responsable' icon="bi bi-plus-circle"
-                    class="btn-primary" />
+                <div class="row g-2 align-items-center justify-content-between flex-wrap">
+                    <div class="col-12 col-md-8 mb-2 mb-md-0">
+                        <x-form.search-input wire:model.live='q' />
+                    </div>
+                    <div class="col-12 col-md-auto d-flex justify-content-end">
+                        <x-form.app-button wire:click='openNewResponsibleStudent' data-bs-toggle="modal"
+                            data-bs-target="#form-responsible-student" textButton='Nouveau responsable'
+                            icon="bi bi-plus-circle" class="btn-primary w-100 w-md-auto" />
+                    </div>
+                </div>
             </div>
-            <table class="table table-bordered table-hover table-sm mt-2">
-                <thead class="text-bg-primary">
-                    <tr class="cursor-hand">
-                        <th class="text-center">#</th>
-                        <th wire:click="sortData('name')">
-                            <span>NOM COMPLET</span>
-                            <x-form.sort-icon sortField="name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
-                        </th>
-                        <th class="text-center">NBRE ENFANT</th>
-                        <th>CONTACT</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($responsibleStudents->isEmpty())
-                        <tr>
-                            <td colspan="5"><x-errors.data-empty /></td>
+            <div class="table-responsive mt-2">
+                <table class="table table-bordered table-hover table-sm mt-2">
+                    <thead class="text-bg-primary">
+                        <tr class="cursor-hand">
+                            <th class="text-center">#</th>
+                            <th wire:click="sortData('name')">
+                                <span>NOM COMPLET</span>
+                                <x-form.sort-icon sortField="name" :sortAsc="$sortAsc" :sortBy="$sortBy" />
+                            </th>
+                            <th class="text-center">NBRE ENFANT</th>
+                            <th>CONTACT</th>
+                            <th class="text-center">Actions</th>
                         </tr>
-                    @else
-                        @foreach ($responsibleStudents as $index => $responsibleStudent)
-                            <tr wire:key='{{ $responsibleStudent->id }}'>
-                                <td class="text-center">{{ $index + 1 }}</td>
-                                <td>{{ $responsibleStudent->name }}</td>
-                                <td class="text-center">{{ $responsibleStudent->students->count() }}</td>
-                                <td>{{ $responsibleStudent->phone . ' | ' . $responsibleStudent->other_phone }}
-                                </td>
-                                <td class="text-center">
-                                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                        class="btn-outline-secondary btn-sm">
-                                        <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'
-                                            data-bs-toggle="modal" data-bs-target="#form-responsible-student"
-                                            href="#" wire:click='edit({{ $responsibleStudent }})'
-                                            class="text-primary" />
-                                        <x-others.dropdown-link iconLink='bi bi-info-circle-fill' labelText='Voir infos'
-                                            data-bs-toggle="modal" data-bs-target="#list-student-by-responsible"
-                                            wire:click='getListStudent({{ $responsibleStudent }})' href="#"
-                                            class="text-primary" />
-                                        <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
-                                            class="text-secondary" href="#"
-                                            wire:click='showDeleteDialog({{ $responsibleStudent }})' />
-                                    </x-others.dropdown>
-                                </td>
+                    </thead>
+                    <tbody>
+                        @if ($responsibleStudents->isEmpty())
+                            <tr>
+                                <td colspan="5"><x-errors.data-empty /></td>
                             </tr>
-                        @endforeach
-                    @endif
+                        @else
+                            @foreach ($responsibleStudents as $index => $responsibleStudent)
+                                <tr wire:key='{{ $responsibleStudent->id }}'>
+                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    <td>{{ $responsibleStudent->name }}</td>
+                                    <td class="text-center">{{ $responsibleStudent->students->count() }}</td>
+                                    <td>{{ $responsibleStudent->phone . ' | ' . $responsibleStudent->other_phone }}
+                                    </td>
+                                    <td class="text-center">
+                                        <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                                            class="btn-outline-secondary btn-sm">
+                                            <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'
+                                                data-bs-toggle="modal" data-bs-target="#form-responsible-student"
+                                                href="#" wire:click='edit({{ $responsibleStudent }})'
+                                                class="text-primary" />
+                                            <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
+                                                labelText='Voir infos' data-bs-toggle="modal"
+                                                data-bs-target="#list-student-by-responsible"
+                                                wire:click='getListStudent({{ $responsibleStudent }})' href="#"
+                                                class="text-primary" />
+                                            <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
+                                                class="text-secondary" href="#"
+                                                wire:click='showDeleteDialog({{ $responsibleStudent }})' />
+                                        </x-others.dropdown>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             @if (!$responsibleStudents->isEmpty())
                 <div class="d-flex justify-content-between align-items-center">
                     <span>{{ $responsibleStudents->links('livewire::bootstrap') }}</span>
