@@ -253,6 +253,7 @@ body {
     overflow: visible;
     background-color: var(--card-bg);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    min-width: 900px;
 }
 
 .table thead th {
@@ -380,6 +381,7 @@ body {
     overflow: visible;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
     background: none;
+    overflow-x: auto;
 }
 
 .table tfoot tr {
@@ -1059,3 +1061,5 @@ body {
 .page-break {
     page-break-after: always;
 }
+
+
