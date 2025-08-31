@@ -1,15 +1,14 @@
 <div>
-    <div class="card">
+    <div class="card mb-4">
         <div class="card-header">
             Effectif par section
         </div>
         <div class="card-body">
             <div class="row">
                 @foreach ($sections as $section => $count)
-                    <div class="col-sm-4">
+                    <div class="col-12 col-md-4 mb-3">
                         <x-widget.student-counter-widget label="{{ $section }}" value="{{ $count }}">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-eye me-2"></i>Voir
-                                    Details</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-eye me-2"></i>Voir Details</a></li>
                             <li><a class="dropdown-item" href="#"><i class="bi bi-printer me-2"></i>Imprimer
                                     Liste</a></li>
                         </x-widget.student-counter-widget>
@@ -19,24 +18,22 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-7">
-            <div class="card">
+        <div class="col-12 col-md-7 mb-3">
+            <div class="card h-100">
                 <div class="card-header">
                     Effectif par option
                 </div>
-                <div class="card-body ">
+                <div class="card-body">
                     <div class="row">
                         @foreach ($options as $option => $co)
-                            <div class="col-sm-4 mb-2" style="cursor: pointer"
+                            <div class="col-12 col-sm-6 col-lg-4 mb-3" style="cursor: pointer"
                                 wire:click="changeOption('{{ $option }}')">
                                 <x-widget.student-counter-widget label="{{ $option }}" value="{{ $co }}"
                                     bg="{{ $selectedOption->name == $option ? 'bg-primary' : '' }}">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-eye me-2"></i>
-                                            Voir
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-eye me-2"></i>Voir
                                             Details</a></li>
                                     <li><a class="dropdown-item" href="#"><i
-                                                class="bi bi-printer me-2"></i>Imprimer
-                                            Liste</a></li>
+                                                class="bi bi-printer me-2"></i>Imprimer Liste</a></li>
                                 </x-widget.student-counter-widget>
                             </div>
                         @endforeach
@@ -44,49 +41,50 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
-
+        <div class="col-12 col-md-5 mb-3">
             @if ($options != [])
-                <div class="card">
+                <div class="card h-100">
                     <div class="card-header">
                         <h5 class="text-primary text-uppercase"> Détail {{ $selectedOption?->name }}</h5>
                     </div>
                     <div class="card-body">
-                        <table class="table table-light table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Classe</th>
-                                    <th class="text-center">Effectif</th>
-                                    <th class="text-center">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($selectedOption?->classRooms == null)
+                        <div class="table-responsive">
+                            <table class="table table-light table-sm">
+                                <thead>
                                     <tr>
-                                        <td colspan="3" class="text-center">
-                                            <span class="text-muted">Aucune classe pour cette option</span>
-                                        </td>
+                                        <th>Classe</th>
+                                        <th class="text-center">Effectif</th>
+                                        <th class="text-center">Actions</th>
                                     </tr>
-                                @else
-                                    @foreach ($selectedOption?->classRooms as $classRoom)
+                                </thead>
+                                <tbody>
+                                    @if ($selectedOption?->classRooms == null)
                                         <tr>
-                                            <td>{{ $classRoom->getOriginalClassRoomName() }}</td>
-                                            <td class="text-center">
-                                                {{ $classRoom->registrations()->where('school_year_id', App\Models\SchoolYear::DEFAULT_SCHOOL_YEAR_ID())->count() }}
-                                            </td>
-                                            <td class="text-center">
-                                                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                                    class=" btn-sm">
-                                                    <x-others.dropdown-link iconLink='bi bi-wallet2' target="_blank"
-                                                        labelText='Imprimer les paiements'
-                                                        href="{{ route('print.student.payemnts.by.classroom', $classRoom->id) }}" />
-                                                </x-others.dropdown>
+                                            <td colspan="3" class="text-center">
+                                                <span class="text-muted">Aucune classe pour cette option</span>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                                    @else
+                                        @foreach ($selectedOption?->classRooms as $classRoom)
+                                            <tr>
+                                                <td>{{ $classRoom->getOriginalClassRoomName() }}</td>
+                                                <td class="text-center">
+                                                    {{ $classRoom->registrations()->where('school_year_id', App\Models\SchoolYear::DEFAULT_SCHOOL_YEAR_ID())->count() }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
+                                                        class="btn-sm">
+                                                        <x-others.dropdown-link iconLink='bi bi-wallet2' target="_blank"
+                                                            labelText='Imprimer les paiements'
+                                                            href="{{ route('print.student.payemnts.by.classroom', $classRoom->id) }}" />
+                                                    </x-others.dropdown>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             @endif

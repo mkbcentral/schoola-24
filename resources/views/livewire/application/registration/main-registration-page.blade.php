@@ -5,8 +5,8 @@
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
         <div class="row mt-4">
-            <div class="col-md-3 mb-3">
-                <div class="card">
+            <div class="col-12 col-md-3 mb-3">
+                <div class="card ">
                     <div class="card-body d-grid gap-2">
                         <x-form.app-button wire:click='openNewResponsibleStudent' data-bs-toggle="modal"
                             data-bs-target="#form-responsible-student" textButton='Nouveau responsable'
@@ -20,25 +20,29 @@
                 </div>
             </div>
 
-            <div class="col-md-9">
-                <div class="card shadow-sm">
+            <div class="col-12 col-md-9">
+                <div class="card shadow-sm h-100 border-0 bg-body-tertiary dark:bg-dark">
                     <div class="card-body">
-                        <div class="mb-2">
-                            <div class="btn-group w-100 shadow-sm rounded-pill overflow-hidden" role="group"
+                        <div class="mb-3">
+                            <div class="btn-group w-100 shadow-sm rounded-pill overflow-auto flex-nowrap" role="group"
                                 aria-label="Type de dossier">
                                 <button type="button"
-                                    class="btn rounded-0 rounded-start-pill fw-semibold px-4 py-2 @if ($caseType === 'new') main-bg shadow-sm @else btn-outline-primary bg-white @endif"
+                                    class="btn  btn-outline-primary fw-semibold px-4 py-2 transition-all
+                                    @if ($caseType === 'new') btn-primary text-white shadow-sm 
+                                    @else btn-outline-primary  border-0 @endif"
                                     wire:click="$set('caseType', 'new')">
                                     <i class="bi bi-plus-circle me-1"></i> Nouveau cas
                                 </button>
                                 <button type="button"
-                                    class="btn rounded-0 rounded-end-pill fw-semibold px-4 py-2 @if ($caseType === 'existing') main-bg shadow-sm @else btn-outline-secondary bg-white @endif"
+                                    class="btn  btn-outline-primary fw-semibold px-4 py-2 transition-all
+                                    @if ($caseType === 'existing') btn-primary text-white shadow-sm 
+                                    @else btn-outline-secondary border-0 @endif"
                                     wire:click="$set('caseType', 'existing')">
                                     <i class="bi bi-folder2-open me-1"></i> Ancien cas
                                 </button>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center my-3">
                             <div class="spinner-border spinner-border-sm text-warning" role="status" wire:loading>
                                 <span class="visually-hidden">Loading...</span>
                             </div>
