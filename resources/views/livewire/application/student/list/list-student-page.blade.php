@@ -5,10 +5,10 @@
     </x-navigation.bread-crumb>
     <div class="">
         <livewire:application.dashboard.registration.student-info-card-page />
-        <div class="d-flex justify-content-between mt-2">
-            <div class="d-flex align-items-center">
-                <x-form.search-input wire:model.live='q' />
-                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="ms-2">
+        <div class="d-flex flex-column flex-md-row justify-content-between mt-2 gap-2">
+            <div class="d-flex flex-wrap align-items-center mb-2 mb-md-0 gap-2">
+                <x-form.search-input wire:model.live='q' class="w-100 w-md-auto" />
+                <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="ms-0 ms-md-2">
                     <x-others.dropdown-link wire:click='refreshData' iconLink='bi bi-arrow-repeat'
                         labelText='Actualiser' href="#" />
                     @if ($selectedRegistrations != [])
@@ -17,9 +17,8 @@
                             labelText='Générer Qrcode' href="#" />
                     @endif
                 </x-others.dropdown>
-
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex flex-wrap align-items-center gap-2">
                 <div class="d-flex align-items-center">
                     <x-form.label value="{{ __('Option') }}" class="me-2" />
                     <x-widget.data.list-option type='text' wire:model.live='option_filter' :error="'form.option_id'" />
@@ -29,7 +28,7 @@
                     <x-widget.data.list-class-room-by-option optionId='{{ $selectedOptionId }}'
                         wire:model.live='class_room_filter' />
                 </div>
-                <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" class=" ms-2">
+                <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" class="ms-0 ms-md-2">
                     <x-others.dropdown-link iconLink='bi bi-file-earmark-check-fill' target='_blank'
                         labelText='Liste  des élèves'
                         href="{{ route('print.all.student.list', ['optionId' => $selectedOptionId, 'classRoomId' => $class_room_filter]) }}" />
@@ -39,10 +38,10 @@
         <div class="d-flex justify-content-center pb-2">
             <x-widget.loading-circular-md wire:loading />
         </div>
-        <div class="table-responsive">
-            <table class=" table table-hover mt-2">
+        <div class="table-responsive" style="overflow-x:auto;">
+            <table class="table table-hover mt-2 align-middle">
                 <thead class="theme-dark">
-                    <tr class="">
+                    <tr>
                         <th class="text-center">
                             <x-form.input-check-box idAndFor="select-all" wire:model.live='selectPageRows'
                                 color="primary" value='' />
@@ -67,7 +66,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @if ($registrations->count() == 0)
                         <tr>
                             <td colspan="9">
@@ -76,7 +74,7 @@
                         </tr>
                     @else
                         @foreach ($registrations as $index => $registration)
-                            <tr wire:key='{{ $registration->student->id }}' class=" ">
+                            <tr wire:key='{{ $registration->student->id }}'>
                                 <td class="text-center {{ $registration->class_changed == true ? 'bg-danger' : '' }}">
                                     <x-form.input-check-box idAndFor="{{ $registration->id }}" color="primary"
                                         wire:model.live='selectedRegistrations' value='{{ $registration->id }}' />
@@ -91,13 +89,11 @@
                                     {{ $registration->code }}
                                 </td>
                                 <td>
-
                                     {{ $registration->student->name }}
                                 </td>
                                 <td class="text-center">{{ $registration->student->getFormattedAg() }}</td>
                                 <td class="text-center">{{ $registration->student->gender }}</td>
-                                <td>{{ $registration?->classRoom?->getOriginalClassRoomName() }}
-                                </td>
+                                <td>{{ $registration?->classRoom?->getOriginalClassRoomName() }}</td>
                                 <td class="text-center">
                                     <span
                                         class="badge text-uppercase bg-{{ $registration->is_old ? 'warning' : 'info' }}">
@@ -105,8 +101,7 @@
                                     </span>
                                 </td>
                                 <td class="text-center">
-                                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                        class=" btn-sm">
+                                    <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="btn-sm">
                                         @can('manage-student')
                                             <x-others.dropdown-link iconLink='bi bi-pencil-fill' data-bs-toggle="modal"
                                                 data-bs-target="#form-edit-student" labelText='Editer' href="#"
@@ -151,10 +146,9 @@
                     @endif
                 </tbody>
             </table>
-
         </div>
         @if ($registrations->count() > 9)
-            <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-2 gap-2">
                 <span>{{ $registrations->links('livewire::bootstrap') }}</span>
                 <x-others.table-page-number wire:model.live='per_page' />
             </div>
