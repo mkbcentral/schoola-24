@@ -81,6 +81,7 @@ class PaymentRegularization extends Model
                     return $query->where('payment_regularizations.name', 'like', '%' . $key . '%');
                 }
             )
+            ->where('payment_regularizations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
             ->with(['classRoom', 'categoryFee'])
             ->select('payment_regularizations.*');
     }

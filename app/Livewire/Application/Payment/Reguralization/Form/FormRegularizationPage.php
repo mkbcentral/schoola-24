@@ -9,8 +9,10 @@ use App\Models\CategoryFee;
 use App\Models\Payment;
 use App\Models\PaymentRegularization;
 use App\Models\Registration;
+use App\Models\SchoolYear;
 use App\Models\ScolarFee;
 use App\Models\Student;
+use Auth;
 use Exception;
 use Livewire\Component;
 
@@ -39,6 +41,7 @@ class FormRegularizationPage extends Component
     }
     public function updatedFormCategoryFeeId($val)
     {
+        $this->listMonths = [];
         if ($this->student != null) {
             $months = collect(DateFormatHelper::getSchoolFrMonths())
                 ->reject(fn($month) => in_array(strtoupper($month['name']), ['JUILLET', 'AOUT']))
@@ -91,7 +94,6 @@ class FormRegularizationPage extends Component
         $this->form->month = $paymentRegularization->month;
         $this->form->amount = $paymentRegularization->amount;
         $this->form->category_fee_id = $paymentRegularization->category_fee_id;
-        $this->form->option_id = $paymentRegularization->classRoom->option_id;
         $this->selectedOptionId = $paymentRegularization->classRoom->option_id;
         $this->form->class_room_id = $paymentRegularization->class_room_id;
     }
@@ -100,15 +102,24 @@ class FormRegularizationPage extends Component
     {
         $this->validate();
         try {
-            if ($this->form->create()) {
-                Payment::create([
-                    'month' => $this->form->month,
-                    'scolar_fee_id' => $this->lastRegistration->scolar_fee_id,
-                    'registration_id' => $this->lastRegistration->id,
-                    'created_at' => $this->form->created_at,
-                    'is_paid' => true
-                ]);
-                $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
+            if ($this->lastRegistration != null) {
+                if ($this->form->create()) {
+                    Payment::create([
+                        'payment_number' => rand(100000, 999999),
+                        'month' => $this->form->month,
+                        'scolar_fee_id' => $this->scolarFee->id,
+                        'registration_id' => $this->lastRegistration->id,
+                        'created_at' => $this->form->created_at,
+                        'is_paid' => true,
+                        'school_year_id' => 1,
+                        'rate_id' => 1,
+                        'user_id' => Auth::id(),
+
+                    ]);
+                    $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
+                }
+            } else {
+                $this->dispatch('error', ['message' => 'Selectionnez un élève SVP !']);
             }
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);

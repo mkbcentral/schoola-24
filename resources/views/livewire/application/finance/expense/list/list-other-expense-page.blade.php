@@ -106,7 +106,7 @@
                                 <td class="text-center">
                                     @can('manage-payment')
                                         <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                            class="btn-secondary btn-sm">
+                                            class="btn-outline-secondary btn-sm">
                                             <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'
                                                 href="#" data-bs-toggle="modal"
                                                 data-bs-target="#form-other-expense-fee"

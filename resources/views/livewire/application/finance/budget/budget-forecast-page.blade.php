@@ -3,24 +3,23 @@
         <x-navigation.bread-crumb-item label='Dashboard' />
     </x-navigation.bread-crumb>
     <!-- Bootstrap Nav Tabs -->
-    <ul class="nav nav-tabs mb-3 rounded shadow-sm bg-white px-2 py-1" id="chartTabs" role="tablist"
-        style="overflow-x:auto;">
+    <ul class="nav nav-tabs mb-3 rounded shadow-sm px-2 py-1" id="chartTabs" role="tablist" style="overflow-x:auto;">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active fw-bold text-primary" id="monthly-movements-tab" data-bs-toggle="tab"
-                data-bs-target="#monthly-movements" type="button" role="tab" aria-controls="monthly-movements"
-                aria-selected="true" style="border-radius: 8px 8px 0 0;">
+            <button class="nav-link active fw-bold text-primary dark:text-blue-400" id="monthly-movements-tab"
+                data-bs-toggle="tab" data-bs-target="#monthly-movements" type="button" role="tab"
+                aria-controls="monthly-movements" aria-selected="true" style="border-radius: 8px 8px 0 0;">
                 <i class="bi bi-bar-chart-line"></i> Graphique Mensuels
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold text-success" id="budget-forecast-tab" data-bs-toggle="tab"
-                data-bs-target="#budget-forecast" type="button" role="tab" aria-controls="budget-forecast"
-                aria-selected="false" style="border-radius: 8px 8px 0 0;">
+            <button class="nav-link fw-bold text-success dark:text-green-400" id="budget-forecast-tab"
+                data-bs-toggle="tab" data-bs-target="#budget-forecast" type="button" role="tab"
+                aria-controls="budget-forecast" aria-selected="false" style="border-radius: 8px 8px 0 0;">
                 <i class="bi bi-graph-up-arrow"></i> Graphique par catégorie
             </button>
         </li>
     </ul>
-    <div class="tab-content mb-4 rounded-bottom shadow-sm bg-light p-4" id="chartTabsContent">
+    <div class="tab-content mb-4 rounded-bottom shadow-sm p-4" id="chartTabsContent">
         <div class="tab-pane fade show active" id="monthly-movements" role="tabpanel"
             aria-labelledby="monthly-movements-tab">
             <canvas id="monthlyMovementsChart"></canvas>
@@ -29,8 +28,8 @@
             <canvas id="budgetForecastChart"></canvas>
         </div>
     </div>
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered dark:text-gray-200 dark:bg-gray-900">
+        <thead class="dark:bg-gray-800">
             <tr>
                 <th>Catégorie</th>
                 @foreach ($months as $month)
@@ -47,7 +46,8 @@
                         @php
                             $amount = $category['monthly_amounts'][$m['number']];
                         @endphp
-                        <td class="text-end{{ $amount == 0 ? ' bg-light text-secondary' : '' }}">
+                        <td
+                            class="text-end{{ $amount == 0 ? ' bg-light dark:bg-gray-800 text-secondary dark:text-gray-500' : '' }}">
                             {{ number_format($amount, 2, ',', ' ') }} $
                         </td>
                     @endforeach
@@ -71,11 +71,12 @@
                     @php
                         $totalMonth = $totalsByMonth[$m['number']];
                     @endphp
-                    <th class="text-end{{ $totalMonth == 0 ? ' bg-light text-muted' : '' }}">
+                    <th
+                        class="text-end{{ $totalMonth == 0 ? ' bg-light dark:bg-gray-800 text-muted dark:text-gray-500' : '' }}">
                         {{ number_format($totalMonth, 2, ',', ' ') }} $
                     </th>
                 @endforeach
-                <th class="text-end bg-primary text-white" style="font-size: 1.3em;">
+                <th class="text-end bg-primary dark:bg-blue-700 text-white" style="font-size: 1.3em;">
                     <strong>{{ number_format($globalTotal, 2, ',', ' ') }} $</strong>
                 </th>
             </tr>

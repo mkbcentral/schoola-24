@@ -78,7 +78,6 @@ class ListPaymentRegularizationPage extends Component
         try {
             $paymentRegularization->delete();
             $this->dispatch('updated', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
-            $this->reset();
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }

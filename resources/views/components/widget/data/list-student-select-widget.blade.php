@@ -45,8 +45,7 @@
             style="z-index: 1000; max-height: 200px; overflow-y: auto;">
             <template x-for="student in filtered()" :key="student.id">
                 <button type="button" class="list-group-item list-group-item-action"
-                    @mousedown.prevent="select(student)"
-                    style="background: linear-gradient(90deg, #f8fafc 0%, #e0e7ef 100%); transition: background 0.2s;">
+                    @mousedown.prevent="select(student)" style=" transition: background 0.2s;">
                     <span x-text="student.name"></span>
                 </button>
             </template>

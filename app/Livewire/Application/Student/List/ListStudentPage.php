@@ -150,12 +150,12 @@ class ListStudentPage extends Component
             $status = RegistrationFeature::delete($student->registration);
             dd($status);
             if ($status) {
-                $this->dispatch('student-deleted', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
+                $this->dispatch('info', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {
-                $this->dispatch('delete-student-failed', ['message' => AppMessage::DATA_DELETED_FAILLED . ", car l'élève a des données"]);
+                $this->dispatch('error', ['message' => AppMessage::DATA_DELETED_FAILLED . ", car l'élève a des données"]);
             }
         } catch (Exception $ex) {
-            $this->dispatch('delete-student-failed', ['message' => $ex->getMessage()]);
+            $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
 

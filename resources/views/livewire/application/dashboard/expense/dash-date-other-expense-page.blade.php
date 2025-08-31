@@ -20,19 +20,24 @@
                         :error="'categoryExpenseIdFilter'" />
                 </div>
             </div>
-            <div class="row mt-2">
-                <div class="col-md-6">
-                    <div class="card bg-light shadow-sm border-0">
-                        <div class="card-body h-4 align-self-center">
-                            <h5 class="card-title">USD {{ app_format_number($expense->total_usd ?? 0, 1) }}
-                            </h5>
+            <div class="row mt-3">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <div class="card border-0 shadow-sm bg-light h-100">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                            <span class="text-muted fw-semibold">Total USD</span>
+                            <h4 class="card-title text-primary mt-2 mb-0">
+                                $ {{ app_format_number($expense->total_usd ?? 0, 1) }}
+                            </h4>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card bg-light shadow-sm border-0">
-                        <div class="card-body h-4  align-self-center">
-                            <h5 class="card-title">CDF {{ app_format_number($expense->total_cdf ?? 0, 1) }}</h5>
+                    <div class="card border-0 shadow-sm bg-light h-100">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                            <span class="text-muted fw-semibold">Total CDF</span>
+                            <h4 class="card-title text-success mt-2 mb-0">
+                                CDF {{ app_format_number($expense->total_cdf ?? 0, 1) }}
+                            </h4>
                         </div>
                     </div>
                 </div>
