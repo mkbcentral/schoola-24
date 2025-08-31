@@ -1,27 +1,33 @@
 <div>
     <div class="card">
-        <div class="card-header ">
+        <div class="card-header">
             <h4 class="text-uppercase text-secondary">Autres dépenses journ.</h4>
         </div>
         <div class="card-body">
-            <div class="d-flex ">
-                <div class="d-flex align-items-center  me-2">
-                    <x-form.label value="{{ __('Date') }}" class="fw-bold me-2" />
-                    <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
+            <div class="row g-2">
+                <div class="col-12 col-md-4">
+                    <div class="d-flex align-items-center">
+                        <x-form.label value="{{ __('Date') }}" class="fw-bold me-2" />
+                        <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
+                    </div>
                 </div>
-                <div class="d-flex align-items-center  me-2">
-                    <x-form.label value="{{ __('Source') }}" class="fw-bold me-2" />
-                    <x-widget.data.list-other-source-expense type='text' wire:model.live='otherSourceExpenseIdFilter'
-                        :error="'otherSourceExpenseIdFilter'" />
+                <div class="col-12 col-md-4">
+                    <div class="d-flex align-items-center">
+                        <x-form.label value="{{ __('Source') }}" class="fw-bold me-2" />
+                        <x-widget.data.list-other-source-expense type='text'
+                            wire:model.live='otherSourceExpenseIdFilter' :error="'otherSourceExpenseIdFilter'" />
+                    </div>
                 </div>
-                <div class="d-flex align-items-center  me-2">
-                    <x-form.label value="{{ __('Categorie') }}" class="fw-bold me-2" />
-                    <x-widget.data.list-category-expense type='text' wire:model.live='categoryExpenseIdFilter'
-                        :error="'categoryExpenseIdFilter'" />
+                <div class="col-12 col-md-4">
+                    <div class="d-flex align-items-center">
+                        <x-form.label value="{{ __('Categorie') }}" class="fw-bold me-2" />
+                        <x-widget.data.list-category-expense type='text' wire:model.live='categoryExpenseIdFilter'
+                            :error="'categoryExpenseIdFilter'" />
+                    </div>
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-6 mb-2 mb-md-0">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
                     <div class="card border-0 shadow-sm bg-light h-100">
                         <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
                             <span class="text-muted fw-semibold">Total USD</span>
@@ -31,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
                     <div class="card border-0 shadow-sm bg-light h-100">
                         <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
                             <span class="text-muted fw-semibold">Total CDF</span>

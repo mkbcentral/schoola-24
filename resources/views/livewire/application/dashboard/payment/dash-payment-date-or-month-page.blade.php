@@ -5,11 +5,17 @@
         </div>
         <div class="card-body">
             <div>
-                <div class="btn-group btn-group-sm d-flex">
-                    <label for="dateFilter" class="me-3">Date</label>
-                    <input wire:model.live='date' type="date" class="form-control me-2" id="dateFilter">
-                    <label for="monthFilter" class="me-3">Mois</label>
-                    <x-widget.list-month-fr wire:model.live='month' :error="'month'" />
+                <div
+                    class="btn-group btn-group-sm d-flex flex-column flex-md-row align-items-stretch align-items-md-center mb-3 gap-2 gap-md-0">
+                    <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center w-100">
+                        <label for="dateFilter" class="me-md-3 mb-1 mb-md-0">Date</label>
+                        <input wire:model.live='date' type="date" class="form-control me-md-2 mb-2 mb-md-0"
+                            id="dateFilter">
+                    </div>
+                    <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center w-100">
+                        <label for="monthFilter" class="me-md-3 mb-1 mb-md-0">Mois</label>
+                        <x-widget.list-month-fr wire:model.live='month' class="mb-2 mb-md-0" />
+                    </div>
                 </div>
 
                 <div class="table-responsive">
@@ -18,7 +24,6 @@
                             <tr>
                                 <th>Categorie</th>
                                 <th class="text-end">Amount</th>
-
                             </tr>
                         </thead>
                         <tbody>

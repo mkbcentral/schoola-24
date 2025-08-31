@@ -1,7 +1,7 @@
 <div>
     <div class="card shadow-lg border-0">
         <div class="card-header">
-            <h4 class="text-uppercase mb-0">Dépenses journ. sur le frais scolaire</h4>
+            <h4 class="text-uppercase mb-0 fs-6 fs-md-5">Dépenses journ. sur le frais scolaire</h4>
         </div>
         <div class="card-body">
             <form class="row g-3 align-items-end mb-4">
