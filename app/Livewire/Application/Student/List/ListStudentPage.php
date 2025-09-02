@@ -148,7 +148,6 @@ class ListStudentPage extends Component
     {
         try {
             $status = RegistrationFeature::delete($student->registration);
-            dd($status);
             if ($status) {
                 $this->dispatch('info', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {
