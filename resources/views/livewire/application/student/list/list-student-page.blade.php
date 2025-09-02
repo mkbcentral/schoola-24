@@ -116,7 +116,7 @@
                                                 href="#" />
                                             <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer'
                                                 wire:confirm="Etês-vous sûre de supprimer ?" href="#"
-                                                wire:click='delete({{ $registration->student }})' />
+                                                wire:click='delete({{ $registration }})' />
                                         @endcan
 
                                         @if (!$registration->qr_code)

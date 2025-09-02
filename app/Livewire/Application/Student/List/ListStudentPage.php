@@ -5,7 +5,9 @@ namespace App\Livewire\Application\Student\List;
 use App\Domain\Features\Registration\RegistrationFeature;
 use App\Domain\Features\Student\StudentFeature;
 use App\Domain\Utils\AppMessage;
+use App\Models\Payment;
 use App\Models\Registration;
+use App\Models\SmsPayment;
 use App\Models\Student;
 use Exception;
 use Livewire\Attributes\Url;
@@ -144,15 +146,20 @@ class ListStudentPage extends Component
      * Supprimer un élève
      * @return void
      */
-    public function delete(Student $student): void
+    public function delete(Registration $registration): void
     {
         try {
-            $status = RegistrationFeature::delete($student->registration);
-            if ($status) {
-                $this->dispatch('info', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
-            } else {
-                $this->dispatch('error', ['message' => AppMessage::DATA_DELETED_FAILLED . ", car l'élève a des données"]);
+            $payments = Payment::where('registration_id', $registration->id)->get();
+            foreach ($payments as $p) {
+                SmsPayment::where('payment_id', $p->id)->delete();
+                $p->delete();
             }
+            $student = $registration->student;
+            $registration->delete();
+            if ($student) {
+                $student->delete();
+            }
+            $this->dispatch('info', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
