@@ -259,7 +259,7 @@ body {
     overflow: visible;
     background-color: var(--card-bg);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    min-width: 900px;
+    //min-width: 900px;
 }
 
 .table thead th {
@@ -272,7 +272,7 @@ body {
     letter-spacing: 0.7px;
     vertical-align: middle;
     background-color: rgb(100, 100, 100);
-    
+
 }
 
 .table tbody tr:only-child .dropdown-menu {
