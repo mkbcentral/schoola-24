@@ -4,6 +4,7 @@ namespace App\Domain\Features\Registration;
 
 use App\Domain\Contract\Registration\IRegistration;
 use App\Domain\Features\Student\StudentFeature;
+use App\Models\Payment;
 use App\Models\Registration;
 
 class RegistrationFeature implements IRegistration
@@ -21,11 +22,10 @@ class RegistrationFeature implements IRegistration
     public static function delete(Registration $registration): bool
     {
         $status = false;
-        if ($registration->payments->isEmpty()) {
-            RegistrationFeature::delete($registration);
-            StudentFeature::delete($registration->student);
-            $status = true;
-        }
+        $reg = RegistrationFeature::delete($registration);
+        Payment::where('registration_id', $registration->id)->delete();
+        StudentFeature::delete($registration->student);
+        $status = true;
         return $status;
     }
     /**
