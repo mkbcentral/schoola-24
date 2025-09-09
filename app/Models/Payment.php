@@ -21,7 +21,6 @@ class Payment extends Model
         'rate_id',
         'user_id',
         'is_paid',
-        'created_at',
     ];
 
     /**
@@ -92,76 +91,40 @@ class Payment extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $this->reusableScopeData($query)
-            ->where(
-                'registrations.school_year_id',
-                SchoolYear::DEFAULT_SCHOOL_YEAR_ID()
-            )
-            ->when(
-                $filters['date'],
-                function ($query, $f) {
-                    return $query->whereDate('payments.created_at', $f);
-                }
-            )
-            ->when(
-                $filters['month'],
-                function ($query, $f) {
-                    return $query->where('payments.month', $f);
-                }
-            )
-            ->when(
-                $filters['categoryFeeId'],
-                function ($query, $f) {
-                    return $query->where('category_fees.id', $f);
-                }
-            )
-            ->when(
-                $filters['feeId'],
-                function ($query, $f) {
-                    return $query->where('payments.scolar_fee_id', $f);
-                }
-            )
-            ->when(
-                $filters['sectionId'],
-                function ($query, $f) {
-                    return $query->where('sections.id', $f);
-                }
-            )
-            ->when(
-                $filters['optionId'],
-                function ($query, $f) {
-                    return $query->where('options.id', $f);
-                }
-            )
-            ->when(
-                $filters['classRoomId'],
-                function ($query, $f) {
-                    return $query->where('registrations.class_room_id', $f);
-                }
-            )
-            ->when(
-                $filters['isPaid'],
-                function ($query, $f) {
-                    return $query->where('payments.is_paid', $f);
-                }
-            )
-            ->when(
-                $filters['isAccessory'],
-                function ($query, $f) {
-                    return $query->where('category_fees.is_accessory', $f);
-                }
-            )
-            ->when(
-                $filters['userId'],
-                function ($query, $f) {
-                    return $query->where('payments.user_id', $f);
-                }
-            )
-            ->when(
-                $filters['key_to_search'],
-                function ($query, $f) {
-                    return $query->where('students.name', 'like', '%' . $f . '%');
-                }
-            )
+            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->when($filters['date'] ?? null, function ($query, $f) {
+                return $query->whereDate('payments.created_at', $f);
+            })
+            ->when($filters['month'] ?? null, function ($query, $f) {
+                return $query->where('payments.month', $f);
+            })
+            ->when($filters['categoryFeeId'] ?? null, function ($query, $f) {
+                return $query->where('category_fees.id', $f);
+            })
+            ->when($filters['feeId'] ?? null, function ($query, $f) {
+                return $query->where('payments.scolar_fee_id', $f);
+            })
+            ->when($filters['sectionId'] ?? null, function ($query, $f) {
+                return $query->where('sections.id', $f);
+            })
+            ->when($filters['optionId'] ?? null, function ($query, $f) {
+                return $query->where('options.id', $f);
+            })
+            ->when($filters['classRoomId'] ?? null, function ($query, $f) {
+                return $query->where('registrations.class_room_id', $f);
+            })
+            ->when($filters['isPaid'] ?? null, function ($query, $f) {
+                return $query->where('payments.is_paid', $f);
+            })
+            ->when($filters['isAccessory'] ?? null, function ($query, $f) {
+                return $query->where('category_fees.is_accessory', $f);
+            })
+            ->when($filters['userId'] ?? null, function ($query, $f) {
+                return $query->where('payments.user_id', $f);
+            })
+            ->when($filters['key_to_search'] ?? null, function ($query, $f) {
+                return $query->where('students.name', 'like', '%' . $f . '%');
+            })
             ->with([
                 'registration',
                 'scolarFee',

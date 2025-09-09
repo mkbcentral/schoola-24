@@ -24,7 +24,13 @@
                 </div>
                 <div class="col-12 col-md-auto">
                     <x-form.label value="{{ __('Type frais') }}" class="me-2" />
-                    <x-widget.data.list-cat-scolar-fee wire:model.live='category_fee_filter' />
+                    <select id="my-select" class="form-select form-control" wire:model.live='category_fee_filter'>
+                        <option value="0">Choisir...</option>
+                        @foreach ($categoryFees as $cat)
+                            <option class="text-uppercase" value="{{ $cat->id }}">{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+
                 </div>
                 <div class="col-12 col-md-auto">
                     <x-form.label value="{{ __('Option') }}" class="me-2" />

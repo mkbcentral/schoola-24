@@ -37,7 +37,7 @@
                 </div>
                 <div class="d-flex align-items-center">
                     <x-others.dropdown wire:ignore.self icon="bi bi-printer-fill" title='Impression'
-                        class="btn-secondary btn-sm ms-2">
+                        class="btn-outline-secondary btn-sm ms-2">
                         @if ($isByDate == true)
                             <x-others.dropdown-link iconLink='bi bi-printer-fill'
                                 labelText='Imprimer rapport journalier'

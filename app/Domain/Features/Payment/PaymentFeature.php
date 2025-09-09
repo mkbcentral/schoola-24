@@ -14,15 +14,16 @@ class PaymentFeature implements IPayment
      */
     public static function create(array $input): Payment|null
     {
-        return
-            Payment::create([
-                'payment_number' => rand(100, 1000),
-                'month' => $input['month'],
-                'registration_id' => $input['registration_id'],
-                'scolar_fee_id' => $input['scolar_fee_id'],
-                'rate_id' => Rate::DEFAULT_RATE_ID(),
-                'user_id' => Auth::id()
-            ]);
+        // Génère un numéro de paiement unique basé sur le timestamp et l'ID utilisateur
+        $paymentNumber = uniqid('PAY-') . '-' . (Auth::id() ?? '0');
+        return Payment::create([
+            'payment_number' => $paymentNumber,
+            'month' => $input['month'] ?? null,
+            'registration_id' => $input['registration_id'] ?? null,
+            'scolar_fee_id' => $input['scolar_fee_id'] ?? null,
+            'rate_id' => Rate::DEFAULT_RATE_ID(),
+            'user_id' => Auth::id()
+        ]);
     }
     /**
      * @inheritDoc
@@ -63,14 +64,27 @@ class PaymentFeature implements IPayment
     public static function getCount(
         string|null $date,
         string|null $month,
-        int|null    $categfeeIdoryFeeId,
+        int|null    $categoryFeeId,
         int|null    $feeId,
         int|null    $sectionId,
         int|null    $optionId,
         int|null    $classRoomId,
         bool|null   $isPaid,
     ): int {
-        return 0;
+        $filters = [
+            'date' => $date,
+            'month' => $month,
+            'categoryFeeId' => $categoryFeeId,
+            'feeId' => $feeId,
+            'sectionId' => $sectionId,
+            'optionId' => $optionId,
+            'classRoomId' => $classRoomId,
+            'isPaid' => $isPaid,
+            'isAccessory' => null,
+            'userId' => null,
+            'key_to_search' => null,
+        ];
+        return Payment::query()->filter($filters)->count();
     }
     /**
      * @inheritDoc
@@ -101,16 +115,11 @@ class PaymentFeature implements IPayment
             'isAccessory' => $isAccessory,
             'userId' => $userId,
         ];
-
-        $total = 0;
-        $payments = Payment::query()
+        // Utilise la somme SQL pour plus de performance
+        return (float) Payment::query()
             ->filter($filters)
-            ->get();
-        foreach ($payments as $payment) {
-            $total += $payment->scolarFee->amount;
-        }
 
-        return $total;
+            ->sum('scolar_fees.amount');
     }
 
     public static function getSinglePaymentForStudentWithMonth(

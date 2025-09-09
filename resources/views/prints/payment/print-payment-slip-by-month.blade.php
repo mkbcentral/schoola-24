@@ -52,5 +52,5 @@
             @endif
         </table>
         <x-widget.finance-info />
-    </div>widget.finance-info
+    </div>
 </x-print-layout>

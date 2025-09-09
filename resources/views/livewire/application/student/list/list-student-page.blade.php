@@ -7,7 +7,7 @@
         <livewire:application.dashboard.registration.student-info-card-page />
         <div class="d-flex flex-column flex-md-row justify-content-between mt-2 gap-2">
             <div class="d-flex flex-wrap align-items-center mb-2 mb-md-0 gap-2">
-                <x-form.search-input wire:model.live='q' class="w-100 w-md-auto" />
+                <x-form.search-input wire:model.live='q' />
                 <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical" class="ms-0 ms-md-2">
                     <x-others.dropdown-link wire:click='refreshData' iconLink='bi bi-arrow-repeat'
                         labelText='Actualiser' href="#" />
@@ -131,6 +131,15 @@
                                                 data-bs-target="#form-give-up-student"
                                                 wire:click='openMakeGiveUpStudentFom({{ $registration }})'
                                                 href="#" />
+                                            <x-others.dropdown-link iconLink='bi bi-cash-stack' :labelText="$registration->is_fee_exempted
+                                                ? 'Retirer exemption frais'
+                                                : 'Exempter des frais'"
+                                                wire:click='toggleFeeExempted({{ $registration }})' href="#" />
+                                            <x-others.dropdown-link iconLink='bi bi-file-earmark-plus'
+                                                labelText='Dérogation' data-bs-toggle="modal"
+                                                data-bs-target="#form-derogation"
+                                                wire:click='openDerogationModal({{ $registration }})'
+                                                href="#" />
                                             <x-others.dropdown-link iconLink='bi bi-info-circle-fill'
                                                 labelText='Voir détails'
                                                 href="{{ route('student.detail', $registration) }}" />
@@ -191,6 +200,7 @@
     @endpush
 
     <livewire:application.student.form.form-edit-student-page />
+    <livewire:application.student.form.form-create-derogation-page />
     <livewire:application.registration.form.form-give-up-student-page />
     <livewire:application.registration.form.form-change-class-student-page />
 </div>

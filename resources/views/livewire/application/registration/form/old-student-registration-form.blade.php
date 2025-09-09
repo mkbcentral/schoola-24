@@ -31,13 +31,6 @@
                 </div>
                 <div class="row g-3 mt-1">
                     <div class="col-12 col-md-6">
-                        <x-form.label value="{{ __('Type inscription') }}" class="mb-1 fw-semibold" />
-                        <x-widget.data.list-registration-fee-by-option optionId="{{ $selectedOption }}"
-                            isOld="{{ $isOldSelected }}" type='text' wire:model.blur='registration_fee_id'
-                            :error="'registration_fee_id'" />
-                        <x-errors.validation-error value='registration_fee_id' class="mt-1" />
-                    </div>
-                    <div class="col-12 col-md-6">
                         <x-form.label value="{{ __('Date inscription') }}" icon='' class="mb-1 fw-semibold" />
                         <x-form.input type='date' wire:model.blur='created_at' :error="'created_at'" />
                         <x-errors.validation-error value='created_at' class="mt-1" />

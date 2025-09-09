@@ -7,7 +7,9 @@ use App\Domain\Helpers\RegistrationHelper;
 use App\Domain\Utils\AppMessage;
 use App\Models\Rate;
 use App\Models\Registration;
+use App\Models\RegistrationFee;
 use App\Models\ResponsibleStudent;
+use App\Models\School;
 use App\Models\SchoolYear;
 use App\Models\Student;
 use Exception;
@@ -38,7 +40,27 @@ class OldStudentRegistrationForm extends Component
 
     public function updatedOptionId($val)
     {
-        $this->selectedOption = $val;
+        if ($val) {
+            $this->selectedOption = $val;
+            if ($val > 0) {
+                $registrationFee = RegistrationFee::query()
+                    ->join(
+                        'category_registration_fees',
+                        'registration_fees.category_registration_fee_id',
+                        '=',
+                        'category_registration_fees.id',
+                    )
+                    ->join('options', 'registration_fees.option_id', '=', 'options.id')
+                    ->join('sections', 'options.section_id', '=', 'sections.id')
+                    ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
+                    ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                    ->where('options.id', $val)
+                    ->where('category_registration_fees.is_old', false)
+                    ->select('registration_fees.*')
+                    ->first();
+                $this->registration_fee_id = $registrationFee->id;
+            }
+        }
     }
 
     public function mount()
@@ -57,6 +79,15 @@ class OldStudentRegistrationForm extends Component
                 'created_at' => 'required|date',
             ]
         );
+        // Vérifier s'il existe déjà une inscription pour cet élève dans l'année scolaire courante
+        $existingRegistration = Registration::where('student_id', $this->selectedStudent->id)
+            ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+            ->first();
+
+        if ($existingRegistration) {
+            $this->dispatch('error', ['message' => 'Cet élève est déjà inscrit pour cette année scolaire.']);
+            return;
+        }
         try {
             $registration = RegistrationFeature::create([
                 'code' => RegistrationHelper::gerenateRegistrationCode($this->class_room_id, rand(100, 1000)),

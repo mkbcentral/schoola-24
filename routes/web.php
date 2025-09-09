@@ -45,6 +45,7 @@ use App\Livewire\Application\Registration\List\ListRegistrationByDatePage;
 use App\Livewire\Application\Registration\List\ListRegistrationByMonthPage;
 use App\Livewire\Application\Registration\MainRegistrationPage;
 use App\Livewire\Application\Report\ReportStudentEnrollmentReport;
+use App\Livewire\Application\Report\StudentSpecialStatusReportPage;
 use App\Livewire\Application\Setting\MainSettingPage;
 use App\Livewire\Application\Student\DetailStudentPage;
 use App\Livewire\Application\Student\List\ListResponsibleStudentPage;
@@ -119,6 +120,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('rapport')->group(function () {
             //repport des effectifs Route::get('students-by-class-room/{classRoomId}', ListStudentByClassRoomPage::class)->name('students.by.class.room')->lazy();
             Route::get('student-enrollment', ReportStudentEnrollmentReport::class)->name('rapport.student.enrollment')->lazy();
+            Route::get('student-special-status', StudentSpecialStatusReportPage::class)->name('rapport.student.special.status')->lazy();
         });
     });
 
@@ -175,7 +177,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('payments-by-date/{date}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByDate')->name('print.payment.date');
             Route::get('payments-by-month/{month}/{categoryFeeId}/{feeId}/{sectionid}/{optionid}/{classRoomId}', 'printPaymentsByMonth')->name('print.payment.month');
             Route::get('payments-slip-by-date/{date}', 'printPaymentSlipByDate')->name('print.payment.slip.date');
-            Route::get('payments-slip-by-month/{month}', 'printPaymentSlipByMonth')->name('print.payment.slip.month');
             Route::get('payments-slip-by-month/{month}', 'printPaymentSlipByMonth')->name('print.payment.slip.month');
         });
     });

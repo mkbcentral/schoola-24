@@ -14,6 +14,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+
 class ListStudentPage extends Component
 {
     use WithPagination;
@@ -31,10 +32,17 @@ class ListStudentPage extends Component
     public $sortBy = 'registrations.code';
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
-
     public ?Student $studentToDelete;
     public  $selectedRegistrations = [];
     public bool $selectPageRows = false;
+
+    /**
+     * Ouvrir le modal de création de dérogation pour une inscription
+     */
+    public function openDerogationModal(Registration $registration): void
+    {
+        $this->dispatch('openDerogationModal', $registration);
+    }
 
     /**
      * Trier le manière (ASC/DESC)
@@ -189,6 +197,7 @@ class ListStudentPage extends Component
     }
 
 
+
     /**
      * Fonction magique (computed) qui permet d'avoir les regisations dans tout les composant
      * @return mixed
@@ -210,6 +219,15 @@ class ListStudentPage extends Component
 
 
         );
+    }
+
+    /**
+     * Marquer ou démarcher une inscription comme exemptée de frais
+     */
+    public function toggleFeeExempted(Registration $registration): void
+    {
+        $registration->markFeeExempted(!$registration->is_fee_exempted);
+        $this->dispatch('added', ['message' => $registration->is_fee_exempted ? 'Inscription marquée comme exemptée de frais.' : 'Exemption de frais retirée.']);
     }
 
     public function mount() {}

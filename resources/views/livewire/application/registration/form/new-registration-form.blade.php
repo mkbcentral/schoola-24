@@ -46,8 +46,8 @@
                 </div>
                 <div class="col-12 col-md-4">
                     <x-form.label value="{{ __('Option') }}" class="mb-1 fw-semibold" />
-                    <x-widget.data.list-option type='text' wire:model.live='form.option_id' :error="'form.option_id'" />
-                    <x-errors.validation-error value='form.option_id' class="mt-1" />
+                    <x-widget.data.list-option type='text' wire:model.live='selectedOption' :error="'selectedOption'" />
+                    <x-errors.validation-error value='selectedOption' class="mt-1" />
                 </div>
                 <div class="col-12 col-md-4">
                     <x-form.label value="{{ __('Classe') }}" class="mb-1 fw-semibold" />
@@ -57,13 +57,7 @@
                 </div>
             </div>
             <div class="row g-3 mt-1">
-                <div class="col-12 col-md-6">
-                    <x-form.label value="{{ __('Type inscription') }}" class="mb-1 fw-semibold" />
-                    <x-widget.data.list-registration-fee-by-option optionId="{{ $selectedOption }}"
-                        isOld="{{ $isOldSelected }}" type='text' wire:model.blur='form.registration_fee_id'
-                        :error="'form.registration_fee_id'" />
-                    <x-errors.validation-error value='form.registration_fee_id' class="mt-1" />
-                </div>
+
                 <div class="col-12 col-md-6">
                     <x-form.label value="{{ __('Date inscription') }}" class="mb-1 fw-semibold" />
                     <x-form.input type='date' wire:model.blur='form.created_at' :error="'form.created_at'"

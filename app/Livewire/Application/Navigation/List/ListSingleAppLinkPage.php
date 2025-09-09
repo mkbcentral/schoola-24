@@ -7,9 +7,12 @@ use App\Models\SingleAppLink;
 use Exception;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListSingleAppLinkPage extends Component
 {
+    use WithPagination;
+
     #[Url(as: 'q')]
     public $q = '';
     protected $listeners = [

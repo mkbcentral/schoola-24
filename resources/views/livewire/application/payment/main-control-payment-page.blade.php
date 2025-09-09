@@ -22,14 +22,74 @@
                         <x-widget.loading-circular-md wire:loading />
                     </div>
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        @if ($categoryFeeSelected?->is_paid_in_installment)
-                            <livewire:application.payment.list.list-student-for-control-payment-by-tranch-page
-                                :categoryFeeId='$selectedIndex' />
-                        @else
-                            <livewire:application.payment.list.list-student-for-control-payment-page
-                                :categoryFeeId='$selectedIndex' />
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                            <div class="d-flex flex-wrap gap-2">
+                                <div class="d-flex align-items-center me-2">
+                                    <x-form.label value="{{ __('Option') }}" class="me-2" />
+                                    <x-widget.data.list-option wire:model.live='option_filter' />
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <x-form.label value="{{ __('Classe') }}" class="me-2" />
+                                    <x-widget.data.list-class-room-by-option optionId='{{ $selectedOptionId }}'
+                                        wire:model.live='class_room_filter' />
+                                </div>
+                            </div>
+                            <div class="flex-grow-1" style="max-width: 300px;">
+                                <x-form.search-input wire:model.live='q' />
+                            </div>
+                        </div>
+                        @if ($results)
+                            <div class="table-responsive mt-2">
+                                <table class="table table-bordered table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Élève</th>
+                                            @if (isset($results[0]['category']))
+                                                <th>Catégorie</th>
+                                                <th>Statut</th>
+                                            @else
+                                                @foreach (['AOUT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DECEMBRE', 'JANVIER', 'FEVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN'] as $mois)
+                                                    <th class="text-center">{{ $mois }}</th>
+                                                @endforeach
+                                                <th class="text-center">Paiement récent (4j)</th>
+                                            @endif
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($results as $row)
+                                            <tr>
+                                                <td>{{ $row['student'] }}</td>
+                                                @if (isset($row['category']))
+                                                    <td>{{ $row['category'] }}</td>
+                                                    <td>
+                                                        <span
+                                                            class="badge {{ $row['status'] === 'OK' ? 'bg-success' : 'bg-danger' }}">
+                                                            {{ $row['status'] }}
+                                                        </span>
+                                                    </td>
+                                                @else
+                                                    @foreach (['AOUT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DECEMBRE', 'JANVIER', 'FEVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN'] as $mois)
+                                                        <td
+                                                            class="text-center {{ $row['months'][$mois] === 'OK' ? 'bg-success' : ($row['months'][$mois] ? 'bg-danger' : 'bg-secondary') }}">
+                                                            {{ $row['months'][$mois] ?? '-' }}
+                                                        </td>
+                                                    @endforeach
+                                                    <td>
+                                                        @if ($row['recent_payment_status'])
+                                                            <span class="badge bg-success">Oui</span>
+                                                            {{ $row['last_payment_date'] }}
+                                                        @else
+                                                            <span class="badge bg-danger">Non</span>
+                                                            {{ $row['last_payment_date'] }}
+                                                        @endif
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         @endif
-
                     </div>
                 </div>
             </div>

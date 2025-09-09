@@ -29,7 +29,18 @@ class Registration extends Model
         'abandoned',
         'class_changed',
         'created_at',
+        'is_fee_exempted',
     ];
+
+    /**
+     * Get the derogation associated with the Registration
+     *
+     * @return HasOne
+     */
+    public function derogation(): HasOne
+    {
+        return $this->hasOne(RegistrationDerogation::class);
+    }
 
 
     /**
@@ -44,7 +55,17 @@ class Registration extends Model
             'abandoned' => 'boolean',
             'class_changed' => 'boolean',
             'is_registered' => 'boolean',
+            'is_fee_exempted' => 'boolean',
         ];
+    }
+
+    /**
+     * Marque l'inscription comme exemptée ou non des frais.
+     */
+    public function markFeeExempted(bool $exempted = true): void
+    {
+        $this->is_fee_exempted = $exempted;
+        $this->save();
     }
 
     /**

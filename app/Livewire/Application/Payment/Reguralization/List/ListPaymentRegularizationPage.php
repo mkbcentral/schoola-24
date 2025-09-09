@@ -112,7 +112,10 @@ class ListPaymentRegularizationPage extends Component
                 $this->category_fee_filter,
                 $this->option_filter,
                 $this->class_room_filter
-            )
+            ),
+            'categoryFees' => CategoryFee::query()
+                ->whereIn('id', [1, 2, 5, 14, 15])
+                ->get(),
         ]);
     }
 }
