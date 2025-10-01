@@ -1,0 +1,65 @@
+# GitHub Actions workflow for Laravel automatic deployment
+# Place this file in .github/workflows/deploy.yml
+
+name: Deploy Laravel App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, bcmath, xml, ctype, json, tokenizer, fileinfo, openssl, pdo, curl
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: |
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Copy .env
+        run: |
+          cp .env.example .env
+        if: ${{ !exists('.env') }}
+
+      - name: Generate app key
+        run: php artisan key:generate
+        env:
+          APP_ENV: production
+
+      - name: Run migrations
+        run: php artisan migrate --force
+        env:
+          APP_ENV: production
+
+      - name: Build assets
+        run: |
+          npm ci
+          npm run build
+        env:
+          CI: true
+
+      - name: Deploy to server (example with rsync)
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          rsync -avz --exclude='.env' --exclude='node_modules' --exclude='vendor' ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
+
+      - name: Install Composer & NPM on server (via SSH)
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.SERVER_PATH }} && composer install --no-interaction --prefer-dist --optimize-autoloader && npm ci && npm run build && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache"

@@ -46,6 +46,14 @@
                                 {{ app_format_number($scolarFee->amount, 1) . ' ' . $scolarFee->categoryFee->currency }}
                                 </h3>
                         @endif
+                        <div class="mt-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="is_ipaid" wire:model="is_ipaid">
+                                <label class="form-check-label" for="is_ipaid">
+                                    Valider le paiement
+                                </label>
+                            </div>
+                        </div>
                         <div class="mt-4">
                             @if ($scolarFee)
                                 <x-form.app-button type='submit' textButton="Payer" icon="bi bi-arrow-left-right"

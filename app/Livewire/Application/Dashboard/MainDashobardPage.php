@@ -4,7 +4,6 @@ namespace App\Livewire\Application\Dashboard;
 
 use App\Domain\Helpers\SmsNotificationHelper;
 use App\Domain\Utils\AppMessage;
-use App\Models\Registration;
 use Livewire\Component;
 
 class MainDashobardPage extends Component
@@ -24,7 +23,6 @@ class MainDashobardPage extends Component
     {
         $this->date_filter = date('Y-m-d');
     }
-
     public function testSMS()
     {
         $phone = '+243898337969';

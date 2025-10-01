@@ -14,12 +14,11 @@ class SmsNotificationHelper
         string $message
     ): void {
         $client = SMSClient::getInstance(
-            env('SMS_ORANGE_CLEINT_ID'),
-            env('SMS_ORANGE_CLIENT_SECRET')
+            'Basic ZkY2YVpIRlNEeU9qeTI2VFZ3WU0xRGhLckZIa0FoMnc6NUJ5a3B6dERLSGxiRWN1UWF0T2JzZlNhZ1loZ080eVN4dmJOTHduYmdMRVM='
         );
         $sms = new SMS($client);
-        $sms->message($message)  //Message à envoyé
-            ->from('+243898337969') //Le numéro d'envoir (Ex. ton numero orange)
+        $sms->message($message)  //Message à envoyer
+            ->from('+243898337969') //Le numéro d'envoi (Ex. ton numero orange)
             ->to($to) //Le numero du destinataire
             ->send();
     }

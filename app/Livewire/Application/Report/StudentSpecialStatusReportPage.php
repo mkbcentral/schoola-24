@@ -46,10 +46,10 @@ class StudentSpecialStatusReportPage extends Component
 
     public function loadLists()
     {
-        $queryDerog = Registration::with(['student', 'classRoom.option'])
+        $queryDerog = Registration::with(['student', 'classRoom.option', 'derogations'])
             ->where('is_fee_exempted', false)
             ->where('is_under_derogation', true);
-        $queryExempt = Registration::with(['student', 'classRoom.option'])
+        $queryExempt = Registration::with(['student', 'classRoom.option', 'derogations'])
             ->where('is_fee_exempted', true);
         if ($this->optionId) {
             $queryDerog->whereHas('classRoom.option', function ($q) {

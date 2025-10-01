@@ -54,28 +54,40 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Classe</th>
-                                    <th>Option</th>
                                     <th>Durée</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($derogations as $reg)
-                                    <tr>
-                                        <td>{{ $reg->student->name ?? '-' }}</td>
-                                        <td>{{ $reg->classRoom->name ?? '-' }}</td>
-                                        <td>{{ $reg->classRoom->option->name ?? '-' }}</td>
-                                        <td>
-                                            @if ($reg->derogation && $reg->derogation->end_date)
-                                                {{ \Carbon\Carbon::parse($reg->derogation->start_date)->format('d/m/Y') }}
-                                                -
-                                                {{ \Carbon\Carbon::parse($reg->derogation->end_date)->format('d/m/Y') }}
-                                                ({{ \Carbon\Carbon::parse($reg->derogation->start_date)->diffInDays(\Carbon\Carbon::parse($reg->derogation->end_date)) }}
-                                                jours)
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-                                    </tr>
+                                    @if ($reg->derogations && $reg->derogations->count())
+                                        @foreach ($reg->derogations as $derogation)
+                                            <tr>
+                                                <td>{{ $reg->student->name ?? '-' }}</td>
+                                                <td>{{ $reg->classRoom->name . '/' . $reg->classRoom->option->name ?? '-' }}
+                                                </td>
+                                                <td>
+                                                    @if ($derogation->end_date)
+                                                        {{ \Carbon\Carbon::parse($derogation->start_date)->format('d/m/Y') }}
+                                                        -
+                                                        {{ \Carbon\Carbon::parse($derogation->end_date)->format('d/m/Y') }}
+                                                        ({{ \Carbon\Carbon::parse($derogation->start_date)->diffInDays(\Carbon\Carbon::parse($derogation->end_date)) }}
+                                                        jours)
+                                                    @elseif ($derogation->month_date)
+                                                        {{ \Carbon\Carbon::parse($derogation->month_date)->format('d/m/Y') }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td>{{ $reg->student->name ?? '-' }}</td>
+                                            <td>{{ $reg->classRoom->name . '/' . $reg->classRoom->option->name ?? '-' }}
+                                            </td>
+                                            <td>-</td>
+                                        </tr>
+                                    @endif
                                 @empty
                                     <tr>
                                         <td colspan="4" class="text-center text-muted">Aucun élève</td>

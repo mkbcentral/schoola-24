@@ -75,7 +75,7 @@
                                     <td>{{ $user?->role?->name }}</td>
                                     <td class="text-center">
                                         <x-others.dropdown icon="bi bi-three-dots-vertical"
-                                            class="btn-secondary btn-sm">
+                                            class="btn-outline-secondary btn-sm">
                                             <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer'
                                                 href="#" data-bs-toggle="modal" data-bs-target="#form-user"
                                                 wire:click='edit({{ $user }})' class="" />

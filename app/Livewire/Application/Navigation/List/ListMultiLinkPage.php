@@ -7,9 +7,11 @@ use App\Models\MultiAppLink;
 use Exception;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListMultiLinkPage extends Component
 {
+    use WithPagination;
     #[Url(as: 'q')]
     public $q = '';
     protected $listeners = [

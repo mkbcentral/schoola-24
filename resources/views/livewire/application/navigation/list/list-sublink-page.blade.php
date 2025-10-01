@@ -33,7 +33,7 @@
                         <td>{{ $subLink->multiAppLink->name }}</td>
                         <td class="text-center">
                             <x-others.dropdown wire:ignore.self icon="bi bi-three-dots-vertical"
-                                class="btn-secondary btn-sm">
+                                class="btn-outline-secondary btn-sm">
                                 <x-others.dropdown-link iconLink='bi bi-pencil-fill' labelText='Editer' href="#"
                                     wire:click='edit({{ $subLink }})' />
                                 <x-others.dropdown-link iconLink='bi bi-trash-fill' labelText='Supprimer' href="#"

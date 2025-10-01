@@ -78,12 +78,11 @@ class StudentFeeStatusService
         $categories = CategoryFee::whereIn('id', $categoryFeeIds)->get();
         $installmentCategories = $categories->where('is_paid_in_installment', true);
         $normalCategories = $categories->where('is_paid_in_installment', false);
-
-        // Si au moins une catégorie est en mode "par tranche"
+        // ==================== Paiement par tranche ====================
         if ($installmentCategories->count() > 0) {
             foreach ($registrations as $registration) {
                 foreach ($installmentCategories as $cat) {
-                    // Paiement par tranche : on considère "en ordre" si au moins un paiement payé existe pour cette catégorie sur l'inscription
+                    // Paiement par tranche : on considère "en ordre" si au moins un paiement payé existe
                     $hasPayment = $registration->payments
                         ->filter(function ($payment) use ($cat) {
                             $fee = $payment->scolarFee;
@@ -92,36 +91,51 @@ class StudentFeeStatusService
                         })
                         ->isNotEmpty();
 
-                    // Dernière date de paiement pour cette catégorie
-                    $lastPaymentDate = $registration->payments
+                    // 🔑 Dernier paiement pour cette catégorie
+                    $lastPayment = $registration->payments
                         ->filter(function ($payment) use ($cat) {
                             $fee = $payment->scolarFee;
                             if (!$fee) return false;
                             return $fee->category_fee_id == $cat->id && $payment->is_paid;
                         })
                         ->sortByDesc('created_at')
-                        ->first()?->created_at;
+                        ->first();
 
-                    // last_payment_date_status: true si le paiement a été fait entre aujourd'hui et 4 jours avant
-                    $lastPaymentDateStatus = false;
+                    $lastPaymentDate = $lastPayment?->created_at;
+                    $lastPaymentDateFormatted = $lastPaymentDate?->format('d/m/Y');
+
+                    // 🔑 Vérification paiement récent (aujourd’hui ou 4 jours avant)
+                    $recentPaymentStatus = false;
                     if ($lastPaymentDate) {
-                        $now = now();
-                        $diff = $lastPaymentDate->diffInDays($now, false);
-                        $lastPaymentDateStatus = $diff >= 0 && $diff <= 4;
+                        $now = now()->startOfDay();
+                        $paymentDay = $lastPaymentDate->copy()->startOfDay();
+                        $diff = $paymentDay->diffInDays($now, false);
+                        $recentPaymentStatus = ($diff >= 0 && $diff <= 4);
+                        // 🔑 Génération du label
+                        $label = '';
+                        if ($diff == 0) {
+                            $label = "Aujourd'hui";
+                        } elseif ($diff == 1) {
+                            $label = "Il y a 1 jour";
+                        } else {
+                            $label = "Il y a {$diff} jours";
+                        }
                     }
 
                     $result[] = [
                         'student' => $registration->student->name ?? 'Unknown',
                         'category' => $cat->name,
                         'status' => $hasPayment ? 'OK' : '-',
-                        'last_payment_date' => $lastPaymentDate?->format('Y-m-d H:i:s'),
-                        'last_payment_date_status' => $lastPaymentDateStatus,
+                        'last_payment_date' => $lastPaymentDateFormatted,
+                        'last_payment_date_status' => $recentPaymentStatus,
+                        'interval_label' => $label,
+                        'recent_payment_status' => $recentPaymentStatus, // 🔑 ajouté pour cohérence
+                        'is_under_derogation' => $registration->is_under_derogation ?? false,
                     ];
                 }
             }
         }
-
-        // Pour les autres catégories (paiement mensuel)
+        // ==================== Paiement mensuel ====================
         if ($normalCategories->count() > 0) {
             foreach ($registrations as $registration) {
                 $row = [
@@ -130,43 +144,74 @@ class StudentFeeStatusService
                     'recent_payment_status' => false,
                     'last_payment_date' => null,
                     'last_payment_date_status' => false,
+                    'interval_label' => '',
                 ];
 
-                // Dernière date de paiement (toutes catégories concernées, tous mois)
-                $lastPaymentDate = $registration->payments
+                // 🔑 Dernier paiement toutes catégories confondues
+                $lastPayment = $registration->payments
                     ->filter(function ($payment) use ($normalCategories) {
                         $fee = $payment->scolarFee;
                         if (!$fee) return false;
                         return $normalCategories->pluck('id')->contains($fee->category_fee_id) && $payment->is_paid;
                     })
                     ->sortByDesc('created_at')
-                    ->first()?->created_at;
-                $row['last_payment_date'] = $lastPaymentDate?->format('Y-m-d H:i:s');
+                    ->first();
 
-                // last_payment_date_status: true si le paiement a été fait entre aujourd'hui et 4 jours avant
-                $lastPaymentDateStatus = false;
+                $lastPaymentDate = $lastPayment?->created_at;
+                //dd($lastPaymentDate);
+                $row['last_payment_date'] = $lastPaymentDate?->format('d/m/Y');
+
+                // 🔑 Vérification paiement récent (aujourd’hui ou 4 jours avant)
+                $recentPaymentStatus = false;
                 if ($lastPaymentDate) {
-                    $now = now();
-                    $diff = $lastPaymentDate->diffInDays($now, false);
-                    $lastPaymentDateStatus = ($diff >= 0 && $diff <= 4);
+                    $now = now()->startOfDay();
+                    $paymentDay = $lastPaymentDate->copy()->startOfDay();
+                    $diff = $paymentDay->diffInDays($now, false);
+                    $recentPaymentStatus = ($diff >= 0 && $diff <= 4);
+
+                    if ($diff >= 0 && $diff <= 4) {
+                        $recentPaymentStatus = true;
+                        // 🔑 Génération du label
+                        if ($diff == 0) {
+                            $row['interval_label'] = "Aujourd'hui";
+                        } elseif ($diff === 1) {
+                            $row['interval_label'] = "Il y a 1 jour";
+                        } else {
+                            $row['interval_label'] = "Il y a {$diff} jours";
+                        }
+                    }
                 }
-                $row['last_payment_date_status'] = $lastPaymentDateStatus;
 
-                // Vérifier s'il y a un paiement effectué entre aujourd'hui et 4 jours avant (toutes catégories confondues)
-                $recentPayment = $registration->payments
-                    ->filter(function ($payment) {
-                        if (!$payment->is_paid) return false;
-                        $createdAt = $payment->created_at;
-                        if (!$createdAt) return false;
-                        $now = now();
-                        $diff = $now->diffInDays($createdAt, false);
-                        return $diff >= 0 && $diff <= 4;
-                    })
-                    ->isNotEmpty();
-                $row['recent_payment_status'] = $recentPayment;
+                $row['recent_payment_status'] = $recentPaymentStatus;
+                $row['last_payment_date_status'] = $recentPaymentStatus;
 
+                // Vérification mois par mois
+                $derogations = $registration->derogations ?? collect();
                 foreach ($months as $moisLabel => $moisNum) {
                     $isInOrder = true;
+                    $isDerogation = false;
+                    if ($registration->is_under_derogation) {
+                        // Vérifier s'il y a une dérogation pour ce mois
+                        foreach ($derogations as $derogation) {
+                            // Cas 1 : dérogation par période (start_date/end_date)
+                            if ($derogation->start_date && $derogation->end_date) {
+                                $start = \Carbon\Carbon::parse($derogation->start_date);
+                                $end = \Carbon\Carbon::parse($derogation->end_date);
+                                if ($start->month <= $moisNum && $end->month >= $moisNum) {
+                                    $isDerogation = true;
+                                    break;
+                                }
+                            }
+                            // Cas 2 : dérogation mensuelle (month_date)
+                            if ($derogation->month_date) {
+                                $monthDate = \Carbon\Carbon::parse($derogation->month_date);
+                                if ($monthDate->month === $moisNum) {
+                                    $isDerogation = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     foreach ($normalCategories as $cat) {
                         $hasPayment = $registration->payments
                             ->filter(function ($payment) use ($cat, $moisNum) {
@@ -182,11 +227,15 @@ class StudentFeeStatusService
                             break;
                         }
                     }
-                    $row['months'][$moisLabel] = $isInOrder ? 'OK' : '-';
+                    $row['months'][$moisLabel] = [
+                        'status' => $isInOrder ? 'OK' : '-',
+                        'is_under_derogation' => $isDerogation,
+                    ];
                 }
                 $result[] = $row;
             }
         }
+
         return $result;
     }
 }

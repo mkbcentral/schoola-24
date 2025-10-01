@@ -44,6 +44,16 @@ class ClassRoom extends Model
         return $this->hasMany(ChangeClassStudent::class);
     }
 
+    /**
+     * Get all of the scolarFees for the ClassRoom
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function scolarFees(): HasMany
+    {
+        return $this->hasMany(ScolarFee::class);
+    }
+
     public function getOriginalClassRoomName(): string
     {
         return $this->name . '-' . $this->option->name;

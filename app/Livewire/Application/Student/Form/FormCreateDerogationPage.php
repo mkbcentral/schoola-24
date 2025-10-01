@@ -12,10 +12,14 @@ class FormCreateDerogationPage extends Component
     public ?Registration $registration = null;
     public $start_date = '';
     public $end_date = '';
+    public $is_month = false;
+    public $month_date = '';
 
     protected $rules = [
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
+        'start_date' => 'nullable|date',
+        'end_date' => 'nullable|date|after_or_equal:start_date',
+        'is_month' => 'boolean',
+        'month_date' => 'nullable|date',
     ];
 
     protected $listeners = [
@@ -27,16 +31,28 @@ class FormCreateDerogationPage extends Component
         $this->registration = $registration;
         $this->start_date = '';
         $this->end_date = '';
+        $this->is_month = false;
+        $this->month_date = '';
+    }
+
+    public function updatedIsMonth($value)
+    {
+        if (!$value) {
+            $this->month_date = '';
+        } else {
+            $this->month_date = date('Y-m-d');
+        }
     }
 
     public function save()
     {
         $this->validate();
-
         RegistrationDerogation::create([
             'registration_id' => $this->registration->id,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
+            'start_date' => $this->start_date ?: null,
+            'end_date' => $this->end_date ?: null,
+            'is_monthly' => $this->is_month,
+            'month_date' => $this->is_month ? $this->month_date : null,
         ]);
         // Mettre à jour la registration
         $this->registration->is_under_derogation = true;

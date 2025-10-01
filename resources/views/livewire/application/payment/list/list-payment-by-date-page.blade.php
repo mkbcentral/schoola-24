@@ -64,7 +64,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $payment?->registration->classRoom?->getOriginalClassRoomName() }}</td>
-                                <td>{{ $payment->month }}</td>
+                                <td>{{ format_fr_month_name($payment->month) }}</td>
                                 <td>{{ app_format_number($payment->getAmount(), 1) }}
                                     {{ $payment->scolarFee->categoryFee->currency }}</td>
                                 <td>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Application\Payment\Form;
 
+use App\Domain\Helpers\DateFormatHelper;
 use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\PaymentForm;
 use App\Models\CategoryFee;
@@ -9,11 +10,14 @@ use App\Models\Payment;
 use App\Models\Registration;
 use App\Models\SchoolYear;
 use App\Models\ScolarFee;
+use App\Services\StudentDebtTrackerService;
 use Exception;
 use Livewire\Component;
 
 class FormPaymentPage extends Component
 {
+
+
     protected $listeners = [
         "registrationData" => "getRegistration",
     ];
@@ -22,6 +26,9 @@ class FormPaymentPage extends Component
     public ?ScolarFee $scolarFee = null;
     public PaymentForm $form;
     public ?Registration $lastRegistration;
+
+    // Pour la case à cocher "Payer immédiatement"
+    public bool $is_ipaid = false;
 
 
     /**
@@ -32,6 +39,7 @@ class FormPaymentPage extends Component
         $this->form->reset();
         $this->form->created_at = date('Y-m-d');
         $this->form->month = date('m');
+        $this->is_ipaid = false;
     }
 
     /**
@@ -63,21 +71,32 @@ class FormPaymentPage extends Component
     public function save(): void
     {
         $this->validate();
-        try {
-
-            $this->form->create($this->registration->id, $this->scolarFee);
-            $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
-            $this->dispatch('refreshPaymentList');
-            $this->initFormFields();
-        } catch (Exception $ex) {
-            $this->dispatch('error', ['message' => $ex->getMessage()]);
+        // Convertir le numéro du mois en label (ex: '10' => 'OCTOBRE')
+        $monthLabel = DateFormatHelper::getMonthLabelFromNumber($this->form->month);
+        $result = (new StudentDebtTrackerService())->payForMonth(
+            $this->registration->id,
+            $this->selectedCategoryFeeId,
+            $monthLabel,
+            [
+                'created_at' => $this->form->created_at,
+                'is_paid' => $this->is_ipaid,
+            ]
+        );
+        if (!$result['success']) {
+            $this->dispatch('error', ['message' => $result['message'] ?? 'Error processing payment']);
+        } else {
+            $this->dispatch('added', ['message' => $result]);
         }
+        $this->dispatch('refreshPaymentList');
+        $this->initFormFields();
+        $this->is_ipaid = false;
     }
 
     public function mount(): void
     {
         $this->form->created_at = date('Y-m-d');
         $this->form->month = date('m');
+        $this->is_ipaid = false;
     }
 
 

@@ -52,6 +52,7 @@ use App\Livewire\Application\Student\List\ListResponsibleStudentPage;
 use App\Livewire\Application\Student\List\ListStudentByResponsiblePage;
 use App\Livewire\Application\Student\List\ListStudentPage;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Application\Report\MissingRevenueReportPage;
 use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -121,8 +122,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
             //repport des effectifs Route::get('students-by-class-room/{classRoomId}', ListStudentByClassRoomPage::class)->name('students.by.class.room')->lazy();
             Route::get('student-enrollment', ReportStudentEnrollmentReport::class)->name('rapport.student.enrollment')->lazy();
             Route::get('student-special-status', StudentSpecialStatusReportPage::class)->name('rapport.student.special.status')->lazy();
+            Route::get('missing-revenue', MissingRevenueReportPage::class)
+                ->name('missing.revenue.report');
         });
     });
+
+
 
     Route::get('registration/student/{registration}', DetailStudentPage::class)->name('student.detail')->lazy();
 

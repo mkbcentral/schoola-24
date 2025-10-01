@@ -58,29 +58,46 @@
                                     <tbody>
                                         @foreach ($results as $row)
                                             <tr>
-                                                <td>{{ $row['student'] }}</td>
+                                                <td class="{{ $row['recent_payment_status'] == true ? 'text-bg-warning' : '' }}"
+                                                    style="{{ isset($row['is_under_derogation']) && $row['is_under_derogation'] == true ? 'background-color: #ffeeba;' : '' }}">
+                                                    {{ $row['student'] }}
+                                                </td>
                                                 @if (isset($row['category']))
                                                     <td>{{ $row['category'] }}</td>
                                                     <td>
                                                         <span
-                                                            class="badge {{ $row['status'] === 'OK' ? 'bg-success' : 'bg-danger' }}">
+                                                            class="badge {{ $row['status'] === 'OK' ? 'text-bg-success' : 'text-bg-danger' }}">
                                                             {{ $row['status'] }}
                                                         </span>
                                                     </td>
                                                 @else
                                                     @foreach (['AOUT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DECEMBRE', 'JANVIER', 'FEVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN'] as $mois)
+                                                        @php
+                                                            $moisData = $row['months'][$mois] ?? [
+                                                                'status' => '-',
+                                                                'is_under_derogation' => false,
+                                                            ];
+                                                            $status = $moisData['status'] ?? '-';
+                                                            $isDerog = $moisData['is_under_derogation'] ?? false;
+                                                        @endphp
                                                         <td
-                                                            class="text-center {{ $row['months'][$mois] === 'OK' ? 'bg-success' : ($row['months'][$mois] ? 'bg-danger' : 'bg-secondary') }}">
-                                                            {{ $row['months'][$mois] ?? '-' }}
+                                                            class="text-center {{ $status === 'OK' ? 'bg-success' : ($status === '-' ? 'bg-secondary' : 'bg-danger') }} {{ $isDerog ? 'text-bg-warning' : '' }}">
+                                                            {{ $status }}
+                                                            @if ($isDerog)
+                                                                <span
+                                                                    class="badge bg-warning text-dark ms-1">Dérogation</span>
+                                                            @endif
                                                         </td>
                                                     @endforeach
-                                                    <td>
-                                                        @if ($row['recent_payment_status'])
-                                                            <span class="badge bg-success">Oui</span>
-                                                            {{ $row['last_payment_date'] }}
+                                                    <td
+                                                        class="{{ $row['recent_payment_status'] == true ? 'text-bg-warning' : '' }} text-end">
+                                                        @if ($row['recent_payment_status'] == true)
+                                                            <span class="badge text-bg-light">Oui</span>
+                                                            {{ $row['interval_label'] }}
                                                         @else
-                                                            <span class="badge bg-danger">Non</span>
-                                                            {{ $row['last_payment_date'] }}
+                                                            <span>
+                                                                -
+                                                            </span>
                                                         @endif
                                                     </td>
                                                 @endif

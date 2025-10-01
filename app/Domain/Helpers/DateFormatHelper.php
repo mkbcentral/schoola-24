@@ -46,4 +46,22 @@ class DateFormatHelper
             ['name' => 'JUIN', 'number' => '06'],
         ];
     }
+
+    public static function getMonthLabelFromNumber($monthNumber): string
+    {
+        $months = [
+            '09' => 'SEPTEMBRE',
+            '10' => 'OCTOBRE',
+            '11' => 'NOVEMBRE',
+            '12' => 'DECEMBRE',
+            '01' => 'JANVIER',
+            '02' => 'FEVRIER',
+            '03' => 'MARS',
+            '04' => 'AVRIL',
+            '05' => 'MAI',
+            '06' => 'JUIN',
+        ];
+        $monthNumber = str_pad($monthNumber, 2, '0', STR_PAD_LEFT);
+        return $months[$monthNumber] ?? $monthNumber;
+    }
 }

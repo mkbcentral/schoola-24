@@ -13,6 +13,14 @@ class RegistrationDerogation extends Model
         'registration_id',
         'start_date',
         'end_date',
+        'is_monthly',
+        'month_date',
+    ];
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'is_monthly' => 'boolean',
+        'month_date' => 'date',
     ];
 
     public function registration()

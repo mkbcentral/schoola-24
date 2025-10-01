@@ -13,15 +13,7 @@ class Payment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'payment_number',
-        'month',
-        'registration_id',
-        'scolar_fee_id',
-        'rate_id',
-        'user_id',
-        'is_paid',
-    ];
+    protected $guarded = [];
 
     /**
      * Get the registration that owns the Payment

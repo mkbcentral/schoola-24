@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Registration extends Model
 {
@@ -30,16 +29,17 @@ class Registration extends Model
         'class_changed',
         'created_at',
         'is_fee_exempted',
+        'is_under_derogation',
     ];
 
     /**
-     * Get the derogation associated with the Registration
+     * Get the derogations associated with the Registration
      *
-     * @return HasOne
+     * @return HasMany
      */
-    public function derogation(): HasOne
+    public function derogations(): HasMany
     {
-        return $this->hasOne(RegistrationDerogation::class);
+        return $this->hasMany(RegistrationDerogation::class);
     }
 
 
@@ -133,7 +133,7 @@ class Registration extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function changeClassStudent(): HasOne
+    public function changeClassStudent(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(ChangeClassStudent::class);
     }
@@ -143,7 +143,7 @@ class Registration extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function giveUoStudent(): HasOne
+    public function giveUoStudent(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(GiveUpStudent::class);
     }

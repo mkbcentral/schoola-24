@@ -24,9 +24,9 @@ class FormSubLinkPage extends Component
     {
         try {
             $this->form->create();
-            $this->dispatch('added', ['message', AppMessage::DATA_SAVED_SUCCESS]);
+            $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
         } catch (Exception $ex) {
-            $this->dispatch('error', ['message', $ex->getMessage()]);
+            $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
     public function update(): void

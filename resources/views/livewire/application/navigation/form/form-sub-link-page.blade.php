@@ -1,10 +1,10 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <h4>
+            <strong>
                 <i class="{{ $subLink == null ? 'bi bi-plus-circle-fill' : 'bi bi-pencil-fill' }}"></i>
                 {{ $subLink == null ? 'CREATION SIMPLE MENU' : 'MODIFICATION SIMPLE MENU' }}
-            </h4>
+            </strong>
 
         </div>
         <div class="card-body">
