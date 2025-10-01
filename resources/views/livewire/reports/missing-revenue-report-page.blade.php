@@ -75,7 +75,7 @@
         <div>
             <h3 class="fw-bold fs-4 text-primary-emphasis">Détail par classe</h3>
             <div class="table-responsive rounded-4 shadow">
-                <table class="table table-bordered table-hover align-middle bg-white mb-0">
+                <table class="table table-bordered table-hover align-middle mb-0 bg-body">
                     <thead class="table-primary">
                         <tr>
                             <th>Classe</th>
@@ -145,12 +145,13 @@
                                             @if (!empty($unpaidList) && count($unpaidList) > 0)
                                                 <ul class="list-group list-group-flush mb-0">
                                                     @foreach ($unpaidList as $i => $student)
-                                                        <li class="list-group-item d-flex align-items-center py-2">
+                                                        <li
+                                                            class="list-group-item d-flex align-items-center py-2 bg-body">
                                                             <span
-                                                                class="badge text-bg-secondary me-2">{{ $i + 1 }}</span>
+                                                                class="badge bg-secondary me-2">{{ $i + 1 }}</span>
                                                             <span
-                                                                class="fw-semibold me-3">{{ $student['matricule'] }}</span>
-                                                            <span>{{ $student['name'] }}</span>
+                                                                class="fw-semibold me-3 text-body">{{ $student['matricule'] }}</span>
+                                                            <span class="text-body">{{ $student['name'] }}</span>
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -181,5 +182,36 @@
                 window.livewire.emit('showUnpaidList', classRoom);
             }
         </script>
+    @endpush
+
+    @push('styles')
+        <style>
+            /* Adaptations pour le mode sombre */
+            [data-bs-theme="dark"] .table-primary {
+                --bs-table-bg: rgba(13, 110, 253, 0.2);
+                --bs-table-border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            [data-bs-theme="dark"] .shadow {
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
+            }
+
+            [data-bs-theme="dark"] .table-hover>tbody>tr:hover>td {
+                background-color: rgba(255, 255, 255, 0.075);
+            }
+
+            /* Amélioration pour les alertes en mode sombre */
+            [data-bs-theme="dark"] .alert-danger {
+                background-color: rgba(220, 53, 69, 0.2);
+                border-color: rgba(220, 53, 69, 0.3);
+                color: #f8d7da;
+            }
+
+            [data-bs-theme="dark"] .alert-success {
+                background-color: rgba(25, 135, 84, 0.2);
+                border-color: rgba(25, 135, 84, 0.3);
+                color: #d1e7dd;
+            }
+        </style>
     @endpush
 </div>
