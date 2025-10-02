@@ -150,6 +150,7 @@ class StudentDebtTrackerService
                     return $categoryMatch && $monthMatch && $payment->is_paid;
                 })
                 ->isNotEmpty();
+            /*
             if (!$hasPaid) {
                 return [
                     'can_pay' => false,
@@ -157,6 +158,7 @@ class StudentDebtTrackerService
                     'message' => "L'élève a une dette sur le mois de $moisLabel. Veuillez régulariser avant de payer $targetMonth."
                 ];
             }
+                */
         }
         return [
             'can_pay' => true,
