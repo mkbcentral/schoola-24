@@ -53,10 +53,11 @@ use App\Livewire\Application\Student\List\ListStudentByResponsiblePage;
 use App\Livewire\Application\Student\List\ListStudentPage;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Application\Report\MissingRevenueReportPage;
+use App\Livewire\Stock\ArticleStockManager;
 use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
+    Route::get('stock/catalog', ArticleStockManager::class)->name('stock.main')->lazy();
     Route::middleware(['access.chercker'])->group(function () {
         Route::get('/', MainDashobardPage::class)->name('dashboard.main')->lazy();
         Route::get('/responsables', ListResponsibleStudentPage::class)->name('responsable.main')->lazy();

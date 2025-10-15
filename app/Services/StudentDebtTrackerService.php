@@ -139,8 +139,18 @@ class StudentDebtTrackerService
             ];
         }
         // Vérifier chaque mois précédent (ordre croissant)
+        $inscriptionDate = $registration->created_at ? \Carbon\Carbon::parse($registration->created_at) : null;
         foreach ($monthsOrder as $moisLabel => $moisNum) {
             if ($moisNum == $targetNum) break;
+            // Si l'élève n'était pas inscrit à ce mois, on ne bloque pas
+            if ($inscriptionDate) {
+                $annee = $inscriptionDate->year;
+                $moisInscription = $inscriptionDate->month;
+                // Si le mois à vérifier est avant le mois d'inscription, on ignore
+                if ($moisNum < $moisInscription) {
+                    continue;
+                }
+            }
             $hasPaid = $registration->payments
                 ->filter(function ($payment) use ($categoryFeeId, $moisNum) {
                     $fee = $payment->scolarFee;
@@ -150,7 +160,6 @@ class StudentDebtTrackerService
                     return $categoryMatch && $monthMatch && $payment->is_paid;
                 })
                 ->isNotEmpty();
-            /*
             if (!$hasPaid) {
                 return [
                     'can_pay' => false,
@@ -158,7 +167,6 @@ class StudentDebtTrackerService
                     'message' => "L'élève a une dette sur le mois de $moisLabel. Veuillez régulariser avant de payer $targetMonth."
                 ];
             }
-                */
         }
         return [
             'can_pay' => true,

@@ -10,6 +10,11 @@ class OtherRecipe extends Model
         'description',
         'amount',
         'user_id',
-        'created_at'
+        'created_at',
+        'start_date',
+        'end_date',
+        'is_period',
+        'school_id',
+        'school_year_id'
     ];
 }

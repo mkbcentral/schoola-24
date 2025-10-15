@@ -169,6 +169,13 @@
                         Fc
                     </td>
                 </tr>
+                <tr class="">
+                    <td colspan="2"></td>
+                    <td class="item-price">
+                        {{ app_format_number($payment->getAmount(), 1) }}
+                        USD
+                    </td>
+                </tr>
             </tbody>
         </table>
         <div class="footer">
