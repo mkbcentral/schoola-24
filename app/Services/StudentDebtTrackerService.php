@@ -27,7 +27,7 @@ class StudentDebtTrackerService
         string $targetMonth,
         array $paymentData = []
     ): array {
-
+        /*
         $check = $this->canPayForMonth($registrationId, $categoryFeeId, $targetMonth);
         if (!$check['can_pay']) {
             return [
@@ -35,6 +35,7 @@ class StudentDebtTrackerService
                 'message' => $check['message'],
             ];
         }
+            */
         // Trouver le ScolarFee correspondant à la catégorie et à la classe de l'inscription
         $registration = Registration::with(['classRoom', 'payments', 'student'])->find($registrationId);
         if (!$registration) {
