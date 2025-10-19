@@ -104,15 +104,15 @@ class StudentFeeStatusService
                     $lastPaymentDate = $lastPayment?->created_at;
                     $lastPaymentDateFormatted = $lastPaymentDate?->format('d/m/Y');
 
-                    // 🔑 Vérification paiement récent (aujourd’hui ou 4 jours avant)
+                    // 🔑 Vérification paiement récent (aujourd'hui ou 4 jours avant)
                     $recentPaymentStatus = false;
+                    $label = ''; // Initialiser la variable label
                     if ($lastPaymentDate) {
                         $now = now()->startOfDay();
                         $paymentDay = $lastPaymentDate->copy()->startOfDay();
                         $diff = $paymentDay->diffInDays($now, false);
                         $recentPaymentStatus = ($diff >= 0 && $diff <= 4);
                         // 🔑 Génération du label
-                        $label = '';
                         if ($diff == 0) {
                             $label = "Aujourd'hui";
                         } elseif ($diff == 1) {

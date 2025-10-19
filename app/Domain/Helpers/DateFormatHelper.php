@@ -64,4 +64,20 @@ class DateFormatHelper
         $monthNumber = str_pad($monthNumber, 2, '0', STR_PAD_LEFT);
         return $months[$monthNumber] ?? $monthNumber;
     }
+
+    public static function getMonthsNumber(): array
+    {
+        return  [
+            'SEPTEMBRE' => 9,
+            'OCTOBRE' => 10,
+            'NOVEMBRE' => 11,
+            'DECEMBRE' => 12,
+            'JANVIER' => 1,
+            'FEVRIER' => 2,
+            'MARS' => 3,
+            'AVRIL' => 4,
+            'MAI' => 5,
+            'JUIN' => 6,
+        ];
+    }
 }

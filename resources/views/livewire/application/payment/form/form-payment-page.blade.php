@@ -23,6 +23,10 @@
                             <span class="fw-bold">Classe:</span>
                             <span>{{ $registration->classRoom->getOriginalClassRoomName() }}</span>
                         </div>
+                        <div>
+                            <span class="fw-bold">Inscrit le:</span>
+                            <span>{{ $registration->created_at->format('d/m/Y') }}</span>
+                        </div>
                     </div>
                     <form wire:submit.prevent='save'>
                         <div class="">

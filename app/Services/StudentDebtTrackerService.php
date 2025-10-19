@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Domain\Helpers\DateFormatHelper;
 use App\Models\Registration;
 use App\Models\CategoryFee;
 use App\Models\Payment;
@@ -27,15 +28,31 @@ class StudentDebtTrackerService
         string $targetMonth,
         array $paymentData = []
     ): array {
-        /*
-        $check = $this->canPayForMonth($registrationId, $categoryFeeId, $targetMonth);
-        if (!$check['can_pay']) {
+
+        // Récupérer la catégorie de frais pour vérifier le type de paiement
+        $categoryFee = CategoryFee::find($categoryFeeId);
+        if (!$categoryFee) {
             return [
                 'success' => false,
-                'message' => $check['message'],
+                'message' => 'Catégorie de frais non trouvée.',
             ];
         }
-            */
+
+        // Si c'est un paiement par tranche, procéder directement au paiement
+        if ($categoryFee->is_paid_in_installment) {
+            // Paiement par tranche - pas de vérification de dette
+            // Aucun contrôle de dette nécessaire pour les paiements en tranche.
+        } else {
+            // Paiement par mois - vérifier les dettes des mois précédents
+            $check = $this->canPayForMonth($registrationId, $categoryFeeId, $targetMonth);
+            if (!$check['can_pay']) {
+                return [
+                    'success' => false,
+                    'message' => $check['message'],
+                ];
+            }
+        }
+
         // Trouver le ScolarFee correspondant à la catégorie et à la classe de l'inscription
         $registration = Registration::with(['classRoom', 'payments', 'student'])->find($registrationId);
         if (!$registration) {
@@ -70,18 +87,7 @@ class StudentDebtTrackerService
      */
     private function getMonthNumber(string $monthLabel): ?int
     {
-        $monthsOrder = [
-            'SEPTEMBRE' => 9,
-            'OCTOBRE' => 10,
-            'NOVEMBRE' => 11,
-            'DECEMBRE' => 12,
-            'JANVIER' => 1,
-            'FEVRIER' => 2,
-            'MARS' => 3,
-            'AVRIL' => 4,
-            'MAI' => 5,
-            'JUIN' => 6,
-        ];
+        $monthsOrder = DateFormatHelper::getMonthsNumber();
         return $monthsOrder[$monthLabel] ?? null;
     }
 
@@ -96,18 +102,7 @@ class StudentDebtTrackerService
     public function canPayForMonth(int $registrationId, int $categoryFeeId, string $targetMonth): array
     {
         $schoolYearId = SchoolYear::DEFAULT_SCHOOL_YEAR_ID();
-        $monthsOrder = [
-            'SEPTEMBRE' => 9,
-            'OCTOBRE' => 10,
-            'NOVEMBRE' => 11,
-            'DECEMBRE' => 12,
-            'JANVIER' => 1,
-            'FEVRIER' => 2,
-            'MARS' => 3,
-            'AVRIL' => 4,
-            'MAI' => 5,
-            'JUIN' => 6,
-        ];
+        $monthsOrder = DateFormatHelper::getMonthsNumber();
 
         $normalizedMonth = strtoupper(trim($targetMonth));
         $normalizedMonth = ltrim($normalizedMonth, '0');
