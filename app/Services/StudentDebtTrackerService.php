@@ -37,7 +37,7 @@ class StudentDebtTrackerService
                 'message' => 'Catégorie de frais non trouvée.',
             ];
         }
-
+        /*
         // Si c'est un paiement par tranche, procéder directement au paiement
         if ($categoryFee->is_paid_in_installment) {
             // Paiement par tranche - pas de vérification de dette
@@ -52,6 +52,7 @@ class StudentDebtTrackerService
                 ];
             }
         }
+            */
 
         // Trouver le ScolarFee correspondant à la catégorie et à la classe de l'inscription
         $registration = Registration::with(['classRoom', 'payments', 'student'])->find($registrationId);
