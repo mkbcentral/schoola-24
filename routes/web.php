@@ -53,11 +53,24 @@ use App\Livewire\Application\Student\List\ListStudentByResponsiblePage;
 use App\Livewire\Application\Student\List\ListStudentPage;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Application\Report\MissingRevenueReportPage;
-use App\Livewire\Stock\ArticleStockManager;
+use App\Livewire\Application\Stock\ArticleStockManager;
+use App\Livewire\Application\Stock\ArticleStockMovementManager;
+use App\Livewire\Application\Stock\ArticleCategoryManager;
+use App\Livewire\Application\Stock\ArticleInventoryManager;
+use App\Livewire\Application\Stock\AuditHistoryViewer;
+use App\Livewire\Application\Stock\StockDashboard;
+use App\Http\Controllers\StockExportController;
 use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('stock/dashboard', StockDashboard::class)->name('stock.dashboard')->lazy();
     Route::get('stock/catalog', ArticleStockManager::class)->name('stock.main')->lazy();
+    Route::get('stock/categories', ArticleCategoryManager::class)->name('stock.categories')->lazy();
+    Route::get('stock/inventory', ArticleInventoryManager::class)->name('stock.inventory')->lazy();
+    Route::get('stock/audit', AuditHistoryViewer::class)->name('stock.audit')->lazy();
+    Route::get('stock/audit/{articleId}', AuditHistoryViewer::class)->name('stock.audit.article')->lazy();
+    Route::get('stock/movements/{article}', ArticleStockMovementManager::class)->name('app.stock.movements')->lazy();
+    Route::get('stock/export/movements-pdf/{article}', [StockExportController::class, 'exportMovementsPdf'])->name('stock.export.movements.pdf');
     Route::middleware(['access.chercker'])->group(function () {
         Route::get('/', MainDashobardPage::class)->name('dashboard.main')->lazy();
         Route::get('/responsables', ListResponsibleStudentPage::class)->name('responsable.main')->lazy();
