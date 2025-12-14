@@ -17,13 +17,11 @@ class RegistrationFee extends Model
         'option_id',
         'category_registration_fee_id',
         'school_year_id',
-        'currency'
+        'currency',
     ];
 
     /**
      * Get the option that owns the RegistrationFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function option(): BelongsTo
     {
@@ -32,8 +30,6 @@ class RegistrationFee extends Model
 
     /**
      * Get all of the registrations for the RegistrationFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function registrations(): HasMany
     {
@@ -42,8 +38,6 @@ class RegistrationFee extends Model
 
     /**
      * Get the category_registration_fee_id that owns the RegistrationFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function categoryRegistrationFee(): BelongsTo
     {

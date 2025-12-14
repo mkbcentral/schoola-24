@@ -4,19 +4,18 @@ namespace App\Domain\Contract\Payment;
 
 interface IPaymentRegularization
 {
-
     /**
      * Récupérer la liste des regularisation des payment
-     * @param mixed $date
-     * @param mixed $month
-     * @param mixed $q
-     * @param mixed $categoryFeeId
-     * @param mixed $optionId
-     * @param mixed $classRoomId
-     * @param mixed $sortBy
-     * @param mixed $sortAsc
-     * @param mixed $per_page
-     * @return mixed
+     *
+     * @param  mixed  $date
+     * @param  mixed  $month
+     * @param  mixed  $q
+     * @param  mixed  $categoryFeeId
+     * @param  mixed  $optionId
+     * @param  mixed  $classRoomId
+     * @param  mixed  $sortBy
+     * @param  mixed  $sortAsc
+     * @param  mixed  $per_page
      */
     public static function getList(
         ?string $date,
@@ -26,19 +25,19 @@ interface IPaymentRegularization
         ?int $optionId,
         ?int $classRoomId,
         ?string $sortBy,
-        ?bool   $sortAsc,
+        ?bool $sortAsc,
         ?int $per_page
     ): mixed;
 
     /**
      * Recuperer le montant total de paiement
-     * @param mixed $date
-     * @param mixed $month
-     * @param mixed $q
-     * @param mixed $categoryFeeId
-     * @param mixed $optionId
-     * @param mixed $classRoomId
-     * @return int|float
+     *
+     * @param  mixed  $date
+     * @param  mixed  $month
+     * @param  mixed  $q
+     * @param  mixed  $categoryFeeId
+     * @param  mixed  $optionId
+     * @param  mixed  $classRoomId
      */
     public static function getAmountTotal(
         ?string $date,

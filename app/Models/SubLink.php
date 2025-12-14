@@ -15,13 +15,11 @@ class SubLink extends Model
         'name',
         'icon',
         'route',
-        'multi_app_link_id'
+        'multi_app_link_id',
     ];
 
     /**
      * Get the user that owns the SingleAppLink
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function multiAppLink(): BelongsTo
     {
@@ -30,8 +28,6 @@ class SubLink extends Model
 
     /**
      * The users that belong to the SubLink
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users(): BelongsToMany
     {

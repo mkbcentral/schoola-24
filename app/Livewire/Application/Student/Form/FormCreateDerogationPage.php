@@ -5,14 +5,17 @@ namespace App\Livewire\Application\Student\Form;
 use App\Models\Registration;
 use App\Models\RegistrationDerogation;
 use Livewire\Component;
-use Carbon\Carbon;
 
 class FormCreateDerogationPage extends Component
 {
     public ?Registration $registration = null;
+
     public $start_date = '';
+
     public $end_date = '';
+
     public $is_month = false;
+
     public $month_date = '';
 
     protected $rules = [
@@ -37,7 +40,7 @@ class FormCreateDerogationPage extends Component
 
     public function updatedIsMonth($value)
     {
-        if (!$value) {
+        if (! $value) {
             $this->month_date = '';
         } else {
             $this->month_date = date('Y-m-d');

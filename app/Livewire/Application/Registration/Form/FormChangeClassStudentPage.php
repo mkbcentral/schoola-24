@@ -13,13 +13,14 @@ use Livewire\Component;
 class FormChangeClassStudentPage extends Component
 {
     protected $listeners = [
-        "registrationData" => "getRegistration",
+        'registrationData' => 'getRegistration',
     ];
 
     public Registration $registration;
-    public Collection $listClassRoom;
-    public int $class_room_id;
 
+    public Collection $listClassRoom;
+
+    public int $class_room_id;
 
     public function getRegistration(Registration $registration)
     {
@@ -33,12 +34,12 @@ class FormChangeClassStudentPage extends Component
     public function changeStudentClass()
     {
         $this->validate([
-            'class_room_id' => 'required'
+            'class_room_id' => 'required',
         ]);
         try {
             ChangeClassStudent::create([
                 'registration_id' => $this->registration->id,
-                'class_room_id' => $this->class_room_id
+                'class_room_id' => $this->class_room_id,
             ]);
             $this->registration->class_changed = true;
             $this->registration->update();

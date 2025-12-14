@@ -52,6 +52,7 @@
                                                     <th class="text-center">{{ $mois }}</th>
                                                 @endforeach
                                                 <th class="text-center">Paiement récent (4j)</th>
+                                                <th class="text-center">Date inscription</th>
                                             @endif
                                         </tr>
                                     </thead>
@@ -61,6 +62,7 @@
                                                 <td class="{{ $row['recent_payment_status'] == true ? 'text-bg-warning' : '' }}"
                                                     style="{{ isset($row['is_under_derogation']) && $row['is_under_derogation'] == true ? 'background-color: #ffeeba;' : '' }}">
                                                     {{ $row['student'] }}
+
                                                 </td>
                                                 @if (isset($row['category']))
                                                     <td>{{ $row['category'] }}</td>
@@ -99,6 +101,11 @@
                                                                 -
                                                             </span>
                                                         @endif
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span>
+                                                            {{ $row['registration_date'] }}
+                                                        </span>
                                                     </td>
                                                 @endif
                                             </tr>

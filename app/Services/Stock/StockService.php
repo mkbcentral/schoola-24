@@ -56,6 +56,7 @@ class StockService
 
     /**
      * Supprime un article
+     *
      * @throws \Exception si l'article a des mouvements clôturés
      */
     public function deleteArticle(int $articleId): void
@@ -82,6 +83,7 @@ class StockService
 
     /**
      * Ajoute un mouvement de stock
+     *
      * @throws \Exception si le stock est insuffisant pour une sortie
      */
     public function addStockMovement(array $data): ArticleStockMovement
@@ -116,6 +118,7 @@ class StockService
 
     /**
      * Met à jour un mouvement de stock
+     *
      * @throws \Exception si le mouvement est clôturé ou le stock insuffisant
      */
     public function updateStockMovement(int $movementId, array $data): ArticleStockMovement
@@ -163,7 +166,7 @@ class StockService
         $movement = ArticleStockMovement::findOrFail($movementId);
         $movement->update([
             'is_closed' => true,
-            'closed_date' => now()->toDateString()
+            'closed_date' => now()->toDateString(),
         ]);
 
         return $movement;
@@ -178,8 +181,8 @@ class StockService
 
         return [
             'total_articles' => $articles->count(),
-            'articles_in_stock' => $articles->filter(fn($a) => $a->stock > 0)->count(),
-            'articles_out_of_stock' => $articles->filter(fn($a) => $a->stock <= 0)->count(),
+            'articles_in_stock' => $articles->filter(fn ($a) => $a->stock > 0)->count(),
+            'articles_out_of_stock' => $articles->filter(fn ($a) => $a->stock <= 0)->count(),
             'total_stock_value' => $articles->sum('stock'),
         ];
     }

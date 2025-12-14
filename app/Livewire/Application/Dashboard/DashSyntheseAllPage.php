@@ -15,8 +15,11 @@ use Livewire\Component;
 class DashSyntheseAllPage extends Component
 {
     public $payments;
+
     public $expenses;
+
     public $balances;
+
     public int $category_fee_filter = 0;
 
     /**
@@ -39,10 +42,12 @@ class DashSyntheseAllPage extends Component
         if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE || Auth::user()->role->name == RoleType::SCHOOL_BOSS) {
             $this->category_fee_filter = FeeDataConfiguration::getFirstCategoryFee()?->id ?? 0;
         } else {
-            $this->category_fee_filter = CategoryFee::query()->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id', School::DEFAULT_SCHOOL_ID())
+            $categoryFee = CategoryFee::query()
+                ->where('school_id', School::DEFAULT_SCHOOL_ID())
+                ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
                 ->where('is_accessory', true)
-                ->first()->id;
+                ->first();
+            $this->category_fee_filter = $categoryFee?->id ?? 0;
         }
     }
 
@@ -62,10 +67,10 @@ class DashSyntheseAllPage extends Component
             $category = $payment->category_name;
             $amount = $payment->total_amount;
 
-            if (!isset($balances[$month])) {
+            if (! isset($balances[$month])) {
                 $balances[$month] = [];
             }
-            if (!isset($balances[$month][$category])) {
+            if (! isset($balances[$month][$category])) {
                 $balances[$month][$category] = ['payments' => 0, 'expenses' => 0, 'other_expenses' => 0, 'total_expenses' => 0, 'balance' => 0];
             }
 
@@ -78,10 +83,10 @@ class DashSyntheseAllPage extends Component
             $category = $expense->category_name;
             $amount = $expense->total_amount;
 
-            if (!isset($balances[$month])) {
+            if (! isset($balances[$month])) {
                 $balances[$month] = [];
             }
-            if (!isset($balances[$month][$category])) {
+            if (! isset($balances[$month][$category])) {
                 $balances[$month][$category] = ['payments' => 0, 'expenses' => 0, 'other_expenses' => 0, 'total_expenses' => 0, 'balance' => 0];
             }
 
@@ -100,6 +105,7 @@ class DashSyntheseAllPage extends Component
             ->get()
             ->map(function ($item) {
                 $item->total_amount = $item->cdf_total + $item->usd_total;
+
                 return $item;
             })
             ->keyBy(function ($item) {
@@ -137,13 +143,15 @@ class DashSyntheseAllPage extends Component
         $this->balances = $balances;
         $this->dispatch('refresh-expenses', params: $this->balances);
     }
+
     public function render()
     {
         $this->payments = Payment::getPaymentsByMonthAndCategory($this->category_fee_filter);
         $this->expenses = ExpenseFee::getExpensesByMonthAndCategory($this->category_fee_filter);
         $this->calculateBalances();
+
         return view('livewire.application.dashboard.dash-synthese-all-page', [
-            'balances' => $this->balances
+            'balances' => $this->balances,
         ]);
     }
 }

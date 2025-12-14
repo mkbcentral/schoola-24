@@ -19,13 +19,11 @@ class PaymentRegularization extends Model
         'class_room_id',
         'created_at',
         'school_id',
-        'school_year_id'
+        'school_year_id',
     ];
 
     /**
      * Get the classRoom that owns the PaymentRegularization
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function classRoom(): BelongsTo
     {
@@ -34,8 +32,6 @@ class PaymentRegularization extends Model
 
     /**
      * Get the categoryFee that owns the PaymentRegularization
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function categoryFee(): BelongsTo
     {

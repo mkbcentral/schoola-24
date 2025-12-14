@@ -10,16 +10,18 @@ use Livewire\Component;
 
 class FormOptionPage extends Component
 {
-    protected $listeners = ["optionData" => "getOption"];
-    public ?Option $optionSelected = null;
-    public OptionFrom $form;
+    protected $listeners = ['optionData' => 'getOption'];
 
+    public ?Option $optionSelected = null;
+
+    public OptionFrom $form;
 
     public function getOption(Option $option)
     {
         $this->optionSelected = $option;
         $this->form->fill($this->optionSelected->toArray());
     }
+
     public function save()
     {
         $input = $this->validate();
@@ -41,6 +43,7 @@ class FormOptionPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit()
     {
         if ($this->optionSelected == null) {
@@ -58,7 +61,6 @@ class FormOptionPage extends Component
         $this->optionSelected = null;
         $this->form->reset();
     }
-
 
     public function render()
     {

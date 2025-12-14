@@ -1,132 +1,41 @@
+// =============================================================================
+// Guest.scss - Point d'entrée pour les pages d'authentification
+// Architecture modulaire pour une meilleure maintenabilité
+// Version refactorisée - Novembre 2025
+// =============================================================================
+
+// =============================================================================
+// 1. Abstracts - Variables, Mixins, Functions
+// =============================================================================
+@import 'abstracts/variables';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+
+// =============================================================================
+// 2. Vendors - Librairies externes (Bootstrap minimal)
+// =============================================================================
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.min.css';
 @import 'toastr/toastr';
 
-.login-page {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
+// =============================================================================
+// 3. Base - Styles de base
+// =============================================================================
+@import 'base/base';
 
-.login-box {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    width: 100%;
-    max-width: 320px;
-    transition: all 0.3s ease;
-}
+// =============================================================================
+// 4. Components (uniquement ceux nécessaires pour l'auth)
+// =============================================================================
+@import 'components/buttons';
+@import 'components/forms';
 
-.login-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
+// =============================================================================
+// 5. Pages - Page d'authentification
+// =============================================================================
+@import 'pages/authentication';
 
-.login-content {
-    padding: 25px;
-}
-
-.brand-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #0d6efd;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.password-field {
-    position: relative;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: none;
-    color: #6c757d;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-}
-
-.password-toggle:hover {
-    color: #0d6efd;
-}
-
-.form-control {
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 10px 15px;
-    font-size: 0.9rem;
-}
-
-.form-control:focus {
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
-}
-
-.btn-login {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
-}
-
-.login-footer {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 0.8rem;
-}
-
-.form-check {
-    font-size: 0.8rem;
-}
-
-@keyframes shake {
-
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-
-    25% {
-        transform: translateX(-5px);
-    }
-
-    75% {
-        transform: translateX(5px);
-    }
-}
-
-.form-error .form-control {
-    border-color: #dc3545;
-    animation: shake 0.4s ease-in-out;
-}
-
-.form-error .error-message {
-    color: #dc3545;
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-}
-
-.page-break {
-    page-break-after: always;
-}
+// =============================================================================
+// 6. Themes - Support du thème sombre pour la page de login
+// =============================================================================
+@import 'themes/light';
+@import 'themes/dark';

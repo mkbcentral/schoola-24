@@ -8,16 +8,28 @@ use Auth;
 use Exception;
 use Livewire\Component;
 
-
-
 class ListOtherRecipePage extends Component
 {
-    public string $description = '', $month_filter = '', $created_at, $start_date = '', $end_date = '';
+    public string $description = '';
+
+    public string $month_filter = '';
+
+    public string $created_at;
+
+    public string $start_date = '';
+
+    public string $end_date = '';
+
     public float $amount = 0;
+
     public bool $is_period = false;
+
     public ?OtherRecipe $otherRecipeSelsected = null;
+
     public string $filter_type = 'all';
+
     public string $filter_start = '';
+
     public string $filter_end = '';
 
     public function initForm(): void
@@ -29,6 +41,7 @@ class ListOtherRecipePage extends Component
         $this->end_date = '';
         $this->is_period = false;
     }
+
     public function save(): void
     {
         $rules = [
@@ -61,6 +74,7 @@ class ListOtherRecipePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function edit(?OtherRecipe $otherRecipe): void
     {
         $this->description = $otherRecipe->description;
@@ -114,6 +128,7 @@ class ListOtherRecipePage extends Component
         $this->initForm();
         $this->otherRecipeSelsected = null;
     }
+
     public function delete(?OtherRecipe $otherRecipe): void
     {
         try {
@@ -182,10 +197,11 @@ class ListOtherRecipePage extends Component
             });
         }
         $otherRecipes = $query->orderByDesc('created_at')->get();
+
         return view(
             'livewire.application.finance.recipe.list.list-other-recipe-page',
             [
-                'otherRecipes' => $otherRecipes
+                'otherRecipes' => $otherRecipes,
             ]
         );
     }

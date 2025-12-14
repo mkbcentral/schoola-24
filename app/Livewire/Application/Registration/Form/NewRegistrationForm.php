@@ -10,19 +10,23 @@ use App\Models\ResponsibleStudent;
 use App\Models\School;
 use App\Models\SchoolYear;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class NewRegistrationForm extends Component
 {
-
     public $responsible_student_id;
+
     public ?ResponsibleStudent $responsibleStudent = null;
+
     public RegistrationForm $form;
+
     public $selectedOption = 0;
+
     public bool $isOldSelected = false;
+
     public string $gender = '';
-    public   $responsibleStudentList = [];
+
+    public $responsibleStudentList = [];
 
     public function updatedSelectedOption($val)
     {
@@ -45,6 +49,7 @@ class NewRegistrationForm extends Component
             $this->form->registration_fee_id = $registrationFee->id;
         }
     }
+
     public function updatedResponsibleStudentId($value)
     {
         $this->responsibleStudent = ResponsibleStudent::find($value);
@@ -52,6 +57,7 @@ class NewRegistrationForm extends Component
             $this->responsible_student_id = $this->responsibleStudent->id;
         }
     }
+
     public function save()
     {
         $data = $this->validate();
@@ -60,8 +66,9 @@ class NewRegistrationForm extends Component
                 $this->dispatch('error', ['message' => AppMessage::ACTION_FAILLED]);
             }
             $registration = $this->form->create($this->responsibleStudent, $this->gender);
-            if (!$registration) {
+            if (! $registration) {
                 $this->dispatch('error', ['message' => 'L\'élève existe déjà pour ce responsable.']);
+
                 return;
             }
             $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
@@ -72,11 +79,13 @@ class NewRegistrationForm extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit()
     {
         $this->save();
         $this->dispatch('refreshListResponsibleStudent');
     }
+
     public function mount()
     {
         $this->form->created_at = date('Y-m-d');

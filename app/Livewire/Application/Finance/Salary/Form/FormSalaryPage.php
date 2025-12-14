@@ -14,7 +14,9 @@ class FormSalaryPage extends Component
         'salaryData' => 'getSalary',
         'initialSalaryForm' => 'initForm',
     ];
+
     public ?Salary $salary = null;
+
     public SalaryForm $form;
 
     public function initForm(): void
@@ -29,6 +31,7 @@ class FormSalaryPage extends Component
         $this->form->fill($salary->toArray());
         $this->form->created_at = $salary->created_at->format('Y-m-d');
     }
+
     public function save(): void
     {
         try {
@@ -38,6 +41,7 @@ class FormSalaryPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         try {
@@ -47,6 +51,7 @@ class FormSalaryPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         $this->validate();

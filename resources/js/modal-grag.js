@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
-    console.log('modal-grag.js loaded');
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal drag functionality initialized
     var modalElement = document.getElementById('{{ $idModal }}');
     if (!modalElement) return;
     new bootstrap.Modal(modalElement);

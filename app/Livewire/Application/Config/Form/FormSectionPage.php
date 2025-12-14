@@ -11,6 +11,7 @@ use Livewire\Component;
 class FormSectionPage extends Component
 {
     protected $listeners = ['sectionData' => 'getSection'];
+
     public ?Section $sectionSelected = null;
 
     public SectionForm $form;
@@ -59,7 +60,6 @@ class FormSectionPage extends Component
         $this->sectionSelected = null;
         $this->form->name = '';
     }
-
 
     public function render()
     {

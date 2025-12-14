@@ -1,0 +1,108 @@
+// =============================================================================
+// Timeline Component
+// Styles pour les timelines et activités récentes
+// =============================================================================
+
+.timeline {
+    position: relative;
+    padding: var(--space-8) 0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: var(--space-8);
+
+    &:last-child {
+        margin-bottom: 0;
+        
+        .timeline-content {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+    }
+}
+
+.timeline-marker {
+    @include circle(var(--timeline-marker-size));
+    @include absolute(0, null, null, 0);
+    border: 2px solid var(--timeline-border);
+    background-color: var(--card-bg);
+    z-index: 1;
+
+    // Variantes de couleurs
+    &.bg-primary {
+        background-color: var(--color-primary);
+        border-color: rgba(13, 110, 253, 0.2);
+    }
+
+    &.bg-success {
+        background-color: var(--color-success);
+        border-color: rgba(25, 135, 84, 0.2);
+    }
+
+    &.bg-warning {
+        background-color: var(--color-warning);
+        border-color: rgba(255, 193, 7, 0.2);
+    }
+
+    &.bg-info {
+        background-color: var(--color-info);
+        border-color: rgba(13, 202, 240, 0.2);
+    }
+
+    &.bg-danger {
+        background-color: var(--color-danger);
+        border-color: rgba(220, 53, 69, 0.2);
+    }
+}
+
+.timeline-content {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--timeline-border);
+
+    h6 {
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+        margin-bottom: var(--space-2);
+    }
+
+    p {
+        color: var(--text-primary);
+        opacity: 0.8;
+        margin-bottom: var(--space-2);
+    }
+
+    small {
+        color: var(--text-muted);
+        font-size: var(--font-size-xs);
+    }
+}
+
+// Ligne verticale de connexion
+.timeline-item::before {
+    content: '';
+    @include absolute(var(--timeline-marker-size), null, null, calc(var(--timeline-marker-size) / 2));
+    width: 2px;
+    height: calc(100% - var(--timeline-marker-size));
+    background: linear-gradient(180deg, var(--timeline-border) 0%, transparent 100%);
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+
+// =============================================================================
+// Responsive
+// =============================================================================
+
+@include respond-below(md) {
+    .timeline-item {
+        padding-left: 30px;
+        margin-bottom: var(--space-6);
+    }
+
+    .timeline-marker {
+        @include circle(12px);
+    }
+}

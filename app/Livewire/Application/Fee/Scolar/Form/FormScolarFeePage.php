@@ -13,19 +13,25 @@ use Livewire\Component;
 class FormScolarFeePage extends Component
 {
     protected $listeners = [
-        "scolrFeeData" => "getScolarFee",
-        "dataFormResed" => "resetFormData",
-        "categoryFeeDataChanged" => "changeCategoryFee",
-        "refreshIndex" => 'sele'
+        'scolrFeeData' => 'getScolarFee',
+        'dataFormResed' => 'resetFormData',
+        'categoryFeeDataChanged' => 'changeCategoryFee',
+        'refreshIndex' => 'sele',
     ];
+
     public ?ScolarFee $scolarFeeSelected = null;
+
     public ?CategoryFee $categoryFeeSelected = null;
+
     public int $option_filter = 0;
+
     public int $selectedOption = 0;
+
     public ScolarFeeForm $form;
+
     public bool $isAllClasse = false;
 
-    //updated isAllClasse
+    // updated isAllClasse
     public function updatedIsAllClasse($val)
     {
         $this->isAllClasse = $val;
@@ -67,7 +73,6 @@ class FormScolarFeePage extends Component
     public function save()
     {
 
-
         try {
             if ($this->isAllClasse == true) {
                 $classRooms = ClassRoom::where('option_id', $this->selectedOption)->get();
@@ -76,7 +81,7 @@ class FormScolarFeePage extends Component
                         'name' => $this->form->name,
                         'amount' => $this->form->amount,
                         'category_fee_id' => $this->categoryFeeSelected->id,
-                        'class_room_id' => $classRoom->id
+                        'class_room_id' => $classRoom->id,
                     ]);
                 }
                 $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);

@@ -11,15 +11,20 @@ use Livewire\WithPagination;
 class ListBankDepositPage extends Component
 {
     use WithPagination;
+
     protected $listeners = [
-        'bankDepositListRefreshed' => '$refresh'
+        'bankDepositListRefreshed' => '$refresh',
     ];
+
     public ?string $date_filter = '';
+
     public ?string $month_filter = '';
+
     public ?string $currency_filter = '';
+
     public ?int $per_page = 10;
 
-    public  function newBankDeposit(): void
+    public function newBankDeposit(): void
     {
         $this->dispatch('initialFormBankDeposit');
     }
@@ -28,11 +33,11 @@ class ListBankDepositPage extends Component
     {
         $this->date_filter = null;
     }
+
     public function updatedDateFilter(): void
     {
-        $this->month_filter = "";
+        $this->month_filter = '';
     }
-
 
     public function edit(?BankDeposit $bankDeposit): void
     {
@@ -71,7 +76,7 @@ class ListBankDepositPage extends Component
                 $this->date_filter,
                 $this->month_filter,
                 'CDF'
-            )
+            ),
         ]);
     }
 }

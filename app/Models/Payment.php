@@ -2,23 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Payment extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'payment_number',
+        'month',
+        'registration_id',
+        'scolar_fee_id',
+        'rate_id',
+        'user_id',
+        'is_paid',
+    ];
+
+    protected $casts = [
+        'is_paid' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     /**
      * Get the registration that owns the Payment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function registration(): BelongsTo
     {
@@ -27,8 +37,6 @@ class Payment extends Model
 
     /**
      * Get the scolarFee that owns the Payment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function scolarFee(): BelongsTo
     {
@@ -37,8 +45,6 @@ class Payment extends Model
 
     /**
      * Get the rate that owns the Payment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function rate(): BelongsTo
     {
@@ -47,8 +53,6 @@ class Payment extends Model
 
     /**
      * Get the user that owns the Payment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -57,8 +61,6 @@ class Payment extends Model
 
     /**
      * Get the SmsPayment associated with the Payment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function smsPayment(): HasOne
     {
@@ -66,8 +68,7 @@ class Payment extends Model
     }
 
     /**
-     * Retourner le montant en CDF
-     * @return void
+     * Retourner le montant du paiement
      */
     public function getAmount(): int|float
     {
@@ -75,143 +76,74 @@ class Payment extends Model
     }
 
     /**
-     * Scope pour les données liste avec des filtres spécifiques
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $filters
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Vérifier si le paiement est payé
      */
-    public function scopeFilter(Builder $query, array $filters): Builder
+    public function isPaid(): bool
     {
-        return $this->reusableScopeData($query)
-            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->when($filters['date'] ?? null, function ($query, $f) {
-                return $query->whereDate('payments.created_at', $f);
-            })
-            ->when($filters['month'] ?? null, function ($query, $f) {
-                return $query->where('payments.month', $f);
-            })
-            ->when($filters['categoryFeeId'] ?? null, function ($query, $f) {
-                return $query->where('category_fees.id', $f);
-            })
-            ->when($filters['feeId'] ?? null, function ($query, $f) {
-                return $query->where('payments.scolar_fee_id', $f);
-            })
-            ->when($filters['sectionId'] ?? null, function ($query, $f) {
-                return $query->where('sections.id', $f);
-            })
-            ->when($filters['optionId'] ?? null, function ($query, $f) {
-                return $query->where('options.id', $f);
-            })
-            ->when($filters['classRoomId'] ?? null, function ($query, $f) {
-                return $query->where('registrations.class_room_id', $f);
-            })
-            ->when($filters['isPaid'] ?? null, function ($query, $f) {
-                return $query->where('payments.is_paid', $f);
-            })
-            ->when($filters['isAccessory'] ?? null, function ($query, $f) {
-                return $query->where('category_fees.is_accessory', $f);
-            })
-            ->when($filters['userId'] ?? null, function ($query, $f) {
-                return $query->where('payments.user_id', $f);
-            })
-            ->when($filters['key_to_search'] ?? null, function ($query, $f) {
-                return $query->where('students.name', 'like', '%' . $f . '%');
-            })
-            ->with([
-                'registration',
-                'scolarFee',
-                'rate'
-            ])
-            ->select('payments.*');
+        return $this->is_paid;
     }
 
     /**
-     * Scope pour les requetes non lister (montant,nombre, un paiement )
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Obtenir le nom de l'élève
      */
-    public function scopeNotFilter(Builder $query): Builder
+    public function getStudentName(): string
     {
-        return $this->reusableScopeData($query);
+        return $this->registration->student->name ?? '';
     }
-
 
     /**
-     * Données du reutilisable dans un scope
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Obtenir le nom de la catégorie de frais
      */
-    public function reusableScopeData(Builder $query): Builder
+    public function getCategoryName(): string
     {
-        return $query
-            ->join('registrations', 'registrations.id', 'payments.registration_id')
-            ->join('students', 'students.id', 'registrations.student_id')
-            ->join('responsible_students', 'responsible_students.id', 'students.responsible_student_id')
-            ->join('class_rooms', 'class_rooms.id', 'registrations.class_room_id')
-            ->join('options', 'options.id', 'class_rooms.option_id')
-            ->join('sections', 'sections.id', 'options.section_id')
-            ->join('scolar_fees', 'payments.scolar_fee_id', 'scolar_fees.id')
-            ->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
-            ->where('responsible_students.school_id', School::DEFAULT_SCHOOL_ID())
-        ;
+        return $this->scolarFee->categoryFee->name ?? '';
     }
 
-    public static function getTotalAmountByCategoryForMonthOrDate(string|null $month, string|null $date)
+    /**
+     * @deprecated Utiliser PaymentRepository::getTotalAmountByCategory()
+     * Cette méthode sera supprimée dans une future version.
+     * Migrez vers: app(PaymentRepositoryInterface::class)->getTotalAmountByCategory($month, $date)
+     */
+    public static function getTotalAmountByCategoryForMonthOrDate(?string $month, ?string $date)
     {
-        return self::join('scolar_fees', 'payments.scolar_fee_id', '=', 'scolar_fees.id')
-            ->join('category_fees', 'scolar_fees.category_fee_id', '=', 'category_fees.id')
-            ->join('rates', 'payments.rate_id', '=', 'rates.id')
-            ->join('registrations', 'payments.registration_id', 'registrations.id')
-            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->select(
-                'category_fees.name as category_name',
-                DB::raw('SUM(scolar_fees.amount) as total_amount'),
-                'category_fees.currency as currency'
-            )
-            ->when($month, function ($query, $month) {
-                return $query->where('payments.month', $month);
-            })
-            ->when($date, function ($query, $date) {
-                return $query->whereDate('payments.created_at', $date);
-            })
-            ->where('payments.is_paid', true)
-            ->groupBy('category_fees.name', 'category_fees.currency')
-            ->get();
+        trigger_error(
+            'getTotalAmountByCategoryForMonthOrDate() est déprécié. Utilisez PaymentRepository::getTotalAmountByCategory()',
+            E_USER_DEPRECATED
+        );
+
+        return app(\App\Repositories\Contracts\PaymentRepositoryInterface::class)
+            ->getTotalAmountByCategory($month, $date);
     }
 
+    /**
+     * @deprecated Utiliser PaymentRepository::getYearlyReceiptsByCategory()
+     * Cette méthode sera supprimée dans une future version.
+     * Migrez vers: app(PaymentRepositoryInterface::class)->getYearlyReceiptsByCategory($categoryId)
+     */
     public static function getListReceiptsYear(int $categoryId): mixed
     {
-        return Payment::join('scolar_fees', 'payments.scolar_fee_id', 'scolar_fees.id')
-            ->join('category_fees', 'scolar_fees.category_fee_id', 'category_fees.id')
-            ->join('rates', 'payments.rate_id', 'rates.id')
-            ->join('registrations', 'payments.registration_id', 'registrations.id')
-            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->select(
-                'category_fees.name as category_name',
-                DB::raw('payments.month as month'),
-                DB::raw('SUM(scolar_fees.amount) as total_amount'),
-                'category_fees.currency as currency_name'
-            )
-            ->where('category_fees.id', $categoryId) // Remplacez 1 par l'ID de la catégorie souhaitée
-            ->groupBy('category_fees.name', 'payments.month', 'category_fees.currency')
-            ->where('payments.is_paid', true)
-            ->get();
+        trigger_error(
+            'getListReceiptsYear() est déprécié. Utilisez PaymentRepository::getYearlyReceiptsByCategory()',
+            E_USER_DEPRECATED
+        );
+
+        return app(\App\Repositories\Contracts\PaymentRepositoryInterface::class)
+            ->getYearlyReceiptsByCategory($categoryId);
     }
 
+    /**
+     * @deprecated Utiliser PaymentRepository::getPaymentsByMonthAndCategory()
+     * Cette méthode sera supprimée dans une future version.
+     * Migrez vers: app(PaymentRepositoryInterface::class)->getPaymentsByMonthAndCategory($categoryId)
+     */
     public static function getPaymentsByMonthAndCategory(int $categoryId): mixed
     {
-        return self::join('scolar_fees', 'payments.scolar_fee_id', '=', 'scolar_fees.id')
-            ->join('category_fees', 'scolar_fees.category_fee_id', '=', 'category_fees.id')
-            ->join('registrations', 'payments.registration_id', 'registrations.id')
-            ->where('registrations.school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->select(
-                DB::raw('payments.month as month'),
-                'category_fees.name as category_name',
-                DB::raw('SUM(scolar_fees.amount) as total_amount')
-            )
-            ->where('payments.is_paid', true)
-            ->where('category_fees.id', $categoryId)
-            ->groupBy(DB::raw('payments.month'), 'category_fees.name')
-            ->get();
+        trigger_error(
+            'getPaymentsByMonthAndCategory() est déprécié. Utilisez PaymentRepository::getPaymentsByMonthAndCategory()',
+            E_USER_DEPRECATED
+        );
+
+        return app(\App\Repositories\Contracts\PaymentRepositoryInterface::class)
+            ->getPaymentsByMonthAndCategory($categoryId);
     }
 }

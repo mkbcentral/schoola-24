@@ -21,7 +21,7 @@ trait StockMovementAuditable
         // Audit lors de la mise à jour
         static::updated(function ($model) {
             $changes = $model->getChanges();
-            if (!empty($changes)) {
+            if (! empty($changes)) {
                 // Si c'est une clôture
                 if (isset($changes['is_closed']) && $changes['is_closed'] == true) {
                     $model->auditStockMovementAction('movement_closed', $model->getOriginal(), $changes);
@@ -81,7 +81,7 @@ trait StockMovementAuditable
      */
     private function filterAuditableAttributes(?array $attributes): ?array
     {
-        if (!$attributes) {
+        if (! $attributes) {
             return null;
         }
 

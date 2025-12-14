@@ -11,12 +11,12 @@ use Livewire\Component;
 class FormGiveUpStudentPage extends Component
 {
     protected $listeners = [
-        "registrationData" => "getRegistration",
+        'registrationData' => 'getRegistration',
     ];
 
     public Registration $registration;
-    public string $month;
 
+    public string $month;
 
     public function getRegistration(Registration $registration)
     {
@@ -26,12 +26,12 @@ class FormGiveUpStudentPage extends Component
     public function makeGiveUpStudent()
     {
         $this->validate([
-            'month' => 'required|min:2'
+            'month' => 'required|min:2',
         ]);
         try {
             GiveUpStudent::create([
                 'registration_id' => $this->registration->id,
-                'month' => $this->month
+                'month' => $this->month,
             ]);
             $this->registration->abandoned = true;
             $this->registration->save();

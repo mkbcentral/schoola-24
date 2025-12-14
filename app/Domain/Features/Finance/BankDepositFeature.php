@@ -7,20 +7,19 @@ use App\Models\BankDeposit;
 
 class BankDepositFeature implements IBankDeposit
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getAmountTotal(
-        string|null $date,
-        string|null $month,
-        string|null $currency
+        ?string $date,
+        ?string $month,
+        ?string $currency
     ): float|int {
         $total = 0;
         $filters = [
             'date' => $date,
             'month' => $month,
-            'currency' => $currency
+            'currency' => $currency,
         ];
         $bankDeposits = BankDeposit::query()
             ->filter($filters)
@@ -28,23 +27,25 @@ class BankDepositFeature implements IBankDeposit
         foreach ($bankDeposits as $bankDeposit) {
             $total += $bankDeposit->amount;
         }
+
         return $total;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getList(
-        string|null $date,
-        string|null $month,
-        string|null $currency,
-        int|null $per_page
+        ?string $date,
+        ?string $month,
+        ?string $currency,
+        ?int $per_page
     ): mixed {
         $filters = [
             'date' => $date,
             'month' => $month,
-            'currency' => $currency
+            'currency' => $currency,
         ];
+
         return BankDeposit::query()
             ->filter($filters)
             ->paginate($per_page);

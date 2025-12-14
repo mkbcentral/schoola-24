@@ -14,17 +14,14 @@ class ChangeClassStudent extends Model
 
     /**
      * Get the classRoom that owns the ChangeClassStudent
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function classRoom(): BelongsTo
     {
         return $this->belongsTo(ClassRoom::class, 'class_room_id');
     }
+
     /**
      * Get the registration that owns the ChangeClassStudent
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function registration(): BelongsTo
     {

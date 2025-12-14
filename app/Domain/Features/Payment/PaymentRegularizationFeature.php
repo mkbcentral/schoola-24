@@ -8,18 +8,18 @@ use App\Models\PaymentRegularization;
 class PaymentRegularizationFeature implements IPaymentRegularization
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getList(
-        string|null $date,
-        string|null $month,
-        string|null $q,
-        int|null $categoryFeeId,
-        int|null $optionId,
-        int|null $classRoomId,
-        string|null $sortBy,
-        bool|null $sortAsc,
-        int|null $per_page
+        ?string $date,
+        ?string $month,
+        ?string $q,
+        ?int $categoryFeeId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?string $sortBy,
+        ?bool $sortAsc,
+        ?int $per_page
     ): mixed {
         $filters = [
             'date' => $date,
@@ -29,21 +29,23 @@ class PaymentRegularizationFeature implements IPaymentRegularization
             'optionId' => $optionId,
             'classRoomId' => $classRoomId,
         ];
+
         return PaymentRegularization::query()
             ->filter($filters)
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->paginate($per_page);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getAmountTotal(
-        string|null $date,
-        string|null $month,
-        string|null $q,
-        int|null $categoryFeeId,
-        int|null $optionId,
-        int|null $classRoomId
+        ?string $date,
+        ?string $month,
+        ?string $q,
+        ?int $categoryFeeId,
+        ?int $optionId,
+        ?int $classRoomId
     ): int|float {
         $filters = [
             'date' => $date,
@@ -61,6 +63,7 @@ class PaymentRegularizationFeature implements IPaymentRegularization
         foreach ($paymentRegularizations as $paymentRegularization) {
             $total += $paymentRegularization->amount;
         }
+
         return $total;
     }
 }

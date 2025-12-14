@@ -11,15 +11,19 @@ use Livewire\Component;
 class FormMultiLinkPage extends Component
 {
     protected $listeners = [
-        'multiAppLinkData' => 'getMultiAppLink'
+        'multiAppLinkData' => 'getMultiAppLink',
     ];
+
     public ?MultiAppLink $multiAppLink = null;
+
     public MultiLinkForm $form;
+
     public function getMultiAppLink(MultiAppLink $multiAppLink): void
     {
         $this->multiAppLink = $multiAppLink;
         $this->form->fill($multiAppLink->toArray());
     }
+
     public function save(): void
     {
         try {
@@ -29,6 +33,7 @@ class FormMultiLinkPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         try {
@@ -38,6 +43,7 @@ class FormMultiLinkPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         $this->validate();
@@ -50,11 +56,13 @@ class FormMultiLinkPage extends Component
         $this->multiAppLink = null;
         $this->dispatch('multiAppLinkListRefred');
     }
+
     public function cancelUpdate(): void
     {
         $this->multiAppLink = null;
         $this->form->reset();
     }
+
     public function render()
     {
         return view('livewire.application.navigation.form.form-multi-link-page');

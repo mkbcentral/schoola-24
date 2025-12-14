@@ -10,12 +10,11 @@ use Livewire\Component;
 
 class FormClassRoomPage extends Component
 {
+    protected $listeners = ['classRoomData' => 'getClassRoom'];
 
-    protected $listeners = ["classRoomData" => "getClassRoom"];
     public ?ClassRoom $classRoomSelected = null;
 
     public ClassRoomFrom $form;
-
 
     public function getClassRoom(ClassRoom $classRoom)
     {

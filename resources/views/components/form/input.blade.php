@@ -2,12 +2,10 @@
 
 <div class="input-group">
     @if ($icon != '')
-        <div class="input-group-prepend">
-            <span class="input-group-text">
-                <i class="{{ $icon }}"></i>
-            </span>
-        </div>
+        <span class="input-group-text bg-body border-secondary">
+            <i class="{{ $icon }}"></i>
+        </span>
     @endif
     <input {{ $disabled ? 'disabled' : '' }} {{ $attributes }}
-        class="form-control @error($error) is-invalid @enderror">
+        class="form-control border-secondary @error($error) is-invalid @enderror">
 </div>

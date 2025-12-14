@@ -14,11 +14,9 @@ class GiveUpStudent extends Model
 
     /**
      * Get the registration that owns the GiveUpStudent
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function registration(): BelongsTo
     {
-        return $this->belongsTo(Registration::class, 'registration_id',);
+        return $this->belongsTo(Registration::class, 'registration_id');
     }
 }

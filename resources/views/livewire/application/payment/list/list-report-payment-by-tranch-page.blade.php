@@ -58,10 +58,10 @@
     </div>
     <table class="table table-bordered table-sm table-hover mt-2" wire:loading.class='d-none'>
         <thead class="table-primary">
-            <tr class="">
+            <tr>
                 <th class="text-center">N°</th>
-                <th class="">DATE PAIMENT</th>
-                <th class="">CODE</th>
+                <th>DATE PAIEMENT</th>
+                <th>CODE</th>
                 <th class="cursor-hand">
                     <span>NOM COMPLET</span>
                 </th>

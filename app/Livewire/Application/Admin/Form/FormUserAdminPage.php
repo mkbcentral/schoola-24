@@ -14,23 +14,28 @@ use Livewire\Component;
 class FormUserAdminPage extends Component
 {
     protected $listeners = [
-        "schoolConfigData" => "getSchool"
+        'schoolConfigData' => 'getSchool',
     ];
+
     public ?School $school = null;
+
     public UserForm $form;
+
     public function save(): void
     {
-        $input = $this->validate();
+        dd($this->form);
+        $input['school_id'] = $this->school->id;
+        $input['password'] = Hash::make('password');
+        $this->form->create($input);
+        $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
+        $this->dispatch('schoolConfigDataRefreshed');
+
         try {
-            $input['school_id'] = $this->school->id;
-            $input['password'] = Hash::make('password');
-            $this->form->create($input);
-            $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
-            $this->dispatch('schoolConfigDataRefreshed');
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function getSchool(?School $school = null)
     {
         $this->school = $school;

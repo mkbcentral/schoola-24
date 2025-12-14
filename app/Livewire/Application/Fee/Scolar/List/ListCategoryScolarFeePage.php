@@ -13,11 +13,16 @@ use Livewire\WithPagination;
 class ListCategoryScolarFeePage extends Component
 {
     use WithPagination;
-    public int $per_page = 10, $option_filter = 0;
+
+    public int $per_page = 10;
+
+    public int $option_filter = 0;
+
     #[Url(as: 'q')]
     public $q = '';
 
-    protected $listeners = ["regCatFeeScolarDataRefreshed" => '$refresh'];
+    protected $listeners = ['regCatFeeScolarDataRefreshed' => '$refresh'];
+
     public function edit(?CategoryFee $categoryFee)
     {
         $this->dispatch('categoryScolarFeeData', $categoryFee);
@@ -37,13 +42,14 @@ class ListCategoryScolarFeePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.fee.scolar.list.list-category-scolar-fee-page', [
             'categoryFees' => FeeDataConfiguration::getListCategoryFee(
                 $this->per_page,
                 $this->q
-            )
+            ),
         ]);
     }
 }

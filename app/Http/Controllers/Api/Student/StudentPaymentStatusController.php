@@ -33,18 +33,20 @@ class StudentPaymentStatusController extends Controller
                 if ($payment) {
                     $status = true;
                 }
+
                 return response()->json([
                     'student' => new RegistrationResource($registration),
                     'status' => $status,
-                    'month' => format_fr_month_name($month)
+                    'month' => format_fr_month_name($month),
                 ], 200);
             } else {
                 return response()->json([
-                    'message' => "Eleve introuvable"
+                    'message' => 'Eleve introuvable',
                 ], 404);
             }
         } catch (Exception $exception) {
-            $handler = new CustomExceptionHandler();
+            $handler = new CustomExceptionHandler;
+
             return $handler->render(request(), $exception);
         }
     }
@@ -53,16 +55,18 @@ class StudentPaymentStatusController extends Controller
     {
         try {
             $categoryFees = CategoryFeeResource::collection(FeeDataConfiguration::getListCategoryFee(100));
+
             return response()->json([
-                'categories' => $categoryFees
+                'categories' => $categoryFees,
             ]);
         } catch (Exception $exception) {
-            $handler = new CustomExceptionHandler();
+            $handler = new CustomExceptionHandler;
+
             return $handler->render(request(), $exception);
         }
     }
 
-    public  function  getScolarFeesByCategory(Request $request, $categoryFeeId, $registrationId)
+    public function getScolarFeesByCategory(Request $request, $categoryFeeId, $registrationId)
     {
         try {
             $registration = Registration::find($registrationId);
@@ -72,15 +76,16 @@ class StudentPaymentStatusController extends Controller
                 ->first();
             if ($scolarFee == null) {
                 return response()->json([
-                    'message' => "Aucun frais scolaire trouvé pour cette catégorie"
+                    'message' => 'Aucun frais scolaire trouvé pour cette catégorie',
                 ], 404);
             } else {
                 return response()->json([
-                    'scolaryFee' => new ScolarFeeResource($scolarFee)
+                    'scolaryFee' => new ScolarFeeResource($scolarFee),
                 ]);
             }
         } catch (Exception $exception) {
-            $handler = new CustomExceptionHandler();
+            $handler = new CustomExceptionHandler;
+
             return $handler->render(request(), $exception);
         }
     }

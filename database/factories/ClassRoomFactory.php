@@ -19,7 +19,7 @@ class ClassRoomFactory extends Factory
     {
         return [
             'name' => fake()->firstName(),
-            'option_id' => Option::all()->random()
+            'option_id' => Option::all()->random(),
         ];
     }
 }

@@ -10,17 +10,19 @@ use Livewire\WithPagination;
 class MainPaymentPage extends Component
 {
     use WithPagination;
-    protected $listeners = [
-        "refreshIndex" => 'changeIndex'
-    ];
-    public int $selectedIndex = 0;
-    public ?CategoryFee $categoryFeeSelected = null;
 
+    protected $listeners = [
+        'refreshIndex' => 'changeIndex',
+    ];
+
+    public int $selectedIndex = 0;
+
+    public ?CategoryFee $categoryFeeSelected = null;
 
     public function mount(): void
     {
         $this->categoryFeeSelected = FeeDataConfiguration::getFirstCategoryFee();
-        $this->selectedIndex =  $this->categoryFeeSelected->id ?? 0;
+        $this->selectedIndex = $this->categoryFeeSelected->id ?? 0;
     }
 
     public function changeIndex(int $index): void

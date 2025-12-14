@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class ListSchoolPage extends Component
 {
-
     protected $listeners = [
         'listSchoolRefred' => '$refresh',
     ];
@@ -16,6 +15,7 @@ class ListSchoolPage extends Component
     {
         $this->dispatch('resetFromData');
     }
+
     public function edit(?School $school)
     {
         $this->dispatch('schoolData', $school);
@@ -24,7 +24,7 @@ class ListSchoolPage extends Component
     public function render()
     {
         return view('livewire.application.admin.list.list-school-page', [
-            'schoools' => School::all()
+            'schoools' => School::all(),
         ]);
     }
 }

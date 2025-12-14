@@ -14,26 +14,39 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-
 class ListStudentPage extends Component
 {
     use WithPagination;
+
     protected $listeners = [
         'refreshListStudent' => '$refresh',
+        'deleteStudent' => 'delete',
+        'deletedStudentListner' => 'confirmDelete',
     ];
+
     public int $per_page = 10;
-    public int  $option_filter = 0;
-    public int  $class_room_filter = 0;
+
+    public int $option_filter = 0;
+
+    public int $class_room_filter = 0;
+
     public int $selectedOptionId = 0;
+
     public ?bool $isOld = null;
+
     #[Url(as: 'q')]
     public $q = '';
+
     #[Url(as: 'sortBy')]
     public $sortBy = 'registrations.code';
+
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
+
     public ?Student $studentToDelete;
-    public  $selectedRegistrations = [];
+
+    public $selectedRegistrations = [];
+
     public bool $selectPageRows = false;
 
     /**
@@ -46,23 +59,18 @@ class ListStudentPage extends Component
 
     /**
      * Trier le manière (ASC/DESC)
-     * @param mixed $value
-     * @return void
      */
     public function sortData(mixed $value): void
     {
         if ($value == $this->sortBy) {
-            $this->sortAsc = !$this->sortAsc;
+            $this->sortAsc = ! $this->sortAsc;
         }
         $this->sortBy = $value;
         $this->resetPage();
     }
 
-
     /**
      * Selectionner toutes les ligne de du table
-     * @param mixed $value
-     * @return void
      */
     public function updatedSelectPageRows(mixed $value): void
     {
@@ -70,7 +78,7 @@ class ListStudentPage extends Component
             $this->per_page = 1000;
             $this->selectedRegistrations = $this->registrations
                 ->pluck('id')->map(function ($id) {
-                    return (string)$id;
+                    return (string) $id;
                 });
         } else {
             $this->reset(['selectedRegistrations', 'selectPageRows']);
@@ -88,26 +96,22 @@ class ListStudentPage extends Component
 
     /**
      * Editer un élève
-     * @param \App\Models\Student $student
-     * @return void
      */
     public function edit(Student $student, Registration $registration): void
     {
         $this->dispatch('studentData', $student, $registration);
     }
+
     /**
      * Ouvrir le formulaire pour marquer abandon
-     * @param \App\Models\Registration $registration
-     * @return void
      */
     public function openMakeGiveUpStudentFom(Registration $registration): void
     {
         $this->dispatch('registrationData', $registration);
     }
+
     /**
      * Ouvrir le formulaire pour changer de classe
-     * @param \App\Models\Registration $registration
-     * @return void
      */
     public function changeClassStudent(Registration $registration): void
     {
@@ -116,8 +120,8 @@ class ListStudentPage extends Component
 
     /**
      * Ouvrir le formulaire passer un payement
-     * @param mixed $registration
-     * @return void
+     *
+     * @param  mixed  $registration
      */
     public function openPaymentForm(?Registration $registration): void
     {
@@ -126,8 +130,6 @@ class ListStudentPage extends Component
 
     /**
      * Générer ou régeénerer un un qr-code pour un élève
-     * @param \App\Models\Registration $registration
-     * @return void
      */
     public function generateQRCode(Registration $registration): void
     {
@@ -139,9 +141,9 @@ class ListStudentPage extends Component
             $this->dispatch('delete-student-failed', ['message' => $ex->getMessage()]);
         }
     }
+
     /**
      * Actualiser la liste
-     * @return void
      */
     public function refreshData(): void
     {
@@ -149,33 +151,69 @@ class ListStudentPage extends Component
         $this->resetPage();
     }
 
-
     /**
-     * Supprimer un élève
-     * @return void
+     * Ouvrir la boîte de dialogue de confirmation de suppression
      */
     public function delete(Registration $registration): void
     {
+        $this->studentToDelete = $registration->student;
+        $this->dispatch('delete-student-dialog', [
+            'name' => $registration->student->name,
+            'registrationId' => $registration->id,
+        ]);
+    }
+
+    /**
+     * Confirmer et exécuter la suppression de l'élève
+     */
+    public function confirmDelete(): void
+    {
         try {
-            $payments = Payment::where('registration_id', $registration->id)->get();
-            foreach ($payments as $p) {
-                SmsPayment::where('payment_id', $p->id)->delete();
-                $p->delete();
+            if (! $this->studentToDelete) {
+                $this->dispatch('delete-student-failed', ['message' => 'Aucun élève sélectionné.']);
+
+                return;
             }
+
+            // Récupérer l'inscription via le studentToDelete
+            $registration = Registration::where('student_id', $this->studentToDelete->id)
+                ->where('school_year_id', \App\Models\SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
+                ->first();
+
+            if (! $registration) {
+                $this->dispatch('delete-student-failed', ['message' => 'Inscription non trouvée.']);
+
+                return;
+            }
+
+            // Supprimer les paiements et SMS associés
+            $payments = Payment::where('registration_id', $registration->id)->get();
+            foreach ($payments as $payment) {
+                SmsPayment::where('payment_id', $payment->id)->delete();
+                $payment->delete();
+            }
+
+            // Supprimer l'inscription
+            $studentName = $registration->student->name;
             $student = $registration->student;
             $registration->delete();
-            if ($student) {
+
+            // Supprimer l'élève si c'est le dernier
+            /*
+            if ($student && $student->registrations()->count() === 0) {
                 $student->delete();
             }
-            $this->dispatch('info', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
+                */
+
+            $this->dispatch('student-deleted', ['message' => "L'élève {$studentName} a été supprimé avec succès."]);
+            $this->reset('studentToDelete');
         } catch (Exception $ex) {
-            $this->dispatch('error', ['message' => $ex->getMessage()]);
+            $this->dispatch('delete-student-failed', ['message' => $ex->getMessage()]);
         }
     }
 
     /**
      * Générer plusieurs qr-code pour plusieurs élèves séléctionnés
-     * @return void
      */
     public function generateQrcodeItems(): void
     {
@@ -191,16 +229,14 @@ class ListStudentPage extends Component
     {
         $this->isOld = true;
     }
+
     public function mekeIsNew()
     {
         $this->isOld = false;
     }
 
-
-
     /**
      * Fonction magique (computed) qui permet d'avoir les regisations dans tout les composant
-     * @return mixed
      */
     public function getRegistrationsProperty(): mixed
     {
@@ -216,8 +252,6 @@ class ListStudentPage extends Component
             $this->sortAsc,
             $this->isOld,
             $this->per_page,
-
-
         );
     }
 
@@ -226,7 +260,7 @@ class ListStudentPage extends Component
      */
     public function toggleFeeExempted(Registration $registration): void
     {
-        $registration->markFeeExempted(!$registration->is_fee_exempted);
+        $registration->markFeeExempted(! $registration->is_fee_exempted);
         $this->dispatch('added', ['message' => $registration->is_fee_exempted ? 'Inscription marquée comme exemptée de frais.' : 'Exemption de frais retirée.']);
     }
 
@@ -243,7 +277,7 @@ class ListStudentPage extends Component
                 $this->option_filter,
                 $this->class_room_filter,
                 null,
-            )
+            ),
         ]);
     }
 }

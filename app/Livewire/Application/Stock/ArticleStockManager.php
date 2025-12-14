@@ -17,7 +17,9 @@ class ArticleStockManager extends Component
     public ArticleForm $form;
 
     public $search = '';
+
     public $editMode = false;
+
     public $selectedCategory = '';
 
     protected $stockService;
@@ -113,7 +115,8 @@ class ArticleStockManager extends Component
     public function exportArticles()
     {
         try {
-            $exportService = new ArticleExportService();
+            $exportService = new ArticleExportService;
+
             return $exportService->exportAllArticles($this->search);
         } catch (\Exception $e) {
             $this->dispatch('error', ['message' => 'Erreur lors de l\'export : ' . $e->getMessage()]);

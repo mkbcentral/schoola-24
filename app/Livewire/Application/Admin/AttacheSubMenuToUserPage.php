@@ -11,6 +11,7 @@ use Livewire\Component;
 class AttacheSubMenuToUserPage extends Component
 {
     public User $user;
+
     public $selectedLinks = [];
 
     public function mount()
@@ -29,10 +30,11 @@ class AttacheSubMenuToUserPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.admin.attache-sub-menu-to-user-page', [
-            'subLinks' => SubLink::all()
+            'subLinks' => SubLink::all(),
         ]);
     }
 }

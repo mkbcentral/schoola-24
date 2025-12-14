@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Features\Payment\PaymentFeature;
-use App\Http\Controllers\Controller;
 use App\Models\CategoryFee;
 use App\Models\ClassRoom;
 use App\Models\Option;
@@ -16,9 +15,8 @@ class PrintPaymentController extends Controller
 {
     /**
      * Imprimer les paiements par date
-     * @param string $date
-     * @param mixed $categoryFeeId
-     * @return mixed
+     *
+     * @param  mixed  $categoryFeeId
      */
     public function printPaymentsByDate(
         string $date,
@@ -52,17 +50,12 @@ class PrintPaymentController extends Controller
                 ['payments', 'categoryFee', 'date', 'section', 'option', 'classRoom']
             )
         );
+
         return $pdf->stream();
     }
+
     /**
      * Imprimer la liste des paiements par mois
-     * @param string $month
-     * @param int $categoryFeeId
-     * @param int $feeId
-     * @param int $sectionId
-     * @param int $optionId
-     * @param int $classRoomId
-     * @return mixed
      */
     public function printPaymentsByMonth(
         string $month,
@@ -96,13 +89,12 @@ class PrintPaymentController extends Controller
                 ['payments', 'categoryFee', 'month', 'section', 'option', 'classRoom']
             )
         );
+
         return $pdf->stream();
     }
 
     /**
      * Imprimer le bordereau par date
-     * @param string $date
-     * @return mixed
      */
     public function printPaymentSlipByDate(string $date): mixed
     {
@@ -117,6 +109,7 @@ class PrintPaymentController extends Controller
                 ['categoryFees', 'date']
             )
         );
+
         return $pdf->stream();
     }
 
@@ -133,6 +126,7 @@ class PrintPaymentController extends Controller
                 ['categoryFees', 'month']
             )
         );
+
         return $pdf->stream();
     }
 }

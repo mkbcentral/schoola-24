@@ -11,11 +11,12 @@ class ListCategoryExpenseController extends Controller
 {
     public function __invoke()
     {
-        $cats= CategoryExpense::query()
-            ->where('school_id',School::DEFAULT_SCHOOL_ID())
+        $cats = CategoryExpense::query()
+            ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->get();
+
         return response()->json([
-            'categories'=> CategoryExpenseResource::collection($cats),
+            'categories' => CategoryExpenseResource::collection($cats),
         ]);
 
     }

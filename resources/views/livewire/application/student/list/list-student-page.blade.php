@@ -163,44 +163,48 @@
             </div>
         @endif
     </div>
-    @push('js')
-        <script type="module">
-            //Confirmation dialog for delete product
-            window.addEventListener('delete-student-dialog', event => {
-                Swal.fire({
-                    title: 'Voulez-vous vraimant ',
-                    text: "Retirer l'élève " + event.detail[0]['name'] + "?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'Non'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.dispatch('deletedStudentListner');
-                    }
-                })
-            });
-            window.addEventListener('student-deleted', event => {
-                Swal.fire(
-                    'Suppression',
-                    event.detail[0].message,
-                    'success'
-                );
-            });
-            window.addEventListener('delete-student-failed', event => {
-                Swal.fire(
-                    'Suppression',
-                    event.detail[0].message,
-                    'error'
-                );
-            });
-        </script>
-    @endpush
 
     <livewire:application.student.form.form-edit-student-page />
     <livewire:application.student.form.form-create-derogation-page />
     <livewire:application.registration.form.form-give-up-student-page />
     <livewire:application.registration.form.form-change-class-student-page />
 </div>
+
+@script
+    <script>
+        // List Student Page - Livewire initialisé
+        // Confirmation dialog for delete student
+        $wire.on('delete-student-dialog', (event) => {
+            Swal.fire({
+                title: 'Voulez-vous vraiment ',
+                text: "Retirer l'élève " + event[0]['name'] + "?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oui',
+                cancelButtonText: 'Non'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $wire.dispatch('deletedStudentListner');
+                }
+            });
+        });
+
+        $wire.on('student-deleted', (event) => {
+            Swal.fire(
+                'Suppression',
+                event[0].message,
+                'success'
+            );
+        });
+
+        $wire.on('delete-student-failed', (event) => {
+            Swal.fire(
+                'Suppression',
+                event[0].message,
+                'error'
+            );
+        });
+    </script>
+@endscript

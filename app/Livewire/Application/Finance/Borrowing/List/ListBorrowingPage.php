@@ -11,26 +11,34 @@ use Livewire\WithPagination;
 class ListBorrowingPage extends Component
 {
     use WithPagination;
+
     protected $listeners = [
-        'moneyBorrowingListRefreshed' => '$refresh'
+        'moneyBorrowingListRefreshed' => '$refresh',
     ];
+
     public ?string $date_filter = null;
+
     public ?string $month_filter = '';
-    public ?string  $currency_filter = '';
+
+    public ?string $currency_filter = '';
+
     public ?int $per_page = 10;
 
-    public  function newBorrowing(): void
+    public function newBorrowing(): void
     {
         $this->dispatch('initialBorrowingForm');
     }
+
     public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
     }
+
     public function updatedDateFilter(): void
     {
-        $this->month_filter = "";
+        $this->month_filter = '';
     }
+
     public function edit(?MoneyBorrowing $moneyBorrowing): void
     {
         $this->dispatch('moneyBorrowingData', $moneyBorrowing);
@@ -68,7 +76,7 @@ class ListBorrowingPage extends Component
                 $this->date_filter,
                 $this->month_filter,
                 'CDF'
-            )
+            ),
         ]);
     }
 }

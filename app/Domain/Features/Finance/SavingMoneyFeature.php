@@ -7,20 +7,19 @@ use App\Models\SavingMoney;
 
 class SavingMoneyFeature implements ISavingMoney
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getAmountTotal(
-        string|null $date,
-        string|null $month,
-        string|null $currency
+        ?string $date,
+        ?string $month,
+        ?string $currency
     ): mixed {
         $total = 0;
         $filters = [
             'date' => $date,
             'month' => $month,
-            'currency' => $currency
+            'currency' => $currency,
         ];
         $savingMoneys = SavingMoney::query()
             ->filter($filters)
@@ -28,23 +27,25 @@ class SavingMoneyFeature implements ISavingMoney
         foreach ($savingMoneys as $savingMoney) {
             $total += $savingMoney->amount;
         }
+
         return $total;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getList(
-        string|null $date,
-        string|null $month,
-        string|null $currency,
-        int|null $per_page,
+        ?string $date,
+        ?string $month,
+        ?string $currency,
+        ?int $per_page,
     ): mixed {
         $filters = [
             'date' => $date,
             'month' => $month,
-            'currency' => $currency
+            'currency' => $currency,
         ];
+
         return SavingMoney::query()
             ->filter($filters)
             ->paginate($per_page);

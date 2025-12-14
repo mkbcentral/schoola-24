@@ -10,7 +10,6 @@ use Livewire\Form;
 
 class ResponsibleStudentForm extends Form
 {
-
     #[Rule('required', message: 'Nom responsable obligatoire', onUpdate: false)]
     public $name = '';
 
@@ -18,7 +17,7 @@ class ResponsibleStudentForm extends Form
     #[Rule('min:9', message: 'Minimum 10 caractères', onUpdate: false)]
     public $phone = '';
 
-    #[Rule('nullable',  onUpdate: false)]
+    #[Rule('nullable', onUpdate: false)]
     #[Rule('min:9', message: 'Minimum 10 caractères', onUpdate: false)]
     public $other_phone = '';
 
@@ -30,6 +29,7 @@ class ResponsibleStudentForm extends Form
     public function create(array $input = []): ResponsibleStudent
     {
         $input['school_id'] = School::DEFAULT_SCHOOL_ID();
+
         return ResponsibleStudentFeature::create($input);
     }
 

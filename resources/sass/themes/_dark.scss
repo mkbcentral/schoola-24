@@ -1,0 +1,619 @@
+// =============================================================================
+// Dark Theme
+// Configuration complète du thème sombre
+// Toutes les surcharges de variables en un seul endroit
+// =============================================================================
+
+[data-bs-theme="dark"],
+.dark-mode {
+    // -------------------------------------------------------------------------
+    // Couleurs de base
+    // -------------------------------------------------------------------------
+    --text-primary: #e8eaed;
+    --text-secondary: #b4b8c5;
+    --text-muted: #8b91a0;
+    --text-dark: #e8eaed;
+
+    // -------------------------------------------------------------------------
+    // Arrière-plans
+    // -------------------------------------------------------------------------
+    --bg-body: #212529;
+    --bg-primary: #1a1d29;
+    --bg-secondary: #242837;
+    --bg-tertiary: #2a2f3f;
+
+    // -------------------------------------------------------------------------
+    // Bordures
+    // -------------------------------------------------------------------------
+    --border-color: #363b4a;
+    --border-color-light: #2a2f3f;
+    --border-color-medium: #3d4354;
+    --border-color-dark: #4a4f5e;
+
+    // -------------------------------------------------------------------------
+    // Sidebar
+    // -------------------------------------------------------------------------
+    --sidebar-bg: #1a1d20;
+    --sidebar-header-bg: #151719;
+    --sidebar-hover-bg: #151719;
+    --sidebar-footer-bg: #151719;
+    --sidebar-active-bg: rgba(13, 110, 253, 0.15);
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+
+    // -------------------------------------------------------------------------
+    // Cards
+    // -------------------------------------------------------------------------
+    --card-bg: #2c3034;
+    --card-border: #373b3e;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+    // -------------------------------------------------------------------------
+    // Tables
+    // -------------------------------------------------------------------------
+    --table-bg: #2c3034;
+    --table-border: #373b3e;
+    --table-hover-bg: #3d4246;
+    --table-striped-bg: #343a40;
+    --table-header-bg: rgba(255, 255, 255, 0.07);
+    --table-header-text: #ffffff;
+
+    // -------------------------------------------------------------------------
+    // Forms
+    // -------------------------------------------------------------------------
+    --input-bg: #2c3034;
+    --input-border: #373b3e;
+    --input-text: #e8eaed;
+    --input-placeholder: #8b91a0;
+    --input-focus-border: #0d6efd;
+    --input-focus-shadow: rgba(13, 110, 253, 0.25);
+    --input-disabled-bg: #1a1d20;
+
+    // -------------------------------------------------------------------------
+    // Modals
+    // -------------------------------------------------------------------------
+    --modal-backdrop-bg: rgba(0, 0, 0, 0.7);
+    --modal-bg: #2c3034;
+    --modal-border: #373b3e;
+    --modal-header-bg: #1a1d20;
+    --modal-footer-bg: #2c3034;
+
+    // -------------------------------------------------------------------------
+    // Dropdowns
+    // -------------------------------------------------------------------------
+    --dropdown-bg: #252935;
+    --dropdown-border: #363b4a;
+    --dropdown-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    --dropdown-item-hover-bg: #2a2f3f;
+
+    // -------------------------------------------------------------------------
+    // Navbar
+    // -------------------------------------------------------------------------
+    --navbar-bg: #2c3034;
+    --navbar-border: #373b3e;
+    --navbar-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    // -------------------------------------------------------------------------
+    // Avatar
+    // -------------------------------------------------------------------------
+    --avatar-circle-bg: #373b3e;
+
+    // -------------------------------------------------------------------------
+    // Timeline
+    // -------------------------------------------------------------------------
+    --timeline-border: #373b3e;
+
+    // -------------------------------------------------------------------------
+    // Shadows (plus prononcées)
+    // -------------------------------------------------------------------------
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-base: 0 4px 8px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.6);
+    --shadow-2xl: 0 16px 40px rgba(0, 0, 0, 0.7);
+    --shadow-primary: 0 4px 12px rgba(13, 110, 253, 0.25);
+    --shadow-primary-lg: 0 8px 24px rgba(13, 110, 253, 0.35);
+
+    // -------------------------------------------------------------------------
+    // Quick Payment (mode sombre)
+    // -------------------------------------------------------------------------
+    --qp-bg-primary: #1a1d29;
+    --qp-bg-secondary: #242837;
+    --qp-bg-card: #1e2230;
+    --qp-bg-gradient-start: #4c5fd7;
+    --qp-bg-gradient-end: #5b3891;
+    --qp-bg-success: #1a3a2e;
+    --qp-bg-success-end: #1e4237;
+    --qp-bg-warning: #3d3420;
+    --qp-bg-warning-end: #4a3f28;
+    --qp-bg-hover: #2a2f3f;
+    --qp-bg-dropdown: #252935;
+}
+
+// =============================================================================
+// Composants spécifiques en mode sombre
+// =============================================================================
+
+[data-bs-theme="dark"],
+.dark-mode {
+    
+    // Navbar
+    .navbar {
+        background-color: #2c3034 !important;
+        border-bottom: 1px solid #373b3e;
+    }
+
+    // Content principal
+    #content {
+        background-color: #212529;
+        color: #fff;
+    }
+
+    .container-fluid {
+        background-color: #212529;
+        color: #fff;
+    }
+
+    // Breadcrumbs
+    .breadcrumb-item {
+        a {
+            color: #0d6efd;
+        }
+
+        &.active {
+            color: #fff;
+        }
+    }
+
+    // Titres
+    h2, h3, h4, h5, h6 {
+        color: #fff;
+    }
+
+    // Bouton info
+    .btn-info {
+        background-color: #0dcaf0;
+        border-color: #0dcaf0;
+        color: #000;
+
+        &:hover {
+            background-color: #31d2f2;
+            border-color: #25cff2;
+            color: #000;
+        }
+    }
+
+    // Canvas (Charts)
+    canvas {
+        filter: brightness(0.8);
+        background-color: var(--card-bg);
+        border-radius: var(--radius-base);
+    }
+
+    .chart-container {
+        background-color: var(--card-bg);
+        border-radius: var(--radius-base);
+        padding: var(--space-4);
+    }
+
+    // Timeline
+    .timeline-marker {
+        border: 2px solid var(--timeline-border);
+        background-color: var(--card-bg);
+
+        &.bg-primary {
+            background-color: #0d6efd !important;
+            border: 2px solid rgba(13, 110, 253, 0.2);
+        }
+
+        &.bg-success {
+            background-color: #198754 !important;
+            border: 2px solid rgba(25, 135, 84, 0.2);
+        }
+
+        &.bg-warning {
+            background-color: #ffc107 !important;
+            border: 2px solid rgba(255, 193, 7, 0.2);
+        }
+
+        &.bg-info {
+            background-color: #0dcaf0 !important;
+            border: 2px solid rgba(13, 202, 240, 0.2);
+        }
+
+        &.bg-danger {
+            background-color: #dc3545 !important;
+            border: 2px solid rgba(220, 53, 69, 0.2);
+        }
+    }
+
+    .timeline-content {
+        border-bottom-color: var(--timeline-border);
+
+        h6, p, small {
+            color: var(--text-primary);
+        }
+
+        p {
+            opacity: 0.8;
+        }
+
+        small {
+            opacity: 0.6;
+        }
+    }
+
+    // Offcanvas
+    .offcanvas {
+        background-color: var(--card-bg);
+        color: var(--text-primary);
+
+        &-header {
+            background-color: var(--sidebar-bg);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .list-group-item {
+            background-color: transparent;
+            color: var(--text-primary);
+
+            &:hover {
+                background-color: var(--sidebar-hover-bg);
+            }
+        }
+    }
+
+    // Loading alert
+    .qp-loading-alert {
+        background-color: #1e3a5f !important;
+        color: #7dd3fc !important;
+    }
+
+    // -------------------------------------------------------------------------
+    // Tables spécifiques (Reports)
+    // -------------------------------------------------------------------------
+    .table-primary {
+        --bs-table-bg: rgba(13, 110, 253, 0.2);
+        --bs-table-border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .shadow {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .table-hover > tbody > tr:hover > td {
+        background-color: rgba(255, 255, 255, 0.075);
+    }
+
+    // -------------------------------------------------------------------------
+    // Alertes spécifiques
+    // -------------------------------------------------------------------------
+    .alert-danger {
+        background-color: rgba(220, 53, 69, 0.2);
+        border-color: rgba(220, 53, 69, 0.3);
+        color: #f8d7da;
+    }
+
+    .alert-success {
+        background-color: rgba(25, 135, 84, 0.2);
+        border-color: rgba(25, 135, 84, 0.3);
+        color: #d1e7dd;
+    }
+
+    // -------------------------------------------------------------------------
+    // Expense Management - Lignes avec toggle switch
+    // -------------------------------------------------------------------------
+    tr:has(.expense-toggle-switch:checked) {
+        background-color: rgba(25, 135, 84, 0.1) !important;
+    }
+
+    tr:has(.expense-toggle-switch):hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    tr:has(.expense-toggle-switch:checked):hover {
+        background-color: rgba(25, 135, 84, 0.15) !important;
+    }
+
+    .badge.bg-light {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    // -------------------------------------------------------------------------
+    // Offcanvas spécifiques (Expense, Source, Category)
+    // -------------------------------------------------------------------------
+    #expenseFormOffcanvas,
+    #sourceFormOffcanvas,
+    #categoryFormOffcanvas {
+        background-color: #212529;
+        color: #dee2e6;
+
+        .offcanvas-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Payment Report Page - Styles spécifiques
+    // -------------------------------------------------------------------------
+    
+    // Background principal
+    .min-vh-100[style*="background-color: #f5f6fa"] {
+        background-color: #1a1d20 !important;
+    }
+
+    // Cards et containers blancs
+    [style*="background: white"],
+    [style*="background-color: white"] {
+        background-color: var(--card-bg) !important;
+        border-color: var(--card-border) !important;
+    }
+
+    // Textes sombres
+    [style*="color: #1a1f36"],
+    [style*="color: #1a1a1a"],
+    [style*="color: #374151"] {
+        color: var(--text-primary) !important;
+    }
+
+    // Textes gris
+    [style*="color: #555"],
+    [style*="color: #666"],
+    [style*="color: #6b7280"] {
+        color: var(--text-secondary) !important;
+    }
+
+    // Inputs et selects
+    select[style*="background-color: white"],
+    input[type="date"][style*="background-color: white"] {
+        background-color: var(--input-bg) !important;
+        border-color: var(--input-border) !important;
+        color: var(--text-primary) !important;
+
+        &:hover {
+            border-color: var(--input-focus-border) !important;
+        }
+
+        &:focus {
+            border-color: var(--input-focus-border) !important;
+            background-color: var(--input-bg) !important;
+        }
+    }
+
+    // Backgrounds gris clairs
+    [style*="background-color: #f9fafb"],
+    [style*="background-color: #f8f9fa"] {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border-color: var(--card-border) !important;
+    }
+
+    // Borders
+    [style*="border: 1px solid #e1e4e8"],
+    [style*="border: 1px solid #e8e8e8"],
+    [style*="border-bottom: 1px solid #e1e4e8"],
+    [style*="border-bottom: 1px solid #e8e8e8"],
+    [style*="border-bottom: 2px solid #e1e4e8"] {
+        border-color: var(--card-border) !important;
+    }
+
+    // Borders des lignes de tableau
+    [style*="border-bottom: 1px solid #e5e7eb"],
+    [style*="border-bottom: 1px solid #f0f0f0"] {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    // Hover sur les lignes de tableau
+    table tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    // Badges et spans avec background gris
+    span[style*="background-color: #f0f0f0"],
+    span[style*="background-color: #e8e8e8"] {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: var(--text-primary) !important;
+    }
+
+    // Boutons avec fond sombre
+    button[style*="background-color: #1a1a1a"],
+    button[style*="background-color: #1a1f36"],
+    a[style*="background-color: #1a1f36"] {
+        background-color: var(--bs-primary) !important;
+        color: white !important;
+    }
+
+    // Boutons avec fond blanc
+    a[style*="background-color: white"] {
+        background-color: var(--card-bg) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--card-border) !important;
+    }
+
+    // Messages d'alerte
+    [style*="background-color: #fffbf0"] {
+        background-color: rgba(255, 193, 7, 0.15) !important;
+        border-color: rgba(255, 193, 7, 0.3) !important;
+    }
+
+    [style*="color: #856404"] {
+        color: #ffc107 !important;
+    }
+
+    [style*="background-color: #fee"] {
+        background-color: rgba(220, 53, 69, 0.15) !important;
+        border-color: rgba(220, 53, 69, 0.3) !important;
+    }
+
+    [style*="color: #721c24"] {
+        color: #f8d7da !important;
+    }
+
+    // Footer info
+    [style*="background-color: #f8f9fa"][style*="border-left: 3px solid #1a1a1a"] {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border-left-color: var(--bs-primary) !important;
+    }
+
+    [style*="color: #888"],
+    [style*="color: #999"] {
+        color: var(--text-muted) !important;
+    }
+
+    // Titres avec border-bottom
+    h6[style*="border-bottom: 2px solid #1a1f36"] {
+        border-bottom-color: var(--bs-primary) !important;
+    }
+
+    // Textes des valeurs monétaires (garder les couleurs pour USD/CDF)
+    // USD reste vert #059669
+    // CDF reste rouge #dc2626
+    // Les autres couleurs fonctionnelles sont préservées
+
+    // -------------------------------------------------------------------------
+    // Sidebar & Navbar - Améliorations Dark Mode
+    // -------------------------------------------------------------------------
+
+    // Sidebar improvements
+    #sidebar {
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.4);
+
+        &.active {
+            box-shadow: none;
+        }
+    }
+
+    .sidebar-header {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+        background: linear-gradient(135deg, 
+            var(--sidebar-header-bg) 0%, 
+            rgba(255, 255, 255, 0.02) 100%);
+    }
+
+    // Navigation links hover improvements
+    #sidebar ul li a {
+        &::before {
+            background: linear-gradient(90deg, 
+                rgba(var(--bs-primary-rgb), 0.15), 
+                rgba(var(--bs-primary-rgb), 0.08));
+        }
+
+        &:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        &.active,
+        &:active {
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.25);
+        }
+    }
+
+    // Sous-menus dark mode
+    #sidebar ul ul {
+        border-left-color: rgba(255, 255, 255, 0.1);
+    }
+
+    // Sidebar footer improvements
+    .sidebar-footer {
+        border-top-color: rgba(255, 255, 255, 0.08);
+        background: linear-gradient(180deg, 
+            rgba(255, 255, 255, 0.02) 0%, 
+            var(--sidebar-footer-bg) 100%);
+    }
+
+    .version-number {
+        background: rgba(var(--bs-info-rgb), 0.15);
+        border-color: rgba(var(--bs-info-rgb), 0.3);
+
+        &:hover {
+            background: rgba(var(--bs-info-rgb), 0.25);
+        }
+    }
+
+    // Navbar improvements
+    .navbar {
+        background: rgba(var(--navbar-bg), 0.95);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
+
+        &.scrolled {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    // Sidebar collapse button
+    #sidebarCollapse {
+        background: var(--card-bg);
+        border-color: rgba(255, 255, 255, 0.1);
+
+        &::before {
+            background: rgba(var(--bs-primary-rgb), 0.3);
+        }
+
+        &:hover {
+            background: var(--sidebar-active-bg);
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.3);
+        }
+    }
+
+    // Dropdown menu dark mode
+    .navbar .dropdown-menu {
+        background: var(--card-bg);
+        border-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+
+        .dropdown-item {
+            color: var(--text-primary);
+
+            &:hover {
+                background: var(--sidebar-active-bg);
+                color: var(--color-primary);
+            }
+        }
+
+        .dropdown-divider {
+            border-color: rgba(255, 255, 255, 0.1);
+            opacity: 1;
+        }
+    }
+
+    // User dropdown button
+    .navbar .dropdown-toggle {
+        background: var(--card-bg);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+
+        &:hover {
+            background: var(--sidebar-hover-bg);
+            border-color: var(--color-primary);
+            box-shadow: 0 2px 8px rgba(var(--bs-primary-rgb), 0.25);
+        }
+
+        &[aria-expanded="true"] {
+            background: var(--sidebar-active-bg);
+            border-color: var(--color-primary);
+        }
+    }
+
+    // Avatar circle
+    .navbar .avatar-circle {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+        &:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.4);
+        }
+    }
+}
+
+// =============================================================================
+// Media Query - Préférence système dark mode
+// =============================================================================
+
+// Note: Les variables sont appliquées automatiquement via [data-bs-theme="dark"]
+// Le mode sombre système est géré par JavaScript qui applique l'attribut data-bs-theme

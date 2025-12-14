@@ -13,27 +13,29 @@ use Livewire\WithPagination;
 class ListClassRoomPage extends Component
 {
     use WithPagination;
+
     protected $listeners = ['classRoomDataRefreshed' => '$refresh'];
+
     public $option_filer;
+
     #[Url(as: 'sortBy')]
     public $sortBy = 'class_rooms.name';
+
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
 
     public function sortData($value): void
     {
         if ($value == $this->sortBy) {
-            $this->sortAsc = !$this->sortAsc;
+            $this->sortAsc = ! $this->sortAsc;
         }
         $this->sortBy = $value;
     }
-
 
     public function edit(?ClassRoom $classRoom)
     {
         $this->dispatch('classRoomData', $classRoom);
     }
-
 
     public function delete(?ClassRoom $classRoom)
     {
@@ -49,8 +51,6 @@ class ListClassRoomPage extends Component
         }
     }
 
-
-
     public function render()
     {
         return view('livewire.application.config.list.list-class-room-page', [
@@ -59,7 +59,7 @@ class ListClassRoomPage extends Component
                 $this->sortBy,
                 $this->sortAsc,
                 10
-            )
+            ),
         ]);
     }
 }

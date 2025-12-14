@@ -21,7 +21,7 @@ trait Auditable
         // Audit lors de la mise à jour
         static::updated(function ($model) {
             $changes = $model->getChanges();
-            if (!empty($changes)) {
+            if (! empty($changes)) {
                 $model->auditAction('updated', $model->getOriginal(), $changes);
             }
         });
@@ -74,7 +74,7 @@ trait Auditable
      */
     private function filterAuditableAttributes(?array $attributes): ?array
     {
-        if (!$attributes) {
+        if (! $attributes) {
             return null;
         }
 

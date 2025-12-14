@@ -13,16 +13,20 @@ use Livewire\Component;
 class FormResponsibleStudentPage extends Component
 {
     public ResponsibleStudentForm $form;
+
     protected $listeners = [
-        "responsibleStudentData" => "getResponsibleStudent",
-        "dataFormResed" => "resetFormData",
+        'responsibleStudentData' => 'getResponsibleStudent',
+        'dataFormResed' => 'resetFormData',
     ];
+
     public ?ResponsibleStudent $responsibleStudent = null;
+
     public function getResponsibleStudent(?ResponsibleStudent $responsibleStudent)
     {
         $this->responsibleStudent = $responsibleStudent;
         $this->form->fill($responsibleStudent->toArray());
     }
+
     public function resetFormData()
     {
         $this->responsibleStudent = null;
@@ -42,6 +46,7 @@ class FormResponsibleStudentPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function update()
     {
         $input = $this->validate();
@@ -53,8 +58,6 @@ class FormResponsibleStudentPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
-
-
 
     public function handlerSubmit()
     {

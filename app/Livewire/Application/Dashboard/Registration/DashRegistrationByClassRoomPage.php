@@ -11,9 +11,11 @@ use Livewire\Component;
 class DashRegistrationByClassRoomPage extends Component
 {
     protected $listeners = [
-        "monthFilder" => "getMonthFilter",
+        'monthFilder' => 'getMonthFilter',
     ];
+
     public $option_filer;
+
     public string $month_filter = '';
 
     public function getMonthFilter(string $month)
@@ -45,7 +47,7 @@ class DashRegistrationByClassRoomPage extends Component
                 $this->option_filer,
                 null,
                 null
-            )
+            ),
         ]);
     }
 }

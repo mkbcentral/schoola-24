@@ -12,6 +12,7 @@ class ArticleCategoryManager extends Component
     use WithPagination;
 
     public CategoryForm $form;
+
     public $editMode = false;
 
     // Couleurs prédéfinies suggérées
@@ -90,6 +91,7 @@ class ArticleCategoryManager extends Component
             // Vérifier s'il y a des articles liés
             if ($category->articles()->count() > 0) {
                 $this->dispatch('error', ['message' => 'Impossible de supprimer : des articles sont liés à cette catégorie']);
+
                 return;
             }
 

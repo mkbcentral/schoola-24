@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ArticleStockMovement extends Model
 {
     use StockMovementAuditable;
+
     protected $fillable = [
         'article_id',
         'type',

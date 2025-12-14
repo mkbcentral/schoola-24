@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 class SchoolDataFeature implements ISchoolDataConfig
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getClassRoomList(
         ?int $option_filer,
@@ -35,20 +35,22 @@ class SchoolDataFeature implements ISchoolDataConfig
             ->select('class_rooms.*')
             ->paginate($per_page);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public static function getOptionList(int $per_page = 10):LengthAwarePaginator
+    public static function getOptionList(int $per_page = 10): LengthAwarePaginator
     {
         return Option::query()
-            ->join('sections', 'options.section_id',  'sections.id')
+            ->join('sections', 'options.section_id', 'sections.id')
             ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
             ->with('section')
             ->select('options.*')
             ->paginate($per_page);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getSectionList(): Collection
     {
@@ -60,7 +62,7 @@ class SchoolDataFeature implements ISchoolDataConfig
     public static function getFirstOption(): Option
     {
         return Option::query()
-            ->join('sections', 'options.section_id',  'sections.id')
+            ->join('sections', 'options.section_id', 'sections.id')
             ->where('sections.school_id', School::DEFAULT_SCHOOL_ID())
             ->with('section')
             ->select('options.*')

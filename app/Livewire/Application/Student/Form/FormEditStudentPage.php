@@ -6,7 +6,6 @@ use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\RegistrationForm;
 use App\Models\ClassRoom;
 use App\Models\Registration;
-use App\Models\SchoolYear;
 use App\Models\Student;
 use Exception;
 use Livewire\Component;
@@ -14,16 +13,20 @@ use Livewire\Component;
 class FormEditStudentPage extends Component
 {
     protected $listeners = [
-        "studentData" => "getStudent",
+        'studentData' => 'getStudent',
     ];
+
     public ?Student $student = null;
+
     public ?Registration $registration = null;
+
     public RegistrationForm $form;
 
     public $selectedOption = 0;
-    public string $gender = '';
-    public bool $isOldSelected = false;
 
+    public string $gender = '';
+
+    public bool $isOldSelected = false;
 
     public function updatedFormOptionId($val): void
     {
@@ -34,7 +37,6 @@ class FormEditStudentPage extends Component
     {
         $this->isOldSelected = $val;
     }
-
 
     public function getStudent(?Student $student, Registration $registration)
     {
@@ -52,7 +54,6 @@ class FormEditStudentPage extends Component
         $this->isOldSelected = $registration->is_old;
         $this->form->created_at = $registration->created_at->format('Y-m-d');
     }
-
 
     public function update()
     {
@@ -74,7 +75,7 @@ class FormEditStudentPage extends Component
     public function render()
     {
         return view('livewire.application.student.form.form-edit-student-page', [
-            'classRooms' => ClassRoom::query()->where('option_id', $this->selectedOption)->get()
+            'classRooms' => ClassRoom::query()->where('option_id', $this->selectedOption)->get(),
         ]);
     }
 }

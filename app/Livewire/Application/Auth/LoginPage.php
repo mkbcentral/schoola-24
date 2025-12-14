@@ -15,21 +15,19 @@ use Str;
 class LoginPage extends Component
 {
     public AuthForm $form;
-    /**
-     * @return void
-     */
+
     public function login(): void
     {
         $this->validate();
         $this->ensureIsNotRateLimited();
         try {
             if ($this->form->login()) {
-                if (!Auth::user()->is_active) {
+                if (! Auth::user()->is_active) {
                     Auth::logout();
                     $this->dispatch('error', ['message' => AppMessage::LOGGED_IN_FAILLED_TO_UNACTIVATE_USER]);
                 } else {
                     $this->dispatch('added', ['message' => AppMessage::LOGGED_IN_SUCCESS]);
-                    $this->redirect('/');;
+                    $this->redirect('/');
                 }
             } else {
                 $this->dispatch('error', ['message' => AppMessage::LOGGED_IN_FAILLED]);
@@ -64,10 +62,6 @@ class LoginPage extends Component
     {
         return Str::transliterate(Str::lower($this->form->login) . '|' . request()->ip());
     }
-
-
-
-
 
     public function render()
     {

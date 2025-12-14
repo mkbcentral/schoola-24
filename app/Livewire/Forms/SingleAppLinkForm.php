@@ -9,12 +9,13 @@ use Livewire\Form;
 class SingleAppLinkForm extends Form
 {
     #[Validate('required', message: 'Nom menu obligatoire')]
-    public  $name = '';
-    #[Validate('required', message: 'Icon menu obligatoire')]
-    public  $icon = '';
-    #[Validate('required', message: 'Route menu obligatoire')]
-    public  $route = '';
+    public $name = '';
 
+    #[Validate('required', message: 'Icon menu obligatoire')]
+    public $icon = '';
+
+    #[Validate('required', message: 'Route menu obligatoire')]
+    public $route = '';
 
     public function create(): SingleAppLink
     {

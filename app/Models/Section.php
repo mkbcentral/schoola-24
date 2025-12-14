@@ -14,13 +14,11 @@ class Section extends Model
 
     protected $fillable = [
         'name',
-        'school_id'
+        'school_id',
     ];
 
     /**
      * Get the school that owns the Section
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function school(): BelongsTo
     {
@@ -29,8 +27,6 @@ class Section extends Model
 
     /**
      * Get all of the options for the Section
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function options(): HasMany
     {
@@ -39,8 +35,6 @@ class Section extends Model
 
     /**
      * Get all of the registrationFee for the Section
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function registrationFee(): HasMany
     {
@@ -49,9 +43,8 @@ class Section extends Model
 
     /**
      * Summary of getRegistrationCountForCurrentSchoolYear
-     * @return int|float
      */
-    public  function getRegistrationCountForCurrentSchoolYear(): int|float
+    public function getRegistrationCountForCurrentSchoolYear(): int|float
     {
         return RegistrationFeature::getCountAll(
             null,

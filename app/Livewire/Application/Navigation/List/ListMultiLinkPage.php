@@ -12,15 +12,19 @@ use Livewire\WithPagination;
 class ListMultiLinkPage extends Component
 {
     use WithPagination;
+
     #[Url(as: 'q')]
     public $q = '';
+
     protected $listeners = [
-        'multiAppLinkListRefred' => '$refresh'
+        'multiAppLinkListRefred' => '$refresh',
     ];
+
     public function edit(?MultiAppLink $multiAppLink)
     {
         $this->dispatch('multiAppLinkData', $multiAppLink);
     }
+
     public function delete(?MultiAppLink $multiAppLink)
     {
         try {
@@ -30,12 +34,13 @@ class ListMultiLinkPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.navigation.list.list-multi-link-page', [
             'multiAppLinks' => MultiAppLink::query()
                 ->where('name', 'like', '%' . $this->q . '%')
-                ->paginate(10)
+                ->paginate(10),
         ]);
     }
 }

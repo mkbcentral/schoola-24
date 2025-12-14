@@ -8,12 +8,13 @@ use Livewire\Component;
 
 class SchoolYearList extends Component
 {
-
     public ?SchoolYear $selectedSchoolYear = null;
+
     public string $name = '';
+
     public bool $is_active = false;
 
-    //edit
+    // edit
     public function edit(SchoolYear $schoolYear)
     {
         $this->selectedSchoolYear = $schoolYear;
@@ -37,7 +38,7 @@ class SchoolYearList extends Component
         $this->dispatch('added', ['message' => __('Année scolaire créée avec succès')]);
     }
 
-    //update
+    // update
     public function update()
     {
         $this->validate([
@@ -55,7 +56,7 @@ class SchoolYearList extends Component
         }
     }
 
-    //reset form
+    // reset form
     public function resetForm()
     {
         $this->selectedSchoolYear = null;
@@ -63,7 +64,7 @@ class SchoolYearList extends Component
         $this->is_active = false;
     }
 
-    //handler submit
+    // handler submit
     public function handlerSubmit()
     {
         if ($this->selectedSchoolYear == null) {
@@ -75,18 +76,18 @@ class SchoolYearList extends Component
         $this->dispatch('schoolYearDataRefreshed');
     }
 
-    //delete if registrations is empty
+    // delete if registrations is empty
     public function delete(SchoolYear $schoolYear)
     {
         if ($schoolYear->registrations()->count() > 0) {
             $this->dispatch('error', ['message' => __('Impossible de supprimer cette année scolaire, des inscriptions existent.')]);
+
             return;
         }
         $schoolYear->delete();
         $this->dispatch('deleted', ['message' => __('Année scolaire supprimée avec succès')]);
         $this->resetForm();
     }
-
 
     public function render()
     {

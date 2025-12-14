@@ -2,24 +2,32 @@
 
 namespace App\Livewire\Application\Report;
 
-use Livewire\Component;
-use App\Services\MissingRevenueTrackerService;
-use App\Models\Option;
 use App\Models\CategoryFee;
+use App\Models\Option;
 use App\Models\SchoolYear;
+use App\Services\Student\MissingRevenueTrackerService;
+use Livewire\Component;
 
 class MissingRevenueReportPage extends Component
 {
     public $unpaidList = [];
+
     public $unpaidClass = null;
+
     protected $listeners = ['showUnpaidList' => 'loadUnpaidList'];
 
     public $optionId = null;
+
     public $categoryFeeId = null;
+
     public $month = null;
+
     public $allOptions = [];
+
     public $allCategories = [];
+
     public $results = null;
+
     public $currency = null;
 
     public function mount()
@@ -27,12 +35,14 @@ class MissingRevenueReportPage extends Component
         $this->allOptions = Option::all();
         $this->allCategories = CategoryFee::query()->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())->get();
     }
+
     public function showUnpaidList($classRoomName)
     {
         // Si on clique sur la même classe, on ferme la liste
         if ($this->unpaidClass === $classRoomName) {
             $this->unpaidClass = null;
             $this->unpaidList = [];
+
             return;
         }
 
@@ -40,16 +50,21 @@ class MissingRevenueReportPage extends Component
         $this->unpaidClass = $classRoomName;
         $this->unpaidList = [];
 
-        if (!$this->results || empty($this->results['by_class'])) return;
+        if (! $this->results || empty($this->results['by_class'])) {
+            return;
+        }
 
         $row = collect($this->results['by_class'])->firstWhere('class_room', $classRoomName);
-        if (!$row) return;
+        if (! $row) {
+            return;
+        }
 
         // Récupérer les élèves non en ordre pour cette classe spécifique
-        $service = new MissingRevenueTrackerService();
+        $service = new MissingRevenueTrackerService;
         $students = $service->getUnpaidStudentsForClass($this->optionId, $this->categoryFeeId, $classRoomName, $this->month);
         $this->unpaidList = $students;
     }
+
     public function updatedOptionId()
     {
         // Réinitialiser la liste des élèves non en ordre car les classes peuvent changer
@@ -66,6 +81,7 @@ class MissingRevenueReportPage extends Component
         $this->setCurrency();
         $this->loadResults();
     }
+
     public function updatedMonth()
     {
         $this->loadResults();
@@ -84,7 +100,7 @@ class MissingRevenueReportPage extends Component
     public function loadResults()
     {
         if ($this->optionId && $this->categoryFeeId) {
-            $service = new MissingRevenueTrackerService();
+            $service = new MissingRevenueTrackerService;
             $this->results = $service->getMissingRevenueByClass(
                 $this->optionId,
                 $this->categoryFeeId,
@@ -108,7 +124,7 @@ class MissingRevenueReportPage extends Component
     private function refreshUnpaidListIfNeeded()
     {
         if ($this->unpaidClass && $this->optionId && $this->categoryFeeId) {
-            $service = new MissingRevenueTrackerService();
+            $service = new MissingRevenueTrackerService;
             $students = $service->getUnpaidStudentsForClass(
                 $this->optionId,
                 $this->categoryFeeId,

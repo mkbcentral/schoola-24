@@ -13,14 +13,23 @@ class ListPaymentStatusByTranch extends Component
     protected $listeners = [
         'statusTranchDetails' => 'getStatusDetails',
     ];
+
     public int $selectedOptionId = 0;
+
     public int $selectedClassRoomId = 0;
+
     public int $selectedCategoryFeeId = 0;
+
     public string $filterStatus = 'all';
+
     public string $sortBy = 'students.name';
+
     public bool $sortAsc = true;
+
     public ?ClassRoom $classRoomSelected = null;
+
     public ?CategoryFee $categoryFeeSelected = null;
+
     public ?ScolarFee $scolarFee = null;
 
     /**
@@ -29,13 +38,14 @@ class ListPaymentStatusByTranch extends Component
     public function sortData(string $column): void
     {
         if ($column === $this->sortBy) {
-            $this->sortAsc = !$this->sortAsc;
+            $this->sortAsc = ! $this->sortAsc;
         } else {
             $this->sortBy = $column;
             $this->sortAsc = true;
         }
         $this->resetPage();
     }
+
     public function getStatusDetails(
         int $option,
         int $classRoom,
@@ -50,8 +60,6 @@ class ListPaymentStatusByTranch extends Component
             ->where('category_fee_id', $categoryFeeId)
             ->first() ?? 0;
     }
-
-
 
     public function render()
     {
@@ -69,7 +77,6 @@ class ListPaymentStatusByTranch extends Component
                     $this->sortBy,
                     $this->sortAsc,
                     100
-
                 ),
             ]
         );

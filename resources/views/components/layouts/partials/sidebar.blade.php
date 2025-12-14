@@ -1,13 +1,16 @@
-<nav id="sidebar">
+<nav id="sidebar" class="sidebar-modern">
     <div class="sidebar-header">
-        <img src="{{ asset('images/Vector-white.svg') }}" alt="Logo" class="brand-image text-start opacity-75 shadow "
-            width="40px">
-        <span class="h4 fw-bold fw-light">{{ config('app.name') }}</span>
+        <div class="sidebar-brand">
+            <img src="{{ asset('images/Vector-white.svg') }}" alt="Logo" class="brand-image">
+            <span class="brand-text">{{ config('app.name') }}</span>
+        </div>
     </div>
-
     <ul class="list-unstyled components">
-        @if (Auth::user()->singleAppLinks->isEmpty() ||
-                (Auth::user()->multiAppLinks->isEmpty() && Auth::user()->role->name == 'ADMIN_SCHOOL'))
+        @if (Auth::user()->role->name == 'ROOT')
+            <x-layouts.partials.root-link />
+        @elseif (Auth::user()->role->name == 'ADMIN_SCHOOL' &&
+                Auth::user()->singleAppLinks->isEmpty() &&
+                Auth::user()->multiAppLinks->isEmpty())
             <x-navigation.nav-link linkLabel='Dashboard' icon='bi bi-chart-bar' href="{{ route('dashboard.main') }}"
                 :active="request()->routeIs('dashboard.main')" />
             <x-navigation.dropdown-link wire:ignore.self label='Administration' icon='bi bi-person-gear'
@@ -46,7 +49,9 @@
         @endif
     </ul>
     <div class="sidebar-footer">
-        <p>{{ config('app.name') }}</p>
-        <p class="version-number">v1.0.0</p>
+        <div class="footer-content">
+            <p class="footer-app-name">{{ config('app.name') }}</p>
+            <p class="version-badge">v1.0.0</p>
+        </div>
     </div>
 </nav>

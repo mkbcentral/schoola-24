@@ -11,15 +11,19 @@ use Livewire\Component;
 class FormSubLinkPage extends Component
 {
     protected $listeners = [
-        'subLinkData' => 'getSubLink'
+        'subLinkData' => 'getSubLink',
     ];
+
     public ?SubLink $subLink = null;
+
     public SubLinkForm $form;
+
     public function getSubLink(SubLink $subLink): void
     {
         $this->subLink = $subLink;
         $this->form->fill($subLink->toArray());
     }
+
     public function save(): void
     {
         try {
@@ -29,6 +33,7 @@ class FormSubLinkPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         try {
@@ -38,6 +43,7 @@ class FormSubLinkPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         $this->validate();
@@ -50,6 +56,7 @@ class FormSubLinkPage extends Component
         $this->subLink = null;
         $this->dispatch('subLinkListRefred');
     }
+
     public function cancelUpdate(): void
     {
         $this->subLink = null;

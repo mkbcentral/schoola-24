@@ -1,0 +1,581 @@
+// =============================================================================
+// Content Layout Modern
+// Zone de contenu principale avec design moderne et fluide
+// =============================================================================
+
+#content {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        var(--bg-body) 0%, 
+        var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    padding: 0;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    // Pattern subtil en arrière-plan
+    &::before {
+        content: '';
+        @include absolute(0, 0, 0, 0);
+        background-image: 
+            radial-gradient(circle at 20% 50%, rgba(var(--bs-primary-rgb), 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(var(--bs-info-rgb), 0.03) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
+}
+
+.content-modern {
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-content-wrapper {
+    position: relative;
+    z-index: 1;
+    animation: contentFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100%;
+
+    // Fond avec motif de carreaux
+    &::before {
+        content: '';
+        @include absolute(0, 0, 0, 0);
+        background-image: 
+            linear-gradient(rgba(var(--bs-primary-rgb), 0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(var(--bs-primary-rgb), 0.12) 1px, transparent 1px);
+        background-size: 20px 20px;
+        background-position: -1px -1px;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 1;
+    }
+
+    // Vignette radiale
+    &::after {
+        content: '';
+        @include absolute(0, 0, 0, 0);
+        background: radial-gradient(ellipse at center, 
+            transparent 0%, 
+            transparent 40%,
+            var(--bg-body) 100%);
+        pointer-events: none;
+        z-index: 1;
+    }
+}
+
+// Icônes décoratives dispersées
+.main-content-wrapper {
+    // Icône 1 - Livre (haut gauche)
+    .container-fluid::before {
+        content: '📚';
+        @include absolute(8%, null, null, 5%);
+        font-size: 60px;
+        opacity: 0.04;
+        pointer-events: none;
+        transform: rotate(-15deg);
+        z-index: 0;
+    }
+
+    // Icône 2 - Diplôme (haut droite)
+    .container-fluid::after {
+        content: '🎓';
+        @include absolute(12%, 8%, null, null);
+        font-size: 70px;
+        opacity: 0.05;
+        pointer-events: none;
+        transform: rotate(20deg);
+        z-index: 0;
+    }
+}
+
+// Icônes additionnelles via pseudo-éléments sur le content
+#content.content-modern {
+    // Icône 3 - Étoile (milieu gauche)
+    .main-content-wrapper .container-fluid {
+        position: relative;
+
+        &:before,
+        &:after {
+            animation: floatIcon 8s ease-in-out infinite;
+        }
+    }
+}
+
+// Création d'icônes décoratives additionnelles
+.main-content-wrapper .container-fluid > *:first-child::before {
+    content: '✨';
+    @include absolute(null, null, 15%, 3%);
+    font-size: 50px;
+    opacity: 0.035;
+    pointer-events: none;
+    transform: rotate(10deg);
+    z-index: -1;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+.main-content-wrapper .container-fluid > *:last-child::after {
+    content: '💡';
+    @include absolute(null, 5%, 20%, null);
+    font-size: 65px;
+    opacity: 0.04;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: -1;
+    animation: pulse 6s ease-in-out infinite;
+}
+
+// Icônes supplémentaires sur le wrapper
+.main-content-wrapper:before {
+    content: '📖';
+    @include absolute(40%, null, null, 90%);
+    font-size: 55px;
+    opacity: 0.035;
+    pointer-events: none;
+    transform: rotate(25deg);
+    z-index: 0;
+    animation: floatIcon 10s ease-in-out infinite;
+}
+
+.main-content-wrapper:after {
+    content: '🌟';
+    @include absolute(60%, 3%, null, null);
+    font-size: 45px;
+    opacity: 0.04;
+    pointer-events: none;
+    transform: rotate(-20deg);
+    z-index: 0;
+    animation: twinkle 5s ease-in-out infinite;
+}
+
+// Animations pour les icônes
+@keyframes floatIcon {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.035;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.06;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.04;
+    }
+    50% {
+        opacity: 0.07;
+    }
+}
+
+// Container au-dessus du fond
+.main-content-wrapper > .container-fluid {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes contentFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// =============================================================================
+// Container Moderne
+// =============================================================================
+
+.container-fluid {
+    padding: var(--space-5) var(--space-6);
+    background: transparent;
+    color: var(--text-primary);
+    position: relative;
+    max-width: 1920px;
+    margin: 0 auto;
+
+    // Effet de vignette subtil sur les bords
+    &::before {
+        content: '';
+        @include absolute(0, -20px, 0, -20px);
+        background: radial-gradient(ellipse at center, 
+            transparent 0%, 
+            rgba(0, 0, 0, 0.02) 100%);
+        pointer-events: none;
+        z-index: -1;
+    }
+}
+
+// =============================================================================
+// Main Background
+// =============================================================================
+
+.main-bg {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    padding: var(--space-4);
+    border-radius: var(--radius-base);
+}
+
+// =============================================================================
+// Breadcrumbs Moderne
+// =============================================================================
+
+.breadcrumb {
+    background: rgba(var(--bs-primary-rgb), 0.05);
+    backdrop-filter: blur(8px);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(var(--bs-primary-rgb), 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transform: translateY(-1px);
+    }
+
+    &-item {
+        font-weight: var(--font-weight-medium);
+        font-size: var(--font-size-sm);
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-base);
+
+            &::before {
+                content: '';
+                @include absolute(null, 0, 0, 0);
+                height: 2px;
+                background: linear-gradient(90deg, 
+                    var(--color-primary) 0%, 
+                    transparent 100%);
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            &:hover {
+                color: var(--color-primary);
+                background: rgba(var(--bs-primary-rgb), 0.1);
+
+                &::before {
+                    transform: scaleX(1);
+                }
+            }
+        }
+
+        &.active {
+            color: var(--text-primary);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        & + &::before {
+            content: '/';
+            color: var(--text-muted);
+            padding: 0 var(--space-2);
+            font-weight: var(--font-weight-normal);
+        }
+    }
+}
+
+// =============================================================================
+// Page Titles Modernes
+// =============================================================================
+
+h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    position: relative;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-6);
+    background: linear-gradient(135deg, 
+        var(--text-primary) 0%, 
+        rgba(var(--bs-primary-rgb), 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &::after {
+        content: '';
+        @include absolute(null, null, -8px, 0);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, 
+            var(--color-primary) 0%, 
+            transparent 100%);
+        border-radius: 2px;
+        animation: underlineSlide 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
+    }
+}
+
+h3 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-5);
+    animation: titleSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s backwards;
+}
+
+h4 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-4);
+    animation: titleSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
+}
+
+@keyframes titleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes underlineSlide {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 60px;
+        opacity: 1;
+    }
+}
+
+// =============================================================================
+// Lists Modernes
+// =============================================================================
+
+.list-group-item {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+    color: var(--text-primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        @include absolute(0, null, 0, 0);
+        width: 4px;
+        background: linear-gradient(180deg, 
+            var(--color-primary) 0%, 
+            transparent 100%);
+        transform: scaleY(0);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover {
+        background-color: var(--dropdown-item-hover-bg);
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+        &::before {
+            transform: scaleY(1);
+        }
+    }
+}
+
+// =============================================================================
+// Text Utilities
+// =============================================================================
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+// Message vide
+.qp-no-student,
+.qp-empty-state {
+    color: var(--text-muted);
+    text-align: center;
+    padding: var(--space-10);
+
+    .qp-empty-icon-bg {
+        @include circle(64px);
+        @include flex-center;
+        background-color: var(--bg-secondary);
+        margin: 0 auto var(--space-4);
+    }
+
+    i {
+        font-size: var(--font-size-3xl);
+        color: var(--text-muted);
+    }
+}
+
+// =============================================================================
+// Separators Modernes
+// =============================================================================
+
+.qp-payment-divider {
+    position: relative;
+    margin: var(--space-5) 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--border-color) 20%, 
+        var(--border-color) 80%, 
+        transparent 100%);
+
+    &::before {
+        content: '';
+        @include absolute(50%, null, null, 50%);
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background: var(--color-primary);
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px var(--bg-body);
+    }
+}
+
+.qp-payment-total-border {
+    position: relative;
+    border-top: 2px solid transparent;
+    border-image: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--color-primary) 20%, 
+        var(--color-primary) 80%, 
+        transparent 100%) 1;
+    padding-top: var(--space-4);
+    margin-top: var(--space-4);
+
+    &::before {
+        content: '';
+        @include absolute(-1px, 0, null, 0);
+        height: 2px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(var(--bs-primary-rgb), 0.3) 50%, 
+            transparent 100%);
+        animation: shimmer 2s infinite;
+    }
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+// =============================================================================
+// Scrollable Areas Modernes
+// =============================================================================
+
+.qp-scrollable {
+    max-height: 500px;
+    overflow-y: auto;
+    @include custom-scrollbar;
+    position: relative;
+
+    // Fade effect en haut et en bas
+    &::before,
+    &::after {
+        content: '';
+        @include absolute(null, 0, null, 0);
+        height: 20px;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    &::before {
+        top: 0;
+        background: linear-gradient(180deg, 
+            var(--card-bg) 0%, 
+            transparent 100%);
+    }
+
+    &::after {
+        bottom: 0;
+        background: linear-gradient(0deg, 
+            var(--card-bg) 0%, 
+            transparent 100%);
+    }
+}
+
+// =============================================================================
+// Loading States
+// =============================================================================
+
+.qp-loading-alert {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border: none;
+    border-radius: var(--radius-base);
+    padding: var(--space-4);
+}
+
+// =============================================================================
+// Icons
+// =============================================================================
+
+.bi {
+    margin-right: var(--space-2);
+}
+
+// =============================================================================
+// Responsive
+// =============================================================================
+
+@include respond-below(md) {
+    .container-fluid {
+        padding: var(--space-4) var(--space-3);
+    }
+
+    h2 {
+        font-size: var(--font-size-2xl);
+
+        &::after {
+            width: 40px;
+        }
+    }
+
+    h3 {
+        font-size: var(--font-size-xl);
+    }
+
+    .qp-scrollable {
+        max-height: 400px;
+    }
+
+    .breadcrumb {
+        font-size: var(--font-size-xs);
+        padding: var(--space-2) var(--space-3);
+    }
+}
+
+@include respond-below(sm) {
+    .main-content-wrapper {
+        animation: none; // Désactiver l'animation sur mobile pour performance
+    }
+
+    h2, h3, h4 {
+        animation: none;
+    }
+}

@@ -9,7 +9,6 @@ use App\Models\CategoryFee;
 use App\Models\Payment;
 use App\Models\PaymentRegularization;
 use App\Models\Registration;
-use App\Models\SchoolYear;
 use App\Models\ScolarFee;
 use App\Models\Student;
 use Auth;
@@ -18,33 +17,40 @@ use Livewire\Component;
 
 class FormRegularizationPage extends Component
 {
-
     protected $listeners = [
-        "paymentRegularizationData" => "getPaymentRegularization",
-        "paymentRegularizationFormReseted" => "clearnFormData",
+        'paymentRegularizationData' => 'getPaymentRegularization',
+        'paymentRegularizationFormReseted' => 'clearnFormData',
     ];
+
     public ?PaymentRegularization $paymentRegularization = null;
+
     public FormPaymentRegularization $form;
+
     public int $selectedOptionId = 0;
+
     public $student_id = 0;
+
     public ?Student $student = null;
+
     public ?ScolarFee $scolarFee = null;
+
     public ?Registration $lastRegistration = null;
 
     public array $listMonths = [];
 
-    //updated student_id
+    // updated student_id
     public function updatedStudentId($val)
     {
         $this->student = Student::find($val);
         $this->form->name = $this->student->name;
     }
+
     public function updatedFormCategoryFeeId($val)
     {
         $this->listMonths = [];
         if ($this->student != null) {
             $months = collect(DateFormatHelper::getSchoolFrMonths())
-                ->reject(fn($month) => in_array(strtoupper($month['name']), ['JUILLET', 'AOUT']))
+                ->reject(fn ($month) => in_array(strtoupper($month['name']), ['JUILLET', 'AOUT']))
                 ->values()
                 ->all();
             $paymentStatus = false;

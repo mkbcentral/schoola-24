@@ -5,7 +5,6 @@ namespace App\Livewire\Application\Stock;
 use App\Livewire\Forms\StockMovementForm;
 use App\Models\Article;
 use App\Models\ArticleStockMovement;
-use App\Services\Stock\StockMovementPdfService;
 use App\Services\Stock\StockService;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -17,13 +16,18 @@ class ArticleStockMovementManager extends Component
     public StockMovementForm $form;
 
     public $selectedArticle;
+
     public $selectedArticleName = '';
+
     public $editMovementMode = false;
 
     // Filtres
     public $filterType = 'all'; // all, in, out
+
     public $filterPeriod = 'all'; // all, today, week, month, custom
+
     public $filterDateStart = '';
+
     public $filterDateEnd = '';
 
     protected $stockService;
@@ -66,6 +70,7 @@ class ArticleStockMovementManager extends Component
 
             if ($movement->is_closed) {
                 $this->dispatch('error', ['message' => 'Impossible de modifier un mouvement clôturé.']);
+
                 return;
             }
 
@@ -128,8 +133,9 @@ class ArticleStockMovementManager extends Component
      */
     public function exportPdf()
     {
-        if (!$this->selectedArticle) {
+        if (! $this->selectedArticle) {
             $this->dispatch('error', ['message' => 'Aucun article sélectionné']);
+
             return;
         }
 
@@ -143,7 +149,7 @@ class ArticleStockMovementManager extends Component
 
         return redirect()->route('stock.export.movements.pdf', [
             'article' => $this->selectedArticle->id,
-            ...$params
+            ...$params,
         ]);
     }
 
@@ -187,7 +193,7 @@ class ArticleStockMovementManager extends Component
      */
     public function getStockMovementsProperty()
     {
-        if (!$this->selectedArticle) {
+        if (! $this->selectedArticle) {
             return collect();
         }
 
@@ -206,7 +212,7 @@ class ArticleStockMovementManager extends Component
             case 'week':
                 $query->whereBetween('movement_date', [
                     now()->startOfWeek(),
-                    now()->endOfWeek()
+                    now()->endOfWeek(),
                 ]);
                 break;
             case 'month':
@@ -234,7 +240,7 @@ class ArticleStockMovementManager extends Component
      */
     public function getFilteredStatsProperty()
     {
-        if (!$this->selectedArticle) {
+        if (! $this->selectedArticle) {
             return ['in' => 0, 'out' => 0, 'count' => 0];
         }
 
@@ -252,7 +258,7 @@ class ArticleStockMovementManager extends Component
             case 'week':
                 $query->whereBetween('movement_date', [
                     now()->startOfWeek(),
-                    now()->endOfWeek()
+                    now()->endOfWeek(),
                 ]);
                 break;
             case 'month':

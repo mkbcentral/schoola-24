@@ -12,10 +12,12 @@ use Livewire\WithPagination;
 class ListSublinkPage extends Component
 {
     use WithPagination;
+
     #[Url(as: 'q')]
     public $q = '';
+
     protected $listeners = [
-        'subLinkListRefred' => '$refresh'
+        'subLinkListRefred' => '$refresh',
     ];
 
     public function edit(?SubLink $subLink)
@@ -38,7 +40,7 @@ class ListSublinkPage extends Component
         return view('livewire.application.navigation.list.list-sublink-page', [
             'subLinks' => SubLink::query()
                 ->where('name', 'like', '%' . $this->q . '%')
-                ->paginate(10)
+                ->paginate(10),
         ]);
     }
 }

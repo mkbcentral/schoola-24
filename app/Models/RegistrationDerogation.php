@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class RegistrationDerogation extends Model
 {
@@ -16,6 +16,7 @@ class RegistrationDerogation extends Model
         'is_monthly',
         'month_date',
     ];
+
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',

@@ -12,13 +12,18 @@ use Livewire\WithPagination;
 class ListSalaryPage extends Component
 {
     use WithPagination;
+
     protected $listeners = [
         'SalaryListReferred' => '$refresh',
         'getSalaryDataDetail' => 'getSalary',
     ];
+
     public ?string $date_filter = '';
+
     public ?string $month_filter = '';
-    public ?string  $currency_filter = '';
+
+    public ?string $currency_filter = '';
+
     public ?int $per_page = 10;
 
     public function getSalary(): void {}
@@ -32,18 +37,22 @@ class ListSalaryPage extends Component
     {
         $this->date_filter = null;
     }
+
     public function updatedDateFilter(): void
     {
-        $this->month_filter = "";
+        $this->month_filter = '';
     }
+
     public function edit(?Salary $salary): void
     {
         $this->dispatch('salaryData', $salary);
     }
+
     public function addDetail(?Salary $salary): void
     {
         $this->dispatch('salaryData', $salary);
     }
+
     public function delete(Salary $salary): void
     {
         try {
@@ -53,10 +62,12 @@ class ListSalaryPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function mount(): void
     {
         $this->month_filter = date('m');
     }
+
     public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.salary.list.list-salary-page', [
@@ -74,7 +85,7 @@ class ListSalaryPage extends Component
                 $this->date_filter,
                 $this->month_filter,
                 'CDF'
-            )
+            ),
         ]);
     }
 }

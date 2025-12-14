@@ -10,8 +10,10 @@ use Livewire\Component;
 
 class FormCategoryRegistrationFeePage extends Component
 {
-    protected $listeners = ["categoryRegistrationFeeData" => "getCategoryRegistrationFee"];
+    protected $listeners = ['categoryRegistrationFeeData' => 'getCategoryRegistrationFee'];
+
     public ?CategoryRegistrationFee $categoryRegistrationFeeSelected = null;
+
     public CategoryRegistrationFeeForm $form;
 
     public function getCategoryRegistrationFee(CategoryRegistrationFee $categoryRegistrationFee)

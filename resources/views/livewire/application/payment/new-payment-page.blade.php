@@ -6,8 +6,8 @@
     <div>
         <livewire:application.payment.list.list-student-for-payment-page />
         <label for="registration_id" class="form-label fw-bold">
-                     Liste des payments jounaliers
-                </label>
+            Liste des payments jounaliers
+        </label>
         <livewire:application.payment.list.list-payment-by-date-page />
     </div>
 </div>

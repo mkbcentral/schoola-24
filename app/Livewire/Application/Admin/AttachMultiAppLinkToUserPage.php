@@ -11,6 +11,7 @@ use Livewire\Component;
 class AttachMultiAppLinkToUserPage extends Component
 {
     public User $user;
+
     public $selectedLinks = [];
 
     public function mount()
@@ -29,10 +30,11 @@ class AttachMultiAppLinkToUserPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.admin.attach-multi-app-link-to-user-page', [
-            'multiAppLinks' => MultiAppLink::all()
+            'multiAppLinks' => MultiAppLink::all(),
         ]);
     }
 }

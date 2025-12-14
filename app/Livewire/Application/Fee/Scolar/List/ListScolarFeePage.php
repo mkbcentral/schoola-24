@@ -13,15 +13,21 @@ use Livewire\WithPagination;
 class ListScolarFeePage extends Component
 {
     use WithPagination;
-    public int $per_page = 10, $option_filter = 0, $class_room_filter = 0;
+
+    public int $per_page = 10;
+
+    public int $option_filter = 0;
+
+    public int $class_room_filter = 0;
 
     #[Url(as: 'q')]
     public $q = '';
+
     public int $idCategorySelected = 0;
 
     protected $listeners = [
-        "regFeeDataRefreshed" => '$refresh',
-        "selectedCategoryFee" => 'getSelectedCategoryFee'
+        'regFeeDataRefreshed' => '$refresh',
+        'selectedCategoryFee' => 'getSelectedCategoryFee',
     ];
 
     public function newFee(): void
@@ -58,7 +64,7 @@ class ListScolarFeePage extends Component
     public function makeIsChange(?ScolarFee $scolarFee): void
     {
         try {
-            if (!$scolarFee->is_changed) {
+            if (! $scolarFee->is_changed) {
                 $scolarFee->is_changed = true;
             } else {
                 $scolarFee->is_changed = false;

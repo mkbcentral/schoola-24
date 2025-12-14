@@ -34,7 +34,7 @@ class MakePaymentController extends Controller
                 if ($existPayment) {
                     return response([
                         'payment' => new PaymentResource($existPayment),
-                        'message' => $registration->student->name . " a déjà un paiement pour ce mois",
+                        'message' => $registration->student->name . ' a déjà un paiement pour ce mois',
                         'status' => false,
                     ], 200);
                 } else {
@@ -44,16 +44,17 @@ class MakePaymentController extends Controller
                     if ($payment) {
                         $payment->is_paid = true;
                         $payment->update();
+
                         return response([
                             'payment' => new PaymentResource($payment),
-                            'message' => "Paiment de " . $registration->student->name . " bien effectué",
+                            'message' => 'Paiment de ' . $registration->student->name . ' bien effectué',
                             'status' => true,
                         ], 200);
                     }
                 }
             } else {
                 return response([
-                    'message' =>  "Aucun élève trouvé ",
+                    'message' => 'Aucun élève trouvé ',
                 ], 404);
             }
         } catch (\Exception $ex) {

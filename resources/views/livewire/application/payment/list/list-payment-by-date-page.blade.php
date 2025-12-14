@@ -40,15 +40,15 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
-                    <thead class="table-light">
+                    <thead class="table-primary">
                         <tr>
-                            <th>N°</th>
+                            <th class="text-center">N°</th>
                             <th>NOMS</th>
                             <th>CLASSE</th>
                             <th>MOIS</th>
-                            <th>MONTANT</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th class="text-end">MONTANT</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>

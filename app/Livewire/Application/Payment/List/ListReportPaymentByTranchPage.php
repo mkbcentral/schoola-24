@@ -13,21 +13,33 @@ class ListReportPaymentByTranchPage extends Component
     use WithPagination;
 
     protected $listeners = [
-        "selectedCategoryFee" => 'getSelectedCategoryFee'
+        'selectedCategoryFee' => 'getSelectedCategoryFee',
     ];
 
     public int $selectedCategoryFeeId = 0;
+
     public ?CategoryFee $categoryFeeSelected = null;
+
     public ?string $date_filter = '';
+
     public string $month_filter = '';
+
     public int $option_filter = 0;
+
     public ?int $section_filter = 0;
+
     public ?int $class_room_filter = 0;
+
     public ?int $scolary_fee_filter = 0;
+
     public ?int $selectedSection = 0;
+
     public ?int $selectedOption = 0;
+
     public ?int $selectedClassRoom = 0;
+
     public ?int $per_page = 1000;
+
     public bool $isByDate = true;
 
     /**
@@ -108,7 +120,7 @@ class ListReportPaymentByTranchPage extends Component
                 true,
                 null,
                 null,
-                "CDF"
+                'CDF'
             ),
         ]);
     }

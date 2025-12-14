@@ -1,0 +1,139 @@
+// =============================================================================
+// Modals Component
+// Styles pour les modales et leurs éléments
+// =============================================================================
+
+// Modal backdrop
+.modal-backdrop {
+    background-color: var(--modal-backdrop-bg);
+}
+
+// Modal
+.modal {
+    &[role="dialog"] {
+        outline: none;
+    }
+}
+
+// Modal content
+.modal-content {
+    background-color: var(--modal-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-2xl);
+}
+
+// Modal header
+.modal-header {
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--modal-border);
+    background-color: var(--modal-header-bg);
+
+    .modal-title {
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--text-primary);
+    }
+
+    .btn-close {
+        @include focus-visible;
+        filter: none;
+        color: var(--color-danger);
+
+        &:focus {
+            outline: 3px solid var(--text-white);
+            outline-offset: -3px;
+        }
+    }
+}
+
+// Modal body
+.modal-body {
+    padding: var(--space-6);
+}
+
+// Modal footer
+.modal-footer {
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--modal-border);
+    background-color: var(--modal-footer-bg);
+}
+
+// =============================================================================
+// Modal XL spécifique (avec charts, tables)
+// =============================================================================
+
+.modal-xl {
+    .card {
+        height: 100%;
+        margin-bottom: 0;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: 300px !important;
+    }
+}
+
+// =============================================================================
+// Offcanvas (sidebar modals)
+// =============================================================================
+
+.offcanvas {
+    z-index: var(--z-modal);
+
+    &-header {
+        padding: var(--space-4);
+        background-color: var(--color-primary);
+        color: var(--text-white);
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    &-body {
+        padding: var(--space-4);
+    }
+
+    .list-group-item {
+        border: none;
+        padding: var(--space-3) 0;
+        background-color: transparent;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        h6 {
+            font-size: var(--font-size-sm);
+            margin: 0;
+        }
+
+        p {
+            font-size: var(--font-size-xs);
+            margin: 0;
+        }
+
+        small {
+            font-size: var(--font-size-xs);
+        }
+    }
+}
+
+// =============================================================================
+// Animations
+// =============================================================================
+
+// Fade in pour modals
+.modal.fade .modal-dialog {
+    transition: transform var(--transition-medium) ease-out;
+}
+
+// Slide in pour offcanvas
+.offcanvas {
+    transition: transform var(--transition-medium) ease-in-out;
+}

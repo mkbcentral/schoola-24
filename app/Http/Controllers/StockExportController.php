@@ -35,7 +35,7 @@ class StockExportController extends Controller
             case 'week':
                 $query->whereBetween('movement_date', [
                     now()->startOfWeek(),
-                    now()->endOfWeek()
+                    now()->endOfWeek(),
                 ]);
                 break;
             case 'month':
@@ -57,7 +57,7 @@ class StockExportController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
-        $pdfService = new StockMovementPdfService();
+        $pdfService = new StockMovementPdfService;
 
         return $pdfService->exportToPdf(
             $article,

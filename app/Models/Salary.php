@@ -16,13 +16,11 @@ class Salary extends Model
         'month',
         'school_id',
         'school_year_id',
-        'created_at'
+        'created_at',
     ];
 
     /**
      * Get the school that owns the Salary
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function school(): BelongsTo
     {
@@ -31,17 +29,14 @@ class Salary extends Model
 
     /**
      * Get the schoolYear that owns the Salary
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class, 'school_year_id');
     }
+
     /**
      * Get all of the salaryDetails for the Salary
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function salaryDetails(): HasMany
     {
@@ -55,7 +50,7 @@ class Salary extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        return $query ->when($filters['date'], function ($query, $val) {
+        return $query->when($filters['date'], function ($query, $val) {
             return $query->whereDate('created_at', $val);
         })
             ->when($filters['month'], function ($query, $val) {

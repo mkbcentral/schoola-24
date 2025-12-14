@@ -4,14 +4,13 @@ namespace App\Domain\Contract\Finance;
 
 interface IBankDeposit
 {
-
     /**
      * Recuprer la liste des dépot bank
-     * @param mixed $date
-     * @param mixed $month
-     * @param mixed $currency
-     * @param mixed $per_page
-     * @return mixed
+     *
+     * @param  mixed  $date
+     * @param  mixed  $month
+     * @param  mixed  $currency
+     * @param  mixed  $per_page
      */
     public static function getList(
         ?string $date,
@@ -22,10 +21,10 @@ interface IBankDeposit
 
     /**
      * Recuperer le montant total des dépots banque
-     * @param mixed $date
-     * @param mixed $month
-     * @param mixed $currency
-     * @return int|float
+     *
+     * @param  mixed  $date
+     * @param  mixed  $month
+     * @param  mixed  $currency
      */
     public static function getAmountTotal(
         ?string $date,

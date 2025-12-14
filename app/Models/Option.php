@@ -15,8 +15,6 @@ class Option extends Model
 
     /**
      * Get the section that owns the Option
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function section(): BelongsTo
     {
@@ -25,8 +23,6 @@ class Option extends Model
 
     /**
      * Get all of the classRooms for the Option
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function classRooms(): HasMany
     {

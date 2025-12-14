@@ -1,7 +1,7 @@
 @props(['color' => '', 'icon' => '', 'label' => ''])
 
-<div class="container-fluid d-flex   justify-content-between align-items-center mb-4  mt-4 ">
-    <div class=" mb-2 mb-md-0">
+<div class="container-fluid d-flex justify-content-between align-items-center mb-3 pt-2">
+    <div class="mb-2 mb-md-0">
         <h3 class="mb-0 fw-bold text-secondary d-flex align-items-center {{ $color }}">
             @if ($icon)
                 <i class="{{ $icon }} me-2"></i>

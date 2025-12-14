@@ -13,9 +13,11 @@ use Livewire\Component;
 class DashOtherInfoPage extends Component
 {
     public function mount() {}
+
     public function render()
     {
         $selectedScolar = CategoryFee::where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())->first();
+
         return view('livewire.application.dashboard.payment.dash-other-info-page', [
             'revenue' => Payment::join('scolar_fees', 'payments.scolar_fee_id', 'scolar_fees.id')
                 ->join('category_fees', 'scolar_fees.category_fee_id', 'category_fees.id')

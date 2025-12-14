@@ -1,0 +1,515 @@
+/*
+ * Styles d'Accessibilité pour Schoola
+ * Conformité WCAG 2.1 Level AA
+ */
+
+/* ========================================
+   1. FOCUS INDICATORS
+   ======================================== */
+
+/* Focus visible pour tous les éléments interactifs */
+:focus {
+    outline: 3px solid #1e90ff;
+    outline-offset: 2px;
+}
+
+/* Focus pour les boutons */
+button:focus,
+.btn:focus,
+a.btn:focus {
+    outline: 3px solid #1e90ff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(30, 144, 255, 0.2);
+}
+
+/* Focus pour les inputs */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid #1e90ff;
+    outline-offset: 1px;
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.15);
+}
+
+/* Focus pour les liens */
+a:focus {
+    outline: 2px solid #1e90ff;
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* Focus pour les éléments personnalisés */
+[tabindex]:focus {
+    outline: 2px solid #1e90ff;
+    outline-offset: 2px;
+}
+
+/* Skip focus outline for mouse users (but keep for keyboard) */
+:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+:focus-visible {
+    outline: 3px solid #1e90ff;
+    outline-offset: 2px;
+}
+
+/* ========================================
+   2. CONTRASTE DES COULEURS (WCAG AA)
+   ======================================== */
+
+/* Variables de couleurs accessibles */
+:root {
+    /* Couleurs primaires avec bon contraste */
+    --primary-accessible: #0066cc; /* Ratio: 4.58:1 sur blanc */
+    --secondary-accessible: #2952a3; /* Ratio: 7.01:1 sur blanc */
+
+    /* Textes */
+    --text-primary: #212529; /* Ratio: 16.07:1 sur blanc */
+    --text-secondary: #495057; /* Ratio: 9.73:1 sur blanc */
+    --text-muted: #6c757d; /* Ratio: 4.54:1 sur blanc */
+
+    /* Backgrounds */
+    --bg-light: #f8f9fa;
+    --bg-dark: #212529;
+
+    /* États */
+    --success-accessible: #0f5132; /* Ratio: 9.21:1 sur blanc */
+    --warning-accessible: #664d03; /* Ratio: 8.21:1 sur blanc */
+    --danger-accessible: #842029; /* Ratio: 10.12:1 sur blanc */
+    --info-accessible: #055160; /* Ratio: 8.91:1 sur blanc */
+}
+
+/* Dark mode - contrastes inversés */
+[data-bs-theme="dark"] {
+    --text-primary: #f8f9fa; /* Ratio: 15.8:1 sur noir */
+    --text-secondary: #adb5bd; /* Ratio: 7.21:1 sur noir */
+    --text-muted: #868e96; /* Ratio: 4.62:1 sur noir */
+}
+
+/* Textes avec contraste suffisant */
+.text-accessible-primary {
+    color: var(--text-primary) !important;
+}
+
+.text-accessible-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.text-accessible-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Liens avec contraste amélioré */
+a {
+    color: var(--primary-accessible);
+    text-decoration: underline;
+}
+
+a:hover {
+    color: var(--secondary-accessible);
+    text-decoration: underline;
+}
+
+/* Boutons avec contraste suffisant */
+.btn-primary-accessible {
+    background-color: var(--primary-accessible);
+    border-color: var(--primary-accessible);
+    color: #ffffff;
+}
+
+.btn-primary-accessible:hover {
+    background-color: var(--secondary-accessible);
+    border-color: var(--secondary-accessible);
+}
+
+/* ========================================
+   3. NAVIGATION CLAVIER
+   ======================================== */
+
+/* Skip to main content link */
+.skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-accessible);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 100;
+    border-radius: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.skip-to-main:focus {
+    top: 0;
+    outline: 3px solid #fff;
+    outline-offset: -3px;
+}
+
+/* Keyboard navigation hints */
+[data-keyboard-hint]::after {
+    content: attr(data-keyboard-hint);
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 12px;
+    white-space: nowrap;
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+[data-keyboard-hint]:focus::after {
+    display: block;
+}
+
+/* Désactiver le pointer-events pour les éléments disabled */
+[disabled],
+[aria-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   4. ÉTATS ARIA VISUELS
+   ======================================== */
+
+/* Expanded/Collapsed indicators */
+[aria-expanded="false"] .icon-collapse {
+    display: none;
+}
+
+[aria-expanded="true"] .icon-expand {
+    display: none;
+}
+
+/* Selected state */
+[aria-selected="true"] {
+    background-color: rgba(30, 144, 255, 0.1);
+    font-weight: 600;
+}
+
+/* Pressed state */
+[aria-pressed="true"] {
+    background-color: var(--primary-accessible);
+    color: white;
+}
+
+/* Invalid state */
+[aria-invalid="true"],
+.is-invalid {
+    border-color: var(--danger-accessible) !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* Required fields indicator */
+[aria-required="true"] label::after,
+.required label::after {
+    content: " *";
+    color: var(--danger-accessible);
+    font-weight: bold;
+}
+
+/* Hidden but accessible */
+.visually-hidden,
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Focusable when navigating with keyboard */
+.visually-hidden-focusable:focus,
+.sr-only-focusable:focus {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+}
+
+/* ========================================
+   5. READABILITY
+   ======================================== */
+
+/* Taille de police minimum */
+body {
+    font-size: 16px; /* Minimum pour accessibilité */
+    line-height: 1.5; /* WCAG recommandation: min 1.5 */
+    color: var(--text-primary);
+}
+
+/* Espacement des paragraphes */
+p {
+    margin-bottom: 1em;
+    max-width: 70ch; /* Limite de largeur pour lisibilité */
+}
+
+/* Espacement des titres */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: var(--text-primary);
+}
+
+/* Liste avec espacement */
+ul, ol {
+    padding-left: 2em;
+    margin-bottom: 1em;
+}
+
+li {
+    margin-bottom: 0.5em;
+}
+
+/* ========================================
+   6. FORMULAIRES ACCESSIBLES
+   ======================================== */
+
+/* Labels toujours visibles */
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Messages d'erreur */
+.error-message,
+[role="alert"] {
+    color: var(--danger-accessible);
+    font-weight: 600;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.error-message::before,
+[role="alert"]::before {
+    content: "⚠️";
+}
+
+/* Messages de succès */
+.success-message {
+    color: var(--success-accessible);
+    font-weight: 600;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.success-message::before {
+    content: "✓";
+}
+
+/* Help text */
+.form-text,
+[id$="-help"] {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* ========================================
+   7. MODALS ACCESSIBLES
+   ======================================== */
+
+/* Modal overlay */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Focus trap dans les modals */
+.modal[role="dialog"] {
+    outline: none;
+}
+
+.modal-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid var(--text-muted);
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Close button accessible */
+.btn-close:focus,
+.modal-close:focus {
+    outline: 3px solid #fff;
+    outline-offset: -3px;
+}
+
+/* ========================================
+   8. TABLES ACCESSIBLES
+   ======================================== */
+
+/* En-têtes de table visibles */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: var(--bg-light);
+    color: var(--text-primary);
+    font-weight: 700;
+    text-align: left;
+    padding: 0.75rem;
+    border: 1px solid var(--text-muted);
+}
+
+td {
+    padding: 0.75rem;
+    border: 1px solid var(--text-muted);
+    color: var(--text-primary);
+}
+
+/* Zebra striping pour meilleure lisibilité */
+tbody tr:nth-child(even) {
+    background-color: var(--bg-light);
+}
+
+/* ========================================
+   9. ANIMATIONS RÉDUITES (Prefers Reduced Motion)
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ========================================
+   10. HAUT CONTRASTE (High Contrast Mode)
+   ======================================== */
+
+@media (prefers-contrast: high) {
+    :root {
+        --primary-accessible: #0000ff;
+        --text-primary: #000000;
+        --text-secondary: #000000;
+        --bg-light: #ffffff;
+    }
+
+    button,
+    .btn {
+        border: 2px solid currentColor;
+    }
+
+    a {
+        text-decoration: underline;
+        font-weight: 600;
+    }
+}
+
+/* ========================================
+   11. PRINT STYLES (Accessibilité impression)
+   ======================================== */
+
+@media print {
+    /* Afficher les URLs des liens */
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: var(--text-muted);
+    }
+
+    /* Éviter les sauts de page dans les éléments */
+    h1, h2, h3, h4, h5, h6,
+    p, ul, ol, img, table {
+        page-break-inside: avoid;
+    }
+
+    /* Contraste maximum pour l'impression */
+    body {
+        color: #000;
+        background: #fff;
+    }
+}
+
+/* ========================================
+   12. TOOLTIPS ACCESSIBLES
+   ======================================== */
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 1000;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus::after {
+    opacity: 1;
+}
+
+/* ========================================
+   13. RESPONSIVE ACCESSIBILITY
+   ======================================== */
+
+/* Touch targets minimum 44x44px (WCAG 2.5.5) */
+@media (pointer: coarse) {
+    button,
+    .btn,
+    a.btn,
+    input[type="checkbox"],
+    input[type="radio"] {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Zoom text jusqu'à 200% sans perte de fonctionnalité */
+@media (min-width: 1280px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1920px) {
+    html {
+        font-size: 18px;
+    }
+}

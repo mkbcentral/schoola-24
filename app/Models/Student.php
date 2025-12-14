@@ -6,31 +6,32 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'gender',
         'place_of_birth',
         'date_of_birth',
-        'responsible_student_id'
+        'responsible_student_id',
     ];
+
+    protected $casts = [
+        'date_of_birth' => 'datetime',
+    ];
+
     /**
      * Get the user that owns the Student
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function responsibleStudent(): BelongsTo
     {
-        return $this->belongsTo(ResponsibleStudent::class, 'responsible_student_id',);
+        return $this->belongsTo(ResponsibleStudent::class, 'responsible_student_id');
     }
 
-    /**
-     * @return int
-     */
     public function getAgeAttribute(): int
     {
         return Carbon::parse($this->attributes['date_of_birth'])->age;
@@ -38,12 +39,10 @@ class Student extends Model
 
     /**
      * Get the registration associated with the Student
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function registration(): HasOne
+    public function registrations(): HasMany
     {
-        return $this->hasOne(Registration::class);
+        return $this->hasMany(Registration::class);
     }
 
     public function getFormattedAg()
@@ -58,6 +57,7 @@ class Student extends Model
             ->where('student_id', $this->id)
             ->where('school_year_id', $lastSchoolYear->id)
             ->first();
+
         return $registration ? $registration->classRoom->getOriginalClassRoomName() : '';
     }
 }

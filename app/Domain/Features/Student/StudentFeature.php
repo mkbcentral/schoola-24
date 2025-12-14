@@ -16,8 +16,9 @@ use LaravelQRCode\Facades\QRCode;
 class StudentFeature implements IStudent
 {
     private static string $keyToSearch;
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function create(array $input): Student
     {
@@ -25,7 +26,7 @@ class StudentFeature implements IStudent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function delete(Student $student): bool
     {
@@ -33,7 +34,7 @@ class StudentFeature implements IStudent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get(int $id): Student
     {
@@ -41,17 +42,18 @@ class StudentFeature implements IStudent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function update(Student $student, array $input): bool
     {
         return $student->update($input);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getListByResponsibleStudent(
         int $id,
@@ -60,15 +62,16 @@ class StudentFeature implements IStudent
         bool $sortAsc,
         int $per_page = 50
     ): mixed {
-        SELF::$keyToSearch = $q;
+        self::$keyToSearch = $q;
+
         return Student::query()
             ->join('responsible_students', 'students.responsible_student_id', 'responsible_students.id')
-            ->where("students.responsible_student_id", $id)
+            ->where('students.responsible_student_id', $id)
             ->when($q, function ($query) {
                 return $query->where(function ($query) {
-                    return $query->where('students.name', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('students.place_of_birth', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('students.date_of_birth', 'like', '%' . SELF::$keyToSearch . '%');
+                    return $query->where('students.name', 'like', '%' . self::$keyToSearch . '%')
+                        ->orWhere('students.place_of_birth', 'like', '%' . self::$keyToSearch . '%')
+                        ->orWhere('students.date_of_birth', 'like', '%' . self::$keyToSearch . '%');
                 });
             })
             ->where('responsible_students.school_id', School::DEFAULT_SCHOOL_ID())
@@ -78,26 +81,28 @@ class StudentFeature implements IStudent
             ])
             ->paginate($per_page);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getList(
         string $q,
         string $sortBy,
         bool $sortAsc,
-        int $per_page = 20,
+        int $per_page,
         int $option_filer
     ): mixed {
-        SELF::$keyToSearch = $q;
+        self::$keyToSearch = $q;
+
         return Student::query()
             ->join('responsible_students', 'students.responsible_student_id', 'responsible_students.id')
             ->join('registrations', 'registrations.student_id', 'students.id')
             ->join('class_rooms', 'registrations.class_room_id', 'class_rooms.id')
             ->when($q, function ($query) {
                 return $query->where(function ($query) {
-                    return $query->where('students.name', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('students.place_of_birth', 'like', '%' . SELF::$keyToSearch . '%')
-                        ->orWhere('students.date_of_birth', 'like', '%' . SELF::$keyToSearch . '%');
+                    return $query->where('students.name', 'like', '%' . self::$keyToSearch . '%')
+                        ->orWhere('students.place_of_birth', 'like', '%' . self::$keyToSearch . '%')
+                        ->orWhere('students.date_of_birth', 'like', '%' . self::$keyToSearch . '%');
                 });
             })
             ->when(
@@ -112,12 +117,13 @@ class StudentFeature implements IStudent
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->with([
                 'responsibleStudent',
-                'registration.classRoom'
+                'registration.classRoom',
             ])
             ->paginate($per_page);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function generateStudentQRCode(Registration $registration): string
     {
@@ -125,7 +131,7 @@ class StudentFeature implements IStudent
         $directory = 'school/qrcodes';
 
         // Créer le répertoire s'il n'existe pas
-        if (!Storage::exists('public/' . $directory)) {
+        if (! Storage::exists('public/' . $directory)) {
             Storage::makeDirectory('public/' . $directory);
         }
 
@@ -138,6 +144,7 @@ class StudentFeature implements IStudent
             ->png();
         // Retourner le chemin relatif
         $relativePath = '/storage/' . $path;
+
         return $relativePath;
     }
 }

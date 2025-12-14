@@ -18,13 +18,11 @@ class School extends Model
         'phone',
         'logo',
         'app_status',
-        'school_status'
+        'school_status',
     ];
 
     /**
      * Get all of the users for the School
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users(): HasMany
     {
@@ -33,8 +31,6 @@ class School extends Model
 
     /**
      * Get all of the sections for the School
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function sections(): HasMany
     {
@@ -43,8 +39,6 @@ class School extends Model
 
     /**
      * Get all of the responsibleStudents for the School
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function responsibleStudents(): HasMany
     {

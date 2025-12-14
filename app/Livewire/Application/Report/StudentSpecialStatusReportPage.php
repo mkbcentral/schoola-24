@@ -2,18 +2,23 @@
 
 namespace App\Livewire\Application\Report;
 
-use Livewire\Component;
-use App\Models\Registration;
-use App\Models\Option;
 use App\Models\ClassRoom;
+use App\Models\Option;
+use App\Models\Registration;
+use Livewire\Component;
 
 class StudentSpecialStatusReportPage extends Component
 {
     public $optionId = null;
+
     public $classRoomId = null;
+
     public $allOptions = [];
+
     public $allClassRooms = [];
+
     public $derogations = [];
+
     public $exempted = [];
 
     public function mount()

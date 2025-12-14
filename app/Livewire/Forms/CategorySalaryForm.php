@@ -10,8 +10,9 @@ use Livewire\Form;
 
 class CategorySalaryForm extends Form
 {
-    #[Rule('required', message: "Nom role obligation", onUpdate: false)]
+    #[Rule('required', message: 'Nom role obligation', onUpdate: false)]
     public $name = '';
+
     public function create(array $input)
     {
         $input['school_id'] = School::DEFAULT_SCHOOL_ID();

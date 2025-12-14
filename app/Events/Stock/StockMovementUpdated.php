@@ -9,7 +9,9 @@ use Illuminate\Queue\SerializesModels;
 
 class StockMovementUpdated
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public ArticleStockMovement $movement;
 

@@ -13,15 +13,14 @@ class CategorySalary extends Model
     protected $fillable = [
         'name',
         'school_id',
-        'school_year_id'
+        'school_year_id',
     ];
+
     /**
      * Get all of the salries for the CategorySalary
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function salrySatails(): HasMany
     {
-        return $this->hasMany(SalaryDetail::class,);
+        return $this->hasMany(SalaryDetail::class);
     }
 }

@@ -16,8 +16,6 @@ class ClassRoom extends Model
 
     /**
      * Get the option that owns the ClassRoom
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function option(): BelongsTo
     {
@@ -26,8 +24,6 @@ class ClassRoom extends Model
 
     /**
      * Get all of the registrations for the ClassRoom
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function registrations(): HasMany
     {
@@ -36,8 +32,6 @@ class ClassRoom extends Model
 
     /**
      * Get all of the changeClassStudent-s for the ClassRoom
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function changeClassStudents(): HasMany
     {
@@ -46,8 +40,6 @@ class ClassRoom extends Model
 
     /**
      * Get all of the scolarFees for the ClassRoom
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function scolarFees(): HasMany
     {
@@ -59,7 +51,7 @@ class ClassRoom extends Model
         return $this->name . '-' . $this->option->name;
     }
 
-    public  function getRegistrationCountForCurrentSchoolYear(string $month = ""): int|float
+    public function getRegistrationCountForCurrentSchoolYear(string $month = ''): int|float
     {
         return RegistrationFeature::getCountAll(
             null,

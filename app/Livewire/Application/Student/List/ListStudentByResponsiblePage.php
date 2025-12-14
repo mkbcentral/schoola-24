@@ -10,13 +10,17 @@ use Livewire\Component;
 class ListStudentByResponsiblePage extends Component
 {
     protected $listeners = [
-        "studentByResponsible" => "getResponsibleStudent",
+        'studentByResponsible' => 'getResponsibleStudent',
     ];
+
     #[Url(as: 'sortBy')]
     public $sortBy = 'students.name';
+
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
+
     public ?ResponsibleStudent $responsibleStudent = null;
+
     public int $selectedResponsibleId = 0;
 
     public function getResponsibleStudent(?ResponsibleStudent $responsibleStudent)
@@ -24,6 +28,7 @@ class ListStudentByResponsiblePage extends Component
         $this->responsibleStudent = $responsibleStudent;
         $this->selectedResponsibleId = $responsibleStudent->id;
     }
+
     public function render()
     {
 

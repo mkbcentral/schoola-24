@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class BankDeposit extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'description',
         'amount',
@@ -18,13 +19,11 @@ class BankDeposit extends Model
         'school_id',
         'school_year_id',
         'category_fee_id',
-        'created_at'
+        'created_at',
     ];
 
     /**
      * Get the school that owns the Salary
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function school(): BelongsTo
     {
@@ -33,8 +32,6 @@ class BankDeposit extends Model
 
     /**
      * Get the schoolYear that owns the Salary
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function schoolYear(): BelongsTo
     {
@@ -43,22 +40,18 @@ class BankDeposit extends Model
 
     /**
      * Get the categoryFee that owns the BankDeposit
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function categoryFee(): BelongsTo
     {
         return $this->belongsTo(CategoryFee::class, 'category_fee_id');
     }
+
     /**
      * Summary of scopeFilter
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $filters
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFilter(Builder $query, array $filters): Builder
     {
-        return  $query->when(
+        return $query->when(
             $filters['date'],
             function ($query, $value) {
                 return $query->whereDate('created_at', $value);

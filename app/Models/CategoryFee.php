@@ -23,7 +23,7 @@ class CategoryFee extends Model
         'is_paid_for_registration',
         'is_state_fee',
         'is_for_dash',
-        'is_accessory'
+        'is_accessory',
     ];
 
     /**
@@ -42,60 +42,23 @@ class CategoryFee extends Model
         ];
     }
 
-
     /**
      * Get the schoolYear that owns the CategoryFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class, 'school_year_id');
     }
+
     /**
      * Get all of the comments for the CategoryFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function scolarFees(): HasMany
     {
         return $this->hasMany(ScolarFee::class);
     }
 
-    public function getAmountByDate(string $date): string|null
-    {
-        return PaymentFeature::getTotal(
-            $date,
-            null,
-            $this->id,
-            null,
-            null,
-            null,
-            null,
-            true,
-            null,
-            null,
-            'CDF'
-        );
-    }
-    public function getAmountByMonth(string $month): int|float
-    {
-        return PaymentFeature::getTotal(
-            null,
-            $month,
-            $this->id,
-            null,
-            null,
-            null,
-            null,
-            true,
-            null,
-            null,
-            'CDF'
-        );
-    }
-
-    public  function scopeFilter(Builder $query, array $filters): Builder
+    public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())

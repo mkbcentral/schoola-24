@@ -16,13 +16,18 @@ class ArticleInventoryManager extends Component
     public InventoryForm $form;
 
     public $selectedArticle = null;
+
     public $showModal = false;
+
     public $isEditing = false;
 
     // Filtres
     public $search = '';
+
     public $statusFilter = '';
+
     public $dateFrom = '';
+
     public $dateTo = '';
 
     protected $queryString = [
@@ -59,7 +64,7 @@ class ArticleInventoryManager extends Component
             $article = Article::find($inventory->article_id);
             if ($article && $inventory->difference != 0) {
                 $article->update([
-                    'stock' => $inventory->actual_quantity
+                    'stock' => $inventory->actual_quantity,
                 ]);
             }
 
@@ -98,7 +103,7 @@ class ArticleInventoryManager extends Component
             $article = Article::find($inventory->article_id);
             if ($article) {
                 $article->update([
-                    'stock' => $inventory->actual_quantity
+                    'stock' => $inventory->actual_quantity,
                 ]);
             }
 

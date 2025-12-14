@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class SchoolYearLabel extends Component
 {
-    //Listner for refresh event
+    // Listner for refresh event
     protected $listeners = ['refreshSchoolYearLabel' => '$refresh'];
 
     public function render()
@@ -19,8 +19,8 @@ class SchoolYearLabel extends Component
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->when(
                 $workOnYear,
-                fn($query, $workOnYear) => $query->where('id', $workOnYear),
-                fn($query) => $query->where('is_active', true)
+                fn ($query, $workOnYear) => $query->where('id', $workOnYear),
+                fn ($query) => $query->where('is_active', true)
             )
             ->first();
 

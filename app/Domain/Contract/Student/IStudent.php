@@ -5,32 +5,36 @@ namespace App\Domain\Contract\Student;
 use App\Models\Registration;
 use App\Models\Student;
 
-interface  IStudent
+interface IStudent
 {
-    public static function create(array $input): Student; //Ajouter un nouvel élève
-    public static function get(int $id): Student; //returner un éleves
+    public static function create(array $input): Student; // Ajouter un nouvel élève
+
+    public static function get(int $id): Student; // returner un éleves
+
     public static function getList(
         string $q,
         string $sortBy,
-        bool   $sortAsc,
-        int    $per_page = 20,
+        bool $sortAsc,
+        int $per_page,
         int $option_filer
-    ): mixed; //Recuperer la liste des éléves
+    ): mixed;
+
+    // Recuperer la liste des éléves
     public static function getListByResponsibleStudent(
         int $id,
         string $q,
         string $sortBy,
-        bool   $sortAsc,
-        int    $per_page = 20,
+        bool $sortAsc,
+        int $per_page = 20,
+    ): mixed;
 
-    ): mixed; //Recuperer la liste des éléves
-    public static function update(Student $student, array $input): bool; //Mettre à jour un éléve
-    public static function delete(Student $student): bool; //Retirer un éléves
+    // Recuperer la liste des éléves
+    public static function update(Student $student, array $input): bool; // Mettre à jour un éléve
+
+    public static function delete(Student $student): bool; // Retirer un éléves
 
     /**
      * Cette function permet de générer un qrocode
-     * @param \App\Models\Registration $registration
-     * @return string
      */
     public static function generateStudentQRCode(Registration $registration): string;
 }

@@ -1,0 +1,141 @@
+// =============================================================================
+// Light Theme
+// Configuration du thème clair (défini dans _variables.scss par défaut)
+// Ce fichier peut contenir des ajustements spécifiques au thème clair
+// =============================================================================
+
+[data-bs-theme="light"],
+.light-mode,
+:root {
+    // Les variables par défaut sont déjà définies dans abstracts/_variables.scss
+    // Ce fichier sert principalement pour les overrides spécifiques
+
+    // -------------------------------------------------------------------------
+    // Sidebar (thème clair)
+    // -------------------------------------------------------------------------
+    --sidebar-bg: #343a40;
+    --sidebar-header-bg: #2c3136;
+    --sidebar-hover-bg: #2c3136;
+    --sidebar-footer-bg: #2c3136;
+    --sidebar-active-bg: rgba(13, 110, 253, 0.1);
+
+    // -------------------------------------------------------------------------
+    // Cards (thème clair)
+    // -------------------------------------------------------------------------
+    --card-bg: #ffffff;
+    --card-border: rgba(0, 0, 0, 0.125);
+
+    // -------------------------------------------------------------------------
+    // Timeline (thème clair)
+    // -------------------------------------------------------------------------
+    --timeline-border: #eeeeee;
+
+    // -------------------------------------------------------------------------
+    // Avatar (thème clair)
+    // -------------------------------------------------------------------------
+    --avatar-circle-bg: #e9ecef;
+
+    // -------------------------------------------------------------------------
+    // Quick Payment (thème clair)
+    // -------------------------------------------------------------------------
+    --qp-bg-primary: #ffffff;
+    --qp-bg-secondary: #f8f9fa;
+    --qp-bg-card: #ffffff;
+    --qp-bg-gradient-start: #667eea;
+    --qp-bg-gradient-end: #764ba2;
+    --qp-bg-success: #d4edda;
+    --qp-bg-success-end: #c3e6cb;
+    --qp-bg-warning: #fff3cd;
+    --qp-bg-warning-end: #ffeaa7;
+    --qp-bg-hover: #f8f9fa;
+    --qp-bg-dropdown: #ffffff;
+}
+
+// =============================================================================
+// Composants spécifiques en mode clair
+// =============================================================================
+
+[data-bs-theme="light"],
+.light-mode {
+    
+    // Navbar
+    .navbar {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    // Tables
+    .table thead th {
+        background-color: rgb(100, 100, 100);
+        color: #ffffff;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f2f6fc;
+    }
+
+    // Dropdown
+    .dropdown-menu {
+        background-color: #ffffff;
+        border-color: rgba(0, 0, 0, 0.125);
+    }
+
+    .dropdown-item {
+        color: #212529;
+
+        &:hover,
+        &:focus {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+    }
+
+    // Forms
+    .form-control,
+    .form-select {
+        background-color: #ffffff;
+        border-color: #ced4da;
+        color: #212529;
+
+        &:focus {
+            background-color: #ffffff;
+            border-color: #0d6efd;
+            color: #212529;
+        }
+    }
+
+    // Offcanvas
+    .offcanvas {
+        background-color: #ffffff;
+        color: #212529;
+
+        .list-group-item {
+            &:hover {
+                background-color: #f8f9fa;
+            }
+        }
+    }
+
+    // Chart container
+    canvas {
+        background-color: #ffffff;
+    }
+
+    // Timeline
+    .timeline-content {
+        h6, p {
+            color: #212529;
+        }
+
+        small {
+            color: #6c757d;
+        }
+    }
+}
+
+// =============================================================================
+// Media Query - Préférence système light mode
+// =============================================================================
+
+// Les variables par défaut dans :root conviennent pour le mode clair
+// Pas besoin de surcharges supplémentaires

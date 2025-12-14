@@ -21,12 +21,13 @@ class LoginController extends Controller
             $user = User::where('email', $request->login)
                 ->orWhere('phone', $request->login)
                 ->first();
-            if (!$user || !Hash::check($request->password, $user->password)) {
+            if (! $user || ! Hash::check($request->password, $user->password)) {
                 return response([
                     'error' => 'Email ou mot de passe incorrect.',
                 ], 500);
             } else {
                 $token = $user->createToken('token')->plainTextToken;
+
                 return response([
                     'user' => new UserResource($user),
                     'token' => $token,

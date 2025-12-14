@@ -11,15 +11,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class MultiAppLink extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'icon',
-        'user_id'
+        'user_id',
     ];
+
     /**
      * Get the user that owns the SingleAppLink
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -28,8 +28,6 @@ class MultiAppLink extends Model
 
     /**
      * Get all of the subLinks for the MultiAppLink
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function subLinks(): HasMany
     {
@@ -38,8 +36,6 @@ class MultiAppLink extends Model
 
     /**
      * The users that belong to the MultiAppLink
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users(): BelongsToMany
     {

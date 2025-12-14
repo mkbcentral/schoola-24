@@ -12,18 +12,22 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 class FormSchoolPage extends Component
 {
     use WithFileUploads;
+
     protected $listeners = [
         'schoolData' => 'getSchool',
         'resetFromData' => 'cancelUpdate',
     ];
 
     public ?School $school = null;
+
     public SchoolForm $form;
+
     public function getSchool(School $school): void
     {
         $this->school = $school;
         $this->form->fill($school->toArray());
     }
+
     public function save(): void
     {
         try {
@@ -33,6 +37,7 @@ class FormSchoolPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         try {
@@ -42,6 +47,7 @@ class FormSchoolPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         $this->validate();
@@ -55,11 +61,13 @@ class FormSchoolPage extends Component
         $this->dispatch('listSchoolRefred');
         $this->dispatch('schoolConfigDataRefreshed');
     }
+
     public function cancelUpdate(): void
     {
         $this->school = null;
         $this->form->reset();
     }
+
     public function render()
     {
         return view('livewire.application.admin.form.form-school-page');

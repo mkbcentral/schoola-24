@@ -11,9 +11,11 @@ use Livewire\Component;
 class FormSingleAppLinkPage extends Component
 {
     protected $listeners = [
-        'singleAppLinkData' => 'getSingleAppLink'
+        'singleAppLinkData' => 'getSingleAppLink',
     ];
+
     public ?SingleAppLink $singleAppLink = null;
+
     public SingleAppLinkForm $form;
 
     public function getSingleAppLink(SingleAppLink $singleAppLink): void
@@ -21,6 +23,7 @@ class FormSingleAppLinkPage extends Component
         $this->singleAppLink = $singleAppLink;
         $this->form->fill($singleAppLink->toArray());
     }
+
     public function save(): void
     {
 
@@ -31,6 +34,7 @@ class FormSingleAppLinkPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         try {
@@ -40,6 +44,7 @@ class FormSingleAppLinkPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         $this->validate();
@@ -52,11 +57,13 @@ class FormSingleAppLinkPage extends Component
         $this->singleAppLink = null;
         $this->dispatch('singleAppLinkListRefred');
     }
+
     public function cancelUpdate(): void
     {
         $this->singleAppLink = null;
         $this->form->reset();
     }
+
     public function render()
     {
         return view('livewire.application.navigation.form.form-single-app-link-page');

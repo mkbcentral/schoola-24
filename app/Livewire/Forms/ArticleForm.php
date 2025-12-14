@@ -15,19 +15,19 @@ class ArticleForm extends Form
     #[Rule('required|string|max:255', message: "Le nom de l'article est obligatoire", onUpdate: false)]
     public $name = '';
 
-    #[Rule('nullable|string|max:100', message: "La référence ne doit pas dépasser 100 caractères", onUpdate: false)]
+    #[Rule('nullable|string|max:100', message: 'La référence ne doit pas dépasser 100 caractères', onUpdate: false)]
     public $reference = '';
 
     #[Rule('nullable|string|max:50', message: "L'unité ne doit pas dépasser 50 caractères", onUpdate: false)]
     public $unit = '';
 
-    #[Rule('nullable|string|max:500', message: "La description ne doit pas dépasser 500 caractères", onUpdate: false)]
+    #[Rule('nullable|string|max:500', message: 'La description ne doit pas dépasser 500 caractères', onUpdate: false)]
     public $description = '';
 
-    #[Rule('nullable|integer|min:0', message: "Le stock minimum doit être un nombre positif", onUpdate: false)]
+    #[Rule('nullable|integer|min:0', message: 'Le stock minimum doit être un nombre positif', onUpdate: false)]
     public $stock_min = 0;
 
-    #[Rule('nullable|exists:article_categories,id', message: "Catégorie invalide", onUpdate: false)]
+    #[Rule('nullable|exists:article_categories,id', message: 'Catégorie invalide', onUpdate: false)]
     public $category_id = null;
 
     /**

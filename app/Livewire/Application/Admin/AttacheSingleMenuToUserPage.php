@@ -11,6 +11,7 @@ use Livewire\Component;
 class AttacheSingleMenuToUserPage extends Component
 {
     public User $user;
+
     public $selectedLinks = [];
 
     public function mount()
@@ -29,10 +30,11 @@ class AttacheSingleMenuToUserPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.admin.attache-single-menu-to-user-page', [
-            'singleAppLinks' => SingleAppLink::all()
+            'singleAppLinks' => SingleAppLink::all(),
         ]);
     }
 }

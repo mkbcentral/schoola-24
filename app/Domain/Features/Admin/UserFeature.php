@@ -9,7 +9,7 @@ use App\Models\User;
 class UserFeature implements IUser
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getListSchoolUser(
         string $q,
@@ -17,17 +17,18 @@ class UserFeature implements IUser
         bool $sortAsc,
         int $per_page = 20
     ): mixed {
-        return  User::query()
+        return User::query()
             ->filter($q)
             ->where('school_id', School::DEFAULT_SCHOOL_ID())
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->paginate($per_page);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getListAppUser(
         string $q,
@@ -35,7 +36,7 @@ class UserFeature implements IUser
         bool $sortAsc,
         int $per_page = 20
     ): mixed {
-        return  User::query()
+        return User::query()
             ->filter($q)
             ->where('roles.is_for_school', false)
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')

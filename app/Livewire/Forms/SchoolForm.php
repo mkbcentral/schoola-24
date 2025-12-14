@@ -2,40 +2,154 @@
 
 namespace App\Livewire\Forms;
 
+use App\Enums\SchoolAppEnum;
+use App\Enums\SchoolEnum;
 use App\Models\School;
+use Illuminate\Validation\Rule as ValidationRule;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class SchoolForm extends Form
 {
+    public ?School $school = null;
 
-    #[Validate('required', message: 'Nom utilisateur obligatoire', onUpdate: false)]
+    #[Validate]
     public $name = '';
-    #[Validate('required', message: 'Nom utilisateur obligatoire', onUpdate: false)]
+
+    #[Validate]
     public $type = '';
-    #[Validate('required', message: 'N° Tél obligation', onUpdate: false)]
-    #[Validate('min:9', message: 'Minimum 9 caractères', onUpdate: false)]
+
+    #[Validate]
     public $phone = '';
 
-    #[Validate('required', message: 'Adresse email abligatoire', onUpdate: false)]
-    #[Validate('min:6', message: 'Minimum 6 caractères', onUpdate: false)]
-    #[Validate('email', message: 'Format email invalide', onUpdate: false)]
+    #[Validate]
     public $email = '';
 
-    #[Validate('required', message: 'Nom mode obligatoire', onUpdate: false)]
+    #[Validate]
+    public $address = '';
+
+    #[Validate]
     public $app_status = '';
-    #[Validate('required', message: 'Nom status obligatoire', onUpdate: false)]
+
+    #[Validate]
     public $school_status = '';
 
-    public function create(): School
+    /**
+     * Règles de validation dynamiques
+     */
+    protected function rules()
     {
-        $inputs = $this->all();
-        return School::create($inputs);
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                ValidationRule::unique('schools', 'name')->ignore($this->school),
+            ],
+            'type' => [
+                'required',
+                'string',
+                'max:100',
+            ],
+            'phone' => [
+                'required',
+                'string',
+                'min:9',
+                'max:20',
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                ValidationRule::unique('schools', 'email')->ignore($this->school),
+            ],
+            'address' => [
+                'nullable',
+                'string',
+                'max:500',
+            ],
+            'app_status' => [
+                'required',
+                ValidationRule::in(SchoolAppEnum::getValues()),
+            ],
+            'school_status' => [
+                'required',
+                ValidationRule::in(SchoolEnum::getValues()),
+            ],
+        ];
     }
 
-    public function update(School $school): bool
+    /**
+     * Messages de validation personnalisés
+     */
+    protected function messages()
     {
-        $inputs = $this->all();
-        return $school->update($inputs);
+        return [
+            'name.required' => 'Le nom de l\'école est obligatoire.',
+            'name.unique' => 'Cette école existe déjà.',
+            'type.required' => 'Le type d\'école est obligatoire.',
+            'phone.required' => 'Le numéro de téléphone est obligatoire.',
+            'phone.min' => 'Le numéro doit contenir au moins 9 caractères.',
+            'email.required' => 'L\'adresse email est obligatoire.',
+            'email.email' => 'L\'adresse email n\'est pas valide.',
+            'email.unique' => 'Cette adresse email est déjà utilisée.',
+            'app_status.required' => 'Le statut de l\'application est obligatoire.',
+            'app_status.in' => 'Le statut de l\'application sélectionné n\'est pas valide.',
+            'school_status.required' => 'Le statut de l\'école est obligatoire.',
+            'school_status.in' => 'Le statut de l\'école sélectionné n\'est pas valide.',
+        ];
+    }
+
+    /**
+     * Initialiser le formulaire avec une école existante
+     */
+    public function setSchool(School $school)
+    {
+        $this->school = $school;
+        $this->name = $school->name;
+        $this->type = $school->type;
+        $this->phone = $school->phone;
+        $this->email = $school->email;
+        $this->address = $school->address ?? '';
+        $this->app_status = $school->app_status;
+        $this->school_status = $school->school_status;
+    }
+
+    /**
+     * Créer une nouvelle école
+     */
+    public function store()
+    {
+        $this->validate();
+
+        School::create([
+            'name' => $this->name,
+            'type' => $this->type,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'address' => $this->address,
+            'app_status' => $this->app_status,
+            'school_status' => $this->school_status,
+        ]);
+
+        $this->reset();
+    }
+
+    /**
+     * Mettre à jour une école existante
+     */
+    public function update()
+    {
+        $this->validate();
+
+        $this->school->update([
+            'name' => $this->name,
+            'type' => $this->type,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'address' => $this->address,
+            'app_status' => $this->app_status,
+            'school_status' => $this->school_status,
+        ]);
     }
 }

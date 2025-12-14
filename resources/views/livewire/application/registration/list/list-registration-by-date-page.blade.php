@@ -117,7 +117,7 @@
 
                     <!-- Menu contextuel personnalisé (affiché uniquement dans la table) -->
                     @if ($registrations->count() > 0)
-                        <div id="contextMenu" style="display:none; position:fixed; z-index:9999; min-width:200px;"
+                        <div id="contextMenu" style="display:none; position:fixed; z-index: var(--z-dropdown); min-width:200px;"
                             class="card shadow-sm">
                             <ul class="list-group list-group-flush mb-0">
                                 <li class="list-group-item" id="ctx-details" style="cursor:pointer;"><i

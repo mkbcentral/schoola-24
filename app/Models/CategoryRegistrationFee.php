@@ -14,8 +14,6 @@ class CategoryRegistrationFee extends Model
 
     /**
      * Get all of the registrationFees for the CategoryRegistrationFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function RegistrationFees(): HasMany
     {

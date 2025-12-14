@@ -10,7 +10,7 @@ class ListResposibleAutoComplete extends Component
     public function render()
     {
         return view('livewire.application.student.list.list-resposible-auto-complete', [
-            'responsibleStudents' => ResponsibleStudent::orderBy('name', 'asc')->get()
+            'responsibleStudents' => ResponsibleStudent::orderBy('name', 'asc')->get(),
         ]);
     }
 }

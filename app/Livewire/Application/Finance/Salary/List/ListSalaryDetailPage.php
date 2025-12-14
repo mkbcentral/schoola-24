@@ -12,10 +12,13 @@ use Livewire\Component;
 class ListSalaryDetailPage extends Component
 {
     protected $listeners = [
-        'salaryData' => 'getSalary'
+        'salaryData' => 'getSalary',
     ];
+
     public ?Salary $salary = null;
+
     public SalaryDetailForm $form;
+
     public ?SalaryDetail $salaryDetailToEdit = null;
 
     public function getSalary(Salary $salary): void
@@ -38,6 +41,7 @@ class ListSalaryDetailPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         try {
@@ -47,6 +51,7 @@ class ListSalaryDetailPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         $this->validate();

@@ -10,7 +10,9 @@ use Livewire\Component;
 class EditUserInfoPage extends Component
 {
     public $name = '';
+
     public $email = '';
+
     public $phone = '';
 
     public function mount()
@@ -33,6 +35,7 @@ class EditUserInfoPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.admin.form.edit-user-info-page');

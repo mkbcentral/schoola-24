@@ -8,15 +8,13 @@ use Livewire\Component;
 
 class ListPaymentByStudent extends Component
 {
-
-
-    //listners
+    // listners
     protected $listeners = ['registrationPyaments' => 'getRegistrationPayments'];
 
-    //student
+    // student
     public Registration $registration;
 
-    //payments
+    // payments
     public function getRegistrationPayments(Registration $registration)
     {
         $this->registration = $registration;

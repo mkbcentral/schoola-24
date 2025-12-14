@@ -8,15 +8,15 @@ use Livewire\Form;
 
 class ScolarFeeForm extends Form
 {
-    #[Rule('required', message: "Nom frais obligation", onUpdate: false)]
+    #[Rule('required', message: 'Nom frais obligation', onUpdate: false)]
     public $name = '';
-    #[Rule('required', message: "Montant obligatoire", onUpdate: false)]
-    #[Rule('numeric', message: "Format numerique invalide", onUpdate: false)]
+
+    #[Rule('required', message: 'Montant obligatoire', onUpdate: false)]
+    #[Rule('numeric', message: 'Format numerique invalide', onUpdate: false)]
     public $amount = '';
-    #[Rule('required', message: "Classe obligatoire", onUpdate: false)]
+
+    #[Rule('required', message: 'Classe obligatoire', onUpdate: false)]
     public $class_room_id = '';
-
-
 
     public function create(array $input)
     {

@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(PaymentRepportPaymentController::class)->group(function () {
         Route::get('payment/report/date/{date}', 'getPaymentByDate');
         Route::get('payment/report/month/{month}', 'getPaymentByMonth');
-        //Route::get('student/payments/{code}', action: 'getStudentPayment');
+        // Route::get('student/payments/{code}', action: 'getStudentPayment');
         Route::get('student/payment-infos/{registration}', action: 'getStudentPayments');
     });
 
@@ -54,7 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('categories', ListCategoryExpenseController::class);
     });
 });
-
 
 Route::prefix('user')->group(function () {
     Route::post('/login', LoginController::class);

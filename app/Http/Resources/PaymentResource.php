@@ -19,7 +19,7 @@ class PaymentResource extends JsonResource
             'name' => $this->registration->student->name,
             'classRoom' => $this->registration->classRoom->getOriginalClassRoomName(),
             'reason' => $this->scolarFee->name,
-            'amount' => $this->scolarFee->categoryFee->currency == 'CDF' ? $this->scolarFee->amount :  $this->scolarFee->amount * $this->rate->amount,
+            'amount' => $this->scolarFee->categoryFee->currency == 'CDF' ? $this->scolarFee->amount : $this->scolarFee->amount * $this->rate->amount,
             'month' => format_fr_month_name($this->month),
             'created_at' => $this->created_at->format('d/m/Y'),
         ];

@@ -14,28 +14,30 @@ class FormBorrowingPage extends Component
         'moneyBorrowingData' => 'getMoneyBorrowing',
         'initialBorrowingForm' => 'initBorrowingForm',
     ];
+
     public ?MoneyBorrowing $moneyBorrowing = null;
+
     public MoneyBorrowingForm $form;
 
-    /**
-     * @return void
-     */
     public function initFormField(): void
     {
         $this->form->reset();
         $this->form->created_at = date('Y-m-d');
         $this->form->month = date('m');
     }
+
     public function initBorrowingForm(): void
     {
         $this->initFormField();
     }
+
     public function getMoneyBorrowing(MoneyBorrowing $moneyBorrowing): void
     {
         $this->moneyBorrowing = $moneyBorrowing;
         $this->form->fill($moneyBorrowing->toArray());
         $this->form->created_at = $moneyBorrowing->created_at->format('Y-m-d');
     }
+
     public function save(): void
     {
         try {
@@ -45,6 +47,7 @@ class FormBorrowingPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         try {
@@ -54,6 +57,7 @@ class FormBorrowingPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         $this->validate();
@@ -66,15 +70,18 @@ class FormBorrowingPage extends Component
         $this->dispatch('moneyBorrowingListRefreshed');
         $this->initFormField();
     }
+
     public function cancelUpdate(): void
     {
         $this->moneyBorrowing = null;
         $this->initFormField();
     }
+
     public function mount(): void
     {
         $this->form->created_at = date('Y-m-d');
     }
+
     public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.borrowing.form.form-borrowing-page');

@@ -7,7 +7,9 @@ use Livewire\Component;
 
 class DashPaymentDateOrMonthPage extends Component
 {
-    public $date, $month;
+    public $date;
+
+    public $month;
 
     public function updatedDate($d)
     {
@@ -21,7 +23,6 @@ class DashPaymentDateOrMonthPage extends Component
         $this->date = null;
     }
 
-
     public function mount()
     {
         $this->date = date('Y-m-d');
@@ -34,7 +35,7 @@ class DashPaymentDateOrMonthPage extends Component
             'payments' => Payment::getTotalAmountByCategoryForMonthOrDate(
                 $this->month,
                 $this->date,
-            )
+            ),
         ]);
     }
 }

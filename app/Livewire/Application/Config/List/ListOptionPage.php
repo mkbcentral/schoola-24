@@ -12,14 +12,15 @@ use Livewire\WithPagination;
 class ListOptionPage extends Component
 {
     protected $listeners = ['optionDataRefreshed' => '$refresh'];
+
     use WithPagination;
+
     public $per_page = 10;
 
     public function edit(?Option $option)
     {
         $this->dispatch('optionData', $option);
     }
-
 
     public function delete(?Option $option)
     {
@@ -36,11 +37,10 @@ class ListOptionPage extends Component
         }
     }
 
-
     public function render()
     {
         return view('livewire.application.config.list.list-option-page', [
-            'options' => SchoolDataFeature::getOptionList($this->per_page)
+            'options' => SchoolDataFeature::getOptionList($this->per_page),
         ]);
     }
 }

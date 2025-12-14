@@ -11,21 +11,26 @@ use Livewire\Component;
 class FormCategorySalaryPage extends Component
 {
     protected $listeners = [
-        "categorySalaryData" => "getCategorySalary",
-        'initialCatSalaryForm'=>'initSalaryForm',
+        'categorySalaryData' => 'getCategorySalary',
+        'initialCatSalaryForm' => 'initSalaryForm',
     ];
+
     public ?CategorySalary $categorySalarySelected = null;
+
     public CategorySalaryForm $form;
+
     public function initSalaryForm(): void
     {
         $this->categorySalarySelected = null;
         $this->form->reset();
     }
+
     public function getCategorySalary(CategorySalary $categorySalary): void
     {
         $this->categorySalarySelected = $categorySalary;
         $this->form->fill($categorySalary->toArray());
     }
+
     public function save(): void
     {
         $input = $this->validate();
@@ -36,6 +41,7 @@ class FormCategorySalaryPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         $input = $this->validate();
@@ -46,6 +52,7 @@ class FormCategorySalaryPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         if ($this->categorySalarySelected == null) {
@@ -62,6 +69,7 @@ class FormCategorySalaryPage extends Component
         $this->categorySalarySelected = null;
         $this->form->reset();
     }
+
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.salary.form.form-category-salary-page');

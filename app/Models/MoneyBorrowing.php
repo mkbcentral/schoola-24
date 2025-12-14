@@ -17,20 +17,18 @@ class MoneyBorrowing extends Model
         'currency',
         'school_id',
         'school_year_id',
-        'created_at'
+        'created_at',
     ];
 
     /**
      * Get the school that owns the MoneyBorrowing
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class, 'school_id');
     }
 
-    public function scopeFilter($query, array $filters )
+    public function scopeFilter($query, array $filters)
     {
         return $query->when($filters['date'], function ($query, $val) {
             return $query->whereDate('created_at', $val);

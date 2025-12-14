@@ -14,12 +14,18 @@ use Livewire\Component;
 class FormEditPaymentPage extends Component
 {
     protected $listeners = [
-        "paymentData" => "getPayment",
+        'paymentData' => 'getPayment',
     ];
-    public PaymentForm $form;
-    public ?Payment $payment = null;
-    public $selectedCategoryFeeId, $selectedIdClassRoom = 0, $scolar_fee_id = 0;
 
+    public PaymentForm $form;
+
+    public ?Payment $payment = null;
+
+    public $selectedCategoryFeeId;
+
+    public $selectedIdClassRoom = 0;
+
+    public $scolar_fee_id = 0;
 
     public function getPayment(?Payment $payment)
     {
@@ -53,6 +59,7 @@ class FormEditPaymentPage extends Component
     {
         $this->selectedCategoryFeeId = $this->payment?->scolarFee?->category_fee_id;
     }
+
     public function render()
     {
         return view('livewire.application.payment.form.form-edit-payment-page', [
@@ -64,7 +71,7 @@ class FormEditPaymentPage extends Component
                 ->where('scolar_fees.class_room_id', $this->selectedIdClassRoom)
                 ->where('scolar_fees.is_changed', false)
                 ->select('scolar_fees.*')
-                ->get()
+                ->get(),
         ]);
     }
 }

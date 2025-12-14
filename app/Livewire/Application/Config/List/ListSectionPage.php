@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class ListSectionPage extends Component
 {
-
     protected $listeners = ['sectionDataRefreshed' => '$refresh'];
 
     public function edit(?Section $section)

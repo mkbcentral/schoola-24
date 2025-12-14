@@ -1,0 +1,77 @@
+<?php
+
+namespace App\DTOs\Configuration;
+
+class OptionDTO
+{
+    public function __construct(
+        public ?int $id = null,
+        public string $name = '',
+        public ?int $sectionId = null,
+        public ?string $createdAt = null,
+        public ?string $updatedAt = null,
+    ) {}
+
+    /**
+     * Créer un DTO depuis un modèle Option
+     */
+    public static function fromModel($model): self
+    {
+        return new self(
+            id: $model->id,
+            name: $model->name,
+            sectionId: $model->section_id,
+            createdAt: $model->created_at?->toDateTimeString(),
+            updatedAt: $model->updated_at?->toDateTimeString(),
+        );
+    }
+
+    /**
+     * Créer un DTO depuis un tableau de données
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            id: $data['id'] ?? null,
+            name: $data['name'] ?? '',
+            sectionId: $data['section_id'] ?? null,
+            createdAt: $data['created_at'] ?? null,
+            updatedAt: $data['updated_at'] ?? null,
+        );
+    }
+
+    /**
+     * Convertir le DTO en tableau
+     */
+    public function toArray(): array
+    {
+        $data = [
+            'name' => $this->name,
+            'section_id' => $this->sectionId,
+        ];
+
+        if ($this->id !== null) {
+            $data['id'] = $this->id;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Valider les données du DTO
+     */
+    public function validate(): array
+    {
+        $errors = [];
+
+        if (empty($this->name)) {
+            $errors['name'] = 'Le nom de l\'option est requis';
+        }
+
+        if ($this->sectionId === null) {
+            $errors['section_id'] = 'La section est requise';
+        }
+
+        return $errors;
+    }
+}

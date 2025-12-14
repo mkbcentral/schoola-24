@@ -14,18 +14,17 @@ class FormBankDepositPage extends Component
         'bankDepositData' => 'getBankDeposit',
         'initialFormBankDeposit' => 'initBankDepositForm',
     ];
+
     public ?BankDeposit $bankDeposit = null;
+
     public BankDepositForm $form;
 
-
-    /**
-     * @return void
-     */
     public function initFormField(): void
     {
         $this->form->created_at = date('Y-m-d');
         $this->form->month = date('m');
     }
+
     public function initBankDepositForm(): void
     {
         $this->initFormField();
@@ -37,6 +36,7 @@ class FormBankDepositPage extends Component
         $this->form->fill($bankDeposit->toArray());
         $this->form->created_at = $bankDeposit->created_at->format('Y-m-d');
     }
+
     public function save(): void
     {
         try {
@@ -46,6 +46,7 @@ class FormBankDepositPage extends Component
             $this->dispatch('error', ['message', $ex->getMessage()]);
         }
     }
+
     public function update(): void
     {
         try {
@@ -55,6 +56,7 @@ class FormBankDepositPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function handlerSubmit(): void
     {
         $this->validate();
@@ -76,8 +78,6 @@ class FormBankDepositPage extends Component
         $this->initFormField();
     }
 
-
-
     public function mount()
     {
         $this->initFormField();
@@ -87,5 +87,4 @@ class FormBankDepositPage extends Component
     {
         return view('livewire.application.finance.bank.form.form-bank-deposit-page');
     }
-
 }

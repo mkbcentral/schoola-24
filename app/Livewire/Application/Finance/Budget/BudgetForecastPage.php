@@ -3,18 +3,16 @@
 namespace App\Livewire\Application\Finance\Budget;
 
 use App\Domain\Helpers\DateFormatHelper;
-use Livewire\Component;
 use App\Models\ExpenseFee;
 use App\Models\OtherExpense;
 use App\Models\SchoolYear;
-use Illuminate\Support\Collection;
+use Livewire\Component;
 
 class BudgetForecastPage extends Component
 {
     public $expensesByCategory = [];
+
     public $months = [];
-
-
 
     public function mount()
     {
@@ -30,6 +28,7 @@ class BudgetForecastPage extends Component
             ->get()
             ->map(function ($item) {
                 $amount = $item->currency === 'CDF' ? $item->amount / 2850 : $item->amount;
+
                 return [
                     'amount' => $amount,
                     'category_id' => $item->category_expense_id,
@@ -44,6 +43,7 @@ class BudgetForecastPage extends Component
             ->get()
             ->map(function ($item) {
                 $amount = $item->currency === 'CDF' ? $item->amount / 2850 : $item->amount;
+
                 return [
                     'amount' => $amount,
                     'category_id' => $item->category_expense_id,
@@ -60,6 +60,7 @@ class BudgetForecastPage extends Component
             foreach ($months as $m) {
                 $monthlyAmounts[$m['number']] = $items->where('month', $m['number'])->sum('amount');
             }
+
             return [
                 'category_id' => $categoryId,
                 'category_name' => $categoryName,

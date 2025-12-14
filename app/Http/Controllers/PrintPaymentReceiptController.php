@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\PaymentRegularization;
 use App\Models\SchoolYear;
@@ -16,6 +15,7 @@ class PrintPaymentReceiptController extends Controller
         $payment->update();
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('prints.print-receipt', compact(['payment']));
+
         return $pdf->stream();
     }
 
@@ -24,6 +24,7 @@ class PrintPaymentReceiptController extends Controller
         $lastSchoolYear = SchoolYear::where('is_last_year', true)->first();
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('prints.print-reg-receipt', compact(['paymentRegularization', 'lastSchoolYear']));
+
         return $pdf->stream();
     }
 }

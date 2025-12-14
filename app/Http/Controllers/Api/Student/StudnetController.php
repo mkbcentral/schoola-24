@@ -28,11 +28,13 @@ class StudnetController extends Controller
                 null,
                 1000
             );
+
             return response()->json([
-                'students' => RegistrationResource::collection($students)
+                'students' => RegistrationResource::collection($students),
             ]);
         } catch (Exception $exception) {
-            $handler = new CustomExceptionHandler();
+            $handler = new CustomExceptionHandler;
+
             return $handler->render(request(), $exception);
         }
     }

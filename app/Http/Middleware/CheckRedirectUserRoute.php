@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Enums\RoleType;
-use App\Models\Role;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,26 +30,51 @@ class CheckRedirectUserRoute
 
     /**
      * Summary of userAccessRoutes
-     * @return array
      */
     public function userAccessRoutes(): array
     {
-        $routes = [];
+        // Routes de base accessibles à tous les utilisateurs authentifiés
+        $routes = [
+            'dashboard.main',
+            'student.info',
+            'student.detail',
+            'admin.user.profile',
+            'settings.main',
+        ];
+
         if (
             (auth()->user()->singleAppLinks->isEmpty()
                 && auth()->user()->subLinks->isEmpty())
             && auth()->user()->role->name === RoleType::ADMIN_SCHOOL
+            || auth()->user()->role->name === RoleType::ROOT
         ) {
-            $routes = [
-                'dashboard.main',
+            $routes = array_merge($routes, [
                 'admin.main',
                 'admin.role',
                 'main.schools',
                 'navigation.single',
                 'navigation.sub',
                 'navigation.multi',
-                'registration.day'
-            ];
+                'registration.day',
+                'admin.attach.single.menu',
+                'admin.attach.multi.menu',
+                'admin.attach.sub.menu',
+                'admin.school.configure',
+                //V2 Test routes
+                'registration.v2.index',
+                'payment.list',
+                'payments.pdf',
+                'payment.quick',
+                'report.payments',
+                'expense.manage',
+                'expense.settings',
+                'student.info',
+                'finance.dashboard',
+                'reports.comparison',
+                'reports.forecast',
+                'reports.treasury',
+                'reports.profitability'
+            ]);
         } else {
             foreach (auth()->user()->singleAppLinks as $singleAppLink) {
                 $routes[] = $singleAppLink->route;
@@ -59,7 +83,6 @@ class CheckRedirectUserRoute
                 $routes[] = $subLink->route;
             }
         }
-
 
         return [
             RoleType::SCHOOL_FINANCE => $routes,
@@ -72,6 +95,7 @@ class CheckRedirectUserRoute
             RoleType::SCHOOL_DIRECTOR => $routes,
             RoleType::SCHOOL_BOSS => $routes,
             RoleType::SCHOOL_GUARD => $routes,
+            RoleType::ROOT => $routes,
         ];
     }
 }

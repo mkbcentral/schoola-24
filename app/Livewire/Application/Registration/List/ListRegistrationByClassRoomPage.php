@@ -11,8 +11,10 @@ use Livewire\Component;
 class ListRegistrationByClassRoomPage extends Component
 {
     public $classRoomId;
+
     #[Url(as: 'sortBy')]
     public $sortBy = 'students.name';
+
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
 
@@ -24,7 +26,7 @@ class ListRegistrationByClassRoomPage extends Component
     public function sortData($value): void
     {
         if ($value == $this->sortBy) {
-            $this->sortAsc = !$this->sortAsc;
+            $this->sortAsc = ! $this->sortAsc;
         }
         $this->sortBy = $value;
     }
@@ -38,6 +40,7 @@ class ListRegistrationByClassRoomPage extends Component
     {
         $this->classRoom = ClassRoom::find($this->classRoomId);
     }
+
     public function render()
     {
         return view('livewire.application.registration.list.list-registration-by-class-room-page', [
@@ -52,7 +55,6 @@ class ListRegistrationByClassRoomPage extends Component
                 $this->sortBy,
                 $this->sortAsc,
                 100
-
             ),
             'count' => RegistrationFeature::getCountAll(
                 null,
@@ -61,7 +63,7 @@ class ListRegistrationByClassRoomPage extends Component
                 null,
                 $this->classRoomId,
                 null,
-            )
+            ),
         ]);
     }
 }

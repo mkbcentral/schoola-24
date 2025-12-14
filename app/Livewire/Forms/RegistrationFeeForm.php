@@ -9,18 +9,20 @@ use Livewire\Form;
 
 class RegistrationFeeForm extends Form
 {
-    #[Rule('required', message: "Nom frais obligation", onUpdate: false)]
+    #[Rule('required', message: 'Nom frais obligation', onUpdate: false)]
     public $name = '';
-    #[Rule('required', message: "Montant obligatoire", onUpdate: false)]
-    #[Rule('numeric', message: "Format numerique invalide", onUpdate: false)]
+
+    #[Rule('required', message: 'Montant obligatoire', onUpdate: false)]
+    #[Rule('numeric', message: 'Format numerique invalide', onUpdate: false)]
     public $amount = '';
-    #[Rule('required', message: "Section obligatoire", onUpdate: false)]
+
+    #[Rule('required', message: 'Section obligatoire', onUpdate: false)]
     public $option_id = '';
 
-    #[Rule('required', message: "Categorie obligatoire", onUpdate: false)]
-    public $category_registration_fee_id   = '';
+    #[Rule('required', message: 'Categorie obligatoire', onUpdate: false)]
+    public $category_registration_fee_id = '';
 
-    #[Rule('required', message: "Dévise obligatoire obligation", onUpdate: false)]
+    #[Rule('required', message: 'Dévise obligatoire obligation', onUpdate: false)]
     public $currency = '';
 
     public function create(array $input)

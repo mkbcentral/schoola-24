@@ -1,0 +1,927 @@
+// =============================================================================
+// Quick Payment Page Styles
+// Styles spécifiques à la page de paiement rapide
+// Utilise le système de variables pour support dark/light automatique
+// =============================================================================
+
+// Toutes les variables de couleur sont déjà définies dans themes/_dark.scss
+// Ce fichier contient uniquement la structure et les comportements
+
+// =============================================================================
+// Animations
+// =============================================================================
+
+@keyframes qpSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes qpFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes qpScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes qpPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes qpShine {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+// =============================================================================
+// Base Cards
+// =============================================================================
+
+.quick-payment-card {
+    @include card-base;
+    border: none;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: qpFadeIn 0.4s ease-out;
+    overflow: hidden;
+    position: relative;
+
+    // Effet de brillance au hover
+    &::before {
+        content: '';
+        @include absolute(0, null, 0, 0);
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.12), 
+                    0 8px 16px -4px rgba(0, 0, 0, 0.08);
+
+        &::before {
+            transform: translateX(100%);
+        }
+    }
+}
+
+// =============================================================================
+// Search Section
+// =============================================================================
+
+.qp-search-section {
+    margin-bottom: var(--space-6);
+}
+
+.qp-search-label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+    font-size: var(--font-size-base);
+    display: flex;
+    align-items: center;
+
+    i {
+        color: var(--color-primary);
+    }
+}
+
+.qp-search-input {
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-base);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+
+    &:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+        transform: scale(1.01);
+    }
+
+    &::placeholder {
+        color: var(--text-muted);
+        font-size: var(--font-size-sm);
+    }
+}
+
+// =============================================================================
+// Dropdown Autocomplete
+// =============================================================================
+
+.qp-dropdown {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.08);
+    border: 2px solid var(--card-border);
+    overflow: hidden;
+    animation: qpSlideIn 0.3s ease-out;
+    backdrop-filter: blur(10px);
+
+    &-item {
+        padding: var(--space-3) var(--space-4);
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border-bottom: 1px solid var(--card-border);
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            @include absolute(0, null, 0, 0);
+            width: 3px;
+            height: 100%;
+            background: var(--color-primary);
+            transform: scaleY(0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background: linear-gradient(
+                90deg,
+                rgba(var(--color-primary-rgb), 0.05),
+                transparent
+            );
+            transform: translateX(4px);
+
+            &::before {
+                transform: scaleY(1);
+            }
+
+            .student-name {
+                color: var(--color-primary);
+            }
+
+            i.bi-arrow-right-circle {
+                transform: translateX(4px) scale(1.1);
+            }
+        }
+
+        .student-name {
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
+            margin-bottom: var(--space-1);
+            transition: color 0.3s;
+            font-size: var(--font-size-base);
+        }
+
+        .student-info {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+
+            .badge {
+                font-weight: var(--font-weight-medium);
+                padding: 0.25rem 0.5rem;
+            }
+        }
+
+        i.bi-arrow-right-circle {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    }
+
+    &-empty {
+        padding: var(--space-6) var(--space-4);
+        text-align: center;
+        color: var(--text-muted);
+        font-size: var(--font-size-sm);
+    }
+}
+
+// =============================================================================
+// Student Info Card (Gradient)
+// =============================================================================
+
+.qp-student-info-card {
+    background: linear-gradient(135deg, var(--qp-bg-gradient-start) 0%, var(--qp-bg-gradient-end) 100%);
+    border: none;
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.15), 
+                0 4px 8px -2px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-6);
+    position: relative;
+    overflow: hidden;
+    animation: qpScaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    // Pattern de fond
+    &::before {
+        content: '';
+        @include absolute(0, 0, 0, 0);
+        background-image: 
+            radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .card-body {
+        position: relative;
+        z-index: var(--z-base);
+    }
+
+    .student-name {
+        color: var(--text-white);
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--space-2);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        animation: qpSlideIn 0.5s ease-out 0.1s backwards;
+    }
+
+    .badge {
+        background-color: rgba(255, 255, 255, 0.25);
+        color: var(--text-white);
+        backdrop-filter: blur(10px);
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-weight: var(--font-weight-medium);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: qpSlideIn 0.5s ease-out 0.2s backwards;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        i {
+            margin-right: var(--space-1);
+        }
+    }
+
+    .btn-light {
+        background-color: rgba(255, 255, 255, 0.9);
+        border: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 1);
+            transform: rotate(90deg) scale(1.1);
+        }
+    }
+}
+
+// =============================================================================
+// Payment Form
+// =============================================================================
+
+.qp-form-section {
+    margin-bottom: var(--space-6);
+}
+
+.qp-form-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-sm);
+
+    i {
+        font-size: 1rem;
+    }
+}
+
+.qp-form-control,
+.qp-form-select {
+    border: 2px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    font-size: var(--font-size-base);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+
+    &:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+        outline: none;
+    }
+
+    &:disabled,
+    &[readonly] {
+        background-color: var(--bg-secondary);
+        cursor: not-allowed;
+    }
+}
+
+.qp-pay-now-label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.qp-pay-now-info {
+    color: var(--text-secondary);
+    font-size: var(--font-size-xs);
+}
+
+// =============================================================================
+// Pay Now Card
+// =============================================================================
+
+.qp-pay-now-section {
+    margin-top: var(--space-6);
+}
+
+.qp-pay-now-card {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--color-success-rgb), 0.08),
+        rgba(var(--color-success-rgb), 0.03)
+    );
+    border: 2px solid rgba(var(--color-success-rgb), 0.2);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        border-color: rgba(var(--color-success-rgb), 0.3);
+        box-shadow: 0 4px 12px rgba(var(--color-success-rgb), 0.1);
+    }
+
+    .form-check-input {
+        cursor: pointer;
+        border-width: 2px;
+        border-color: var(--color-success);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:checked {
+            background-color: var(--color-success);
+            border-color: var(--color-success);
+            box-shadow: 0 0 0 3px rgba(var(--color-success-rgb), 0.2);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba(var(--color-success-rgb), 0.2);
+        }
+    }
+
+    .form-check-label {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+        color: var(--text-primary);
+        margin-left: var(--space-3);
+    }
+
+    .qp-pay-now-info {
+        color: var(--text-secondary);
+        font-size: var(--font-size-sm);
+        margin-top: var(--space-2);
+        margin-left: calc(24px + var(--space-3));
+    }
+}
+
+// =============================================================================
+// Payment List (Sticky Sidebar)
+// =============================================================================
+
+.qp-payment-list-section {
+    position: sticky;
+    top: var(--space-8);
+}
+
+.qp-payment-list-card {
+    @include card-base;
+    max-height: calc(100vh - var(--space-10));
+    @include flex-column;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    animation: qpFadeIn 0.5s ease-out;
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+
+    .qp-payment-list-header {
+        padding: var(--space-5);
+        border-bottom: 2px solid var(--card-border);
+        flex-shrink: 0;
+        background: linear-gradient(
+            135deg,
+            rgba(var(--color-primary-rgb), 0.05),
+            transparent
+        );
+        position: relative;
+
+        &::after {
+            content: '';
+            @include absolute(null, 0, 0, 0);
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                var(--color-primary),
+                var(--color-success),
+                transparent
+            );
+        }
+
+        h5 {
+            margin: 0;
+            font-weight: var(--font-weight-bold);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+
+            i {
+                animation: qpPulse 2s infinite;
+            }
+        }
+
+        .badge {
+            animation: qpScaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: var(--font-weight-semibold);
+            padding: 0.5rem 0.75rem;
+        }
+    }
+
+    .qp-payment-list-body {
+        flex: 1;
+        overflow-y: auto;
+        @include custom-scrollbar(8px, var(--color-primary), rgba(var(--color-primary-rgb), 0.2));
+    }
+
+    .qp-payment-list-footer {
+        flex-shrink: 0;
+        padding: var(--space-5);
+        border-top: 2px solid var(--card-border);
+        background: linear-gradient(
+            135deg,
+            rgba(var(--color-success-rgb), 0.05),
+            transparent
+        );
+        position: relative;
+
+        &::before {
+            content: '';
+            @include absolute(0, 0, null, 0);
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                var(--color-success),
+                var(--color-primary),
+                transparent
+            );
+        }
+    }
+
+    .qp-payment-total-border {
+        border-top: 1px solid var(--card-border);
+        position: relative;
+        padding-top: var(--space-3);
+
+        &::before {
+            content: '';
+            @include absolute(0, 0, null, 0);
+            height: 2px;
+            width: 80px;
+            background: linear-gradient(90deg, var(--color-success), transparent);
+        }
+    }
+}
+
+// Scrollable avec custom scrollbar
+.qp-scrollable {
+    @include custom-scrollbar(8px, var(--color-primary), rgba(var(--color-primary-rgb), 0.2));
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: var(--radius-full);
+        
+        &:hover {
+            background-color: var(--color-primary);
+        }
+    }
+}
+
+// Items de paiement
+.qp-payment-item {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--card-border);
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--card-bg);
+
+    &::before {
+        content: '';
+        @include absolute(0, null, 0, 0);
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--color-primary), var(--color-success));
+        transform: scaleY(0);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: linear-gradient(
+            90deg,
+            rgba(var(--color-primary-rgb), 0.03),
+            transparent
+        );
+        transform: translateX(4px);
+
+        &::before {
+            transform: scaleY(1);
+        }
+
+        .student-name {
+            color: var(--color-primary);
+        }
+
+        .qp-dropdown-btn {
+            background-color: var(--color-primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+    }
+
+    .student-name {
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+        margin-bottom: var(--space-1);
+        transition: color 0.3s;
+        font-size: var(--font-size-base);
+    }
+
+    .student-info {
+        font-size: var(--font-size-sm);
+        color: var(--text-secondary);
+
+        .badge {
+            transition: all 0.3s;
+            
+            &:hover {
+                transform: translateY(-1px);
+            }
+        }
+    }
+
+    .payment-amount {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-success);
+    }
+
+    .qp-dropdown-btn {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--card-border);
+
+        &:hover {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+    }
+
+    .form-check-input {
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:checked {
+            background-color: var(--color-success);
+            border-color: var(--color-success);
+            box-shadow: 0 0 0 3px rgba(var(--color-success-rgb), 0.2);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.2);
+        }
+    }
+}
+
+// Divider entre sections
+.qp-payment-divider {
+    border-top: 1px solid var(--card-border);
+    position: relative;
+
+    &::before {
+        content: '';
+        @include absolute(-1px, 0, null, 0);
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--color-primary), transparent);
+    }
+}
+
+// Total section
+.qp-payment-total {
+    @include flex-row(center, space-between);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+
+    .amount {
+        color: var(--color-success);
+    }
+}
+
+// =============================================================================
+// Badges et Labels
+// =============================================================================
+
+.qp-badge-light {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--card-border);
+    font-weight: var(--font-weight-medium);
+    padding: 0.35rem 0.65rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        background-color: var(--color-primary);
+        color: white;
+        border-color: var(--color-primary);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    i {
+        margin-right: 0.25rem;
+    }
+}
+
+// =============================================================================
+// Empty States
+// =============================================================================
+
+.qp-no-student,
+.qp-empty-state {
+    text-align: center;
+    padding: var(--space-10) var(--space-6);
+    color: var(--text-muted);
+    animation: qpFadeIn 0.5s ease-out;
+
+    &-icon-bg {
+        background: linear-gradient(
+            135deg,
+            rgba(var(--color-primary-rgb), 0.1),
+            rgba(var(--color-primary-rgb), 0.05)
+        );
+        animation: qpPulse 3s infinite;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    i {
+        font-size: var(--font-size-4xl);
+        margin-bottom: var(--space-4);
+        opacity: 0.5;
+        color: var(--color-primary);
+        animation: qpPulse 2s infinite;
+    }
+
+    h6 {
+        color: var(--text-primary);
+        font-weight: var(--font-weight-semibold);
+        margin-bottom: var(--space-2);
+    }
+
+    p {
+        font-size: var(--font-size-sm);
+        margin: 0;
+        color: var(--text-muted);
+    }
+}
+
+// =============================================================================
+// Loading State
+// =============================================================================
+
+.qp-loading-alert {
+    @include flex-row(center);
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-base);
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border: none;
+
+    .spinner-border {
+        @include size(20px);
+        border-width: 2px;
+    }
+}
+
+// =============================================================================
+// Dropdown History
+// =============================================================================
+
+.qp-history-dropdown {
+    position: absolute;
+    z-index: var(--z-overlay);
+    min-width: 400px;
+    max-width: 600px;
+    animation: qpSlideIn 0.3s ease-out;
+
+    .card {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(10px);
+    }
+
+    .card-header {
+        background: linear-gradient(
+            135deg,
+            rgba(var(--color-info-rgb), 0.1),
+            rgba(var(--color-info-rgb), 0.05)
+        );
+        border-bottom: 2px solid var(--card-border);
+
+        .badge {
+            animation: qpScaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    }
+
+    table {
+        font-size: var(--font-size-sm);
+        margin: 0;
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: var(--z-base);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        th {
+            font-weight: var(--font-weight-semibold);
+            background-color: var(--bg-secondary);
+            padding: var(--space-2) var(--space-3);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid var(--card-border);
+
+            &:hover {
+                background-color: rgba(var(--color-primary-rgb), 0.03);
+                transform: translateX(2px);
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        td {
+            padding: var(--space-2) var(--space-3);
+            vertical-align: middle;
+
+            .badge {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
+            }
+
+            i {
+                font-size: 1.1rem;
+                
+                &.bi-check-circle-fill {
+                    animation: qpScaleIn 0.3s ease-out;
+                }
+            }
+        }
+    }
+}
+
+// =============================================================================
+// Dropdown Menu Actions
+// =============================================================================
+
+.qp-dropdown-menu {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    padding: var(--space-2);
+    animation: qpSlideIn 0.2s ease-out;
+    backdrop-filter: blur(10px);
+    z-index: var(--z-top) !important; // Au-dessus de tout
+
+    .dropdown-item {
+        border-radius: var(--radius-base);
+        padding: var(--space-3) var(--space-4);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--font-size-sm);
+
+        i {
+            font-size: 1rem;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+            background-color: rgba(var(--color-primary-rgb), 0.1);
+            transform: translateX(4px);
+            
+            i {
+                transform: scale(1.2);
+            }
+
+            &.text-danger {
+                background-color: rgba(var(--color-danger-rgb), 0.1);
+                
+                i {
+                    transform: scale(1.2) rotate(10deg);
+                }
+            }
+        }
+
+        &:active {
+            transform: translateX(4px) scale(0.98);
+        }
+    }
+
+    .dropdown-divider {
+        margin: var(--space-2) 0;
+        border-color: var(--card-border);
+    }
+}
+
+// =============================================================================
+// Responsive
+// =============================================================================
+
+@include respond-below(lg) {
+    .qp-payment-list-section {
+        position: relative;
+        top: 0;
+        margin-top: var(--space-6);
+    }
+
+    .qp-payment-list-card {
+        max-height: 500px;
+    }
+}
+
+@include respond-below(md) {
+    .qp-student-info-card {
+        padding: var(--space-4);
+
+        .student-name {
+            font-size: var(--font-size-lg);
+        }
+    }
+
+    .qp-scrollable {
+        max-height: 400px;
+    }
+
+    .qp-history-dropdown {
+        min-width: 100%;
+        max-width: 100%;
+    }
+}

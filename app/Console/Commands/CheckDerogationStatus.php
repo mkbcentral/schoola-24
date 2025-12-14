@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Services\Student\DerogationTrackerService;
 use Illuminate\Console\Command;
-use App\Services\DerogationTrackerService;
 
 class CheckDerogationStatus extends Command
 {

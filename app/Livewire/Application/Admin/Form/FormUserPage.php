@@ -13,9 +13,12 @@ use Livewire\Component;
 
 class FormUserPage extends Component
 {
-    protected $listeners = ["userData" => "getUser"];
+    protected $listeners = ['userData' => 'getUser'];
+
     public ?User $user = null;
+
     public UserForm $form;
+
     public function save(): void
     {
         $input = $this->validate();
@@ -26,7 +29,7 @@ class FormUserPage extends Component
             }
             $input['password'] = Hash::make('password');
             $this->form->create($input);
-            $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);;
+            $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
@@ -59,7 +62,6 @@ class FormUserPage extends Component
         $this->dispatch('userDataRefreshed');
         $this->dispatch('close-form-user');
     }
-
 
     public function render()
     {

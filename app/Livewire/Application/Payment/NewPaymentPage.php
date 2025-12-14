@@ -2,13 +2,10 @@
 
 namespace App\Livewire\Application\Payment;
 
-use Livewire\Attributes\Lazy;
 use Livewire\Component;
 
 class NewPaymentPage extends Component
 {
-
-
     public function mount() {}
 
     public function render()

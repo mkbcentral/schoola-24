@@ -9,15 +9,18 @@ use Livewire\Component;
 class MainPaymentChartPage extends Component
 {
     protected $listeners = [
-        "dateFilder" => "getDateFilter",
-        "monthFilder" => "getMonthFilter",
+        'dateFilder' => 'getDateFilter',
+        'monthFilder' => 'getMonthFilter',
     ];
+
     public ?string $date_filter;
+
     public ?string $month_filter = '';
 
     public bool $is_by_date = true;
 
     public array $dataSeries = [];
+
     public array $labels = [];
 
     public function getDateFilter(string $date)
@@ -28,6 +31,7 @@ class MainPaymentChartPage extends Component
         $this->month_filter = '';
         $this->dispatch('refreshChart', ['seriesData' => $this->dataSeries]);
     }
+
     public function getMonthFilter(string $month)
     {
         $this->month_filter = $month;
@@ -51,6 +55,7 @@ class MainPaymentChartPage extends Component
         foreach ($categoryFees as $categoryFee) {
             $lables[] = $categoryFee->name;
         }
+
         return $lables;
     }
 
@@ -74,13 +79,11 @@ class MainPaymentChartPage extends Component
                 }
             }
 
-
             $seriesData[] = $amount;
         }
+
         return $seriesData;
     }
-
-
 
     public function render()
     {

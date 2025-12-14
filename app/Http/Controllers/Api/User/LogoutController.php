@@ -14,6 +14,7 @@ class LogoutController extends Controller
     {
         try {
             auth()->user()->tokens()->delete();
+
             return response([
                 'message' => 'Déconnexion avec succès.',
             ], 200);

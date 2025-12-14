@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hors ligne - Schoola</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e90ff 0%, #4169e1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .offline-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            margin: 1rem;
+        }
+
+        .offline-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #1e90ff, #4169e1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        .offline-icon svg {
+            width: 60px;
+            height: 60px;
+            fill: white;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #1e90ff;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .retry-button {
+            background: linear-gradient(135deg, #1e90ff, #4169e1);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+        }
+
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 144, 255, 0.3);
+        }
+
+        .retry-button:active {
+            transform: translateY(0);
+        }
+
+        .info-text {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .loader {
+            display: none;
+            margin: 1rem auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1e90ff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .checking .loader {
+            display: block;
+        }
+
+        .checking .retry-button {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 6.23 11.08 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45C23.16 18.16 24 16.68 24 15c0-2.64-2.05-4.78-4.65-4.96zM3 5.27l2.75 2.74C2.56 8.15 0 10.77 0 14c0 3.31 2.69 6 6 6h11.73l2 2L21 20.73 4.27 4 3 5.27zM7.73 10l8 8H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h1.73z"/>
+            </svg>
+        </div>
+
+        <h1>Vous êtes hors ligne</h1>
+        <p>
+            Il semble que vous n'ayez pas de connexion internet pour le moment.
+            Certaines fonctionnalités peuvent être limitées.
+        </p>
+
+        <div class="loader"></div>
+
+        <button class="retry-button" onclick="checkConnection()">
+            Réessayer
+        </button>
+
+        <p class="info-text">
+            Les données mises en cache sont toujours disponibles.<br>
+            La connexion sera rétablie automatiquement.
+        </p>
+    </div>
+
+    <script>
+        // Vérifier la connexion au chargement
+        window.addEventListener('load', () => {
+            if (navigator.onLine) {
+                window.location.href = '/';
+            }
+        });
+
+        // Détecter quand la connexion est rétablie
+        window.addEventListener('online', () => {
+            console.log('Connexion rétablie');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 500);
+        });
+
+        // Fonction pour vérifier la connexion manuellement
+        async function checkConnection() {
+            const container = document.querySelector('.offline-container');
+            container.classList.add('checking');
+
+            try {
+                // Tenter une requête vers le serveur
+                const response = await fetch('/', {
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+
+                if (response.ok) {
+                    // Connexion rétablie
+                    window.location.href = '/';
+                } else {
+                    // Toujours hors ligne
+                    showOfflineMessage();
+                }
+            } catch (error) {
+                // Toujours hors ligne
+                showOfflineMessage();
+            }
+
+            container.classList.remove('checking');
+        }
+
+        function showOfflineMessage() {
+            const p = document.createElement('p');
+            p.textContent = 'Toujours hors ligne. Veuillez vérifier votre connexion.';
+            p.style.color = '#e74c3c';
+            p.style.marginTop = '1rem';
+            p.style.animation = 'fadeIn 0.5s';
+
+            const container = document.querySelector('.offline-container');
+            const existing = container.querySelector('.error-message');
+            if (existing) existing.remove();
+
+            p.className = 'error-message';
+            container.appendChild(p);
+
+            setTimeout(() => {
+                p.remove();
+            }, 3000);
+        }
+
+        // Vérifier périodiquement la connexion
+        setInterval(() => {
+            if (navigator.onLine) {
+                fetch('/', { method: 'HEAD', cache: 'no-cache' })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = '/';
+                        }
+                    })
+                    .catch(() => {});
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

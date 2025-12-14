@@ -9,7 +9,7 @@ use App\Models\School;
 class CategoryRegistrationFeeFeature implements ICategoryRegistrationFee
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getListCategoryRegistrationFee(
         string $q,

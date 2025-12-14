@@ -1,47 +1,49 @@
 <?php
+
 function format_fr_month_name($key): string
 {
-    $month = "";
+    $month = '';
     switch ($key) {
         case '01':
-            $month = "JANVIER";
+            $month = 'JANVIER';
             break;
         case '02':
-            $month = "FEVRIER";
+            $month = 'FEVRIER';
             break;
         case '03':
-            $month = "MARS";
+            $month = 'MARS';
             break;
         case '04':
-            $month = "AVRIL";
+            $month = 'AVRIL';
             break;
         case '05':
-            $month = "MAI";
+            $month = 'MAI';
             break;
         case '06':
-            $month = "JUIN";
+            $month = 'JUIN';
             break;
         case '07':
-            $month = "JUILLET";
+            $month = 'JUILLET';
             break;
         case '08':
-            $month = "AOUT";
+            $month = 'AOUT';
             break;
         case '09':
-            $month = "SEPTEMBRE";
+            $month = 'SEPTEMBRE';
             break;
         case '10':
-            $month = "OCTOBRE";
+            $month = 'OCTOBRE';
             break;
         case '11':
-            $month = "NOVEMBRE";
+            $month = 'NOVEMBRE';
             break;
         case '12':
-            $month = "DECEMBRE";
+            $month = 'DECEMBRE';
 
         default:
-            # code...
+            // code...
             break;
     }
+
     return $month;
 }

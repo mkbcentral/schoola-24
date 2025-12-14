@@ -6,10 +6,10 @@
                     Total: {{ app_format_number($total_payments, 1) }} {{ $categoryFeeSelected?->currency }}
                 </h3>
             </div>
-            <div class="d-flex flex-wrap gap-2 p-2">
+            <div class="d-flex  gap-2 p-2">
                 <div class="d-flex flex-column flex-sm-row align-items-sm-center me-2">
                     <x-form.label value="{{ __('Date') }}" class="me-2 mb-1 mb-sm-0" />
-                    <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" class="w-100 w-sm-auto" />
+                    <x-form.input type='date' wire:model.live='date_filter' :error="'date_filter'" />
                 </div>
                 <div class="d-flex flex-column flex-sm-row align-items-sm-center me-2">
                     <x-form.label value="{{ __('Mois') }}" class="me-2 mb-1 mb-sm-0" />
@@ -80,7 +80,7 @@
                 <thead class="table-primary">
                     <tr>
                         <th class="text-center">N°</th>
-                        <th>DATE PAIMENT</th>
+                        <th>DATE PAIEMENT</th>
                         <th>CODE</th>
                         <th class="cursor-hand"><span>NOM COMPLET</span></th>
                         <th>CLASSE</th>

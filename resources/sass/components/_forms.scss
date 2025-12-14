@@ -1,0 +1,197 @@
+// =============================================================================
+// Forms Component
+// Styles pour les formulaires et leurs éléments
+// =============================================================================
+
+// Labels
+.form-label {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-2);
+    color: var(--text-primary);
+}
+
+// Form controls de base
+.form-control {
+    @include input-base;
+    border-radius: var(--radius-base);
+    border: 1px solid var(--border-color-light);
+    padding: var(--space-3);
+    font-size: var(--font-size-sm);
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+        border-color: var(--input-focus-border);
+    }
+
+    &[readonly] {
+        background-color: var(--input-disabled-bg);
+        color: var(--text-secondary);
+    }
+}
+
+// Select
+.form-select {
+    @include input-base;
+    border-radius: var(--radius-base);
+}
+
+// Checkbox
+.form-check {
+    font-size: var(--font-size-sm);
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        @include focus-visible;
+    }
+}
+
+// =============================================================================
+// Quick Payment Forms
+// =============================================================================
+
+// En-tête formulaire - Mode normal
+.qp-form-header-normal {
+    background-color: var(--card-bg);
+}
+
+// En-tête formulaire - Mode édition
+.qp-form-header-edit {
+    background: linear-gradient(135deg, #fff3cd 0%, #fff9e6 100%);
+}
+
+// Champs de formulaire Quick Payment
+.qp-form-control,
+.qp-form-select {
+    background-color: var(--input-bg);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--radius-base);
+    padding: var(--space-2) var(--space-3);
+    transition: all var(--transition-fast);
+
+    &:focus {
+        background-color: var(--input-bg);
+        border-color: var(--input-focus-border);
+        color: var(--text-primary);
+        box-shadow: 0 0 0 0.25rem var(--input-focus-shadow);
+    }
+
+    &[readonly] {
+        background-color: var(--input-disabled-bg);
+        color: var(--text-secondary);
+    }
+
+    &::placeholder {
+        color: var(--input-placeholder);
+    }
+}
+
+// Labels Quick Payment
+.qp-form-label {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+// =============================================================================
+// Search Input
+// =============================================================================
+
+.qp-search-input {
+    background-color: var(--input-bg);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--radius-base);
+    padding: var(--space-3);
+    transition: all var(--transition-fast);
+
+    &::placeholder {
+        color: var(--input-placeholder);
+    }
+
+    &:focus {
+        border-color: var(--input-focus-border);
+        background-color: var(--input-bg);
+        color: var(--text-primary);
+        box-shadow: 0 0 0 0.25rem var(--input-focus-shadow);
+    }
+}
+
+.qp-search-label {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+// =============================================================================
+// Input Groups
+// =============================================================================
+
+.input-group-text {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+// =============================================================================
+// Password Field
+// =============================================================================
+
+.password-field {
+    position: relative;
+
+    .form-control {
+        padding-right: calc(var(--space-3) + 2rem);
+    }
+}
+
+// =============================================================================
+// Form Errors
+// =============================================================================
+
+.form-error {
+    .form-control {
+        border-color: var(--color-danger);
+        animation: shake 0.4s ease-in-out;
+    }
+
+    .error-message {
+        color: var(--color-danger);
+        font-size: var(--font-size-xs);
+        margin-top: var(--space-1);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+// =============================================================================
+// Form Text (help text)
+// =============================================================================
+
+.form-text {
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+    margin-top: var(--space-1);
+}
+
+// =============================================================================
+// Responsive
+// =============================================================================
+
+@include respond-below(md) {
+    .form-control,
+    .form-select,
+    .qp-form-control,
+    .qp-form-select {
+        font-size: var(--font-size-base);
+        padding: var(--space-3);
+    }
+}

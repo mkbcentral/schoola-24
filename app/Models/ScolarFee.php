@@ -16,13 +16,11 @@ class ScolarFee extends Model
         'amount',
         'category_fee_id',
         'class_room_id',
-        'is_changed'
+        'is_changed',
     ];
 
     /**
      * Get the currency that owns the ScolarFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function currency(): BelongsTo
     {
@@ -31,8 +29,6 @@ class ScolarFee extends Model
 
     /**
      * Get the categoryFee that owns the ScolarFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function categoryFee(): BelongsTo
     {
@@ -41,8 +37,6 @@ class ScolarFee extends Model
 
     /**
      * Get the classRoom that owns the ScolarFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function classRoom(): BelongsTo
     {
@@ -51,15 +45,13 @@ class ScolarFee extends Model
 
     /**
      * Get all of the payments for the ScolarFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }
 
-    public function  scopeFilter($query, array $filters)
+    public function scopeFilter($query, array $filters)
     {
         return $query->join('category_fees', 'category_fees.id', 'scolar_fees.category_fee_id')
             ->join('class_rooms', 'class_rooms.id', 'scolar_fees.class_room_id')

@@ -8,42 +8,46 @@ use App\Domain\Helpers\RegistrationHelper;
 use App\Domain\Utils\AppMessage;
 use App\Models\Registration;
 use App\Models\Student;
-use Exception;;
-
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ListStudentWidget extends Component
 {
     use WithPagination;
+
     protected $listeners = [
         'refreshListStudentWidget' => '$refresh',
         'deletedStudentListner' => 'delete',
     ];
+
     public mixed $registrations;
+
     public ?Student $studentToDelete;
 
     /**
      * Editer un élève
-     * @param \App\Models\Student $student
+     *
      * @return void
      */
     public function edit(Student $student)
     {
         $this->dispatch('studentData', $student);
     }
+
     /**
      * Ouvrir le formulaire pour marquer abandon
-     * @param \App\Models\Registration $registration
+     *
      * @return void
      */
     public function openMakeGiveUpStudentFom(Registration $registration)
     {
         $this->dispatch('registrationData', $registration);
     }
+
     /**
      * Ouvrir le formulaire pour changer de classe
-     * @param \App\Models\Registration $registration
+     *
      * @return void
      */
     public function changeClassStudent(Registration $registration)
@@ -53,7 +57,8 @@ class ListStudentWidget extends Component
 
     /**
      * Ouvrir le formulaire passer un payement
-     * @param mixed $registration
+     *
+     * @param  mixed  $registration
      * @return void
      */
     public function openPaymentForm(?Registration $registration)
@@ -63,8 +68,6 @@ class ListStudentWidget extends Component
 
     /**
      * Générer ou régeénerer un un qr-code pour un élève
-     * @param \App\Models\Registration $registration
-     * @return void
      */
     public function generateQRCode(Registration $registration): void
     {
@@ -76,15 +79,15 @@ class ListStudentWidget extends Component
             $this->dispatch('delete-student-failed', ['message' => $ex->getMessage()]);
         }
     }
+
     /**
      * Actualiser la liste
-     * @return void
      */
     public function refreshData(): void
     {
         $registrations = Registration::all();
         foreach ($registrations as $registration) {
-            $code =  RegistrationHelper::gerenateRegistrationCode($registration->class_room_id, rand(100, 1000));
+            $code = RegistrationHelper::gerenateRegistrationCode($registration->class_room_id, rand(100, 1000));
             $registration->update(['code' => $code]);
         }
         $this->reset();
@@ -92,7 +95,7 @@ class ListStudentWidget extends Component
 
     /**
      * Afficher la confirmation pour supprimer un élève
-     * @param \App\Models\Student $student
+     *
      * @return void
      */
     public function showDeleteDialog(Student $student)
@@ -103,12 +106,11 @@ class ListStudentWidget extends Component
 
     /**
      * Supprimer un élève
-     * @return void
      */
     public function delete(): void
     {
         try {
-            $status=RegistrationFeature::delete($this->studentToDelete->registration);
+            $status = RegistrationFeature::delete($this->studentToDelete->registration);
             if ($status) {
                 $this->dispatch('student-deleted', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {
@@ -121,7 +123,6 @@ class ListStudentWidget extends Component
 
     /**
      * Générer plusieurs qr-code pour plusieurs élèves séléctionnés
-     * @return void
      */
     public function generateQrcodeItems(): void
     {
@@ -133,8 +134,7 @@ class ListStudentWidget extends Component
         }
     }
 
-
-    public function mount(mixed  $registrations): void
+    public function mount(mixed $registrations): void
     {
         $this->registrations = $registrations;
     }

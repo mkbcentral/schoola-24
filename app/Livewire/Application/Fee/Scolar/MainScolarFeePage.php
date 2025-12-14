@@ -12,11 +12,12 @@ use Livewire\Component;
 class MainScolarFeePage extends Component
 {
     protected $listeners = [
-        "refreshIndex" => 'changeIndex'
+        'refreshIndex' => 'changeIndex',
     ];
-    public int $selectedIndex = 0;
-    public ?CategoryFee $categoryFeeSelected = null;
 
+    public int $selectedIndex = 0;
+
+    public ?CategoryFee $categoryFeeSelected = null;
 
     public function mount(): void
     {
@@ -39,7 +40,7 @@ class MainScolarFeePage extends Component
                 ->where('school_id', School::DEFAULT_SCHOOL_ID())
                 ->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
                 ->get(),
-            'listclassRoom' => ClassRoom::all()
+            'listclassRoom' => ClassRoom::all(),
         ]);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\SchoolAppEnum;
-use App\Enums\SchoolEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

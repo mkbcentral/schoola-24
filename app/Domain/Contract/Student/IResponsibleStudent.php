@@ -4,49 +4,49 @@ namespace App\Domain\Contract\Student;
 
 use App\Models\ResponsibleStudent;
 
-interface  IResponsibleStudent
+interface IResponsibleStudent
 {
     /**
      * create
      * Ajouter un nouveau resp
-     * @param  mixed $input
-     * @return ResponsibleStudent
+     *
+     * @param  mixed  $input
      */
     public static function create(array $input): ResponsibleStudent;
+
     /**
      * get
      * Recuperer un resp
-     * @param  mixed $id
-     * @return ResponsibleStudent
+     *
+     * @param  mixed  $id
      */
     public static function get(int $id): ResponsibleStudent;
 
     /**
      * getList
      * Recuperer la liste des resp
-     * @return mixed
      */
     public static function getList(
         string $q,
         string $sortBy,
-        bool   $sortAsc,
-        int    $per_page = 20
+        bool $sortAsc,
+        int $per_page = 20
     ): mixed;
 
     /**
      * update
      * Mettre à jour un resp
-     * @param  mixed $responsibleStudent
-     * @param  mixed $input
-     * @return bool
+     *
+     * @param  mixed  $responsibleStudent
+     * @param  mixed  $input
      */
     public static function update(ResponsibleStudent $responsibleStudent, array $input): bool;
 
     /**
      * delete
      * Retirer un resp
-     * @param  mixed $responsibleStudent
-     * @return bool
+     *
+     * @param  mixed  $responsibleStudent
      */
     public static function delete(ResponsibleStudent $responsibleStudent): bool;
 }

@@ -4,10 +4,10 @@ namespace App\Services\Stock;
 
 use App\Models\Article;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ArticleExportService
@@ -17,7 +17,7 @@ class ArticleExportService
      */
     public function exportToExcel($articles)
     {
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
 
         // Configuration de la feuille
@@ -37,16 +37,16 @@ class ArticleExportService
                 'bold' => true,
                 'color' => ['rgb' => 'FFFFFF'],
                 'name' => 'Times New Roman',
-                'size' => 12
+                'size' => 12,
             ],
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => '0D6EFD']
+                'startColor' => ['rgb' => '0D6EFD'],
             ],
             'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
             'borders' => [
-                'allBorders' => ['borderStyle' => Border::BORDER_THIN]
-            ]
+                'allBorders' => ['borderStyle' => Border::BORDER_THIN],
+            ],
         ];
         $sheet->getStyle('A1:E1')->applyFromArray($headerStyle);
 
@@ -62,8 +62,8 @@ class ArticleExportService
             // Style des données
             $sheet->getStyle('A' . $row . ':E' . $row)->applyFromArray([
                 'borders' => [
-                    'allBorders' => ['borderStyle' => Border::BORDER_THIN, 'color' => ['rgb' => 'CCCCCC']]
-                ]
+                    'allBorders' => ['borderStyle' => Border::BORDER_THIN, 'color' => ['rgb' => 'CCCCCC']],
+                ],
             ]);
 
             // Centrer la colonne Stock

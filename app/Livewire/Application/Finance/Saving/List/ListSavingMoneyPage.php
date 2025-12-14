@@ -11,30 +11,36 @@ use Livewire\WithPagination;
 class ListSavingMoneyPage extends Component
 {
     use WithPagination;
+
     protected $listeners = [
-        'savingMoneyListRefreshed' => '$refresh'
+        'savingMoneyListRefreshed' => '$refresh',
     ];
+
     public ?string $date_filter = '';
+
     public ?string $month_filter = '';
-    public ?string  $currency_filter = '';
+
+    public ?string $currency_filter = '';
+
     public ?int $per_page = 10;
 
-    public function newSavingMoney()
-    {
+    public function newSavingMoney() {}
 
-    }
     public function updatedMonthFilter(): void
     {
         $this->date_filter = null;
     }
+
     public function updatedDateFilter(): void
     {
-        $this->month_filter = "";
+        $this->month_filter = '';
     }
+
     public function edit(?SavingMoney $savingMoney): void
     {
         $this->dispatch('savingMoneyData', $savingMoney);
     }
+
     public function delete(SavingMoney $savingMoney): void
     {
         try {
@@ -43,6 +49,7 @@ class ListSavingMoneyPage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function mount(): void
     {
         $this->month_filter = date('m');
@@ -66,7 +73,7 @@ class ListSavingMoneyPage extends Component
                 $this->date_filter,
                 $this->month_filter,
                 'CDF'
-            )
+            ),
         ]);
     }
 }

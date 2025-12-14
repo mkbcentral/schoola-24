@@ -15,18 +15,16 @@ class SchoolYear extends Model
         'name',
         'is_active',
         'school_id',
-        'user_id'
+        'user_id',
     ];
 
-    //cast is_active to boolean
+    // cast is_active to boolean
     protected $casts = [
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
     ];
 
     /**
      * Get all of the registrations for the SchoolYear
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function registrations(): HasMany
     {
@@ -44,7 +42,8 @@ class SchoolYear extends Model
                 fn($query) => $query->where('is_active', true)
             )
             ->first();
-        return $schoolYear->id;
+
+        return $schoolYear->id ?? 0;
     }
 
     public static function DEFAULT_SCHOOL_YEAR_NAME(): string
@@ -58,6 +57,7 @@ class SchoolYear extends Model
                 fn($query) => $query->where('is_active', true)
             )
             ->first();
-        return $schoolYear->name;
+
+        return $schoolYear->name ?? 'NA';
     }
 }

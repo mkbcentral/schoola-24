@@ -10,8 +10,10 @@ use Livewire\Component;
 
 class FormCategoryScolarFeePage extends Component
 {
-    protected $listeners = ["categoryScolarFeeData" => "getCategoryScolarFee"];
+    protected $listeners = ['categoryScolarFeeData' => 'getCategoryScolarFee'];
+
     public ?CategoryFee $categoryFeeSelected = null;
+
     public CategoryFeeForm $form;
 
     public function getCategoryScolarFee(CategoryFee $categoryFee)
@@ -60,6 +62,7 @@ class FormCategoryScolarFeePage extends Component
         $this->categoryFeeSelected = null;
         $this->form->reset();
     }
+
     public function render()
     {
         return view('livewire.application.fee.scolar.form.form-category-scolar-fee-page');

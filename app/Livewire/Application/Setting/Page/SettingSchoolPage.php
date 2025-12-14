@@ -16,13 +16,14 @@ class SettingSchoolPage extends Component
         $this->form->fill(Auth::user()->school->toArray());
     }
 
-    //handler update
+    // handler update
     public function update()
     {
         $this->validate();
         $this->form->update(Auth::user()->school);
         $this->dispatch('updated', ['message', AppMessage::DATA_UPDATED_SUCCESS]);
     }
+
     public function render()
     {
         return view('livewire.application.setting.page.setting-school-page');

@@ -10,12 +10,11 @@ use App\Models\SchoolYear;
 class RegistrationFeeFeature implements IRegistrationFee
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getListRegistrationFee(
         string $q,
-        int
-        $option_filter,
+        int $option_filter,
         int $per_page = 5
     ): mixed {
         return RegistrationFee::query()

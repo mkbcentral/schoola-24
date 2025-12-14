@@ -3,15 +3,11 @@
 namespace App\Livewire\Application\Dashboard\Payment;
 
 use App\Domain\Features\Configuration\FeeDataConfiguration;
-use App\Domain\Features\Payment\PaymentFeature;
 use App\Enums\RoleType;
 use App\Models\CategoryFee;
-use App\Models\ExpenseFee;
 use App\Models\Payment;
 use App\Models\School;
-use App\Models\SchoolYear;
 use Auth;
-use DB;
 use Livewire\Component;
 
 class DashPaymentPage extends Component
@@ -33,12 +29,13 @@ class DashPaymentPage extends Component
                 ->first()->id ?? 0;
         }
     }
+
     public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
 
         return view('livewire.application.dashboard.payment.dash-payment-page', [
             'payments' => Payment::getListReceiptsYear($this->category_fee_filter),
-            'categoryFees' => FeeDataConfiguration::getListCategoryFee(100)
+            'categoryFees' => FeeDataConfiguration::getListCategoryFee(100),
         ]);
     }
 }

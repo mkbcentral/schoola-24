@@ -37,6 +37,7 @@ class Article extends Model
         // Calcule le stock courant uniquement sur les mouvements clôturés
         $in = $this->stockMovements()->where('type', 'in')->where('is_closed', true)->sum('quantity');
         $out = $this->stockMovements()->where('type', 'out')->where('is_closed', true)->sum('quantity');
+
         return $in - $out;
     }
 
@@ -45,9 +46,10 @@ class Article extends Model
      */
     public function getIsLowStockAttribute(): bool
     {
-        if (!$this->stock_min || $this->stock_min == 0) {
+        if (! $this->stock_min || $this->stock_min == 0) {
             return false;
         }
+
         return $this->stock <= $this->stock_min;
     }
 

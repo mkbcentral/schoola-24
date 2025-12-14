@@ -6,11 +6,6 @@ interface IUser
 {
     /**
      * Summary of getListUser
-     * @param string $q
-     * @param string $sortBy
-     * @param bool $sortAsc
-     * @param int $per_page
-     * @return mixed
      */
     public static function getListSchoolUser(
         string $q,
@@ -21,11 +16,6 @@ interface IUser
 
     /**
      * Summary of getListUser
-     * @param string $q
-     * @param string $sortBy
-     * @param bool $sortAsc
-     * @param int $per_page
-     * @return mixed
      */
     public static function getListAppUser(
         string $q,

@@ -14,35 +14,56 @@ use Livewire\WithPagination;
 class ListPaymentRegularizationPage extends Component
 {
     protected $listeners = ['paymentRegularizationListRefreshed', '$refresh'];
+
     use WithPagination;
-    public int $per_page = 10, $selectedOption = 0;
-    public int $option_filter = 0, $class_room_filter = 0, $category_fee_filter = 0;
-    public ?string $date_filter = '', $month_filter = '', $currency = '';
+
+    public int $per_page = 10;
+
+    public int $selectedOption = 0;
+
+    public int $option_filter = 0;
+
+    public int $class_room_filter = 0;
+
+    public int $category_fee_filter = 0;
+
+    public ?string $date_filter = '';
+
+    public ?string $month_filter = '';
+
+    public ?string $currency = '';
+
     #[Url(as: 'q')]
     public $q = '';
+
     #[Url(as: 'sortBy')]
     public $sortBy = 'payment_regularizations.name';
+
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
 
     public function sortData($value): void
     {
         if ($value == $this->sortBy) {
-            $this->sortAsc = !$this->sortAsc;
+            $this->sortAsc = ! $this->sortAsc;
         }
         $this->sortBy = $value;
     }
+
     public function updatedMonthFilter()
     {
         $this->date_filter = null;
     }
+
     public function updatedDateFilter()
     {
-        $this->month_filter = "";
+        $this->month_filter = '';
     }
+
     /**
      * Summary of updatedOptionFilter
-     * @param mixed $val
+     *
+     * @param  mixed  $val
      * @return void
      */
     public function updatedCategoryFeeFilter($val)
@@ -54,14 +75,14 @@ class ListPaymentRegularizationPage extends Component
 
     /**
      * Summary of updatedOptionFilter
-     * @param mixed $val
+     *
+     * @param  mixed  $val
      * @return void
      */
     public function updatedOptionFilter($val)
     {
         $this->selectedOption = $val;
     }
-
 
     public function newPayment()
     {

@@ -11,14 +11,15 @@ use App\Models\SmsPayment;
 class RegistrationFeature implements IRegistration
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function create(array $input): Registration
     {
         return Registration::create($input);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function delete(Registration $registration): bool
     {
@@ -28,17 +29,20 @@ class RegistrationFeature implements IRegistration
         $Payment->delete();
         $registration->student->delete();
         $status = true;
+
         return $status;
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get(int $id): Registration
     {
         return Registration::find($id);
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function update(Registration $registration, array $input): bool
     {
@@ -51,100 +55,110 @@ class RegistrationFeature implements IRegistration
             ]
         );
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function makeAbandoned(Registration $registration): bool
     {
-        $registration->abandoned = !$registration->abandoned;
+        $registration->abandoned = ! $registration->abandoned;
+
         return $registration->update();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function makeClassChanged(Registration $registration): bool
     {
-        $registration->class_changed = !$registration->class_changed;
+        $registration->class_changed = ! $registration->class_changed;
+
         return $registration->update();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function makeIsRegistered(Registration $registration): bool
     {
-        $registration->is_registered = !$registration->is_registered;
+        $registration->is_registered = ! $registration->is_registered;
+
         return $registration->update();
     }
+
     public static function getCount(
-        string|null $date,
-        string|null $month,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        int|null $responsibleId,
-        bool|null $isOld
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId,
+        ?bool $isOld
     ): int|float {
         $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, $isOld, null, null, null);
+
         return Registration::query()
             ->filter($filters)
             ->count();
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getCountAll(
-        string|null $date,
-        string|null $month,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        int|null $responsibleId
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId
     ): float|int {
         $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, null, null, null, '');
+
         return Registration::query()
             ->filter($filters)
             ->count();
     }
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getTotalAmount(
-        string|null $date,
-        string|null $month,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        int|null $responsibleId,
-        bool|null $isOld
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId,
+        ?bool $isOld
     ): int|float {
         $total = 0;
         $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, $isOld, null, null, null);
-        $registrations =  Registration::query()
+        $registrations = Registration::query()
             ->filter($filters)
             ->get();
         foreach ($registrations as $registration) {
             $total += $registration->registrationFee->amount;
         }
+
         return $total;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getList(
-        string|null $date,
-        string|null $month,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        int|null $responsibleId,
-        string|null $q,
-        string|null $sortBy,
-        bool|null $sortAsc,
-        bool|null $isOld,
-        int|null $per_page
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId,
+        ?string $q,
+        ?string $sortBy,
+        ?bool $sortAsc,
+        ?bool $isOld,
+        ?int $per_page
     ): array|\Illuminate\Pagination\LengthAwarePaginator {
         $filters = self::getFilters(
             $sectionId,
@@ -158,34 +172,36 @@ class RegistrationFeature implements IRegistration
             null,
             $q
         );
-        return Registration::query()
-            ->filter($filters)
-            ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
-            ->paginate($per_page);
-    }
-    /**
-     * @inheritDoc
-     */
-    public static function getListOldOrNew(
-        string|null $date,
-        string|null $month,
-        int|null $sectionId,
-        int|null $optionId,
-        int|null $classRoomId,
-        int|null $responsibleId,
-        bool|null $isOld,
-        string|null $q,
-        string|null $sortBy,
-        bool|null $sortAsc,
-        int|null $per_page
-    ): array|\Illuminate\Pagination\LengthAwarePaginator {
-        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, $isOld, null, null, $q);
+
         return Registration::query()
             ->filter($filters)
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->paginate($per_page);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public static function getListOldOrNew(
+        ?string $date,
+        ?string $month,
+        ?int $sectionId,
+        ?int $optionId,
+        ?int $classRoomId,
+        ?int $responsibleId,
+        ?bool $isOld,
+        ?string $q,
+        ?string $sortBy,
+        ?bool $sortAsc,
+        ?int $per_page
+    ): array|\Illuminate\Pagination\LengthAwarePaginator {
+        $filters = self::getFilters($sectionId, $date, $month, $optionId, $classRoomId, $responsibleId, $isOld, null, null, $q);
+
+        return Registration::query()
+            ->filter($filters)
+            ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
+            ->paginate($per_page);
+    }
 
     public static function getFilters(mixed $sectionId, mixed $date, mixed $month, mixed $optionId, mixed $classRoomId, mixed $responsibleId, mixed $isOld, mixed $sortBy, mixed $sortAsc, mixed $q): array
     {

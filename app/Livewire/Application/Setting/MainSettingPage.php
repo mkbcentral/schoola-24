@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Application\Setting;
 
-use Auth;
 use Livewire\Component;
 
 class MainSettingPage extends Component

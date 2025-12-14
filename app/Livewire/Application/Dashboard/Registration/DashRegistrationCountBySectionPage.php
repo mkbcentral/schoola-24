@@ -10,7 +10,7 @@ class DashRegistrationCountBySectionPage extends Component
     public function render()
     {
         return view('livewire.application.dashboard.registration.dash-registration-count-by-section-page', [
-            'sections' => SchoolDataFeature::getSectionList()
+            'sections' => SchoolDataFeature::getSectionList(),
         ]);
     }
 }

@@ -14,20 +14,24 @@ use Livewire\WithPagination;
 class ListUserPage extends Component
 {
     use WithPagination;
+
     protected $listeners = ['userDataRefreshed' => '$refresh'];
+
     public int $per_page = 10;
 
     #[Url(as: 'q')]
     public $q = '';
+
     #[Url(as: 'sortBy')]
     public $sortBy = 'name';
+
     #[Url(as: 'sortAsc')]
     public $sortAsc = true;
 
     public function sortData($value): void
     {
         if ($value == $this->sortBy) {
-            $this->sortAsc = !$this->sortAsc;
+            $this->sortAsc = ! $this->sortAsc;
         }
         $this->sortBy = $value;
     }
@@ -46,7 +50,7 @@ class ListUserPage extends Component
     public function activateUser(User $user): void
     {
         try {
-            $user->is_active = !$user->is_active;
+            $user->is_active = ! $user->is_active;
             $user->update();
             $this->dispatch('added', ['message' => AppMessage::ACTION_SUCCESS]);
         } catch (Exception $ex) {
@@ -55,6 +59,7 @@ class ListUserPage extends Component
     }
 
     public function deleteUser(User $user): void {}
+
     public function resetUserPassword(User $user): void
     {
         try {

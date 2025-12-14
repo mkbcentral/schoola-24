@@ -13,10 +13,8 @@ class CreateRegistrationPaymentListner
     /**
      * Create the event listener.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct() {}
+
     /**
      * Handle the event.
      */
@@ -36,7 +34,7 @@ class CreateRegistrationPaymentListner
                 'scolar_fee_id' => $scolarFee->id,
                 'rate_id' => Rate::DEFAULT_RATE_ID(),
                 'user_id' => Auth::id(),
-                'is_paid' => true
+                'is_paid' => true,
             ]);
         }
     }

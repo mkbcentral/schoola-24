@@ -7,18 +7,16 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-sm table-hover mt-2">
                     <thead class="table-primary">
-                        <tr class="">
+                        <tr>
                             <th class="text-center">N°</th>
-                            <th class="">
-                                DATE PAIEMENT
-                            </th>
+                            <th>DATE PAIEMENT</th>
                             <th>TYPE FRAIS</th>
                             <th class="text-end">MONTANT</th>
                         </tr>
                     </thead>
                     @if ($registration->payments->isEmpty())
                         <tr>
-                            <td colspan="7"><x-errors.data-empty /></td>
+                            <td colspan="4"><x-errors.data-empty /></td>
                         </tr>
                     @else
                         <tbody>

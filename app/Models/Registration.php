@@ -13,7 +13,6 @@ class Registration extends Model
 {
     use HasFactory;
 
-    public mixed $isRegistered;
     protected $fillable = [
         'code',
         'registration_number',
@@ -34,14 +33,11 @@ class Registration extends Model
 
     /**
      * Get the derogations associated with the Registration
-     *
-     * @return HasMany
      */
     public function derogations(): HasMany
     {
         return $this->hasMany(RegistrationDerogation::class);
     }
-
 
     /**
      * Get the attributes that should be cast.
@@ -70,8 +66,6 @@ class Registration extends Model
 
     /**
      * Get the student that owns the Registration
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function student(): BelongsTo
     {
@@ -80,8 +74,6 @@ class Registration extends Model
 
     /**
      * Get the registrationFee that owns the Registration
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function registrationFee(): BelongsTo
     {
@@ -90,8 +82,6 @@ class Registration extends Model
 
     /**
      * Get the classRoom that owns the Registration
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function classRoom(): BelongsTo
     {
@@ -100,8 +90,6 @@ class Registration extends Model
 
     /**
      * Get the schoolYear that owns the Registration
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function schoolYear(): BelongsTo
     {
@@ -110,8 +98,6 @@ class Registration extends Model
 
     /**
      * Get the rate that owns the Registration
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function rate(): BelongsTo
     {
@@ -120,8 +106,6 @@ class Registration extends Model
 
     /**
      * Get all of the payments for the Registration
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function payments(): HasMany
     {
@@ -130,8 +114,6 @@ class Registration extends Model
 
     /**
      * Get the changeClassStudent associated with the Registration
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function changeClassStudent(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
@@ -140,8 +122,6 @@ class Registration extends Model
 
     /**
      * Get the giveUoStudent associated with the Registration
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function giveUoStudent(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
@@ -150,9 +130,6 @@ class Registration extends Model
 
     /**
      * Summary of scopeFilter
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $filters
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     // Scope for filtering registrations with reusable joins and conditions
     public function scopeFilter(Builder $query, array $filters): Builder
@@ -183,7 +160,6 @@ class Registration extends Model
             ->join('sections', 'sections.id', '=', 'options.section_id');
     }
 
-
     /**
      * Compte le nombre d'inscriptions d'élèves groupées par un champ spécifique.
      *
@@ -193,9 +169,9 @@ class Registration extends Model
      * (spécifié par $groupField et nommé $groupAlias) et la valeur est le nombre d'élèves
      * correspondants à ce groupe.
      *
-     * @param string $groupField   Le nom du champ sur lequel effectuer le groupement (ex: 'sections.id').
-     * @param string $groupAlias   L'alias à utiliser pour le champ de groupement dans le résultat.
-     * @return array               Tableau associatif [valeur du groupe => nombre d'élèves].
+     * @param  string  $groupField  Le nom du champ sur lequel effectuer le groupement (ex: 'sections.id').
+     * @param  string  $groupAlias  L'alias à utiliser pour le champ de groupement dans le résultat.
+     * @return array Tableau associatif [valeur du groupe => nombre d'élèves].
      */
     protected static function countByGroup(string $groupField, string $groupAlias): array
     {
@@ -254,7 +230,8 @@ class Registration extends Model
 
     public function getStatusPayment(int $registrationId, $categoryFeeId, $schoolYearId, string $month): bool
     {
-        $payment = PaymentFeature::getSinglePaymentForStudentWithMonth(
+        $paymentFeature = app(PaymentFeature::class);
+        $payment = $paymentFeature->getSinglePaymentForStudentWithMonth(
             $registrationId,
             $categoryFeeId,
             $schoolYearId,
@@ -265,7 +242,8 @@ class Registration extends Model
 
     public function getStatusPaymentByTranch(int $registrationId, $categoryFeeId, int $scolarFeeId): bool
     {
-        $payment = PaymentFeature::getSinglePaymentForStudentWithTranche(
+        $paymentFeature = app(PaymentFeature::class);
+        $payment = $paymentFeature->getSinglePaymentForStudentWithTranche(
             $registrationId,
             $categoryFeeId,
             $scolarFeeId

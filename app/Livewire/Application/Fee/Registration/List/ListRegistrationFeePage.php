@@ -13,12 +13,16 @@ use Livewire\WithPagination;
 class ListRegistrationFeePage extends Component
 {
     use WithPagination;
-    public int $per_page = 10, $option_filter = 0;
+
+    public int $per_page = 10;
+
+    public int $option_filter = 0;
 
     #[Url(as: 'q')]
     public $q = '';
 
-    protected $listeners = ["regFeeDataRefreshed" => '$refresh'];
+    protected $listeners = ['regFeeDataRefreshed' => '$refresh'];
+
     public function edit(?RegistrationFee $Registrationfee)
     {
         $this->dispatch('RegistrationFeeData', $Registrationfee);
@@ -37,6 +41,7 @@ class ListRegistrationFeePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.fee.registration.list.list-registration-fee-page', [

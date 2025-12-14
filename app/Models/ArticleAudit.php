@@ -118,7 +118,7 @@ class ArticleAudit extends Model
      */
     public function getChangesAttribute(): array
     {
-        if (!$this->old_values || !$this->new_values) {
+        if (! $this->old_values || ! $this->new_values) {
             return [];
         }
 

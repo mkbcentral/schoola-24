@@ -1,10 +1,17 @@
-// Assurez-vous que Chart.js est importé avant ce script, par exemple :
-// import Chart from 'chart.js/auto'; // Si vous utilisez un bundler
-// ou incluez <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> dans votre HTML
+// Lazy import de Chart.js uniquement quand nécessaire
+let Chart;
+
+async function loadChart() {
+    if (!Chart) {
+        const module = await import('chart.js/auto');
+        Chart = module.default;
+    }
+    return Chart;
+}
 
 window.myExpensesChart = window.myExpensesChart || null;
 
-window.addEventListener('refresh-expenses', e => {
+window.addEventListener('refresh-expenses', async e => {
     const balances = e.detail.params;
     console.log('Balances data received:', balances);
     const labels = [];
@@ -27,6 +34,9 @@ window.addEventListener('refresh-expenses', e => {
         return;
     }
 
+    // Charger Chart.js dynamiquement
+    const ChartClass = await loadChart();
+
     // Détruire l'ancien graphique s'il existe
     if (window.myExpensesChart && typeof window.myExpensesChart.destroy === 'function') {
         window.myExpensesChart.destroy();
@@ -34,7 +44,7 @@ window.addEventListener('refresh-expenses', e => {
     }
 
     // Crée le graphique
-    window.myExpensesChart = new Chart(ctx, {
+    window.myExpensesChart = new ChartClass(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -127,7 +137,7 @@ window.addEventListener('refresh-expenses', e => {
     });
 });
 
-window.addEventListener('refresh-budget-forecast', e => {
+window.addEventListener('refresh-budget-forecast', async e => {
     // e.detail.params should be an array of objects like:
     const data = e.detail.params;
 
@@ -149,6 +159,9 @@ window.addEventListener('refresh-budget-forecast', e => {
         `hsl(${(i * 360 / labels.length)}, 70%, 45%)`
     );
 
+    // Charger Chart.js dynamiquement
+    const ChartClass = await loadChart();
+
     // Créer ou mettre à jour le graphique
     let forecastChart = window.forecastChart || null;
     const ctx = document.getElementById('budgetForecastChart').getContext('2d');
@@ -158,7 +171,7 @@ window.addEventListener('refresh-budget-forecast', e => {
         forecastChart = null;
     }
 
-    forecastChart = new Chart(ctx, {
+    forecastChart = new ChartClass(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -271,7 +284,7 @@ window.addEventListener('refresh-budget-forecast', e => {
 });
 
 
-window.addEventListener('refresh-budget-forecast-monthly', e => {
+window.addEventListener('refresh-budget-forecast-monthly', async e => {
     // e.detail.params should be an array of objects like:
     const data = e.detail.params;
     const tableauComplet = Object.values(data).map(item => ({
@@ -322,6 +335,9 @@ window.addEventListener('refresh-budget-forecast-monthly', e => {
         };
     });
 
+    // Charger Chart.js dynamiquement
+    const ChartClass = await loadChart();
+
     // Créer ou mettre à jour le graphique
     const ctxMovements = document.getElementById('monthlyMovementsChart')?.getContext('2d');
     if (ctxMovements) {
@@ -330,7 +346,7 @@ window.addEventListener('refresh-budget-forecast-monthly', e => {
             window.monthlyMovementsChart.destroy();
         }
 
-        window.monthlyMovementsChart = new Chart(ctxMovements, {
+        window.monthlyMovementsChart = new ChartClass(ctxMovements, {
             type: 'line',
             data: {
                 labels: monthLabels,

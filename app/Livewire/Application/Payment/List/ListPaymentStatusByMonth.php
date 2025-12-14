@@ -6,7 +6,6 @@ use App\Domain\Features\Registration\RegistrationFeature;
 use App\Models\CategoryFee;
 use App\Models\ClassRoom;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Validation\Rules\In;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,14 +18,23 @@ class ListPaymentStatusByMonth extends Component
     ];
 
     public string $selectedMonth = '';
+
     public int $selectedOptionId = 0;
+
     public int $selectedClassRoomId = 0;
+
     public int $selectedCategoryFeeId = 0;
+
     public string $filterStatus = 'all';
+
     public string $sortBy = 'students.name';
+
     public bool $sortAsc = true;
+
     public ?ClassRoom $classRoomSelected = null;
+
     public ?CategoryFee $categoryFeeSelected = null;
+
     public ?LengthAwarePaginator $registraions = null;
 
     /**
@@ -35,7 +43,7 @@ class ListPaymentStatusByMonth extends Component
     public function sortData(string $column): void
     {
         if ($column === $this->sortBy) {
-            $this->sortAsc = !$this->sortAsc;
+            $this->sortAsc = ! $this->sortAsc;
         } else {
             $this->sortBy = $column;
             $this->sortAsc = true;
@@ -58,7 +66,7 @@ class ListPaymentStatusByMonth extends Component
         $this->selectedCategoryFeeId = $categoryFeeId;
         $this->classRoomSelected = ClassRoom::find($classRoom) ?? null;
         $this->categoryFeeSelected = CategoryFee::find($categoryFeeId) ?? null;
-        $this->registraions =  RegistrationFeature::getList(
+        $this->registraions = RegistrationFeature::getList(
             null,
             null,
             null,
@@ -71,7 +79,7 @@ class ListPaymentStatusByMonth extends Component
             100
         );
 
-        //dd($this->selectedOptionId,$this->selectedClassRoomId);
+        // dd($this->selectedOptionId,$this->selectedClassRoomId);
     }
 
     public function render()

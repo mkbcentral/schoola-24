@@ -8,8 +8,6 @@ use App\Exceptions\CustomExceptionHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OptionResource;
 use App\Http\Resources\RegistrationResource;
-use App\Models\ClassRoom;
-use App\Models\Option;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -36,6 +34,7 @@ class StudentCounterController extends Controller
                 null,
                 isOld: true
             );
+
             return response()->json([
                 'count_new' => $countNew,
                 'count_old' => $countOld,
@@ -43,10 +42,11 @@ class StudentCounterController extends Controller
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'error' => $ex->getMessage()
+                'error' => $ex->getMessage(),
             ]);
         }
     }
+
     public function countBySection(Request $request)
     {
         try {
@@ -58,15 +58,17 @@ class StudentCounterController extends Controller
                     'count' => $section->getRegistrationCountForCurrentSchoolYear(),
                 ];
             }
+
             return response()->json([
-                'sections' => $sectionCount
+                'sections' => $sectionCount,
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'error' => $ex->getMessage()
+                'error' => $ex->getMessage(),
             ]);
         }
     }
+
     public function countByClasseRoom(Request $request, int $optionId)
     {
         try {
@@ -84,31 +86,34 @@ class StudentCounterController extends Controller
                 ];
                 $total += $classRoom->getRegistrationCountForCurrentSchoolYear();
             }
+
             return response()->json([
                 'total' => $total,
                 'classRooms' => $classRoomCount,
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'error' => $ex->getMessage()
-            ]);
-        }
-    }
-    public function getListOption(Request $request)
-    {
-        try {
-            $options = OptionResource::collection(SchoolDataFeature::getOptionList(100));
-            return response()->json([
-                'options' => $options
-            ]);
-        } catch (Exception $ex) {
-            return response()->json([
-                'error' => $ex->getMessage()
+                'error' => $ex->getMessage(),
             ]);
         }
     }
 
-    public function getListStudentByCalssRoom(Request $request,  $classRoomId)
+    public function getListOption(Request $request)
+    {
+        try {
+            $options = OptionResource::collection(SchoolDataFeature::getOptionList(100));
+
+            return response()->json([
+                'options' => $options,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function getListStudentByCalssRoom(Request $request, $classRoomId)
     {
         try {
 
@@ -125,11 +130,13 @@ class StudentCounterController extends Controller
                 null,
                 1000
             );
+
             return response()->json([
-                'students' => RegistrationResource::collection($students)
+                'students' => RegistrationResource::collection($students),
             ]);
         } catch (Exception $exception) {
-            $handler = new CustomExceptionHandler();
+            $handler = new CustomExceptionHandler;
+
             return $handler->render(request(), $exception);
         }
     }

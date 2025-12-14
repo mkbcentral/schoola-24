@@ -4,17 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Domain\Features\Configuration\SchoolDataFeature;
 use App\Domain\Features\Registration\RegistrationFeature;
-use App\Http\Controllers\Controller;
 use App\Models\ClassRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use LaravelQRCode\Facades\QRCode;
 
 class SchoolDataPrinterController extends Controller
 {
     /**
      * Imprimer la liste des effectifs pour chaque classe par option
-     * @param \Illuminate\Http\Request $request
+     *
      * @return mixed
      */
     public function printStudentNumbersPerClassRoom(Request $request)
@@ -22,14 +20,12 @@ class SchoolDataPrinterController extends Controller
         $options = SchoolDataFeature::getOptionList();
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('prints.school.print-list-class-room-by-option', compact(['options']));
+
         return $pdf->stream();
     }
+
     /**
      * Imprimer la liste des iffectifs par classe
-     * @param \Illuminate\Http\Request $request
-     * @param int $classRoomId
-     * @param bool $sortAsc
-     * @return mixed
      */
     public function printListStudeForClassRoom(
         Request $request,
@@ -57,15 +53,12 @@ class SchoolDataPrinterController extends Controller
                 ['registrationns', 'classRoom']
             )
         );
+
         return $pdf->stream();
     }
 
     /**
      * Imprimer la liste des iffectifs par classe
-     * @param \Illuminate\Http\Request $request
-     * @param int $classRoomId
-     * @param bool $sortAsc
-     * @return mixed
      */
     public function printListStudentCardsForClassRoom(
         Request $request,
@@ -93,16 +86,14 @@ class SchoolDataPrinterController extends Controller
                 ['registrationns', 'classRoom']
             )
         );
+
         return $pdf->stream();
     }
 
-
     /**
      * Imprimer la liste des élèves par date
-     * @param mixed $date
-     * @param bool $isOld
-     * @param bool $sortAsc
-     * @return mixed
+     *
+     * @param  mixed  $date
      */
     public function printListStudentByDate(
         ?string $date,
@@ -122,7 +113,6 @@ class SchoolDataPrinterController extends Controller
             $sortBy,
             $sortAsc,
             1000
-
         );
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView(
@@ -131,15 +121,14 @@ class SchoolDataPrinterController extends Controller
                 ['registrationns', 'date', 'isOld']
             )
         );
+
         return $pdf->stream();
     }
 
     /**
      * Imprimer la liste de élèves par mois
-     * @param mixed $month
-     * @param bool $isOld
-     * @param bool $sortAsc
-     * @return mixed
+     *
+     * @param  mixed  $month
      */
     public function printListStudentByMonth(
         ?string $month,
@@ -159,7 +148,6 @@ class SchoolDataPrinterController extends Controller
             $sortBy,
             $sortAsc,
             1000
-
         );
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView(
@@ -168,6 +156,7 @@ class SchoolDataPrinterController extends Controller
                 ['registrationns']
             )
         );
+
         return $pdf->stream();
     }
 }

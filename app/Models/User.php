@@ -14,7 +14,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +34,7 @@ class User extends Authenticatable
         'is_active',
         'is_on_line',
         'school_id',
-        'work_on_year'
+        'work_on_year',
     ];
 
     /**
@@ -62,8 +64,6 @@ class User extends Authenticatable
 
     /**
      * Get the school that owns the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function school(): BelongsTo
     {
@@ -72,35 +72,30 @@ class User extends Authenticatable
 
     /**
      * Get all of the payments for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }
+
     /**
      * Get the role that owns the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
     /**
      * The singleAppLinks that belong to the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function singleAppLinks(): BelongsToMany
     {
         return $this->belongsToMany(SingleAppLink::class)->withPivot('id');
     }
+
     /**
      * The subLinks that belong to the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function subLinks(): BelongsToMany
     {
@@ -109,26 +104,20 @@ class User extends Authenticatable
 
     /**
      * The multiAppLinks that belong to the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function multiAppLinks(): BelongsToMany
     {
         return $this->belongsToMany(MultiAppLink::class)->withPivot(('id'));
     }
 
-
     /**
      * Scope for reusable query on user model
-     * @param Builder $query
-     * @param string $q
-     * @return Builder
      */
-    public function  scopeFilter(Builder $query, string $q = ''): Builder
+    public function scopeFilter(Builder $query, string $q = ''): Builder
     {
         return $query->join('roles', 'roles.id', 'users.role_id')
             ->when($q, function ($query, $keyToSearch) {
-                return $query->where('name', 'like', '%' .  $keyToSearch . '%')
+                return $query->where('name', 'like', '%' . $keyToSearch . '%')
                     ->orWhere('phone', 'like', '%' . $keyToSearch . '%')
                     ->orWhere('email', 'like', '%' . $keyToSearch . '%');
             })->select('users.*')->with(['role']);

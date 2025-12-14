@@ -10,8 +10,10 @@ use Livewire\Component;
 
 class FormRolePage extends Component
 {
-    protected $listeners = ["roleData" => "getRole"];
+    protected $listeners = ['roleData' => 'getRole'];
+
     public ?Role $roleSelected = null;
+
     public RoleForm $form;
 
     public function getRole(Role $role)

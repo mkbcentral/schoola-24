@@ -15,6 +15,6 @@ class OtherRecipe extends Model
         'end_date',
         'is_period',
         'school_id',
-        'school_year_id'
+        'school_year_id',
     ];
 }

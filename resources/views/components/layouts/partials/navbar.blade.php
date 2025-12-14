@@ -1,61 +1,69 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-    <div class="container-fluid">
-        <button type="button" id="sidebarCollapse" class="btn btn-info">
-            <i class="bi bi-list"></i>
-        </button>
-        <!-- Show only on desktop -->
-        <div class="d-none d-lg-block">
-            <livewire:application.widgets.school-year-label />
+<nav class="navbar-modern" style="z-index: 1050;">
+    <div class="navbar-content">
+        {{-- Section gauche : Toggle + Info --}}
+        <div class="navbar-left">
+            <button type="button" id="sidebarCollapse" class="navbar-toggle" aria-label="Toggle sidebar">
+                <span class="toggle-icon"></span>
+            </button>
+
+            {{-- Année scolaire (Desktop) --}}
+            <div class="navbar-info d-none d-lg-flex">
+                <livewire:application.widgets.school-year-label />
+            </div>
         </div>
-        <!-- Desktop User Dropdown -->
-        <div class="d-none d-lg-flex align-items-center">
-            <div class="dropdown ms-3">
-                <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="userDropdown"
-                    data-bs-toggle="dropdown">
-                    <i class="bi bi-person-circle me-2"></i>
-                    {{ Auth::user()->name }}
+
+        {{-- Section droite : Actions --}}
+        <div class="navbar-right">
+
+            {{-- Séparateur --}}
+            <div class="navbar-divider d-none d-lg-block"></div>
+
+            {{-- User Menu --}}
+            <div class="navbar-user dropdown">
+                <button class="navbar-user-btn" type="button" id="userDropdown" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span class="user-avatar">
+                        <i class="bi bi-person-circle"></i>
+                    </span>
+                    <span class="user-name d-none d-lg-inline">{{ Auth::user()->name }}</span>
+                    <i class="bi bi-chevron-down user-arrow"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a href="{{ route('admin.user.profile') }}" class="dropdown-item">Profile</a></li>
-                    <li><a class="dropdown-item" href="{{ route('settings.main') }}">Settings</a></li>
+
+                <ul class="dropdown-menu dropdown-menu-end navbar-dropdown" aria-labelledby="userDropdown">
+                    <li class="dropdown-header">
+                        <div class="dropdown-user-info">
+                            <i class="bi bi-person-circle fs-3"></i>
+                            <div>
+                                <div class="fw-semibold">{{ Auth::user()->name }}</div>
+                                <small class="text-muted">{{ Auth::user()->email }}</small>
+                            </div>
+                        </div>
+                    </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <form method="POST" action="{{ route('logout') }}" class="float-end">
-                            @csrf
-                            <a href="#"
-                                onclick="event.preventDefault();
-                this.closest('form').submit();"
-                                class="dropdown-item">
-                                <i class="bi bi-box-arrow-right me-2"></i>Se déconnecter</a>
-                        </form>
+                        <a href="{{ route('admin.user.profile') }}" class="dropdown-item">
+                            <i class="bi bi-person"></i>
+                            <span>Mon profil</span>
+                        </a>
                     </li>
-                </ul>
-            </div>
-        </div>
-        <!-- Mobile User Dropdown -->
-        <div class="d-flex d-lg-none align-items-center ms-auto">
-            <div class="dropdown">
-                <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="userDropdownMobile"
-                    data-bs-toggle="dropdown">
-                    <i class="bi bi-person-circle me-2"></i>
-
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a href="{{ route('admin.user.profile') }}" class="dropdown-item">Profile</a></li>
-                    <li><a class="dropdown-item" href="{{ route('settings.main') }}">Settings</a></li>
+                    <li>
+                        <a href="{{ route('settings.main') }}" class="dropdown-item">
+                            <i class="bi bi-gear"></i>
+                            <span>Paramètres</span>
+                        </a>
+                    </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <a href="#"
-                                onclick="event.preventDefault();
-                this.closest('form').submit();"
-                                class="dropdown-item">
-                                <i class="bi bi-box-arrow-right me-2"></i>Se déconnecter</a>
+                            <button type="submit" class="dropdown-item dropdown-item-danger">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Se déconnecter</span>
+                            </button>
                         </form>
                     </li>
                 </ul>

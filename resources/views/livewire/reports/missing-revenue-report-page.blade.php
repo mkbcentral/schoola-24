@@ -184,34 +184,5 @@
         </script>
     @endpush
 
-    @push('styles')
-        <style>
-            /* Adaptations pour le mode sombre */
-            [data-bs-theme="dark"] .table-primary {
-                --bs-table-bg: rgba(13, 110, 253, 0.2);
-                --bs-table-border-color: rgba(255, 255, 255, 0.2);
-            }
-
-            [data-bs-theme="dark"] .shadow {
-                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
-            }
-
-            [data-bs-theme="dark"] .table-hover>tbody>tr:hover>td {
-                background-color: rgba(255, 255, 255, 0.075);
-            }
-
-            /* Amélioration pour les alertes en mode sombre */
-            [data-bs-theme="dark"] .alert-danger {
-                background-color: rgba(220, 53, 69, 0.2);
-                border-color: rgba(220, 53, 69, 0.3);
-                color: #f8d7da;
-            }
-
-            [data-bs-theme="dark"] .alert-success {
-                background-color: rgba(25, 135, 84, 0.2);
-                border-color: rgba(25, 135, 84, 0.3);
-                color: #d1e7dd;
-            }
-        </style>
-    @endpush
+    {{-- Styles dark mode intégrés dans themes/_dark.scss --}}
 </div>

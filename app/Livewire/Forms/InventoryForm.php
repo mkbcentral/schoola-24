@@ -7,7 +7,6 @@ use App\Models\ArticleInventory;
 use App\Models\School;
 use App\Models\SchoolYear;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -51,7 +50,7 @@ class InventoryForm extends Form
      */
     public function calculateDifference()
     {
-        $this->difference = (int)$this->actual_quantity - (int)$this->expected_quantity;
+        $this->difference = (int) $this->actual_quantity - (int) $this->expected_quantity;
 
         if ($this->difference == 0) {
             $this->status = 'conforme';

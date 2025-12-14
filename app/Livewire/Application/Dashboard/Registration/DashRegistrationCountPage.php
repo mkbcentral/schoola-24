@@ -7,12 +7,13 @@ use Livewire\Component;
 
 class DashRegistrationCountPage extends Component
 {
-
     protected $listeners = [
-        "dateFilder" => "getDateFilter",
-        "monthFilder" => "getMonthFilter",
+        'dateFilder' => 'getDateFilter',
+        'monthFilder' => 'getMonthFilter',
     ];
+
     public string $date_filter;
+
     public string $month_filter;
 
     public bool $is_by_date = true;
@@ -22,6 +23,7 @@ class DashRegistrationCountPage extends Component
         $this->date_filter = $date;
         $this->is_by_date = true;
     }
+
     public function getMonthFilter(string $month)
     {
         $this->month_filter = $month;

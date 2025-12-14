@@ -11,7 +11,8 @@ use Livewire\Component;
 
 class ListRatePage extends Component
 {
-    public float $amount=0;
+    public float $amount = 0;
+
     public ?Rate $rateSelected = null;
 
     public function initForm(): void
@@ -43,7 +44,7 @@ class ListRatePage extends Component
     public function update(): void
     {
         $inputs = $this->validate([
-            'amount' => 'required|numeric'
+            'amount' => 'required|numeric',
         ]);
 
         try {
@@ -79,6 +80,7 @@ class ListRatePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function delete(?Rate $rate): void
     {
         try {
@@ -92,17 +94,19 @@ class ListRatePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function cancelUpdate(): void
     {
         $this->rateSelected = null;
         $this->amount = '';
     }
+
     public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.finance.rate.list.list-rate-page', [
             'rates' => Rate::query()
                 ->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->get()
+                ->get(),
         ]);
     }
 }

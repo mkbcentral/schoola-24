@@ -1,0 +1,57 @@
+// =============================================================================
+// Badges & Labels Component
+// Styles pour les badges et étiquettes
+// =============================================================================
+
+.badge {
+    padding: var(--badge-padding-y) var(--badge-padding-x);
+    font-size: var(--badge-font-size);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.02em;
+    border-radius: var(--badge-border-radius);
+    transition: all var(--transition-fast);
+}
+
+// Badge light
+.qp-badge-light {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+// Badge avec effet survol
+.badge-hoverable {
+    cursor: pointer;
+    
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-sm);
+    }
+}
+
+// =============================================================================
+// Avatar Circle
+// =============================================================================
+
+.avatar-circle {
+    @include circle(var(--avatar-size-md));
+    @include flex-center;
+    font-weight: var(--font-weight-bold);
+    background-color: var(--avatar-circle-bg);
+    color: var(--text-primary);
+}
+
+// Tailles d'avatars
+.avatar-sm {
+    @include circle(var(--avatar-size-sm));
+    font-size: var(--font-size-xs);
+}
+
+.avatar-lg {
+    @include circle(var(--avatar-size-lg));
+    font-size: var(--font-size-lg);
+}
+
+.avatar-xl {
+    @include circle(var(--avatar-size-xl));
+    font-size: var(--font-size-xl);
+}

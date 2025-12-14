@@ -2,13 +2,10 @@
 
 namespace App\Domain\Helpers;
 
-use Carbon\Carbon;;
-
 class DateFormatHelper
 {
     /**
      * Ge list fr months
-     * @return array
      */
     public static function getFrMonths(): array
     {
@@ -27,7 +24,6 @@ class DateFormatHelper
             ['name' => 'DECEMBRE', 'number' => '12'],
         ];
     }
-
 
     public static function getSchoolFrMonths(): array
     {
@@ -62,12 +58,13 @@ class DateFormatHelper
             '06' => 'JUIN',
         ];
         $monthNumber = str_pad($monthNumber, 2, '0', STR_PAD_LEFT);
+
         return $months[$monthNumber] ?? $monthNumber;
     }
 
     public static function getMonthsNumber(): array
     {
-        return  [
+        return [
             'SEPTEMBRE' => 9,
             'OCTOBRE' => 10,
             'NOVEMBRE' => 11,

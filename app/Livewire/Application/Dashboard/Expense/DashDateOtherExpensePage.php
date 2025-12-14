@@ -8,12 +8,16 @@ use Livewire\Component;
 class DashDateOtherExpensePage extends Component
 {
     public ?string $date_filter = '';
-    public int  $otherSourceExpenseIdFilter = 0;
+
+    public int $otherSourceExpenseIdFilter = 0;
+
     public int $categoryExpenseIdFilter = 0;
+
     public function mount(): void
     {
         $this->date_filter = date('Y-m-d');
     }
+
     public function render()
     {
         return view('livewire.application.dashboard.expense.dash-date-other-expense-page', [

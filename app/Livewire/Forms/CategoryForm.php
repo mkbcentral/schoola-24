@@ -11,13 +11,13 @@ class CategoryForm extends Form
 {
     public ?ArticleCategory $category = null;
 
-    #[Rule('required|string|max:255', message: "Le nom de la catégorie est obligatoire", onUpdate: false)]
+    #[Rule('required|string|max:255', message: 'Le nom de la catégorie est obligatoire', onUpdate: false)]
     public $name = '';
 
-    #[Rule('nullable|string|max:500', message: "La description ne doit pas dépasser 500 caractères", onUpdate: false)]
+    #[Rule('nullable|string|max:500', message: 'La description ne doit pas dépasser 500 caractères', onUpdate: false)]
     public $description = '';
 
-    #[Rule('required|string|regex:/^#[0-9A-Fa-f]{6}$/', message: "Veuillez choisir une couleur valide", onUpdate: false)]
+    #[Rule('required|string|regex:/^#[0-9A-Fa-f]{6}$/', message: 'Veuillez choisir une couleur valide', onUpdate: false)]
     public $color = '#6c757d';
 
     /**

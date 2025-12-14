@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Application\Report;
 
-use App\Domain\Features\Configuration\SchoolDataFeature;
 use App\Domain\Helpers\DateFormatHelper;
 use App\Models\SchoolYear;
 use App\Models\Section;
@@ -11,6 +10,7 @@ use Livewire\Component;
 class ReportStudentEnrollmentReport extends Component
 {
     public $selectedSection = null;
+
     public $selectedOption = null;
 
     public function mount()
@@ -18,13 +18,13 @@ class ReportStudentEnrollmentReport extends Component
         $this->selectedSection = Section::query()->first()->id;
     }
 
-    //selectSection
+    // selectSection
     public function selectSection($sectionId)
     {
         $this->selectedSection = $sectionId;
     }
 
-    //selectSection
+    // selectSection
     public function selectOption($optionId)
     {
         $this->selectedOption = $optionId;
@@ -38,7 +38,7 @@ class ReportStudentEnrollmentReport extends Component
                     $query->withCount([
                         'registrations as registration_count' => function ($q) {
                             $q->where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID());
-                        }
+                        },
                     ]);
                 },
                 'options', // eager load options to avoid N+1

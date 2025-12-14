@@ -15,8 +15,9 @@ class ListSingleAppLinkPage extends Component
 
     #[Url(as: 'q')]
     public $q = '';
+
     protected $listeners = [
-        'singleAppLinkListRefred' => '$refresh'
+        'singleAppLinkListRefred' => '$refresh',
     ];
 
     public function edit(?SingleAppLink $singleAppLink)
@@ -39,7 +40,7 @@ class ListSingleAppLinkPage extends Component
         return view('livewire.application.navigation.list.list-single-app-link-page', [
             'singleAppLinks' => SingleAppLink::query()
                 ->where('name', 'like', '%' . $this->q . '%')
-                ->paginate(10)
+                ->paginate(10),
         ]);
     }
 }

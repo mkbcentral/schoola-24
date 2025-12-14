@@ -18,18 +18,26 @@ use Livewire\Component;
 class OldStudentRegistrationForm extends Component
 {
     public ?ResponsibleStudent $responsibleStudent = null;
+
     public $selectedStudent = null;
+
     public $selectedOption = 0;
+
     public $student_id = 0;
+
     public bool $isOldSelected = true;
 
     public $option_id = 0;
+
     public $class_room_id = 0;
+
     public $registration_fee_id = 0;
+
     public $created_at = '';
+
     public $lastClassRoom = '';
 
-    //updated student_id
+    // updated student_id
     public function updatedStudentId($value)
     {
         $this->selectedStudent = Student::find($value);
@@ -86,6 +94,7 @@ class OldStudentRegistrationForm extends Component
 
         if ($existingRegistration) {
             $this->dispatch('error', ['message' => 'Cet élève est déjà inscrit pour cette année scolaire.']);
+
             return;
         }
         try {
@@ -114,6 +123,7 @@ class OldStudentRegistrationForm extends Component
             $this->dispatch('error', ['message' => AppMessage::EXECPTION_ERROR]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.registration.form.old-student-registration-form');

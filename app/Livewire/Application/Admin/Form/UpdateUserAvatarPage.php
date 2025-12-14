@@ -18,7 +18,7 @@ class UpdateUserAvatarPage extends Component
         try {
             $path = $this->image->store('school/users/avatars', 'public');
             auth()->user()->update(['avatar' => $path]);
-            $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);;
+            $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }

@@ -3,7 +3,6 @@
 namespace App\Events;
 
 use App\Models\Registration;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -11,9 +10,12 @@ use Illuminate\Queue\SerializesModels;
 
 class RegistrationCreatedEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public ?Registration $registration;
+
     /**
      * Create a new event instance.
      */

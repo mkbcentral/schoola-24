@@ -16,13 +16,11 @@ class ResponsibleStudent extends Model
         'phone',
         'email',
         'other_phone',
-        'school_id'
+        'school_id',
     ];
 
     /**
      * Get all of the students for the ResponsibleStudent
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function students(): HasMany
     {
@@ -31,8 +29,6 @@ class ResponsibleStudent extends Model
 
     /**
      * Get the school that owns the ResponsibleStudent
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function school(): BelongsTo
     {

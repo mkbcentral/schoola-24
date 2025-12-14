@@ -11,6 +11,7 @@ use Livewire\Component;
 class SettingSchoolYearPage extends Component
 {
     public $schoolYearId;
+
     public function mount()
     {
         $this->schoolYearId = SchoolYear::DEFAULT_SCHOOL_YEAR_ID();
@@ -29,17 +30,18 @@ class SettingSchoolYearPage extends Component
             $schoolYear->save();
             $user = Auth::user();
             $user->update([
-                'work_on_year' => $schoolYear->id
+                'work_on_year' => $schoolYear->id,
             ]);
         }
         $this->dispatch('refreshSchoolYearLabel');
         $this->dispatch('updated', ['message', AppMessage::DATA_UPDATED_SUCCESS]);
     }
+
     public function render()
     {
         return view('livewire.application.setting.page.setting-school-year-page', [
             'schoolYears' => SchoolYear::latest()
-                ->get()
+                ->get(),
         ]);
     }
 }

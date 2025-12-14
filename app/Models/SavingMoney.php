@@ -10,19 +10,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SavingMoney extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'amount',
         'month',
         'currency',
         'school_id',
         'school_year_id',
-        'created_at'
+        'created_at',
     ];
 
     /**
      * Get the school that owns the Salary
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function school(): BelongsTo
     {
@@ -31,8 +30,6 @@ class SavingMoney extends Model
 
     /**
      * Get the schoolYear that owns the Salary
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function schoolYear(): BelongsTo
     {
@@ -41,7 +38,7 @@ class SavingMoney extends Model
 
     public function scopeFilter(Builder $query, array $filters): Builder
     {
-        return  $query->when(
+        return $query->when(
             $filters['date'],
             function ($query, $value) {
                 return $query->whereDate('created_at', $value);

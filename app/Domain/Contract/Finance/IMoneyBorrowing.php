@@ -6,10 +6,10 @@ interface IMoneyBorrowing
 {
     /**
      * Recuperer la liste des emprunts
-     * @param mixed $date
-     * @param mixed $month
-     * @param mixed $currency
-     * @return mixed
+     *
+     * @param  mixed  $date
+     * @param  mixed  $month
+     * @param  mixed  $currency
      */
     public static function getList(
         string $date,
@@ -17,12 +17,13 @@ interface IMoneyBorrowing
         ?string $currency,
         ?int $per_page
     ): mixed;
+
     /**
      * Recuperer le montant total des emprunts
-     * @param mixed $date
-     * @param mixed $month
-     * @param mixed $currency
-     * @return int|float
+     *
+     * @param  mixed  $date
+     * @param  mixed  $month
+     * @param  mixed  $currency
      */
     public static function getAmount(
         ?string $date,

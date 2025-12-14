@@ -12,12 +12,16 @@ class AuditHistoryViewer extends Component
     use WithPagination;
 
     public ?Article $article = null;
+
     public $articleId = null;
 
     // Filtres
     public $actionFilter = '';
+
     public $userFilter = '';
+
     public $dateFrom = '';
+
     public $dateTo = '';
 
     protected $queryString = [

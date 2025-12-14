@@ -17,3 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Fichiers backup SCSS
+*.scss.backup
+*.css.backup

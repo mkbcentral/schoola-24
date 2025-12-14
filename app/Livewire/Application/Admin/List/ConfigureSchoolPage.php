@@ -9,10 +9,12 @@ use Livewire\Component;
 
 class ConfigureSchoolPage extends Component
 {
-    protected $listeners = ["schoolConfigDataRefreshed" => '$refresh'];
+    protected $listeners = ['schoolConfigDataRefreshed' => '$refresh'];
 
     public School $school;
+
     public ?User $user;
+
     public function mount(): void
     {
         $this->user = User::query()
@@ -22,6 +24,7 @@ class ConfigureSchoolPage extends Component
             ->select('users.*')
             ->first();
     }
+
     public function edit(): void
     {
         $this->dispatch('schoolData', $this->school);

@@ -3,37 +3,33 @@
 namespace App\Livewire\Application\Payment\Form;
 
 use App\Domain\Helpers\DateFormatHelper;
-use App\Domain\Utils\AppMessage;
 use App\Livewire\Forms\PaymentForm;
-use App\Models\CategoryFee;
-use App\Models\Payment;
 use App\Models\Registration;
-use App\Models\SchoolYear;
 use App\Models\ScolarFee;
-use App\Services\StudentDebtTrackerService;
-use Exception;
+use App\Services\Student\StudentDebtTrackerService;
 use Livewire\Component;
 
 class FormPaymentPage extends Component
 {
-
-
     protected $listeners = [
-        "registrationData" => "getRegistration",
+        'registrationData' => 'getRegistration',
     ];
+
     public ?Registration $registration;
-    public $selectedCategoryFeeId, $selectedIdClassRoom = 0;
+
+    public $selectedCategoryFeeId;
+
+    public $selectedIdClassRoom = 0;
+
     public ?ScolarFee $scolarFee = null;
+
     public PaymentForm $form;
+
     public ?Registration $lastRegistration;
 
     // Pour la case à cocher "Payer immédiatement"
     public bool $is_ipaid = false;
 
-
-    /**
-     * @return void
-     */
     public function initFormFields(): void
     {
         $this->form->reset();
@@ -42,10 +38,6 @@ class FormPaymentPage extends Component
         $this->is_ipaid = false;
     }
 
-    /**
-     * @param $val
-     * @return void
-     */
     public function updatedFormCategoryFeeId($val): void
     {
         $this->selectedCategoryFeeId = $val;
@@ -55,10 +47,6 @@ class FormPaymentPage extends Component
             ->first();
     }
 
-    /**
-     * @param Registration|null $registration
-     * @return void
-     */
     public function getRegistration(?Registration $registration): void
     {
         $this->registration = $registration;
@@ -68,12 +56,13 @@ class FormPaymentPage extends Component
             ->where('school_year_id', 1)
             ->where('student_id', $registration->student_id)->first();
     }
+
     public function save(): void
     {
         $this->validate();
         // Convertir le numéro du mois en label (ex: '10' => 'OCTOBRE')
         $monthLabel = DateFormatHelper::getMonthLabelFromNumber($this->form->month);
-        $result = (new StudentDebtTrackerService())->payForMonth(
+        $result = (new StudentDebtTrackerService)->payForMonth(
             $this->registration->id,
             $this->selectedCategoryFeeId,
             $monthLabel,
@@ -82,7 +71,7 @@ class FormPaymentPage extends Component
                 'is_paid' => $this->is_ipaid,
             ]
         );
-        if (!$result['success']) {
+        if (! $result['success']) {
             $this->dispatch('error', ['message' => $result['message'] ?? 'Error processing payment']);
         } else {
             $this->dispatch('added', ['message' => $result]);
@@ -98,7 +87,6 @@ class FormPaymentPage extends Component
         $this->form->month = date('m');
         $this->is_ipaid = false;
     }
-
 
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {

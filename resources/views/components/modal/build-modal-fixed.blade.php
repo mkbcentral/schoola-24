@@ -6,8 +6,8 @@
     'bg' => '',
     'headerLabel' => '',
 ])
-<div wire:ignore.self class="modal fade " id="{{ $idModal }}" tabindex="-1" role="dialog"
-    aria-labelledby="{{ $idModal }}-label" data-bs-backdrop="static" data-keyboard="false" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="{{ $idModal }}" tabindex="-1" role="dialog"
+    aria-labelledby="{{ $idModal }}-label" aria-hidden="true">
     <div class="modal-dialog modal-{{ $size }} modal-dialog-centered" role="document" style="position:relative;">
         <div class="modal-content">
             <div class="modal-header {{ $bg }}">

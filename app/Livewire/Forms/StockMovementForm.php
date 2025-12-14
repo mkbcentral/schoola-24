@@ -13,18 +13,19 @@ use Livewire\Form;
 class StockMovementForm extends Form
 {
     public ?ArticleStockMovement $movement = null;
+
     public ?Article $article = null;
 
-    #[Rule('required|in:in,out', message: "Le type de mouvement est obligatoire", onUpdate: false)]
+    #[Rule('required|in:in,out', message: 'Le type de mouvement est obligatoire', onUpdate: false)]
     public $type = 'in';
 
-    #[Rule('required|integer|min:1', message: "La quantité doit être au moins de 1", onUpdate: false)]
+    #[Rule('required|integer|min:1', message: 'La quantité doit être au moins de 1', onUpdate: false)]
     public $quantity = 0;
 
-    #[Rule('required|date|before_or_equal:today', message: "La date est obligatoire et ne peut pas être dans le futur", onUpdate: false)]
+    #[Rule('required|date|before_or_equal:today', message: 'La date est obligatoire et ne peut pas être dans le futur', onUpdate: false)]
     public $movement_date = '';
 
-    #[Rule('nullable|string|max:500', message: "La note ne doit pas dépasser 500 caractères", onUpdate: false)]
+    #[Rule('nullable|string|max:500', message: 'La note ne doit pas dépasser 500 caractères', onUpdate: false)]
     public $note = '';
 
     /**
@@ -52,14 +53,14 @@ class StockMovementForm extends Form
      */
     public function validateStock(): bool
     {
-        if ($this->type !== 'out' || !$this->article) {
+        if ($this->type !== 'out' || ! $this->article) {
             return true;
         }
 
         $stock = $this->article->stock;
 
         // Si on édite un mouvement, on ajoute son ancienne quantité au stock
-        if ($this->movement && $this->movement->type === 'out' && !$this->movement->is_closed) {
+        if ($this->movement && $this->movement->type === 'out' && ! $this->movement->is_closed) {
             $stock += $this->movement->quantity;
         }
 
@@ -71,14 +72,14 @@ class StockMovementForm extends Form
      */
     public function getAvailableStock(): int
     {
-        if (!$this->article) {
+        if (! $this->article) {
             return 0;
         }
 
         $stock = $this->article->stock;
 
         // Si on édite un mouvement de sortie non clôturé, on ajoute son ancienne quantité
-        if ($this->movement && $this->movement->type === 'out' && !$this->movement->is_closed) {
+        if ($this->movement && $this->movement->type === 'out' && ! $this->movement->is_closed) {
             $stock += $this->movement->quantity;
         }
 
@@ -92,7 +93,7 @@ class StockMovementForm extends Form
     {
         $this->validate();
 
-        if (!$this->validateStock()) {
+        if (! $this->validateStock()) {
             throw new \Exception('Stock insuffisant pour cette sortie. Stock disponible : ' . $this->getAvailableStock());
         }
 
@@ -119,7 +120,7 @@ class StockMovementForm extends Form
             throw new \Exception('Impossible de modifier un mouvement clôturé.');
         }
 
-        if (!$this->validateStock()) {
+        if (! $this->validateStock()) {
             throw new \Exception('Stock insuffisant pour cette sortie. Stock disponible : ' . $this->getAvailableStock());
         }
 

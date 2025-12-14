@@ -2,14 +2,13 @@
 
 namespace App\Livewire\Application\Payment\List;
 
-use App\Domain\Features\Configuration\FeeDataConfiguration;
-use App\Domain\Features\Payment\PaymentFeature;
 use App\Domain\Helpers\SmsNotificationHelper;
 use App\Domain\Utils\AppMessage;
-use App\Enums\RoleType;
+use App\DTOs\Payment\PaymentFilterDTO;
 use App\Models\CategoryFee;
 use App\Models\Payment;
-use App\Models\School;
+use App\Services\CategoryFee\CategoryFeeService;
+use App\Services\Contracts\PaymentServiceInterface;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Url;
@@ -19,34 +18,120 @@ use Livewire\WithPagination;
 class ListPaymentByDatePage extends Component
 {
     use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    // Services
+    private PaymentServiceInterface $paymentService;
+    private CategoryFeeService $categoryFeeService;
+
     protected $listeners = [
-        "refreshPaymentList" => '$refresh',
+        'refreshPaymentList' => 'loadPayments',
+        'paymentCreated' => 'loadPayments',
+        'paymentUpdated' => 'loadPayments',
+        'paymentDeleted' => 'loadPayments',
     ];
+
+    public function boot(
+        PaymentServiceInterface $paymentService,
+        CategoryFeeService $categoryFeeService
+    ): void {
+        $this->paymentService = $paymentService;
+        $this->categoryFeeService = $categoryFeeService;
+    }
+
+    // Filtres
     public ?string $date_filter = '';
     public int $category_fee_filter = 0;
     public int $per_page = 100;
-    public ?CategoryFee $categoryFeeSelected;
+
     #[Url(as: 'q')]
     public $q = '';
+
+    // Résultats
+    public $payments = [];
+    public $totalCount = 0;
+    public $totalsByCurrency = [];
+    public $currentPage = 1;
+    public $lastPage = 1;
+    public $hasMorePages = false;
+
+    // Données disponibles
+    public $categoryFees = [];
+    public ?CategoryFee $categoryFeeSelected = null;
 
     public function mount(): void
     {
         $this->date_filter = date('Y-m-d');
-        if (Auth::user()->role->name == RoleType::SCHOOL_FINANCE) {
-            $categoryFee = FeeDataConfiguration::getFirstCategoryFee();
-        } else {
-            $categoryFee = CategoryFee::query()->where('school_id', School::DEFAULT_SCHOOL_ID())
-                ->where('school_year_id', School::DEFAULT_SCHOOL_ID())
-                ->where('is_accessory', true)
-                ->first();
+
+        // Charger les catégories de frais
+        $this->categoryFees = $this->categoryFeeService->getAllCategoryFees();
+
+        // Sélectionner Minerval par défaut
+        $this->category_fee_filter = $this->categoryFeeService->findMinervalCategoryId(collect($this->categoryFees));
+
+        if ($this->category_fee_filter) {
+            $this->categoryFeeSelected = CategoryFee::find($this->category_fee_filter);
         }
-        $this->category_fee_filter = $categoryFee->id ?? 0;
-        $this->categoryFeeSelected = $categoryFee ?? null;
+
+        $this->loadPayments();
     }
 
     public function updatedCategoryFeeFilter($val): void
     {
         $this->categoryFeeSelected = CategoryFee::findOrFail($val);
+        $this->loadPayments();
+    }
+
+    public function updatedDateFilter(): void
+    {
+        $this->loadPayments();
+    }
+
+    public function updatedQ(): void
+    {
+        $this->loadPayments();
+    }
+
+    /**
+     * Charger les paiements filtrés
+     */
+    public function loadPayments(): void
+    {
+        if (!$this->category_fee_filter) {
+            $this->resetPaymentData();
+            return;
+        }
+
+        $filterDTO = PaymentFilterDTO::fromArray([
+            'date' => $this->date_filter,
+            'categoryFeeId' => $this->category_fee_filter,
+            'search' => $this->q,
+            'userId' => Auth::id(),
+        ]);
+
+        $result = $this->paymentService->getFilteredPayments($filterDTO, $this->per_page, $this->getPage());
+
+        // Décomposer le DTO en propriétés simples
+        $this->payments = $result->payments->items();
+        $this->totalCount = $result->totalCount;
+        $this->totalsByCurrency = $result->totalsByCurrency;
+        $this->currentPage = $result->payments->currentPage();
+        $this->lastPage = $result->payments->lastPage();
+        $this->hasMorePages = $result->payments->hasMorePages();
+    }
+
+    /**
+     * Réinitialiser les données de paiement
+     */
+    private function resetPaymentData(): void
+    {
+        $this->payments = [];
+        $this->totalCount = 0;
+        $this->totalsByCurrency = [];
+        $this->currentPage = 1;
+        $this->lastPage = 1;
+        $this->hasMorePages = false;
     }
 
     public function edit(Payment $payment): void
@@ -57,7 +142,7 @@ class ListPaymentByDatePage extends Component
     public function delete(?Payment $payment): void
     {
         try {
-            if (!$payment->is_paid) {
+            if (! $payment->is_paid) {
                 $payment->delete();
                 $this->dispatch('updated', ['message' => AppMessage::DATA_DELETED_SUCCESS]);
             } else {
@@ -88,18 +173,18 @@ class ListPaymentByDatePage extends Component
 
         try {
             if ($payment->smsPayment == null) {
-                //$phone = '+243898337969';
-                $phone =  $payment->registration->student->responsibleStudent->phone;
+                // $phone = '+243898337969';
+                $phone = $payment->registration->student->responsibleStudent->phone;
                 $phone = str_replace([' ', '(', ')', '-'], '', $phone);
-                $message = "C.S AQUILA, Cher parent, votre enfant "
-                    . $payment->registration->student->name . " est en ordre avec le frais "
-                    . $payment->scolarFee->name . ' Montant : ' . $payment->scolarFee->amount . " "
-                    .  $payment->scolarFee->categoryFee->currency . " "
-                    . format_fr_month_name($payment->month) . " , Merci pour votre confiance.";
+                $message = 'C.S AQUILA, Cher parent, votre enfant '
+                    . $payment->registration->student->name . ' est en ordre avec le frais '
+                    . $payment->scolarFee->name . ' Montant : ' . $payment->scolarFee->amount . ' '
+                    . $payment->scolarFee->categoryFee->currency . ' '
+                    . format_fr_month_name($payment->month) . ' , Merci pour votre confiance.';
                 SmsNotificationHelper::sendOrangeSMS($phone, $message);
                 $payment->smsPayment()->create([
                     'receiver' => $phone,
-                    'message' => $message
+                    'message' => $message,
                 ]);
                 $this->dispatch('added', ['message' => AppMessage::DATA_SAVED_SUCCESS]);
             } else {
@@ -110,36 +195,23 @@ class ListPaymentByDatePage extends Component
         }
     }
 
+    /**
+     * Obtenir le total pour la devise sélectionnée
+     */
+    public function getTotalPaymentsProperty(): float
+    {
+        if (!$this->categoryFeeSelected) {
+            return 0;
+        }
+
+        $currency = $this->categoryFeeSelected->currency;
+        return $this->totalsByCurrency[$currency] ?? 0;
+    }
+
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.application.payment.list.list-payment-by-date-page', [
-            'payments' => PaymentFeature::getList(
-                $this->date_filter,
-                '',
-                $this->q,
-                $this->category_fee_filter,
-                null,
-                null,
-                null,
-                null,
-                null,
-                Auth::id(),
-                $this->per_page
-            ),
-            'total_payments' => PaymentFeature::getTotal(
-                $this->date_filter,
-                '',
-                $this->category_fee_filter,
-                null,
-                null,
-                null,
-                0,
-                true,
-                null,
-                Auth::id(),
-                'CDF'
-            ),
-            'categoryFees' => FeeDataConfiguration::getListCategoryFee(100)
+            'total_payments' => $this->totalPayments,
         ]);
     }
 }

@@ -9,6 +9,7 @@ use Livewire\Component;
 class StudentCardInfoWidget extends Component
 {
     public ?Registration $registration;
+
     public function mount(Registration $registration)
     {
         $this->registration = $registration;
@@ -18,6 +19,7 @@ class StudentCardInfoWidget extends Component
     {
         $this->dispatch('studentData', $student);
     }
+
     public function render()
     {
         return view('livewire.application.student.widget.student-card-info-widget');

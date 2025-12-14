@@ -3,30 +3,37 @@
 namespace App\Models;
 
 use DB;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OtherExpense extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
     protected $fillable = [
         'description',
         'month',
         'amount',
         'currency',
+        'is_validated',
         'category_expense_id',
         'other_source_expense_id',
         'school_year_id',
-        'created_at'
+        'created_at',
+    ];
+
+    protected $casts = [
+        'amount' => 'float',
+        'is_validated' => 'boolean',
+        'created_at' => 'datetime',
     ];
 
     /**
      * Get the CategoryExpense that owns the ExpenseFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function categoryExpense(): BelongsTo
     {
@@ -35,18 +42,14 @@ class OtherExpense extends Model
 
     /**
      * Get the otherSourceExpense that owns the ExpenseFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function otherSourceExpense(): BelongsTo
     {
-        return $this->belongsTo(OtherSourceExpense::class, 'other_source_expense_id',);
+        return $this->belongsTo(OtherSourceExpense::class, 'other_source_expense_id');
     }
 
     /**
      * Get the scoolYear that owns the ExpenseFee
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function scoolYear(): BelongsTo
     {

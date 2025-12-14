@@ -11,10 +11,11 @@ class AuthUserController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $user=Auth::user();
-        return  response([
-        'user' => new UserResource($user),
-        'token' => $request->bearerToken(),
-    ], 200);
+        $user = Auth::user();
+
+        return response([
+            'user' => new UserResource($user),
+            'token' => $request->bearerToken(),
+        ], 200);
     }
 }

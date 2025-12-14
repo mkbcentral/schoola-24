@@ -11,9 +11,11 @@ use Livewire\WithPagination;
 class ListRolePage extends Component
 {
     use WithPagination;
+
     public int $per_page = 5;
 
-    protected $listeners = ["roleDataRefreshed" => '$refresh'];
+    protected $listeners = ['roleDataRefreshed' => '$refresh'];
+
     public function edit(?Role $role)
     {
         $this->dispatch('roleData', $role);
@@ -32,6 +34,7 @@ class ListRolePage extends Component
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
     }
+
     public function render()
     {
         return view('livewire.application.admin.list.list-role-page', [

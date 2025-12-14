@@ -10,23 +10,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class OtherSourceExpense extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
-        'school_id'
+        'school_id',
     ];
+
     /**
      * Get the school that owns the CategoryExpense
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class, 'school_id');
     }
+
     /**
      * Get all of the otherExpenses for the OtherSourceExpense
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function otherExpenses(): HasMany
     {

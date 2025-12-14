@@ -9,16 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class SingleAppLink extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'icon',
         'route',
-        'user_id'
+        'user_id',
     ];
+
     /**
      * The users that belong to the SingleAppLink
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users(): BelongsToMany
     {

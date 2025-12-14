@@ -14,8 +14,6 @@ class Rate extends Model
 
     /**
      * Get all of the registrations for the Rate
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function registrations(): HasMany
     {
@@ -24,8 +22,6 @@ class Rate extends Model
 
     /**
      * Get all of the payments for the Rate
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function payments(): HasMany
     {
@@ -36,6 +32,7 @@ class Rate extends Model
     {
         return Rate::query()->where('is_changed', false)->first()->amount;
     }
+
     public static function DEFAULT_RATE_ID(): int
     {
         return Rate::query()->where('is_changed', false)->first()->id;
