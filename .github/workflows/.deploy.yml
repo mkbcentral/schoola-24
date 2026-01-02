@@ -23,7 +23,28 @@ jobs:
         run: composer install --no-dev --optimize-autoloader
         # Installe les dépendances PHP sans les dépendances de développement
 
-      - name: 🚀 Deploy to Hostinger via SSH
+      - name: � Debug - Test SSH connection and verify path
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            echo "=== Current directory ==="
+            pwd
+            echo "=== Home directory contents ==="
+            ls -la ~
+            echo "=== Target path info ==="
+            echo "Deploy path should be: ${{ secrets.DEPLOY_PATH }}"
+            ls -la ${{ secrets.DEPLOY_PATH }} || echo "Path does not exist or not accessible"
+            echo "=== Creating/verifying deploy directory ==="
+            mkdir -p ${{ secrets.DEPLOY_PATH }}
+            chmod 755 ${{ secrets.DEPLOY_PATH }}
+            echo "Deploy directory ready!"
+        # Test la connexion SSH et vérifie les chemins
+
+      - name: �🚀 Deploy to Hostinger via SSH
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
