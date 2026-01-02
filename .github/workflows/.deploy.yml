@@ -1,5 +1,4 @@
-name: 🚀 Deploy via SSH Mahubiri backend
-
+name: 🚀 Deploy via SSH SCHOOLA APP V2
 on:
   push:
     branches:
