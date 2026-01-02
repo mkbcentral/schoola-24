@@ -1,0 +1,321 @@
+/**
+ * Styles V3 - Payment Management
+ * Styles modernes et fluides pour la gestion des paiements V3
+ */
+
+/* ==================== Variables ==================== */
+:root {
+    --v3-primary: #667eea;
+    --v3-primary-dark: #5a67d8;
+    --v3-success: #10b981;
+    --v3-success-dark: #059669;
+    --v3-info: #3b82f6;
+    --v3-info-dark: #2563eb;
+    --v3-warning: #f59e0b;
+    --v3-danger: #ef4444;
+    --v3-light: #f8fafc;
+    --v3-dark: #1e293b;
+    
+    --v3-border-radius: 0.5rem;
+    --v3-transition: all 0.3s ease;
+    --v3-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --v3-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --v3-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== Gradients ==================== */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--v3-primary) 0%, #764ba2 100%) !important;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, var(--v3-success) 0%, var(--v3-success-dark) 100%) !important;
+}
+
+.bg-gradient-info {
+    background: linear-gradient(135deg, var(--v3-info) 0%, var(--v3-info-dark) 100%) !important;
+}
+
+/* ==================== Cards ==================== */
+.v3-card {
+    border-radius: var(--v3-border-radius);
+    border: none;
+    box-shadow: var(--v3-shadow-sm);
+    transition: var(--v3-transition);
+}
+
+.v3-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--v3-shadow-md);
+}
+
+.v3-card-header {
+    border-radius: var(--v3-border-radius) var(--v3-border-radius) 0 0;
+    border: none;
+    padding: 1rem 1.25rem;
+}
+
+.v3-card-body {
+    padding: 1.25rem;
+}
+
+/* ==================== Dropdown Results ==================== */
+.dropdown-results {
+    background: white;
+    border-radius: var(--v3-border-radius);
+    border: 1px solid #e5e7eb;
+    box-shadow: var(--v3-shadow-lg);
+}
+
+.dropdown-results .list-group-item {
+    border: none;
+    border-bottom: 1px solid #f3f4f6;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.dropdown-results .list-group-item:hover {
+    background-color: #f8fafc;
+    transform: translateX(4px);
+}
+
+.dropdown-results .list-group-item:last-child {
+    border-bottom: none;
+    border-radius: 0 0 var(--v3-border-radius) var(--v3-border-radius);
+}
+
+.dropdown-results .list-group-item:first-child {
+    border-radius: var(--v3-border-radius) var(--v3-border-radius) 0 0;
+}
+
+/* ==================== Form Elements ==================== */
+.v3-form-control {
+    border-radius: var(--v3-border-radius);
+    border: 2px solid #e5e7eb;
+    transition: var(--v3-transition);
+}
+
+.v3-form-control:focus {
+    border-color: var(--v3-primary);
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: var(--v3-success);
+    border-color: var(--v3-success);
+}
+
+.form-switch .form-check-input {
+    cursor: pointer;
+    transition: var(--v3-transition);
+}
+
+.form-switch .form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
+}
+
+/* ==================== Buttons ==================== */
+.v3-btn {
+    border-radius: var(--v3-border-radius);
+    transition: var(--v3-transition);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+.v3-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--v3-shadow-sm);
+}
+
+.v3-btn:active {
+    transform: translateY(0);
+}
+
+.btn-group .btn {
+    transition: var(--v3-transition);
+}
+
+/* ==================== Tables ==================== */
+.v3-table {
+    border-radius: var(--v3-border-radius);
+    overflow: hidden;
+}
+
+.v3-table thead {
+    background-color: var(--v3-light);
+}
+
+.v3-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.v3-table tbody tr:hover {
+    background-color: #f8fafc;
+    transform: scale(1.005);
+    box-shadow: var(--v3-shadow-sm);
+}
+
+/* ==================== Badges ==================== */
+.v3-badge {
+    border-radius: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+/* ==================== Animations ==================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.v3-fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+.v3-slide-in {
+    animation: slideIn 0.3s ease;
+}
+
+/* ==================== Loading States ==================== */
+.v3-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.v3-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid rgba(102, 126, 234, 0.2);
+    border-top-color: var(--v3-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ==================== Sticky Elements ==================== */
+@media (min-width: 992px) {
+    .sticky-top {
+        position: sticky;
+        top: 1rem;
+        z-index: 1020;
+    }
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 991.98px) {
+    .sticky-top {
+        position: relative;
+        top: 0;
+    }
+}
+
+/* ==================== Input Groups ==================== */
+.input-group .form-control:focus {
+    z-index: 3;
+}
+
+.input-group-text {
+    background-color: var(--v3-light);
+    border: 2px solid #e5e7eb;
+    transition: var(--v3-transition);
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: var(--v3-primary);
+}
+
+/* ==================== Status Indicators ==================== */
+.status-paid {
+    color: var(--v3-success);
+}
+
+.status-unpaid {
+    color: var(--v3-warning);
+}
+
+/* ==================== Smooth Scrolling ==================== */
+.v3-scrollable {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(102, 126, 234, 0.3) transparent;
+}
+
+.v3-scrollable::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.v3-scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.v3-scrollable::-webkit-scrollbar-thumb {
+    background-color: rgba(102, 126, 234, 0.3);
+    border-radius: 10px;
+}
+
+.v3-scrollable::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(102, 126, 234, 0.5);
+}
+
+/* ==================== Empty States ==================== */
+.v3-empty-state {
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.v3-empty-state i {
+    font-size: 4rem;
+    opacity: 0.3;
+    color: var(--v3-dark);
+}
+
+.v3-empty-state p {
+    color: #64748b;
+    margin-top: 1rem;
+}
+
+/* ==================== Utility Classes ==================== */
+.text-gradient {
+    background: linear-gradient(135deg, var(--v3-primary) 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hover-lift {
+    transition: var(--v3-transition);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--v3-shadow-lg);
+}
