@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        $school = School::create(['name' => 'MY SCHOOL', 'type' => 'C.S']);
+        //$school = School::create(['name' => 'MY SCHOOL', 'type' => 'C.S']);
+        /*
         $currencies = [
             ['name' => 'USD'],
             ['name' => 'CDF'],
@@ -49,6 +50,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ]
         );
+        */
 
         $multi_app_links = [
             [
