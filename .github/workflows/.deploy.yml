@@ -19,9 +19,6 @@ jobs:
           php-version: "8.3"
         # Installe PHP 8.3 sur l'environnement GitHub Actions
 
-      - name: � Install dependencies
-        run: composer install --no-dev --optimize-autoloader
-        # Installe les dépendances PHP sans les dépendances de développement
 
       - name: � Debug - Test SSH connection and verify path
         uses: appleboy/ssh-action@v1.1.0
@@ -45,18 +42,36 @@ jobs:
         # Test la connexion SSH et vérifie les chemins
 
       - name: �🚀 Deploy to Hostinger via SSH
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "./"
-          target: ${{ secrets.DEPLOY_PATH }}
-          rm: false
-          overwrite: true
-          strip_components: 0
-        # Transfère tous les fichiers du projet vers le serveur distant via SCP
+          script: |
+            # Créer un répertoire temporaire pour le déploiement
+            TEMP_DIR="/tmp/schoola-deploy-$(date +%s)"
+            mkdir -p $TEMP_DIR
+            cd $TEMP_DIR
+
+            # Cloner le repository
+            git clone --depth 1 --branch main https://github.com/${{ github.repository }}.git .
+
+            # Installer les dépendances
+            composer install --no-dev --optimize-autoloader --no-interaction
+
+            # Synchroniser vers le dossier de déploiement
+            mkdir -p ${{ secrets.DEPLOY_PATH }}
+            rsync -av --delete \
+              --exclude='.git' \
+              --exclude='node_modules' \
+              --exclude='.env' \
+              --exclude='storage/logs/*' \
+              ./ ${{ secrets.DEPLOY_PATH }}/
+
+            # Nettoyer
+            rm -rf $TEMP_DIR
+        # Clone, build et déploie via SSH directement sur le serveur
 
       - name: 🔧 Run artisan commands remotely
         uses: appleboy/ssh-action@v1.1.0
