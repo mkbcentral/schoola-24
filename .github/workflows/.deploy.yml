@@ -35,6 +35,8 @@ jobs:
           rm: false
           overwrite: true
           strip_components: 0
+          timeout: 120s
+          command_timeout: 30m
         # Transfère tous les fichiers du projet vers le serveur distant via SCP
 
       - name: 🔧 Run artisan commands remotely
