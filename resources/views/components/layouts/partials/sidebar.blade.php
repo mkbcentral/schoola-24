@@ -91,7 +91,7 @@
                 <button @click="open = !open" class="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 text-white/90 hover:text-white hover:bg-blue-700/30 dark:hover:bg-gray-700/40 rounded-lg transition-all duration-200 group">
                     <div class="flex items-center gap-3">
                         <i class="bi bi-people text-lg"></i>
-                        <span class="text-sm font-medium">Étudiants</span>
+                        <span class="text-sm font-medium">Élèves</span>
                     </div>
                     <i class="bi bi-chevron-down text-xs transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
                 </button>
@@ -100,14 +100,14 @@
                         <a href="{{ route('student.info') }}"
                            class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('student.info') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
                             <i class="bi bi-person-lines-fill text-xs opacity-70"></i>
-                            <span>Informations étudiants</span>
+                            <span>Informations élèves</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('rapport.student.debt') }}"
                            class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('rapport.student.debt') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
                             <i class="bi bi-exclamation-triangle text-xs opacity-70"></i>
-                            <span>Dettes étudiants</span>
+                            <span>Dettes élèves</span>
                         </a>
                     </li>
                 </ul>
