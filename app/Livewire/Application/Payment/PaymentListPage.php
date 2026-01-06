@@ -199,7 +199,7 @@ class PaymentListPage extends Component
     {
         $result = $this->getPaymentResults();
 
-        return view('livewire.application.payment.payment-list-page', [
+        return view('livewire.application.payment.payment-list-page-modern', [
             'payments' => $result->payments,
             'totalCount' => $result->totalCount,
             'totalsByCurrency' => $result->totalsByCurrency,

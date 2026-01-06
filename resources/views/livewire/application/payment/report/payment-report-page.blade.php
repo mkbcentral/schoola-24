@@ -1,7 +1,7 @@
 <div>
     <x-navigation.bread-crumb icon='bi bi-file-earmark-text' label="Rapports de Paiement">
         <x-navigation.bread-crumb-item label='Paiements' />
-        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="dashboard.main" />
+        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="finance.dashboard" />
     </x-navigation.bread-crumb>
 
     <x-content.main-content-page>

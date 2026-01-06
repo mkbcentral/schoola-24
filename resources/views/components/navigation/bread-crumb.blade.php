@@ -1,19 +1,22 @@
 @props(['color' => '', 'icon' => '', 'label' => ''])
 
-<div class="container-fluid d-flex justify-content-between align-items-center mb-3 pt-2">
-    <div class="mb-2 mb-md-0">
-        <h3 class="mb-0 fw-bold text-secondary d-flex align-items-center {{ $color }}">
-            @if ($icon)
-                <i class="{{ $icon }} me-2"></i>
-            @endif
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-4 px-4 lg:px-0">
+    {{-- Titre avec icône --}}
+    <div class="flex items-center gap-3">
+        @if ($icon)
+            <div class="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-2.5">
+                <i class="{{ $icon }} text-blue-600 dark:text-blue-400 text-xl"></i>
+            </div>
+        @endif
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 {{ $color }}">
             {{ $label }}
-        </h3>
+        </h1>
     </div>
-    <div class=" d-flex justify-content-center justify-content-md-end">
-        <nav aria-label="breadcrumb" class="w-100">
-            <ol class="breadcrumb bg-transparent p-0 m-0">
-                {{ $slot }}
-            </ol>
-        </nav>
-    </div>
+    
+    {{-- Breadcrumb navigation --}}
+    <nav aria-label="breadcrumb" class="flex items-center">
+        <ol class="flex items-center gap-2 text-sm">
+            {{ $slot }}
+        </ol>
+    </nav>
 </div>

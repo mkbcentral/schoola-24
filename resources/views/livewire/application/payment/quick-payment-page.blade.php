@@ -2,7 +2,7 @@
 <div>
     <x-navigation.bread-crumb icon='bi bi-cash-coin' label="Paiement Rapide">
         <x-navigation.bread-crumb-item label='Paiements' />
-        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="dashboard.main" />
+        <x-navigation.bread-crumb-item label='Dashboard' isLinked=true link="finance.dashboard" />
     </x-navigation.bread-crumb>
 
     <x-content.main-content-page>
@@ -185,7 +185,7 @@
                             </h6>
                         </div>
                         <div class="card-body p-0">
-                            @livewire('application.payment.daily-payment-list')
+                            @livewire('application.payment.daily-payment-list-v2')
                         </div>
                     </div>
                 </div>

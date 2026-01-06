@@ -250,6 +250,6 @@ class ListStudentDebtPage extends Component
 
     public function render()
     {
-        return view('livewire.application.v2.report.list-student-debt-page');
+        return view('livewire.application.v2.report.list-student-debt-page-tailwind');
     }
 }

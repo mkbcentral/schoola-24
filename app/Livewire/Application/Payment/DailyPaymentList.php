@@ -20,6 +20,16 @@ class DailyPaymentList extends Component
     public $searchPayment = '';
     public $filterDate;
     public $filterCategoryFeeId;
+    public $dateRange = null;
+    public $dateDebut = null;
+    public $dateFin = null;
+
+    // Filtres académiques
+    public $sectionId = null;
+    public $optionId = null;
+    public $sections = [];
+    public $options = [];
+    public $classRooms = [];
 
     // Résultat des paiements
     public $payments = [];
@@ -28,6 +38,11 @@ class DailyPaymentList extends Component
     public $currentPage = 1;
     public $lastPage = 1;
     public $hasMorePages = false;
+    public $statistics = [
+        'paid_count' => 0,
+        'unpaid_count' => 0,
+        'payment_rate' => 0,
+    ];
 
     // Données disponibles
     public $categoryFees = [];
@@ -100,6 +115,9 @@ class DailyPaymentList extends Component
         $this->currentPage = $result->payments->currentPage();
         $this->lastPage = $result->payments->lastPage();
         $this->hasMorePages = $result->payments->hasMorePages();
+
+        // Calculer les statistiques
+        $this->calculateStatistics();
     }
 
     /**
@@ -113,6 +131,27 @@ class DailyPaymentList extends Component
         $this->currentPage = 1;
         $this->lastPage = 1;
         $this->hasMorePages = false;
+        $this->statistics = [
+            'paid_count' => 0,
+            'unpaid_count' => 0,
+            'payment_rate' => 0,
+        ];
+    }
+
+    /**
+     * Calculer les statistiques de paiement
+     */
+    private function calculateStatistics(): void
+    {
+        $paidCount = collect($this->payments)->where('is_paid', true)->count();
+        $unpaidCount = collect($this->payments)->where('is_paid', false)->count();
+        $total = $paidCount + $unpaidCount;
+
+        $this->statistics = [
+            'paid_count' => $paidCount,
+            'unpaid_count' => $unpaidCount,
+            'payment_rate' => $total > 0 ? ($paidCount / $total) * 100 : 0,
+        ];
     }
 
     /**
@@ -128,6 +167,8 @@ class DailyPaymentList extends Component
             ['path' => request()->url(), 'pageName' => 'page']
         );
     }
+
+
 
     /**
      * Mise à jour du filtre de date
@@ -318,6 +359,8 @@ class DailyPaymentList extends Component
 
     public function render()
     {
-        return view('livewire.application.payment.daily-payment-list');
+        return view('livewire.application.payment.daily-payment-list', [
+            'paymentsPaginated' => $this->getPaymentsPaginatedProperty()
+        ]);
     }
 }

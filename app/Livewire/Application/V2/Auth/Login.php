@@ -102,7 +102,7 @@ class Login extends Component
                 session()->flash('success', $result['message']);
 
                 // Rediriger vers le tableau de bord financier
-                $this->redirect('/', navigate: true);
+                $this->redirect('/');
                 return;
             } else {
                 // Connexion échouée

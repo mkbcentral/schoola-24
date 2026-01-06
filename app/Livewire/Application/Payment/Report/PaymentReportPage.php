@@ -316,6 +316,6 @@ class PaymentReportPage extends Component
 
     public function render()
     {
-        return view('livewire.application.payment.report.payment-report-page');
+        return view('livewire.application.payment.report.payment-report-page-tailwind');
     }
 }

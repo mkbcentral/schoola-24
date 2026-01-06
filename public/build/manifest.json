@@ -1,80 +1,17 @@
 {
-  "_jquery.mask-DoX7ZNaz.js": {
-    "file": "js/jquery.mask-DoX7ZNaz.js",
-    "name": "jquery.mask",
-    "isDynamicEntry": true,
-    "imports": [
-      "_vendor-core-4_Hsn_i4.js",
-      "_vendor-utils-BwYyBwBR.js"
-    ]
-  },
-  "_vendor-charts-Cv9K9ogR.js": {
-    "file": "js/vendor-charts-Cv9K9ogR.js",
-    "name": "vendor-charts"
-  },
-  "_vendor-core-4_Hsn_i4.js": {
-    "file": "js/vendor-core-4_Hsn_i4.js",
-    "name": "vendor-core"
-  },
-  "_vendor-ui-CucWSvYC.js": {
-    "file": "js/vendor-ui-CucWSvYC.js",
-    "name": "vendor-ui",
-    "imports": [
-      "_vendor-core-4_Hsn_i4.js"
-    ]
-  },
-  "_vendor-utils-BwYyBwBR.js": {
-    "file": "js/vendor-utils-BwYyBwBR.js",
-    "name": "vendor-utils",
-    "imports": [
-      "_vendor-core-4_Hsn_i4.js"
-    ]
-  },
-  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
-    "file": "fonts/bootstrap-icons-BeopsB42.woff",
-    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
-  },
-  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
-    "file": "fonts/bootstrap-icons-mSm7cUeB.woff2",
-    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
-  },
-  "node_modules/chart.js/auto/auto.js": {
-    "file": "js/auto-Cm5WSf46.js",
-    "name": "auto",
-    "src": "node_modules/chart.js/auto/auto.js",
-    "isDynamicEntry": true,
-    "imports": [
-      "_vendor-charts-Cv9K9ogR.js"
-    ]
-  },
-  "resources/js/app.js": {
-    "file": "js/app-CrfDuMYx.js",
+  "resources/css/app.css": {
+    "file": "assets/app-oAt2DxaF.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
     "name": "app",
-    "src": "resources/js/app.js",
-    "isEntry": true,
-    "imports": [
-      "_vendor-core-4_Hsn_i4.js",
-      "_vendor-ui-CucWSvYC.js"
-    ],
-    "dynamicImports": [
-      "node_modules/chart.js/auto/auto.js",
-      "_jquery.mask-DoX7ZNaz.js"
-    ]
-  },
-  "resources/sass/app.scss": {
-    "file": "assets/app-CVUkzXMA.css",
-    "src": "resources/sass/app.scss",
-    "isEntry": true,
     "names": [
       "app.css"
     ]
   },
-  "resources/sass/guest.scss": {
-    "file": "assets/guest-CvEYcW_Y.css",
-    "src": "resources/sass/guest.scss",
-    "isEntry": true,
-    "names": [
-      "guest.css"
-    ]
+  "resources/js/app.js": {
+    "file": "assets/app-CUHdPbdY.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
   }
 }

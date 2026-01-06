@@ -78,11 +78,13 @@ use App\Livewire\Application\Student\List\ListResponsibleStudentPage;
 use App\Livewire\Application\Student\List\ListStudentPage;
 use App\Livewire\Application\Student\StudentInfoPage;
 use App\Livewire\Application\V2\Registration\RegistrationListPage;
+use App\Livewire\Application\V2\Report\ListStudentDebtPage;
 use App\Livewire\Application\V2\School\SchoolManagementPage;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     Route::get('payment/list', PaymentListPage::class)->name('payment.list')->lazy();
     Route::get('payment/pdf/generate', [\App\Http\Controllers\Payment\PaymentPdfController::class, 'generate'])->name('payments.pdf');
     Route::get('payment/quick', QuickPaymentPage::class)->name('payment.quick')->lazy();
@@ -93,10 +95,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('infos', StudentInfoPage::class)->name('student.info')->lazy();
 
-    Route::get('finance/dashboard', FinancialDashboardPage::class)->name('finance.dashboard')->lazy();
+    Route::get('/', FinancialDashboardPage::class)->name('finance.dashboard')->lazy();
 
 
-    Route::get('student-debt', \App\Livewire\Application\Report\ListStudentDebtPage::class)
+    Route::get('student-debt', ListStudentDebtPage::class)
         ->name('rapport.student.debt')->lazy();
 
 
@@ -122,7 +124,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('audit/{articleId}', AuditHistoryViewer::class)->name('stock.audit.article')->lazy();
     Route::get('movements/{article}', ArticleStockMovementManager::class)->name('app.stock.movements')->lazy();
     Route::get('export/movements-pdf/{article}', [StockExportController::class, 'exportMovementsPdf'])->name('stock.export.movements.pdf');
-
+    /*
     Route::middleware(['access.chercker'])->group(function () {
         Route::get('/', MainDashobardPage::class)->name('dashboard.main')->lazy();
         Route::get('/responsables', ListResponsibleStudentPage::class)->name('responsable.main')->lazy();
@@ -158,7 +160,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('/', SchoolListPage::class)->name('admin.schools.index')->lazy();
                 Route::get('/create', CreateSchoolPage::class)->name('admin.schools.create')->lazy();
                 Route::get('/{schoolId}/edit', EditSchoolPage::class)->name('admin.schools.edit')->lazy();
-                
+
             });
         });
         // Routes work on payments
@@ -206,6 +208,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 ->name('missing.revenue.report');
         });
     });
+    */
 
     // Route::get('report/payments', PaymentReportPage::class)->name('report.payments')->lazy();
 

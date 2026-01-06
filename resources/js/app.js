@@ -1,22 +1,30 @@
-// Import critique - chargé immédiatement
-import "./bootstrap.js";
-import "../js/toats.js";
-import './chart.js';
-import './main.js';
-import './theme-switcher.js';
+import './bootstrap';
+import Alpine from 'alpinejs';
+import Chart from 'chart.js/auto';
 
+// Initialize Alpine
+window.Alpine = Alpine;
+Alpine.start();
 
+// Make Chart.js available globally
+window.Chart = Chart;
 
-// jQuery Mask Plugin - chargé uniquement si des champs avec masque sont présents
-if (document.querySelector('[data-mask]') || document.querySelector('.mask-input')) {
-    import("jquery-mask-plugin/dist/jquery.mask.js").then(() => {
-        console.log('jQuery Mask loaded');
-    }).catch(err => console.error('Error loading jQuery Mask:', err));
-}
+// Log pour vérifier que le JS est chargé
+console.log('Schoola App loaded');
 
-// Modal drag - à décommenter si nécessaire
-// if (document.querySelector('.draggable-modal')) {
-//     import('./modal-grag.js').then(() => {
-//         console.log('Modal drag loaded');
-//     }).catch(err => console.error('Error loading modal drag:', err));
-// }
+// Rafraîchir le token CSRF pour éviter les erreurs 419 avec wire:navigate
+document.addEventListener('livewire:navigated', () => {
+    // Récupérer le nouveau token CSRF après la navigation
+    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    if (token) {
+        // Mettre à jour tous les champs CSRF cachés dans les formulaires
+        document.querySelectorAll('input[name="_token"]').forEach(input => {
+            input.value = token;
+        });
+
+        // Mettre à jour axios si disponible
+        if (window.axios) {
+            window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+        }
+    }
+});

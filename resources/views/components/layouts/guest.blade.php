@@ -10,20 +10,13 @@
     @if (config('app.env') === 'production')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @endif
-    @vite(['resources/sass/guest.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('style')
 </head>
 
 <body>
-    <div class="login-page">
-        <div class="login-box">
-            <div class="login-content">
-                <div class="brand-logo">
-                    <img class="" src="{{ asset('images/logo.svg') }}" alt="Logo" width="260px">
-                </div>
-                {{ $slot }}
-            </div>
-        </div>
+    <div class="">
+           {{ $slot }}
     </div>
     @stack('js')
 </body>

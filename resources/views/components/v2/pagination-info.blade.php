@@ -7,7 +7,7 @@
             {{ $paginator->total() }} résultats
         </div>
         <div>
-            {{ $paginator->links() }}
+            {{ $paginator->links('livewire::tailwind') }}
         </div>
     </div>
 @endif

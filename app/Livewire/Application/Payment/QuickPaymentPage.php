@@ -201,6 +201,6 @@ class QuickPaymentPage extends Component
 
     public function render()
     {
-        return view('livewire.application.payment.quick-payment-page');
+        return view('livewire.application.payment.quick-payment-page-modern');
     }
 }

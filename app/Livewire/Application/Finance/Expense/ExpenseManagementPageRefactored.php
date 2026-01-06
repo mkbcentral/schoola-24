@@ -27,6 +27,20 @@ class ExpenseManagementPageRefactored extends Component
     // Type de dépense actif
     public string $expenseType = 'fee';
 
+    // Données du formulaire de dépense
+    public array $expenseFormData = [
+        'description' => '',
+        'month' => '',
+        'amount' => '',
+        'currency' => 'USD',
+        'categoryExpenseId' => '',
+        'categoryFeeId' => '',
+        'otherSourceExpenseId' => '',
+    ];
+
+    public bool $isEditingExpense = false;
+    public ?int $editingExpenseId = null;
+
     // Pas de modal ni de form - géré par ExpenseFormModal
 
     // Services injectés
@@ -87,7 +101,10 @@ class ExpenseManagementPageRefactored extends Component
     public function openCreateModal(): void
     {
         $this->clearMessage();
-        $this->dispatch('openExpenseModal', expenseType: $this->expenseType);
+        $this->resetExpenseForm();
+        $this->isEditingExpense = false;
+        $this->editingExpenseId = null;
+        $this->dispatch('open-expense-form-modal');
     }
 
     /**
@@ -96,7 +113,131 @@ class ExpenseManagementPageRefactored extends Component
     public function openEditModal(int $id): void
     {
         $this->clearMessage();
-        $this->dispatch('openExpenseEditModal', id: $id, expenseType: $this->expenseType);
+        $this->isEditingExpense = true;
+        $this->editingExpenseId = $id;
+        
+        // Charger les données de la dépense
+        if ($this->expenseType === 'fee') {
+            $expense = \App\Models\ExpenseFee::find($id);
+        } else {
+            $expense = \App\Models\OtherExpense::find($id);
+        }
+
+        if ($expense) {
+            $this->expenseFormData = [
+                'description' => $expense->description,
+                'month' => $expense->month,
+                'amount' => $expense->amount,
+                'currency' => $expense->currency,
+                'categoryExpenseId' => $expense->category_expense_id,
+                'categoryFeeId' => $expense->category_fee_id ?? '',
+                'otherSourceExpenseId' => $expense->other_source_expense_id ?? '',
+            ];
+        }
+        
+        $this->dispatch('open-expense-form-modal');
+    }
+
+    /**
+     * Enregistrer une dépense
+     */
+    public function saveExpense(): void
+    {
+        $this->validate([
+            'expenseFormData.description' => 'required|string|max:255',
+            'expenseFormData.month' => 'required|string',
+            'expenseFormData.amount' => 'required|numeric|min:0',
+            'expenseFormData.currency' => 'required|in:USD,CDF',
+            'expenseFormData.categoryExpenseId' => 'required|exists:category_expenses,id',
+        ]);
+
+        try {
+            if ($this->expenseType === 'fee') {
+                $this->validate([
+                    'expenseFormData.categoryFeeId' => 'required|exists:category_fees,id',
+                ]);
+
+                if ($this->isEditingExpense && $this->editingExpenseId) {
+                    $expense = \App\Models\ExpenseFee::find($this->editingExpenseId);
+                    $expense->update([
+                        'description' => $this->expenseFormData['description'],
+                        'month' => $this->expenseFormData['month'],
+                        'amount' => $this->expenseFormData['amount'],
+                        'currency' => $this->expenseFormData['currency'],
+                        'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
+                        'category_fee_id' => $this->expenseFormData['categoryFeeId'],
+                    ]);
+                    $this->success('Dépense modifiée avec succès');
+                } else {
+                    \App\Models\ExpenseFee::create([
+                        'description' => $this->expenseFormData['description'],
+                        'month' => $this->expenseFormData['month'],
+                        'amount' => $this->expenseFormData['amount'],
+                        'currency' => $this->expenseFormData['currency'],
+                        'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
+                        'category_fee_id' => $this->expenseFormData['categoryFeeId'],
+                        'school_id' => \App\Models\School::DEFAULT_SCHOOL_ID(),
+                        'school_year_id' => session('school_year_id'),
+                        'date' => now(),
+                    ]);
+                    $this->success('Dépense créée avec succès');
+                }
+            } else {
+                $this->validate([
+                    'expenseFormData.otherSourceExpenseId' => 'required|exists:other_source_expenses,id',
+                ]);
+
+                if ($this->isEditingExpense && $this->editingExpenseId) {
+                    $expense = \App\Models\OtherExpense::find($this->editingExpenseId);
+                    $expense->update([
+                        'description' => $this->expenseFormData['description'],
+                        'month' => $this->expenseFormData['month'],
+                        'amount' => $this->expenseFormData['amount'],
+                        'currency' => $this->expenseFormData['currency'],
+                        'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
+                        'other_source_expense_id' => $this->expenseFormData['otherSourceExpenseId'],
+                    ]);
+                    $this->success('Dépense modifiée avec succès');
+                } else {
+                    \App\Models\OtherExpense::create([
+                        'description' => $this->expenseFormData['description'],
+                        'month' => $this->expenseFormData['month'],
+                        'amount' => $this->expenseFormData['amount'],
+                        'currency' => $this->expenseFormData['currency'],
+                        'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
+                        'other_source_expense_id' => $this->expenseFormData['otherSourceExpenseId'],
+                        'school_id' => \App\Models\School::DEFAULT_SCHOOL_ID(),
+                        'school_year_id' => session('school_year_id'),
+                        'date' => now(),
+                    ]);
+                    $this->success('Dépense créée avec succès');
+                }
+            }
+
+            $this->dispatch('close-expense-form-modal');
+            $this->resetExpenseForm();
+            $this->resetPage();
+        } catch (\Exception $e) {
+            $this->error('Erreur lors de l\'enregistrement: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Réinitialiser le formulaire
+     */
+    private function resetExpenseForm(): void
+    {
+        $this->expenseFormData = [
+            'description' => '',
+            'month' => '',
+            'amount' => '',
+            'currency' => 'USD',
+            'categoryExpenseId' => '',
+            'categoryFeeId' => '',
+            'otherSourceExpenseId' => '',
+        ];
+        $this->isEditingExpense = false;
+        $this->editingExpenseId = null;
     }
 
     /**
@@ -222,7 +363,7 @@ class ExpenseManagementPageRefactored extends Component
      */
     public function render()
     {
-        return view('livewire.application.finance.expense.expense-management-page', [
+        return view('livewire.application.finance.expense.expense-management-page-v2', [
             'expenses' => $this->getExpenses(),
             'statistics' => $this->getStatistics(),
             'categoryExpenses' => CategoryExpense::where('school_id', School::DEFAULT_SCHOOL_ID())->orderBy('name')->get(),

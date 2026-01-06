@@ -1,0 +1,268 @@
+/* Tailwind CSS - Point d'entrée principal */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================================================
+   LAYER COMPONENTS - Classes réutilisables custom
+   ================================================== */
+
+@layer components {
+  /* Boutons - Migration des classes Bootstrap */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-lg;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
+  }
+
+  .btn-success {
+    @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+
+  .btn-warning {
+    @apply bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500;
+  }
+
+  .btn-info {
+    @apply bg-cyan-600 text-white hover:bg-cyan-700 focus:ring-cyan-500;
+  }
+
+  .btn-light {
+    @apply bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
+  }
+
+  .btn-dark {
+    @apply bg-gray-800 text-white hover:bg-gray-900 focus:ring-gray-700;
+  }
+
+  .btn-outline-primary {
+    @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white focus:ring-blue-500;
+  }
+
+  /* Cards - Migration des classes Bootstrap */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-card overflow-hidden transition-shadow duration-200;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover;
+  }
+
+  .card-header {
+    @apply px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 font-semibold text-gray-900 dark:text-gray-100;
+  }
+
+  .card-body {
+    @apply px-6 py-4;
+  }
+
+  .card-footer {
+    @apply px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200;
+  }
+
+  .badge-success {
+    @apply bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200;
+  }
+
+  .badge-danger {
+    @apply bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200;
+  }
+
+  .badge-info {
+    @apply bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200;
+  }
+
+  /* Forms */
+  .form-control {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+  }
+
+  .form-select {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white;
+  }
+
+  /* Tables */
+  .table {
+    @apply w-full text-sm text-left text-gray-700 dark:text-gray-300;
+  }
+
+  .table-striped tbody tr:nth-child(odd) {
+    @apply bg-gray-50 dark:bg-gray-800/50;
+  }
+
+  .table-hover tbody tr {
+    @apply hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors;
+  }
+
+  /* Alerts */
+  .alert {
+    @apply p-4 rounded-lg border;
+  }
+
+  .alert-success {
+    @apply bg-green-50 border-green-200 text-green-800 dark:bg-green-900/20 dark:border-green-800 dark:text-green-200;
+  }
+
+  .alert-danger {
+    @apply bg-red-50 border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-800 dark:text-red-200;
+  }
+
+  .alert-warning {
+    @apply bg-yellow-50 border-yellow-200 text-yellow-800 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-200;
+  }
+
+  .alert-info {
+    @apply bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-200;
+  }
+
+  /* Containers */
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  .container-fluid {
+    @apply w-full px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* ==================================================
+   LAYER UTILITIES - Classes utilitaires custom
+   ================================================== */
+
+@layer utilities {
+  /* Scrollbar custom (comme dans votre base.scss actuel) */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full hover:bg-gray-400 dark:hover:bg-gray-500;
+  }
+
+  /* Sidebar utilities - Compatible avec le système existant */
+  .sidebar-transition {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Backdrop blur pour la sidebar */
+  .sidebar-blur {
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* ==================================================
+   SIDEBAR TAILWIND - Version migrée
+   Compatible avec le système existant
+   ================================================== */
+
+/* Variables CSS pour la sidebar - Compatible dark mode */
+:root {
+  --sidebar-width-expanded: 280px;
+  --sidebar-width-compact: 80px;
+}
+
+/* Sidebar moderne avec Tailwind + styles custom nécessaires */
+.sidebar-modern {
+  /* Ces styles ne peuvent pas être exprimés en Tailwind utility uniquement */
+  width: var(--sidebar-width-expanded);
+  min-width: var(--sidebar-width-expanded);
+  max-width: var(--sidebar-width-expanded);
+
+  /* Mode compact */
+  &.active {
+    width: var(--sidebar-width-compact);
+    min-width: var(--sidebar-width-compact);
+    max-width: var(--sidebar-width-compact);
+
+    .brand-text,
+    .nav-text,
+    .dropdown-arrow,
+    .footer-app-name,
+    .version-badge {
+      @apply w-0 opacity-0 invisible overflow-hidden whitespace-nowrap;
+    }
+
+    .sidebar-brand {
+      @apply justify-center p-4;
+    }
+
+    .brand-image {
+      @apply m-0;
+    }
+
+    .components li a {
+      @apply justify-center p-3;
+
+      i {
+        @apply m-0 w-auto;
+      }
+    }
+
+    .dropdown-submenu {
+      display: none !important;
+    }
+
+    /* Tooltip au hover en mode compact */
+    .components li a:hover::after {
+      content: attr(data-label);
+      @apply absolute left-full ml-3 -translate-y-1/2 bg-gray-800 dark:bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap shadow-xl border border-white/10 z-[10000] pointer-events-none;
+      top: 50%;
+      animation: tooltipSlideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+}
+
+@keyframes tooltipSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
