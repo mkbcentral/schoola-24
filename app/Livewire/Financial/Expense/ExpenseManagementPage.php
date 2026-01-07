@@ -27,6 +27,10 @@ class ExpenseManagementPage extends Component
     // Type de dépense actif
     public string $expenseType = 'fee';
 
+    // UI - Modal
+    public bool $showExpenseModal = false;
+    public ?int $expenseId = null;
+
     // Données du formulaire de dépense
     public array $expenseFormData = [
         'description' => '',
@@ -104,7 +108,8 @@ class ExpenseManagementPage extends Component
         $this->resetExpenseForm();
         $this->isEditingExpense = false;
         $this->editingExpenseId = null;
-        $this->dispatch('open-expense-form-modal');
+        $this->expenseId = null;
+        $this->showExpenseModal = true;
     }
 
     /**
@@ -115,7 +120,8 @@ class ExpenseManagementPage extends Component
         $this->clearMessage();
         $this->isEditingExpense = true;
         $this->editingExpenseId = $id;
-        
+        $this->expenseId = $id;
+
         // Charger les données de la dépense
         if ($this->expenseType === 'fee') {
             $expense = \App\Models\ExpenseFee::find($id);
@@ -134,8 +140,17 @@ class ExpenseManagementPage extends Component
                 'otherSourceExpenseId' => $expense->other_source_expense_id ?? '',
             ];
         }
-        
-        $this->dispatch('open-expense-form-modal');
+
+        $this->showExpenseModal = true;
+    }
+
+    /**
+     * Fermer le modal
+     */
+    public function closeExpenseModal(): void
+    {
+        $this->showExpenseModal = false;
+        $this->resetExpenseForm();
     }
 
     /**
@@ -214,7 +229,7 @@ class ExpenseManagementPage extends Component
                 }
             }
 
-            $this->dispatch('close-expense-form-modal');
+            $this->showExpenseModal = false;
             $this->resetExpenseForm();
             $this->resetPage();
         } catch (\Exception $e) {
@@ -363,7 +378,7 @@ class ExpenseManagementPage extends Component
      */
     public function render()
     {
-        return view('livewire.application.finance.expense.expense-management-page-v2', [
+        return view('livewire.application.finance.expense.expense-management-page-tailwind', [
             'expenses' => $this->getExpenses(),
             'statistics' => $this->getStatistics(),
             'categoryExpenses' => CategoryExpense::where('school_id', School::DEFAULT_SCHOOL_ID())->orderBy('name')->get(),

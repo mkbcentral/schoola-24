@@ -9,7 +9,7 @@ use App\Models\SchoolYear;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-class StudentDebtService
+    class StudentDebtService
 {
     /**
      * Mois de l'année scolaire (Septembre à Juin)
@@ -107,11 +107,12 @@ class StudentDebtService
     {
         $registrationDate = Carbon::parse($registration->created_at);
         $registrationMonth = (int) $registrationDate->format('n');
+        $registrationDay = (int) $registrationDate->format('j');
         $currentDate = Carbon::now();
         $currentMonth = (int) $currentDate->format('n');
 
         // Calculer les mois attendus depuis l'inscription
-        $expectedMonths = $this->getExpectedMonths($registrationMonth, $currentMonth);
+        $expectedMonths = $this->getExpectedMonths($registrationMonth, $currentMonth, $registrationDay);
         $totalMonthsExpected = count($expectedMonths);
 
         // Utiliser les paiements déjà chargés (eager loading)
@@ -140,6 +141,11 @@ class StudentDebtService
         $unpaidMonthNames = array_values(array_map(function ($monthNumber) {
             return self::SCHOOL_MONTHS[$monthNumber] ?? "Mois $monthNumber";
         }, $unpaidMonthNumbers));
+
+        // Formater les noms des mois payés
+        $paidMonthNames = array_values(array_map(function ($monthNumber) {
+            return self::SCHOOL_MONTHS[$monthNumber] ?? "Mois $monthNumber";
+        }, $paidMonths));
 
         // Calculer les montants
         $totalAmountPaid = $payments->sum(function ($payment) {
@@ -170,6 +176,7 @@ class StudentDebtService
             'total_months_paid' => $totalMonthsPaid,
             'months_unpaid' => $monthsUnpaid,
             'unpaid_months' => $unpaidMonthNames,
+            'paid_months' => $paidMonthNames,
             'total_amount_due' => $totalAmountDue,
             'total_amount_paid' => $totalAmountPaid,
             'total_debt_amount' => max(0, $totalDebtAmount), // Éviter les valeurs négatives
@@ -181,10 +188,22 @@ class StudentDebtService
     /**
      * Obtenir les mois attendus depuis l'inscription jusqu'à maintenant
      */
-    private function getExpectedMonths(int $registrationMonth, int $currentMonth): array
+    private function getExpectedMonths(int $registrationMonth, int $currentMonth, int $registrationDay = 1): array
     {
         $expectedMonths = [];
         $schoolMonths = array_keys(self::SCHOOL_MONTHS);
+
+        // Si l'élève s'inscrit à partir du 25, ignorer le mois d'inscription
+        if ($registrationDay >= 25) {
+            // Trouver le mois suivant
+            $currentIndex = array_search($registrationMonth, $schoolMonths);
+            if ($currentIndex !== false && isset($schoolMonths[$currentIndex + 1])) {
+                $registrationMonth = $schoolMonths[$currentIndex + 1];
+            } else {
+                // Si on est en juin (dernier mois), pas de mois suivant
+                return $expectedMonths;
+            }
+        }
 
         // Trouver l'index du mois d'inscription
         $startIndex = array_search($registrationMonth, $schoolMonths);

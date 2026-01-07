@@ -199,6 +199,7 @@
     <div class="container">
         {{-- En-tête --}}
         <div class="header">
+            <p style="font-size: 18pt; font-weight: bold; color: #1F2937; margin-bottom: 10px;">C.S.{{ $schoolName }}</p>
             <h1>📊 Rapport des Élèves avec Dettes</h1>
             <p>Généré le {{ now()->format('d/m/Y à H:i') }}</p>
         </div>
@@ -279,28 +280,37 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 8%;">N°</th>
-                    <th style="width: 10%;">Code</th>
-                    <th style="width: 27%;">Nom de l'élève</th>
-                    <th style="width: 20%;">Classe</th>
-                    <th style="width: 10%;" class="text-center">Mois</th>
-                    <th style="width: 25%;" class="text-right">Dette ({{ $currency }})</th>
+                    <th style="width: 6%;">N°</th>
+                    <th style="width: 30%;">Nom de l'élève</th>
+                    <th style="width: 20%;">Section/Option/Classe</th>
+                    <th style="width: 8%;" class="text-center">Mois</th>
+                    <th style="width: 18%;">Mois Impayés</th>
+                    <th style="width: 18%;" class="text-right">Dette ({{ $currency }})</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($students as $index => $student)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $student['student_code'] }}</td>
                         <td>{{ $student['student_name'] }}</td>
-                        <td>{{ $student['class_room_name'] }}</td>
+                        <td style="font-size: 8pt; line-height: 1.3;">
+                            {{ $student['option_name'] }} / {{ $student['class_room_name'] }}
+                        </td>
                         <td class="text-center">
                             @if($student['months_unpaid'] >= 4)
-                                <span class="badge badge-critical">{{ $student['months_unpaid'] }} mois</span>
+                                <span class="badge badge-critical">{{ $student['months_unpaid'] }}</span>
                             @elseif($student['months_unpaid'] >= 3)
-                                <span class="badge badge-danger">{{ $student['months_unpaid'] }} mois</span>
+                                <span class="badge badge-danger">{{ $student['months_unpaid'] }}</span>
                             @else
-                                <span class="badge badge-warning">{{ $student['months_unpaid'] }} mois</span>
+                                <span class="badge badge-warning">{{ $student['months_unpaid'] }}</span>
+                            @endif
+                        </td>
+                        <td style="font-size: 7pt; line-height: 1.2;">
+                            @if(isset($student['unpaid_months']) && count($student['unpaid_months']) > 0)
+                                {{ implode(', ', array_slice($student['unpaid_months'], 0, 3)) }}
+                                @if(count($student['unpaid_months']) > 3)
+                                    ...
+                                @endif
                             @endif
                         </td>
                         <td class="amount">{{ number_format($student['total_debt_amount'], 2, ',', ' ') }}</td>

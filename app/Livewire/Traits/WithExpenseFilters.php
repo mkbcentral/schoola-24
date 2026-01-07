@@ -5,6 +5,11 @@ namespace App\Livewire\Traits;
 trait WithExpenseFilters
 {
     // Filtres pour dépenses
+    public ?string $date = null;
+    public ?string $filterPeriod = null;
+    public ?string $dateRange = null;
+    public ?string $dateDebut = null;
+    public ?string $dateFin = null;
     public ?string $filterMonth = null;
     public ?int $filterCategoryExpense = null;
     public ?int $filterCategoryFee = null;
@@ -17,6 +22,11 @@ trait WithExpenseFilters
      */
     protected function initializeFilters(): void
     {
+        $this->date = null;
+        $this->filterPeriod = null;
+        $this->dateRange = null;
+        $this->dateDebut = null;
+        $this->dateFin = null;
         $this->filterMonth = null;
         $this->filterCategoryExpense = null;
         $this->filterCategoryFee = null;

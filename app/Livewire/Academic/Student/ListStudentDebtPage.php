@@ -144,12 +144,18 @@ class ListStudentDebtPage extends Component
                 return;
             }
 
+            // Convertir les chaînes vides en null
+            $sectionId = $this->sectionId ?: null;
+            $optionId = $this->optionId ?: null;
+            $classRoomId = $this->classRoomId ?: null;
+            $categoryFeeId = $this->categoryFeeId ?: null;
+
             // Charger les élèves avec dettes
             $students = $this->debtService->getStudentsWithDebt(
-                $this->sectionId,
-                $this->optionId,
-                $this->classRoomId,
-                $this->categoryFeeId,
+                $sectionId,
+                $optionId,
+                $classRoomId,
+                $categoryFeeId,
                 $this->minMonthsUnpaid
             );
 
@@ -171,10 +177,10 @@ class ListStudentDebtPage extends Component
 
             // Charger les statistiques
             $this->statistics = $this->debtService->getDebtStatistics(
-                $this->sectionId,
-                $this->optionId,
-                $this->classRoomId,
-                $this->categoryFeeId
+                $sectionId,
+                $optionId,
+                $classRoomId,
+                $categoryFeeId
             );
         } catch (\Exception $e) {
             \Log::error('Error loading debt data: ' . $e->getMessage());

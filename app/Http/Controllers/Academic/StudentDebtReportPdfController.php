@@ -85,6 +85,7 @@ class StudentDebtReportPdfController extends Controller
                 'statistics' => $statistics,
                 'currency' => $currency,
                 'categoryName' => $categoryName,
+                'schoolName' => strtoupper(auth()->user()->school->name ?? 'ÉCOLE'),
                 'filters' => [
                     'section' => $sectionId ? Section::find($sectionId)?->name : null,
                     'option' => $optionId ? Option::find($optionId)?->name : null,
@@ -187,6 +188,7 @@ class StudentDebtReportPdfController extends Controller
                 'statistics' => $statistics,
                 'currency' => $currency,
                 'categoryName' => $categoryName,
+                'schoolName' => strtoupper(auth()->user()->school->name ?? 'ÉCOLE'),
                 'filters' => [
                     'section' => $sectionId ? Section::find($sectionId)?->name : null,
                     'option' => $optionId ? Option::find($optionId)?->name : null,
