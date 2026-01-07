@@ -191,9 +191,7 @@ class ExpenseManagementPage extends Component
                         'currency' => $this->expenseFormData['currency'],
                         'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
                         'category_fee_id' => $this->expenseFormData['categoryFeeId'],
-                        'school_id' => \App\Models\School::DEFAULT_SCHOOL_ID(),
                         'school_year_id' => session('school_year_id'),
-                        'date' => now(),
                     ]);
                     $this->success('Dépense créée avec succès');
                 }
@@ -221,9 +219,7 @@ class ExpenseManagementPage extends Component
                         'currency' => $this->expenseFormData['currency'],
                         'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
                         'other_source_expense_id' => $this->expenseFormData['otherSourceExpenseId'],
-                        'school_id' => \App\Models\School::DEFAULT_SCHOOL_ID(),
                         'school_year_id' => session('school_year_id'),
-                        'date' => now(),
                     ]);
                     $this->success('Dépense créée avec succès');
                 }

@@ -331,6 +331,8 @@
                                 <th class="px-4 py-3 text-center text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Devise</th>
                                 @if ($expenseType === 'fee')
                                     <th class="px-4 py-3 text-center text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Mois</th>
+                                @else
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Source</th>
                                 @endif
                                 <th class="px-4 py-3 text-center text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Validation</th>
                                 <th class="px-4 py-3 text-center text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Actions</th>
@@ -345,7 +347,7 @@
                                     <td class="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
                                         <div class="flex items-center gap-2">
                                             <i class="bi bi-calendar3 text-gray-400"></i>
-                                            {{ \Carbon\Carbon::parse($expense->date)->format('d/m/Y') }}
+                                            {{ \Carbon\Carbon::parse($expense->created_at)->format('d/m/Y') }}
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
@@ -374,6 +376,12 @@
                                         <td class="px-4 py-3 text-center">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300">
                                                 {{ $expense->month ?? 'N/A' }}
+                                            </span>
+                                        </td>
+                                    @else
+                                        <td class="px-4 py-3 text-center">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300">
+                                                {{ $expense->otherSourceExpense->name ?? 'N/A' }}
                                             </span>
                                         </td>
                                     @endif
@@ -405,7 +413,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="{{ $expenseType === 'fee' ? '9' : '8' }}" class="px-6 py-12 text-center">
+                                    <td colspan="9" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center gap-3">
                                             <div class="bg-gray-100 dark:bg-gray-700 rounded-full p-6 w-20 h-20 flex items-center justify-center">
                                                 <i class="bi bi-inbox text-gray-400 text-4xl"></i>
@@ -513,175 +521,182 @@
         {{-- Modal Ajouter/Modifier Dépense --}}
         @if($showExpenseModal)
             <div class="fixed inset-0 z-50 overflow-y-auto"
-                 x-data="{ show: true }"
-                 x-init="show = true"
-                 x-show="show"
-                 x-transition:enter="ease-out duration-300"
+                 x-show="true"
+                 x-init="showExpenseModal = true"
+                 x-transition:enter="transition ease-out duration-300"
                  x-transition:enter-start="opacity-0"
                  x-transition:enter-end="opacity-100"
-                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave="transition ease-in duration-200"
                  x-transition:leave-start="opacity-100"
                  x-transition:leave-end="opacity-0"
                  aria-labelledby="modal-title"
                  role="dialog"
                  aria-modal="true">
-                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                    {{-- Overlay --}}
-                    <div x-show="show"
+
+                {{-- Overlay --}}
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                     x-show="true"
                      x-transition:enter="ease-out duration-300"
                      x-transition:enter-start="opacity-0"
                      x-transition:enter-end="opacity-100"
                      x-transition:leave="ease-in duration-200"
                      x-transition:leave-start="opacity-100"
                      x-transition:leave-end="opacity-0"
-                     class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                      @click="$wire.closeExpenseModal()"></div>
 
-                {{-- Center modal --}}
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                {{-- Modal Content avec glassmorphism --}}
+                <div class="flex min-h-full items-center justify-center p-4">
+                    <div class="relative w-full max-w-2xl bg-white/98 dark:bg-gray-800/98 backdrop-blur-2xl rounded-3xl shadow-2xl border border-gray-200/60 dark:border-gray-700/60 overflow-hidden"
+                         x-show="true"
+                         x-transition:enter="ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                         x-transition:leave="ease-in duration-200"
+                         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+                         @click.stop>
 
-                {{-- Modal panel --}}
-                <div x-show="show"
-                     x-transition:enter="ease-out duration-300"
-                     x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                     x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:leave="ease-in duration-200"
-                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                     class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full"
-                     @click.stop>
-
-                    {{-- Header --}}
-                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-lg font-semibold text-white flex items-center gap-2">
-                                <i class="bi bi-cash-stack"></i>
-                                <span x-text="$wire.expenseId ? 'Modifier la dépense' : 'Nouvelle dépense'"></span>
-                            </h3>
-                            <button @click="showExpenseModal = false" class="text-white hover:text-gray-200 transition-colors">
-                            </button>
-                        </div>
-                    </div>
-
-                    {{-- Body --}}
-                    <div class="px-6 py-4 max-h-[70vh] overflow-y-auto">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {{-- Date --}}
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Date <span class="text-red-500">*</span>
-                                </label>
-                                <input type="date" wire:model="date"
-                                    class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                @error('date') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                        {{-- Header --}}
+                        <div class="border-b border-gray-200 dark:border-gray-700 px-8 py-5 bg-gradient-to-r from-blue-600 to-purple-600">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="bg-white/20 backdrop-blur-sm rounded-lg p-3">
+                                        <i class="bi bi-cash-stack text-white text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-white font-bold text-xl" x-text="$wire.expenseId ? 'Modifier la dépense' : 'Nouvelle dépense'"></h3>
+                                        <p class="text-white/80 text-sm mt-1">Formulaire de gestion des dépenses</p>
+                                    </div>
+                                </div>
+                                <button wire:click="closeExpenseModal" class="text-white hover:text-gray-200 transition-colors p-2">
+                                    <i class="bi bi-x-lg text-xl"></i>
+                                </button>
                             </div>
+                        </div>
 
+                        {{-- Body --}}
+                        <div class="px-8 py-6 max-h-[calc(100vh-300px)] overflow-y-auto">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {{-- Montant --}}
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Montant <span class="text-red-500">*</span>
+                                    <i class="bi bi-cash"></i> Montant <span class="text-red-500">*</span>
                                 </label>
-                                <input type="number" step="0.01" wire:model="amount"
+                                <input type="number" step="0.01" wire:model="expenseFormData.amount"
                                     class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="0.00">
-                                @error('amount') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                @error('expenseFormData.amount') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                             </div>
 
                             {{-- Devise --}}
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Devise <span class="text-red-500">*</span>
+                                    <i class="bi bi-currency-exchange"></i> Devise <span class="text-red-500">*</span>
                                 </label>
-                                <select wire:model.live="currency"
+                                <select wire:model="expenseFormData.currency"
                                     class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     <option value="">Sélectionner...</option>
-                                    <option value="USD">USD</option>
-                                    <option value="CDF">CDF</option>
+                                    <option value="USD">USD - Dollar américain</option>
+                                    <option value="CDF">CDF - Franc congolais</option>
                                 </select>
-                                @error('currency') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                @error('expenseFormData.currency') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                             </div>
 
                             {{-- Catégorie générale --}}
-                            <div>
+                            <div class="md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Catégorie générale <span class="text-red-500">*</span>
+                                    <i class="bi bi-tag-fill"></i> Catégorie générale <span class="text-red-500">*</span>
                                 </label>
-                                <select wire:model="categoryExpenseId"
+                                <select wire:model="expenseFormData.categoryExpenseId"
                                     class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <option value="">Sélectionner...</option>
+                                    <option value="">Sélectionner une catégorie...</option>
                                     @foreach ($categoryExpenses as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('categoryExpenseId') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                @error('expenseFormData.categoryExpenseId') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                             </div>
 
                             {{-- Catégorie frais (si type = fee) --}}
                             @if($expenseType === 'fee')
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Catégorie frais <span class="text-red-500">*</span>
+                                        <i class="bi bi-mortarboard"></i> Catégorie frais scolaires <span class="text-red-500">*</span>
                                     </label>
-                                    <select wire:model="categoryFeeId"
+                                    <select wire:model="expenseFormData.categoryFeeId"
                                         class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                        <option value="">Sélectionner...</option>
+                                        <option value="">Sélectionner une catégorie...</option>
                                         @foreach ($categoryFees as $fee)
                                             <option value="{{ $fee->id }}">{{ $fee->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('categoryFeeId') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                    @error('expenseFormData.categoryFeeId') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Mois <span class="text-red-500">*</span>
+                                        <i class="bi bi-calendar-month"></i> Mois <span class="text-red-500">*</span>
                                     </label>
-                                    <select wire:model="month"
+                                    <select wire:model="expenseFormData.month"
                                         class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                        <option value="">Sélectionner...</option>
+                                        <option value="">Sélectionner un mois...</option>
                                         @foreach(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'] as $index => $monthName)
                                             <option value="{{ $index + 1 }}">{{ $monthName }}</option>
                                         @endforeach
                                     </select>
-                                    @error('month') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                    @error('expenseFormData.month') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                                 </div>
                             @else
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Source de dépense <span class="text-red-500">*</span>
+                                        <i class="bi bi-wallet2"></i> Source de dépense <span class="text-red-500">*</span>
                                     </label>
-                                    <select wire:model="otherSourceId"
+                                    <select wire:model="expenseFormData.otherSourceExpenseId"
                                         class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                        <option value="">Sélectionner...</option>
+                                        <option value="">Sélectionner une source...</option>
                                         @foreach ($otherSources as $source)
                                             <option value="{{ $source->id }}">{{ $source->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('otherSourceId') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                    @error('expenseFormData.otherSourceExpenseId') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <i class="bi bi-calendar-month"></i> Mois <span class="text-red-500">*</span>
+                                    </label>
+                                    <select wire:model="expenseFormData.month"
+                                        class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option value="">Sélectionner un mois...</option>
+                                        @foreach(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'] as $index => $monthName)
+                                            <option value="{{ $index + 1 }}">{{ $monthName }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('expenseFormData.month') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                                 </div>
                             @endif
 
                             {{-- Description --}}
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Description <span class="text-red-500">*</span>
+                                    <i class="bi bi-text-paragraph"></i> Description <span class="text-red-500">*</span>
                                 </label>
-                                <textarea wire:model="description" rows="3"
+                                <textarea wire:model="expenseFormData.description" rows="3"
                                     class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="Décrivez la dépense..."></textarea>
-                                @error('description') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                    placeholder="Décrivez en détail la dépense effectuée..."></textarea>
+                                @error('expenseFormData.description') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
 
-                    {{-- Footer --}}
-                    <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 flex flex-col sm:flex-row gap-3 justify-end">
+                    {{-- Footer avec gradient --}}
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100/80 dark:from-gray-700/80 dark:to-gray-700/60 backdrop-blur-sm px-8 py-5 border-t border-gray-200/50 dark:border-gray-600/50 flex flex-col sm:flex-row gap-3 justify-end">
                         <button wire:click="closeExpenseModal"
-                            class="px-4 py-2 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 font-medium rounded-lg transition-colors">
-                            <i class="bi bi-x-circle mr-2"></i> Annuler
+                            class="px-6 py-2.5 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                            <i class="bi bi-x-circle"></i> Annuler
                         </button>
                         <button wire:click="saveExpense"
-                            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                            class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                             wire:loading.attr="disabled">
                             <span wire:loading.remove wire:target="saveExpense">
                                 <i class="bi bi-check-circle mr-2"></i>
@@ -694,6 +709,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         @endif
 
         {{-- Indicateur de chargement --}}
