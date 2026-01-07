@@ -4,7 +4,9 @@ namespace App\Livewire\Financial\Expense;
 
 use App\Actions\Expense\DeleteExpenseAction;
 use App\Actions\Expense\SaveExpenseAction;
+use App\DTOs\ExpenseDTO;
 use App\DTOs\ExpenseFilterDTO;
+use App\DTOs\OtherExpenseDTO;
 use App\DTOs\OtherExpenseFilterDTO;
 use App\Livewire\Traits\WithExpenseFilters;
 use App\Livewire\Traits\WithFlashMessages;
@@ -86,6 +88,7 @@ class ExpenseManagementPage extends Component
      */
     public function mount(): void
     {
+
         $this->initializeFilters();
     }
 
@@ -94,6 +97,7 @@ class ExpenseManagementPage extends Component
      */
     public function switchExpenseType(string $type): void
     {
+
         $this->expenseType = $type;
         $this->resetFilters();
         $this->clearMessage();
@@ -160,7 +164,7 @@ class ExpenseManagementPage extends Component
     {
         $this->validate([
             'expenseFormData.description' => 'required|string|max:255',
-            'expenseFormData.month' => 'required|string',
+            'expenseFormData.month' => 'required|integer|min:1|max:12',
             'expenseFormData.amount' => 'required|numeric|min:0',
             'expenseFormData.currency' => 'required|in:USD,CDF',
             'expenseFormData.categoryExpenseId' => 'required|exists:category_expenses,id',
@@ -172,56 +176,46 @@ class ExpenseManagementPage extends Component
                     'expenseFormData.categoryFeeId' => 'required|exists:category_fees,id',
                 ]);
 
+                $dto = ExpenseDTO::fromArray([
+                    'id' => $this->editingExpenseId,
+                    'description' => $this->expenseFormData['description'],
+                    'month' => (string) $this->expenseFormData['month'],
+                    'amount' => (float) $this->expenseFormData['amount'],
+                    'currency' => $this->expenseFormData['currency'],
+                    'categoryExpenseId' => (int) $this->expenseFormData['categoryExpenseId'],
+                    'categoryFeeId' => (int) $this->expenseFormData['categoryFeeId'],
+                    'schoolYearId' => session('school_year_id'),
+                ]);
+
                 if ($this->isEditingExpense && $this->editingExpenseId) {
-                    $expense = \App\Models\ExpenseFee::find($this->editingExpenseId);
-                    $expense->update([
-                        'description' => $this->expenseFormData['description'],
-                        'month' => $this->expenseFormData['month'],
-                        'amount' => $this->expenseFormData['amount'],
-                        'currency' => $this->expenseFormData['currency'],
-                        'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
-                        'category_fee_id' => $this->expenseFormData['categoryFeeId'],
-                    ]);
-                    $this->success('Dépense modifiée avec succès');
+                    $this->expenseService->update($this->editingExpenseId, $dto);
+                    $this->dispatch('expense-saved', ['message' => 'Dépense modifiée avec succès']);
                 } else {
-                    \App\Models\ExpenseFee::create([
-                        'description' => $this->expenseFormData['description'],
-                        'month' => $this->expenseFormData['month'],
-                        'amount' => $this->expenseFormData['amount'],
-                        'currency' => $this->expenseFormData['currency'],
-                        'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
-                        'category_fee_id' => $this->expenseFormData['categoryFeeId'],
-                        'school_year_id' => session('school_year_id'),
-                    ]);
-                    $this->success('Dépense créée avec succès');
+                    $this->expenseService->create($dto);
+                    $this->dispatch('expense-saved', ['message' => 'Dépense créée avec succès']);
                 }
             } else {
                 $this->validate([
                     'expenseFormData.otherSourceExpenseId' => 'required|exists:other_source_expenses,id',
                 ]);
 
+                $dto = OtherExpenseDTO::fromArray([
+                    'id' => $this->editingExpenseId,
+                    'description' => $this->expenseFormData['description'],
+                    'month' => (string) $this->expenseFormData['month'],
+                    'amount' => (float) $this->expenseFormData['amount'],
+                    'currency' => $this->expenseFormData['currency'],
+                    'categoryExpenseId' => (int) $this->expenseFormData['categoryExpenseId'],
+                    'otherSourceExpenseId' => (int) $this->expenseFormData['otherSourceExpenseId'],
+                    'schoolYearId' => session('school_year_id'),
+                ]);
+
                 if ($this->isEditingExpense && $this->editingExpenseId) {
-                    $expense = \App\Models\OtherExpense::find($this->editingExpenseId);
-                    $expense->update([
-                        'description' => $this->expenseFormData['description'],
-                        'month' => $this->expenseFormData['month'],
-                        'amount' => $this->expenseFormData['amount'],
-                        'currency' => $this->expenseFormData['currency'],
-                        'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
-                        'other_source_expense_id' => $this->expenseFormData['otherSourceExpenseId'],
-                    ]);
-                    $this->success('Dépense modifiée avec succès');
+                    $this->otherExpenseService->update($this->editingExpenseId, $dto);
+                    $this->dispatch('expense-saved', ['message' => 'Dépense modifiée avec succès']);
                 } else {
-                    \App\Models\OtherExpense::create([
-                        'description' => $this->expenseFormData['description'],
-                        'month' => $this->expenseFormData['month'],
-                        'amount' => $this->expenseFormData['amount'],
-                        'currency' => $this->expenseFormData['currency'],
-                        'category_expense_id' => $this->expenseFormData['categoryExpenseId'],
-                        'other_source_expense_id' => $this->expenseFormData['otherSourceExpenseId'],
-                        'school_year_id' => session('school_year_id'),
-                    ]);
-                    $this->success('Dépense créée avec succès');
+                    $this->otherExpenseService->create($dto);
+                    $this->dispatch('expense-saved', ['message' => 'Dépense créée avec succès']);
                 }
             }
 
@@ -229,7 +223,7 @@ class ExpenseManagementPage extends Component
             $this->resetExpenseForm();
             $this->resetPage();
         } catch (\Exception $e) {
-            $this->error('Erreur lors de l\'enregistrement: ' . $e->getMessage());
+            $this->dispatch('expense-save-failed', ['message' => 'Erreur lors de l\'enregistrement: ' . $e->getMessage()]);
         }
     }
 
@@ -338,7 +332,7 @@ class ExpenseManagementPage extends Component
 
         $filter = $filterClass::fromArray($this->getFilterArray($this->expenseType));
 
-        return $service->getAll($filter, 15);
+        return $service->getAll($filter);
     }
 
     /**

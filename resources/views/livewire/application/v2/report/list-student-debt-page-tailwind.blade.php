@@ -784,7 +784,8 @@
                 </div>
             @endif
 
-
+            {{-- Indicateur de chargement --}}
+            <x-v2.loading-overlay title="Chargement en cours..." subtitle="Récupération des données" />
         </div>
     </x-content.main-content-page>
 </div>

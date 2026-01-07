@@ -16,6 +16,7 @@ trait WithExpenseFilters
     public ?int $filterOtherSource = null;
     public ?string $filterCurrency = null;
     public ?bool $filterIsValidated = null;
+    public int $perPage = 15;
 
     /**
      * Initialiser les filtres
@@ -33,6 +34,7 @@ trait WithExpenseFilters
         $this->filterOtherSource = null;
         $this->filterCurrency = null;
         $this->filterIsValidated = null;
+        $this->perPage = 15;
     }
 
     /**
@@ -50,16 +52,20 @@ trait WithExpenseFilters
     protected function getFilterArray(string $type): array
     {
         $filters = [
+            'date' => $this->date,
             'month' => $this->filterMonth,
-            'categoryExpense' => $this->filterCategoryExpense,
+            'categoryExpenseId' => $this->filterCategoryExpense,
             'currency' => $this->filterCurrency,
-            'isValidated' => $this->filterIsValidated,
+            'period' => $this->filterPeriod,
+            'startDate' => $this->dateDebut,
+            'endDate' => $this->dateFin,
+            'perPage' => $this->perPage,
         ];
 
         if ($type === 'fee') {
-            $filters['categoryFee'] = $this->filterCategoryFee;
+            $filters['categoryFeeId'] = $this->filterCategoryFee;
         } else {
-            $filters['otherSource'] = $this->filterOtherSource;
+            $filters['otherSourceExpenseId'] = $this->filterOtherSource;
         }
 
         return $filters;

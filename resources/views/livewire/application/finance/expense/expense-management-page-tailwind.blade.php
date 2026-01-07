@@ -26,29 +26,27 @@
                     </div>
                     <div class="flex gap-2 flex-wrap items-center">
                         {{-- Switch Type de Dépense --}}
-                        <div class="flex items-center gap-3 bg-gray-50 dark:bg-gray-700 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600">
+                        <div wire:key="toggle-type-{{ $expenseType }}" class="flex items-center gap-3 bg-gray-50 dark:bg-gray-700 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600">
                             <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">Type:</span>
                             <div class="relative inline-flex items-center">
-                                <button @click="$wire.switchExpenseType(expenseType === 'fee' ? 'other' : 'fee')" type="button"
-                                    class="cursor-pointer w-16 h-8 rounded-full shadow-inner transition-all duration-300"
-                                    :class="expenseType === 'fee' ? 'bg-gradient-to-r from-green-400 to-emerald-500' : 'bg-gradient-to-r from-yellow-400 to-orange-500'">
-                                    <div class="absolute top-0.5 left-0.5 bg-white rounded-full h-7 w-7 shadow-md transition-transform duration-300 flex items-center justify-center"
-                                        :class="expenseType === 'fee' ? 'translate-x-8' : 'translate-x-0'">
-                                        <i class="bi text-xs" :class="expenseType === 'fee' ? 'bi-check-circle-fill text-green-600' : 'bi-circle text-yellow-600'"></i>
+                                <button wire:click="switchExpenseType('{{ $expenseType === 'fee' ? 'other' : 'fee' }}')" type="button"
+                                    class="cursor-pointer w-16 h-8 rounded-full shadow-inner transition-all duration-300 {{ $expenseType === 'fee' ? 'bg-gradient-to-r from-green-400 to-emerald-500' : 'bg-gradient-to-r from-yellow-400 to-orange-500' }}">
+                                    <div class="absolute top-0.5 left-0.5 bg-white rounded-full h-7 w-7 shadow-md transition-transform duration-300 flex items-center justify-center {{ $expenseType === 'fee' ? 'translate-x-8' : 'translate-x-0' }}">
+                                        <i class="bi text-xs {{ $expenseType === 'fee' ? 'bi-check-circle-fill text-green-600' : 'bi-circle text-yellow-600' }}"></i>
                                     </div>
                                 </button>
                             </div>
-                            <span class="text-xs font-medium transition-all duration-200"
-                                :class="expenseType === 'fee' ? 'text-green-700 dark:text-green-400' : 'text-yellow-700 dark:text-yellow-400'">
-                                <i class="bi mr-1" :class="expenseType === 'fee' ? 'bi-mortarboard' : 'bi-wallet2'"></i>
-                                <span x-text="expenseType === 'fee' ? 'Frais Scolaires' : 'Autres Dépenses'"></span>
+                            <span class="text-xs font-medium transition-all duration-200 {{ $expenseType === 'fee' ? 'text-green-700 dark:text-green-400' : 'text-yellow-700 dark:text-yellow-400' }}">
+                                <i class="bi mr-1 {{ $expenseType === 'fee' ? 'bi-mortarboard' : 'bi-wallet2' }}"></i>
+                                <span>{{ $expenseType === 'fee' ? 'Frais Scolaires' : 'Autres Dépenses' }}</span>
                             </span>
                         </div>
 
                         <button @click="showFilters = !showFilters"
                             class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg transition-colors flex items-center gap-2">
                             <i class="bi bi-funnel"></i>
-                            <span x-text="showFilters ? 'Masquer filtres' : 'Afficher filtres'"></span>
+                            <span x-show="!showFilters">Afficher filtres</span>
+                            <span x-show="showFilters">Masquer filtres</span>
                         </button>
                         <button wire:click="openCreateModal"
                             class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2">
@@ -94,9 +92,15 @@
                                 class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="">Toutes les périodes</option>
                                 <option value="today">Aujourd'hui</option>
-                                <option value="week">Cette semaine</option>
-                                <option value="month">Ce mois</option>
-                                <option value="year">Cette année</option>
+                                <option value="yesterday">Hier</option>
+                                <option value="this_week">Cette semaine</option>
+                                <option value="last_week">Semaine dernière</option>
+                                <option value="this_month">Ce mois</option>
+                                <option value="last_month">Mois dernier</option>
+                                <option value="3_months">3 derniers mois</option>
+                                <option value="6_months">6 derniers mois</option>
+                                <option value="this_year">Cette année</option>
+                                <option value="last_year">Année dernière</option>
                             </select>
                         </div>
 
@@ -303,12 +307,15 @@
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
                                 {{ $expenses->total() }}
                             </span>
-                            <span x-show="expenseType === 'fee'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
-                                <i class="bi bi-mortarboard mr-1"></i> Frais Scolaires
-                            </span>
-                            <span x-show="expenseType !== 'fee'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300">
-                                <i class="bi bi-wallet2 mr-1"></i> Autres Dépenses
-                            </span>
+                            @if($expenseType === 'fee')
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+                                    <i class="bi bi-mortarboard mr-1"></i> Frais Scolaires
+                                </span>
+                            @else
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300">
+                                    <i class="bi bi-wallet2 mr-1"></i> Autres Dépenses
+                                </span>
+                            @endif
                         </h3>
                         <div class="flex items-center gap-2">
                             <span class="text-sm text-gray-600 dark:text-gray-400">Par page:</span>
@@ -568,7 +575,7 @@
                                         <i class="bi bi-cash-stack text-white text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-white font-bold text-xl" x-text="$wire.expenseId ? 'Modifier la dépense' : 'Nouvelle dépense'"></h3>
+                                        <h3 class="text-white font-bold text-xl">{{ $expenseId ? 'Modifier la dépense' : 'Nouvelle dépense' }}</h3>
                                         <p class="text-white/80 text-sm mt-1">Formulaire de gestion des dépenses</p>
                                     </div>
                                 </div>
@@ -704,7 +711,7 @@
                             wire:loading.attr="disabled">
                             <span wire:loading.remove wire:target="saveExpense">
                                 <i class="bi bi-check-circle mr-2"></i>
-                                <span x-text="$wire.expenseId ? 'Mettre à jour' : 'Enregistrer'"></span>
+                                {{ $expenseId ? 'Mettre à jour' : 'Enregistrer' }}
                             </span>
                             <span wire:loading wire:target="saveExpense">
                                 <i class="bi bi-arrow-repeat animate-spin mr-2"></i> Enregistrement...
@@ -715,9 +722,9 @@
             </div>
         </div>
         @endif
+ {{-- Indicateur de chargement --}}
+            <x-v2.loading-overlay title="Chargement en cours..." subtitle="Récupération des données" />
 
-        {{-- Indicateur de chargement --}}
-        <x-v2.loading-overlay title="Chargement en cours..." subtitle="Veuillez patienter" />
     </x-content.main-content-page>
 </div>
 
@@ -727,6 +734,45 @@
 
 @script
     <script>
+        // Afficher les erreurs de validation Livewire
+        Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+            fail(({ status, response }) => {
+                if (status === 422 && response.errors) {
+                    const errors = Object.values(response.errors).flat();
+                    Swal.fire({
+                        title: 'Erreurs de validation',
+                        html: errors.map(err => `<p class="text-sm text-left mb-1">• ${err}</p>`).join(''),
+                        icon: 'error',
+                        confirmButtonColor: '#dc3545',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+
+        // Expense Management - Messages de succès et d'erreur
+        $wire.on('expense-saved', (event) => {
+            Swal.fire({
+                title: 'Succès!',
+                text: event[0].message,
+                icon: 'success',
+                confirmButtonColor: '#198754',
+                confirmButtonText: 'OK',
+                timer: 3000,
+                timerProgressBar: true
+            });
+        });
+
+        $wire.on('expense-save-failed', (event) => {
+            Swal.fire({
+                title: 'Erreur!',
+                text: event[0].message,
+                icon: 'error',
+                confirmButtonColor: '#dc3545',
+                confirmButtonText: 'OK'
+            });
+        });
+
         // Expense Management - SweetAlert pour confirmation de suppression
         $wire.on('delete-expense-dialog', (event) => {
             const data = event[0];

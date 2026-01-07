@@ -14,6 +14,25 @@ class ExpenseSettingsPage extends Component
     public string $activeTab = 'categories'; // 'categories' or 'sources'
 
     public string $search = '';
+    
+    // Modal states
+    public bool $showCategoryModal = false;
+    public bool $showSourceModal = false;
+    public ?int $editingCategoryId = null;
+    public ?int $editingSourceId = null;
+    
+    // Form data
+    public array $categoryFormData = [
+        'name' => '',
+        'description' => '',
+        'is_active' => true,
+    ];
+    
+    public array $sourceFormData = [
+        'name' => '',
+        'description' => '',
+        'is_active' => true,
+    ];
 
     /**
      * Switch between tabs
@@ -61,15 +80,75 @@ class ExpenseSettingsPage extends Component
      */
     public function openCreateCategoryModal(): void
     {
-        $this->dispatch('open-category-modal');
+        $this->resetCategoryForm();
+        $this->editingCategoryId = null;
+        $this->showCategoryModal = true;
     }
 
     /**
      * Open modal to edit category
      */
-    public function openEditCategoryModal(int $id): void
+    public function openEditCategoryModal(int $id, CategoryExpenseServiceInterface $categoryExpenseService): void
     {
-        $this->dispatch('open-edit-category-modal', categoryId: $id);
+        $category = $categoryExpenseService->findById($id);
+        
+        if ($category) {
+            $this->editingCategoryId = $id;
+            $this->categoryFormData = [
+                'name' => $category->name,
+                'description' => $category->description ?? '',
+                'is_active' => $category->is_active,
+            ];
+            $this->showCategoryModal = true;
+        }
+    }
+    
+    /**
+     * Close category modal
+     */
+    public function closeCategoryModal(): void
+    {
+        $this->showCategoryModal = false;
+        $this->resetCategoryForm();
+    }
+    
+    /**
+     * Reset category form
+     */
+    private function resetCategoryForm(): void
+    {
+        $this->categoryFormData = [
+            'name' => '',
+            'description' => '',
+            'is_active' => true,
+        ];
+        $this->editingCategoryId = null;
+    }
+    
+    /**
+     * Save category
+     */
+    public function saveCategory(CategoryExpenseServiceInterface $categoryExpenseService): void
+    {
+        $this->validate([
+            'categoryFormData.name' => 'required|string|max:255',
+            'categoryFormData.description' => 'nullable|string',
+            'categoryFormData.is_active' => 'boolean',
+        ]);
+        
+        try {
+            if ($this->editingCategoryId) {
+                $categoryExpenseService->update($this->editingCategoryId, $this->categoryFormData);
+                $this->dispatch('category-saved', message: 'Catégorie modifiée avec succès');
+            } else {
+                $categoryExpenseService->create($this->categoryFormData);
+                $this->dispatch('category-saved', message: 'Catégorie créée avec succès');
+            }
+            
+            $this->closeCategoryModal();
+        } catch (\Exception $e) {
+            $this->dispatch('save-failed', message: 'Erreur: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -110,15 +189,75 @@ class ExpenseSettingsPage extends Component
      */
     public function openCreateSourceModal(): void
     {
-        $this->dispatch('open-source-modal');
+        $this->resetSourceForm();
+        $this->editingSourceId = null;
+        $this->showSourceModal = true;
     }
 
     /**
      * Open modal to edit source
      */
-    public function openEditSourceModal(int $id): void
+    public function openEditSourceModal(int $id, OtherSourceExpenseServiceInterface $otherSourceExpenseService): void
     {
-        $this->dispatch('open-edit-source-modal', sourceId: $id);
+        $source = $otherSourceExpenseService->findById($id);
+        
+        if ($source) {
+            $this->editingSourceId = $id;
+            $this->sourceFormData = [
+                'name' => $source->name,
+                'description' => $source->description ?? '',
+                'is_active' => $source->is_active,
+            ];
+            $this->showSourceModal = true;
+        }
+    }
+    
+    /**
+     * Close source modal
+     */
+    public function closeSourceModal(): void
+    {
+        $this->showSourceModal = false;
+        $this->resetSourceForm();
+    }
+    
+    /**
+     * Reset source form
+     */
+    private function resetSourceForm(): void
+    {
+        $this->sourceFormData = [
+            'name' => '',
+            'description' => '',
+            'is_active' => true,
+        ];
+        $this->editingSourceId = null;
+    }
+    
+    /**
+     * Save source
+     */
+    public function saveSource(OtherSourceExpenseServiceInterface $otherSourceExpenseService): void
+    {
+        $this->validate([
+            'sourceFormData.name' => 'required|string|max:255',
+            'sourceFormData.description' => 'nullable|string',
+            'sourceFormData.is_active' => 'boolean',
+        ]);
+        
+        try {
+            if ($this->editingSourceId) {
+                $otherSourceExpenseService->update($this->editingSourceId, $this->sourceFormData);
+                $this->dispatch('source-saved', message: 'Source modifiée avec succès');
+            } else {
+                $otherSourceExpenseService->create($this->sourceFormData);
+                $this->dispatch('source-saved', message: 'Source créée avec succès');
+            }
+            
+            $this->closeSourceModal();
+        } catch (\Exception $e) {
+            $this->dispatch('save-failed', message: 'Erreur: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -168,7 +307,7 @@ class ExpenseSettingsPage extends Component
         CategoryExpenseServiceInterface $categoryExpenseService,
         OtherSourceExpenseServiceInterface $otherSourceExpenseService
     ) {
-        return view('livewire.application.finance.expense.settings.expense-settings-page', [
+        return view('livewire.application.finance.expense.settings.expense-settings-page-tailwind', [
             'categoryExpenses' => $this->getCategoryExpenses($categoryExpenseService),
             'otherSourceExpenses' => $this->getOtherSourceExpenses($otherSourceExpenseService),
         ]);

@@ -631,8 +631,11 @@
             </div>
         </div>
     </x-content.main-content-page>
-</div>
 
-<style>
+    <style>
     [x-cloak] { display: none !important; }
 </style>
+
+</div>
+
+
