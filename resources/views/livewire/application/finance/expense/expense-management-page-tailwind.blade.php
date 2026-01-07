@@ -224,7 +224,7 @@
             </div>
 
             {{-- Statistiques --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" wire:loading.remove.delay.longer>
+            <div wire:key="statistics-{{ $expenseType }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" wire:loading.remove.delay.longer>
                 {{-- Nombre de dépenses --}}
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-4">
                     <div class="flex justify-between items-start">
@@ -295,7 +295,7 @@
             </div>
 
             {{-- Tableau des dépenses --}}
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 overflow-hidden" wire:loading.remove.delay.longer>
+            <div wire:key="expense-table-{{ $expenseType }}" class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 overflow-hidden" wire:loading.remove.delay.longer>
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                     <div class="flex justify-between items-center">
                         <h3 class="text-gray-900 dark:text-gray-100 font-semibold text-base flex items-center gap-2">
