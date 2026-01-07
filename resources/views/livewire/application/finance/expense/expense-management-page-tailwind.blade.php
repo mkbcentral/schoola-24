@@ -29,7 +29,7 @@
                         <div class="flex items-center gap-3 bg-gray-50 dark:bg-gray-700 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600">
                             <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">Type:</span>
                             <div class="relative inline-flex items-center">
-                                <button wire:click="switchExpenseType('{{ $expenseType === 'fee' ? 'other' : 'fee' }}')" type="button"
+                                <button @click="$wire.switchExpenseType(expenseType === 'fee' ? 'other' : 'fee')" type="button"
                                     class="cursor-pointer w-16 h-8 rounded-full shadow-inner transition-all duration-300"
                                     :class="expenseType === 'fee' ? 'bg-gradient-to-r from-green-400 to-emerald-500' : 'bg-gradient-to-r from-yellow-400 to-orange-500'">
                                     <div class="absolute top-0.5 left-0.5 bg-white rounded-full h-7 w-7 shadow-md transition-transform duration-300 flex items-center justify-center"
