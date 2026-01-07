@@ -303,15 +303,12 @@
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
                                 {{ $expenses->total() }}
                             </span>
-                            @if($expenseType === 'fee')
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
-                                    <i class="bi bi-mortarboard mr-1"></i> Frais Scolaires
-                                </span>
-                            @else
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300">
-                                    <i class="bi bi-wallet2 mr-1"></i> Autres Dépenses
-                                </span>
-                            @endif
+                            <span x-show="expenseType === 'fee'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+                                <i class="bi bi-mortarboard mr-1"></i> Frais Scolaires
+                            </span>
+                            <span x-show="expenseType !== 'fee'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300">
+                                <i class="bi bi-wallet2 mr-1"></i> Autres Dépenses
+                            </span>
                         </h3>
                         <div class="flex items-center gap-2">
                             <span class="text-sm text-gray-600 dark:text-gray-400">Par page:</span>
