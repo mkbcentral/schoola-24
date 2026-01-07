@@ -29,16 +29,14 @@
                         <div class="flex items-center gap-3 bg-gray-50 dark:bg-gray-700 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600">
                             <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">Type:</span>
                             <div class="relative inline-flex items-center">
-                                <input type="checkbox" wire:model.live="expenseType" value="fee" class="sr-only peer"
-                                    {{ $expenseType === 'fee' ? 'checked' : '' }}>
-                                <label for="expenseType" wire:click="switchExpenseType('{{ $expenseType === 'fee' ? 'other' : 'fee' }}')"
+                                <button wire:click="switchExpenseType('{{ $expenseType === 'fee' ? 'other' : 'fee' }}')" type="button"
                                     class="cursor-pointer w-16 h-8 rounded-full shadow-inner transition-all duration-300"
                                     :class="expenseType === 'fee' ? 'bg-gradient-to-r from-green-400 to-emerald-500' : 'bg-gradient-to-r from-yellow-400 to-orange-500'">
                                     <div class="absolute top-0.5 left-0.5 bg-white rounded-full h-7 w-7 shadow-md transition-transform duration-300 flex items-center justify-center"
                                         :class="expenseType === 'fee' ? 'translate-x-8' : 'translate-x-0'">
                                         <i class="bi text-xs" :class="expenseType === 'fee' ? 'bi-check-circle-fill text-green-600' : 'bi-circle text-yellow-600'"></i>
                                     </div>
-                                </label>
+                                </button>
                             </div>
                             <span class="text-xs font-medium transition-all duration-200"
                                 :class="expenseType === 'fee' ? 'text-green-700 dark:text-green-400' : 'text-yellow-700 dark:text-yellow-400'">
@@ -305,6 +303,15 @@
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
                                 {{ $expenses->total() }}
                             </span>
+                            @if($expenseType === 'fee')
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+                                    <i class="bi bi-mortarboard mr-1"></i> Frais Scolaires
+                                </span>
+                            @else
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300">
+                                    <i class="bi bi-wallet2 mr-1"></i> Autres Dépenses
+                                </span>
+                            @endif
                         </h3>
                         <div class="flex items-center gap-2">
                             <span class="text-sm text-gray-600 dark:text-gray-400">Par page:</span>
