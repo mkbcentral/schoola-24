@@ -25,10 +25,28 @@
                         <i class="bi bi-funnel"></i>
                         <span x-text="showFilters ? 'Masquer filtres' : 'Afficher filtres'"></span>
                     </button>
-                    <button wire:click="exportData"
+                    <a href="{{ route('student.debt.pdf.preview', [
+                        'section_id' => $sectionId,
+                        'option_id' => $optionId,
+                        'class_room_id' => $classRoomId,
+                        'category_fee_id' => $categoryFeeId,
+                        'min_months_unpaid' => $minMonthsUnpaid,
+                        'search' => $search,
+                    ]) }}" target="_blank"
+                        class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2">
+                        <i class="bi bi-eye"></i> Aperçu PDF
+                    </a>
+                    <a href="{{ route('student.debt.pdf.download', [
+                        'section_id' => $sectionId,
+                        'option_id' => $optionId,
+                        'class_room_id' => $classRoomId,
+                        'category_fee_id' => $categoryFeeId,
+                        'min_months_unpaid' => $minMonthsUnpaid,
+                        'search' => $search,
+                    ]) }}"
                         class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2">
-                        <i class="bi bi-download"></i> Exporter
-                    </button>
+                        <i class="bi bi-download"></i> Télécharger PDF
+                    </a>
                 </div>
             </div>
         </div>
@@ -489,19 +507,19 @@
 
                                 {{-- Statistiques en ligne --}}
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                                    <div class="bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-900/20 dark:to-blue-900/10 rounded-xl p-3 border border-blue-200/50 dark:border-blue-800/50 text-center">
+                                    <div class="bg-linear-to-br from-blue-50 to-blue-100/50 dark:from-blue-900/20 dark:to-blue-900/10 rounded-xl p-3 border border-blue-200/50 dark:border-blue-800/50 text-center">
                                         <p class="text-xs text-blue-600 dark:text-blue-400 font-medium uppercase tracking-wide mb-1">Mois Dus</p>
                                         <p class="text-2xl font-bold text-blue-700 dark:text-blue-300">{{ $selectedStudent['total_months_expected'] }}</p>
                                     </div>
-                                    <div class="bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-900/20 dark:to-green-900/10 rounded-xl p-3 border border-green-200/50 dark:border-green-800/50 text-center">
+                                    <div class="bg-linear-to-br from-green-50 to-green-100/50 dark:from-green-900/20 dark:to-green-900/10 rounded-xl p-3 border border-green-200/50 dark:border-green-800/50 text-center">
                                         <p class="text-xs text-green-600 dark:text-green-400 font-medium uppercase tracking-wide mb-1">Mois Payés</p>
                                         <p class="text-2xl font-bold text-green-700 dark:text-green-300">{{ $selectedStudent['total_months_paid'] }}</p>
                                     </div>
-                                    <div class="bg-gradient-to-br from-red-50 to-red-100/50 dark:from-red-900/20 dark:to-red-900/10 rounded-xl p-3 border border-red-200/50 dark:border-red-800/50 text-center">
+                                    <div class="bg-linear-to-br from-red-50 to-red-100/50 dark:from-red-900/20 dark:to-red-900/10 rounded-xl p-3 border border-red-200/50 dark:border-red-800/50 text-center">
                                         <p class="text-xs text-red-600 dark:text-red-400 font-medium uppercase tracking-wide mb-1">Mois Impayés</p>
                                         <p class="text-2xl font-bold text-red-700 dark:text-red-300">{{ $selectedStudent['months_unpaid'] }}</p>
                                     </div>
-                                    <div class="bg-gradient-to-br from-orange-50 to-orange-100/50 dark:from-orange-900/20 dark:to-orange-900/10 rounded-xl p-3 border border-orange-200/50 dark:border-orange-800/50 text-center">
+                                    <div class="bg-linear-to-br from-orange-50 to-orange-100/50 dark:from-orange-900/20 dark:to-orange-900/10 rounded-xl p-3 border border-orange-200/50 dark:border-orange-800/50 text-center">
                                         <p class="text-xs text-orange-600 dark:text-orange-400 font-medium uppercase tracking-wide mb-1">Taux</p>
                                         <p class="text-2xl font-bold text-orange-700 dark:text-orange-300">
                                             {{ $selectedStudent['total_months_expected'] > 0 ? round(($selectedStudent['total_months_paid'] / $selectedStudent['total_months_expected']) * 100) : 0 }}%
@@ -510,7 +528,7 @@
                                 </div>
 
                                 {{-- Liste des mois impayés --}}
-                                <div class="bg-gradient-to-br from-yellow-50 to-amber-100/50 dark:from-yellow-900/20 dark:to-yellow-900/10 rounded-xl p-5 border-l-4 border-yellow-500 dark:border-yellow-600">
+                                <div class="bg-linear-to-br from-yellow-50 to-amber-100/50 dark:from-yellow-900/20 dark:to-yellow-900/10 rounded-xl p-5 border-l-4 border-yellow-500 dark:border-yellow-600">
                                     <div class="flex items-center gap-2 mb-3">
                                         <i class="bi bi-exclamation-triangle-fill text-yellow-600 dark:text-yellow-400"></i>
                                         <p class="text-sm text-yellow-900 dark:text-yellow-100 font-bold uppercase tracking-wide">Mois Impayés</p>
@@ -535,7 +553,7 @@
                                     Détails des Montants
                                 </h4>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="bg-gradient-to-br from-red-50 via-red-100/50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/10 rounded-2xl p-5 border-2 border-red-300/50 dark:border-red-700/50 shadow-lg">
+                                    <div class="bg-linear-to-br from-red-50 via-red-100/50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/10 rounded-2xl p-5 border-2 border-red-300/50 dark:border-red-700/50 shadow-lg">
                                         <div class="flex items-start justify-between mb-3">
                                             <div>
                                                 <p class="text-xs text-red-600 dark:text-red-400 font-semibold uppercase tracking-wide mb-1">Montant Total Dû</p>
@@ -603,7 +621,7 @@
                                     </h4>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                         @if ($selectedStudent['responsible_name'])
-                                            <div class="bg-gradient-to-br from-indigo-50 to-indigo-100/50 dark:from-indigo-900/20 dark:to-indigo-900/10 rounded-xl p-4 border border-indigo-200/50 dark:border-indigo-800/50">
+                                            <div class="bg-linear-to-br from-indigo-50 to-indigo-100/50 dark:from-indigo-900/20 dark:to-indigo-900/10 rounded-xl p-4 border border-indigo-200/50 dark:border-indigo-800/50">
                                                 <div class="flex items-center gap-3">
                                                     <div class="bg-indigo-100 dark:bg-indigo-900/40 rounded-lg p-2.5">
                                                         <i class="bi bi-person text-indigo-600 dark:text-indigo-400 text-lg"></i>

@@ -1,49 +1,36 @@
 <?php
 
-function format_fr_month_name($key): string
-{
-    $month = '';
-    switch ($key) {
-        case '01':
-            $month = 'JANVIER';
-            break;
-        case '02':
-            $month = 'FEVRIER';
-            break;
-        case '03':
-            $month = 'MARS';
-            break;
-        case '04':
-            $month = 'AVRIL';
-            break;
-        case '05':
-            $month = 'MAI';
-            break;
-        case '06':
-            $month = 'JUIN';
-            break;
-        case '07':
-            $month = 'JUILLET';
-            break;
-        case '08':
-            $month = 'AOUT';
-            break;
-        case '09':
-            $month = 'SEPTEMBRE';
-            break;
-        case '10':
-            $month = 'OCTOBRE';
-            break;
-        case '11':
-            $month = 'NOVEMBRE';
-            break;
-        case '12':
-            $month = 'DECEMBRE';
+if (!function_exists('format_fr_month_name')) {
+    /**
+     * Format a month number or date to French month name
+     *
+     * @param mixed $month Month number (1-12) or date string
+     * @return string French month name
+     */
+    function format_fr_month_name($month): string
+    {
+        $monthNames = [
+            1 => 'Janvier',
+            2 => 'Février',
+            3 => 'Mars',
+            4 => 'Avril',
+            5 => 'Mai',
+            6 => 'Juin',
+            7 => 'Juillet',
+            8 => 'Août',
+            9 => 'Septembre',
+            10 => 'Octobre',
+            11 => 'Novembre',
+            12 => 'Décembre',
+        ];
 
-        default:
-            // code...
-            break;
+        // Si c'est une date, extraire le mois
+        if (is_string($month) && strpos($month, '-') !== false) {
+            $month = (int) date('n', strtotime($month));
+        }
+
+        $month = (int) $month;
+
+        return $monthNames[$month] ?? 'Mois inconnu';
     }
-
-    return $month;
 }

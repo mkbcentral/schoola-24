@@ -26,7 +26,7 @@
             </li>
 
             {{-- Paiements --}}
-            <li x-data="{ open: {{ request()->routeIs('payment.*') || request()->routeIs('report.payments') ? 'true' : 'false' }} }">
+            <li x-data="{ open: {{ request()->routeIs('payment.*') ? 'true' : 'false' }} }">
                 <button @click="open = !open" class="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 text-white/90 hover:text-white hover:bg-blue-700/30 dark:hover:bg-gray-700/40 rounded-lg transition-all duration-200 group">
                     <div class="flex items-center gap-3">
                         <i class="bi bi-credit-card text-lg"></i>
@@ -50,8 +50,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('report.payments') }}"
-                           class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('report.payments') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
+                        <a href="{{ route('payment.report.payments') }}"
+                           class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('payment.report.payments') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
                             <i class="bi bi-file-earmark-bar-graph text-xs opacity-70"></i>
                             <span>Rapport paiements</span>
                         </a>
@@ -87,7 +87,7 @@
             </li>
 
             {{-- Étudiants --}}
-            <li x-data="{ open: {{ request()->routeIs('student.*') || request()->routeIs('rapport.student.*') ? 'true' : 'false' }} }">
+            <li x-data="{ open: {{ request()->routeIs('student.*') ? 'true' : 'false' }} }">
                 <button @click="open = !open" class="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 text-white/90 hover:text-white hover:bg-blue-700/30 dark:hover:bg-gray-700/40 rounded-lg transition-all duration-200 group">
                     <div class="flex items-center gap-3">
                         <i class="bi bi-people text-lg"></i>
@@ -104,8 +104,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('rapport.student.debt') }}"
-                           class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('rapport.student.debt') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
+                        <a href="{{ route('student.debt.list') }}"
+                           class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('student.debt.list') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
                             <i class="bi bi-exclamation-triangle text-xs opacity-70"></i>
                             <span>Dettes élèves</span>
                         </a>
@@ -215,18 +215,7 @@
 
     <!-- Footer -->
     <div class="px-5 py-4 border-t border-blue-700/20 dark:border-gray-700/20 bg-gradient-to-r from-blue-900/20 to-transparent backdrop-blur-sm" x-data="themeToggle()">
-        <!-- Theme Toggle -->
-        <button @click="toggle()" class="w-full mb-3 flex items-center justify-between gap-3 px-3 py-2.5 text-white/90 hover:text-white hover:bg-blue-700/30 dark:hover:bg-gray-700/40 rounded-lg transition-all duration-200 group">
-            <div class="flex items-center gap-3">
-                <i class="bi bi-sun-fill text-lg hidden dark:block"></i>
-                <i class="bi bi-moon-stars-fill text-lg block dark:hidden"></i>
-                <span class="text-sm font-medium">
-                    <span class="hidden dark:block">Mode Clair</span>
-                    <span class="block dark:hidden">Mode Sombre</span>
-                </span>
-            </div>
-            <i class="bi bi-chevron-right text-xs opacity-50"></i>
-        </button>
+
 
         <div class="text-center space-y-2">
             <p class="text-white font-semibold text-sm tracking-wide">{{ config('app.name') }}</p>

@@ -1,0 +1,114 @@
+<?php
+
+/**
+ * Routes du Domaine Financier
+ *
+ * Gestion des paiements, dépenses, frais et rapports financiers
+ */
+
+use App\Http\Controllers\Payment\PaymentReportPdfController;
+use App\Http\Controllers\PrintPaymentReceiptController;
+use App\Livewire\Application\Dashboard\Finance\FinancialDashboardPage;
+use App\Livewire\Application\Finance\Expense\ExpenseManagementPageRefactored;
+use App\Livewire\Application\Finance\Expense\Settings\ExpenseSettingsPage;
+use App\Livewire\Application\Payment\PaymentListPage;
+use App\Livewire\Application\Payment\QuickPaymentPage;
+use App\Livewire\Application\Payment\Report\PaymentReportPage;
+use App\Livewire\Application\AllReport\ComparisonReportPage;
+use App\Livewire\Application\AllReport\ForecastReportPage;
+use App\Livewire\Application\AllReport\ProfitabilityReportPage;
+use App\Livewire\Application\AllReport\TreasuryReportPage;
+use Illuminate\Support\Facades\Route;
+
+/**
+ * Toutes les routes financières nécessitent authentification
+ */
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // ============================================================
+    // DASHBOARD FINANCIER
+    // ============================================================
+    Route::get('/', FinancialDashboardPage::class)
+        ->name('finance.dashboard')
+        ->lazy();
+
+    // ============================================================
+    // PAIEMENTS
+    // ============================================================
+    Route::prefix('payment')->name('payment.')->group(function () {
+
+        // Liste et gestion
+        Route::get('list', PaymentListPage::class)
+            ->name('list')
+            ->lazy();
+
+        Route::get('quick', QuickPaymentPage::class)
+            ->name('quick')
+            ->lazy();
+
+        // Génération PDF
+        Route::get('pdf/generate', [\App\Http\Controllers\Payment\PaymentPdfController::class, 'generate'])
+            ->name('pdf');
+
+        // Reçus de paiement
+        Route::controller(PrintPaymentReceiptController::class)->group(function () {
+            Route::get('print-receipt/{payment}', 'printReceipt')
+                ->name('print.receipt');
+
+            Route::get('print-reguralization-receipt/{paymentRegularization}', 'printRegReceipt')
+                ->name('print.reguralization.receipt');
+        });
+
+        // Rapports de paiements
+        Route::prefix('report')->name('report.')->group(function () {
+            Route::get('/', PaymentReportPage::class)
+                ->name('index')
+                ->lazy();
+
+            // Export PDF des rapports
+            Route::controller(PaymentReportPdfController::class)->group(function () {
+                Route::get('pdf/download', 'download')
+                    ->name('pdf.download');
+
+                Route::get('pdf/preview', 'preview')
+                    ->name('pdf.preview');
+            });
+        });
+    });
+
+    // ============================================================
+    // DÉPENSES
+    // ============================================================
+    Route::prefix('expense')->name('expense.')->group(function () {
+
+        Route::get('manage', ExpenseManagementPageRefactored::class)
+            ->name('manage')
+            ->lazy();
+
+        Route::get('settings', ExpenseSettingsPage::class)
+            ->name('settings')
+            ->lazy();
+    });
+
+    // ============================================================
+    // RAPPORTS FINANCIERS
+    // ============================================================
+    Route::prefix('reports')->name('reports.')->group(function () {
+
+        Route::get('comparison', ComparisonReportPage::class)
+            ->name('comparison')
+            ->lazy();
+
+        Route::get('forecast', ForecastReportPage::class)
+            ->name('forecast')
+            ->lazy();
+
+        Route::get('treasury', TreasuryReportPage::class)
+            ->name('treasury')
+            ->lazy();
+
+        Route::get('profitability', ProfitabilityReportPage::class)
+            ->name('profitability')
+            ->lazy();
+    });
+});

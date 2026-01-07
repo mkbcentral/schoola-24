@@ -4,25 +4,25 @@ namespace App\Livewire\Traits;
 
 trait WithExpenseFilters
 {
-    // Filters
-    public string $searchTerm = '';
-    public ?string $date = null;
+    // Filtres pour dépenses
     public ?string $filterMonth = null;
-    public string $filterCurrency = '';
-    public int $filterCategoryExpense = 0;
-    public int $filterCategoryFee = 0;
-    public int $filterOtherSource = 0;
-    public string $filterPeriod = '';
-    public ?string $dateDebut = null;
-    public ?string $dateFin = null;
-    public ?string $dateRange = null;
+    public ?int $filterCategoryExpense = null;
+    public ?int $filterCategoryFee = null;
+    public ?int $filterOtherSource = null;
+    public ?string $filterCurrency = null;
+    public ?bool $filterIsValidated = null;
 
     /**
      * Initialiser les filtres
      */
-    public function initializeFilters(): void
+    protected function initializeFilters(): void
     {
-        $this->filterMonth = str_pad(date('m'), 2, '0', STR_PAD_LEFT);
+        $this->filterMonth = null;
+        $this->filterCategoryExpense = null;
+        $this->filterCategoryFee = null;
+        $this->filterOtherSource = null;
+        $this->filterCurrency = null;
+        $this->filterIsValidated = null;
     }
 
     /**
@@ -30,50 +30,36 @@ trait WithExpenseFilters
      */
     public function resetFilters(): void
     {
-        $this->searchTerm = '';
-        $this->date = null;
-        $this->filterMonth = str_pad(date('m'), 2, '0', STR_PAD_LEFT);
-        $this->filterCurrency = '';
-        $this->filterCategoryExpense = 0;
-        $this->filterCategoryFee = 0;
-        $this->filterOtherSource = 0;
-        $this->filterPeriod = '';
-        $this->dateDebut = null;
-        $this->dateFin = null;
-        $this->dateRange = null;
+        $this->initializeFilters();
         $this->resetPage();
     }
 
     /**
-     * Appliquer un filtre de période
+     * Obtenir le tableau de filtres
      */
-    public function applyPeriodFilter(string $period): void
-    {
-        $this->filterPeriod = $period;
-        $this->resetPage();
-    }
-
-    /**
-     * Obtenir le tableau de filtres pour le DTO
-     */
-    protected function getFilterArray(string $expenseType): array
+    protected function getFilterArray(string $type): array
     {
         $filters = [
             'month' => $this->filterMonth,
+            'categoryExpense' => $this->filterCategoryExpense,
             'currency' => $this->filterCurrency,
-            'categoryExpenseId' => $this->filterCategoryExpense,
-            'period' => $this->dateRange ?: $this->filterPeriod,
-            'startDate' => $this->dateDebut,
-            'endDate' => $this->dateFin,
-            'date' => $this->date,
+            'isValidated' => $this->filterIsValidated,
         ];
 
-        if ($expenseType === 'fee') {
-            $filters['categoryFeeId'] = $this->filterCategoryFee;
+        if ($type === 'fee') {
+            $filters['categoryFee'] = $this->filterCategoryFee;
         } else {
-            $filters['otherSourceExpenseId'] = $this->filterOtherSource;
+            $filters['otherSource'] = $this->filterOtherSource;
         }
 
         return $filters;
+    }
+
+    /**
+     * Appliquer les filtres (déclenche le re-render)
+     */
+    public function applyFilters(): void
+    {
+        $this->resetPage();
     }
 }

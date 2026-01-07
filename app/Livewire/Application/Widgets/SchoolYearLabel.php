@@ -2,30 +2,31 @@
 
 namespace App\Livewire\Application\Widgets;
 
-use App\Models\School;
-use App\Models\SchoolYear;
-use Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class SchoolYearLabel extends Component
 {
-    // Listner for refresh event
-    protected $listeners = ['refreshSchoolYearLabel' => '$refresh'];
+    public ?object $schoolYear = null;
+
+    public function mount()
+    {
+        $this->loadSchoolYear();
+    }
+
+    protected function loadSchoolYear()
+    {
+        try {
+            $this->schoolYear = DB::table('school_years')
+                ->where('active', true)
+                ->first();
+        } catch (\Exception $e) {
+            $this->schoolYear = (object) ['name' => 'N/A'];
+        }
+    }
 
     public function render()
     {
-        $workOnYear = Auth::user()->work_on_year;
-        $schoolYear = SchoolYear::query()
-            ->where('school_id', School::DEFAULT_SCHOOL_ID())
-            ->when(
-                $workOnYear,
-                fn ($query, $workOnYear) => $query->where('id', $workOnYear),
-                fn ($query) => $query->where('is_active', true)
-            )
-            ->first();
-
-        return view('livewire.application.widgets.school-year-label', [
-            'schoolYear' => $schoolYear,
-        ]);
+        return view('livewire.application.widgets.school-year-label');
     }
 }

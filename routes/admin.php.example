@@ -1,0 +1,99 @@
+<?php
+
+/**
+ * Routes du Domaine Administration
+ *
+ * Gestion des utilisateurs, écoles, configuration et paramètres
+ */
+
+use App\Livewire\Application\Admin\AttacheSingleMenuToUserPage;
+use App\Livewire\Application\Admin\AttacheSubMenuToUserPage;
+use App\Livewire\Application\Admin\AttachMultiAppLinkToUserPage;
+use App\Livewire\Application\Admin\List\ConfigureSchoolPage;
+use App\Livewire\Application\Admin\School\SchoolUsersPage;
+use App\Livewire\Application\Admin\UserProfilePage;
+use App\Livewire\Application\Setting\MainSettingPage;
+use App\Livewire\Application\V2\Configuration\ConfigurationManagementPage;
+use App\Livewire\Application\V2\Configuration\SectionManagementPage;
+use App\Livewire\Application\V2\School\SchoolManagementPage;
+use App\Livewire\Application\V2\User\UserManagementPage;
+use Illuminate\Support\Facades\Route;
+
+/**
+ * Toutes les routes d'administration nécessitent authentification
+ */
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // ============================================================
+    // ADMINISTRATION UTILISATEURS
+    // ============================================================
+    Route::prefix('administration')->name('admin.')->group(function () {
+
+        // Gestion des menus utilisateurs
+        Route::prefix('menu')->name('menu.')->group(function () {
+            Route::get('attach-single/{user}', AttacheSingleMenuToUserPage::class)
+                ->name('attach.single')
+                ->lazy();
+
+            Route::get('attach-multi/{user}', AttachMultiAppLinkToUserPage::class)
+                ->name('attach.multi')
+                ->lazy();
+
+            Route::get('attach-sub/{user}', AttacheSubMenuToUserPage::class)
+                ->name('attach.sub')
+                ->lazy();
+        });
+
+        // Profil utilisateur
+        Route::get('user-profile', UserProfilePage::class)
+            ->name('user.profile');
+
+        // Gestion des utilisateurs (V2)
+        Route::get('user/manage/v2', UserManagementPage::class)
+            ->name('user.manage')
+            ->lazy();
+    });
+
+    // ============================================================
+    // GESTION DES ÉCOLES
+    // ============================================================
+    Route::prefix('schools')->name('admin.schools.')->group(function () {
+
+        Route::get('manage/v2', SchoolManagementPage::class)
+            ->name('index')
+            ->middleware('can:viewAny,App\Models\School')
+            ->lazy();
+
+        Route::get('{schoolId}/users/v2', SchoolUsersPage::class)
+            ->name('users')
+            ->lazy();
+
+        Route::get('configure/{school}', ConfigureSchoolPage::class)
+            ->name('configure')
+            ->lazy();
+    });
+
+    // ============================================================
+    // CONFIGURATION SYSTÈME
+    // ============================================================
+    Route::prefix('config')->name('config.')->group(function () {
+
+        Route::get('manage/v2', ConfigurationManagementPage::class)
+            ->name('manage')
+            ->lazy();
+
+        Route::get('section-manage/v2', SectionManagementPage::class)
+            ->name('section.manage')
+            ->lazy();
+    });
+
+    // ============================================================
+    // PARAMÈTRES GÉNÉRAUX
+    // ============================================================
+    Route::prefix('settings')->name('settings.')->group(function () {
+
+        Route::get('main', MainSettingPage::class)
+            ->name('main')
+            ->lazy();
+    });
+});

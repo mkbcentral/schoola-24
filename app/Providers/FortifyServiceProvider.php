@@ -40,8 +40,33 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
+        // Vues d'authentification personnalisées avec Livewire
         Fortify::loginView(function () {
             return view('guest-view');
+        });
+
+        Fortify::registerView(function () {
+            return view('auth.register-view');
+        });
+
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.forgot-password-view');
+        });
+
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password-view', ['request' => $request]);
+        });
+
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email-view');
+        });
+
+        Fortify::twoFactorChallengeView(function () {
+            return view('auth.two-factor-challenge-view');
+        });
+
+        Fortify::confirmPasswordView(function () {
+            return view('auth.confirm-password-view');
         });
     }
 }
