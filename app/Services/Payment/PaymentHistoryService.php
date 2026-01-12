@@ -27,7 +27,7 @@ class PaymentHistoryService
                     'id' => $payment->id,
                     'date' => $payment->created_at->format('d/m/Y'),
                     'category' => $payment->scolarFee->categoryFee->name ?? 'N/A',
-                    'month' => format_fr_month_name($payment->month),
+                    'month' => \App\Domain\Helpers\DateFormatHelper::getFrenchMonthName($payment->month),
                     'amount' => $payment->scolarFee->amount ?? 0,
                     'currency' => $payment->scolarFee->categoryFee->currency ?? '',
                     'is_paid' => $payment->is_paid,

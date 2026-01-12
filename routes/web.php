@@ -27,6 +27,7 @@ use App\Livewire\Configuration\System\SectionManagementPage;
 use App\Livewire\Financial\Dashboard\FinancialDashboardPage;
 use App\Livewire\Financial\Expense\ExpenseManagementPage;
 use App\Livewire\Financial\Expense\Settings\ExpenseSettingsPage;
+use App\Livewire\Financial\Payment\PaymentDailyPage;
 use App\Livewire\Financial\Payment\PaymentListPage;
 use App\Livewire\Financial\Payment\QuickPaymentPage;
 use App\Livewire\Financial\Payment\Report\PaymentReportPage;
@@ -53,6 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // PAIEMENTS - Gestion des paiements
     // ============================================================
     Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('daily', PaymentDailyPage::class)->name('daily')->lazy();
         Route::get('list', PaymentListPage::class)->name('list')->lazy();
         Route::get('quick', QuickPaymentPage::class)->name('quick')->lazy();
         Route::get('pdf/generate', [\App\Http\Controllers\Payment\PaymentPdfController::class, 'generate'])->name('pdf');
