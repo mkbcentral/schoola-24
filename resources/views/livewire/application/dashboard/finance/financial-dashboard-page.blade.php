@@ -30,44 +30,44 @@
                 <div class="flex gap-2" role="group">
                     <button type="button"
                         class="group relative flex-1 px-6 py-3 rounded-lg font-semibold text-base transition-all duration-200 disabled:opacity-50
-                        {{ $activeTab === 'reports' 
-                            ? 'bg-blue-600 text-white shadow' 
+                        {{ $activeTab === 'reports'
+                            ? 'bg-blue-600 text-white shadow'
                             : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600' }}"
-                        wire:click="changeTab('reports')" 
+                        wire:click="changeTab('reports')"
                         wire:loading.attr="disabled"
                         wire:target="changeTab('reports')">
-                        
+
                         <div class="relative flex items-center justify-center gap-2">
                             <i class="bi bi-file-earmark-bar-graph" wire:loading.remove wire:target="changeTab('reports')"></i>
-                            <span class="inline-block animate-spin border-2 border-t-transparent {{ $activeTab === 'reports' ? 'border-white' : 'border-blue-600' }} rounded-full w-4 h-4" 
+                            <span class="inline-block animate-spin border-2 border-t-transparent {{ $activeTab === 'reports' ? 'border-white' : 'border-blue-600' }} rounded-full w-4 h-4"
                                   wire:loading wire:target="changeTab('reports')"></span>
                             <span>Rapports Détaillés</span>
                         </div>
-                        
+
                         {{-- Barre de sélection --}}
                         @if($activeTab === 'reports')
                             <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-white"></div>
                         @endif
                     </button>
-                    
+
                     <button type="button"
                         class="group relative flex-1 px-6 py-3 rounded-lg font-semibold text-base transition-all duration-200 disabled:opacity-50
-                        {{ $activeTab === 'global' 
-                            ? 'bg-blue-600 text-white shadow' 
+                        {{ $activeTab === 'global'
+                            ? 'bg-blue-600 text-white shadow'
                             : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600' }}"
-                        wire:click="changeTab('global')" 
-                        wire:loading.attr="disabled" 
+                        wire:click="changeTab('global')"
+                        wire:loading.attr="disabled"
                         wire:target="changeTab('global')">
-                        
 
-                        
+
+
                         <div class="relative flex items-center justify-center gap-2">
                             <i class="bi bi-speedometer2 text-xl" wire:loading.remove wire:target="changeTab('global')"></i>
-                            <span class="inline-block animate-spin border-2 border-t-transparent {{ $activeTab === 'global' ? 'border-white' : 'border-blue-600' }} rounded-full w-5 h-5" 
+                            <span class="inline-block animate-spin border-2 border-t-transparent {{ $activeTab === 'global' ? 'border-white' : 'border-blue-600' }} rounded-full w-5 h-5"
                                   wire:loading wire:target="changeTab('global')"></span>
                             <span class="tracking-wide">Rapport Global</span>
                         </div>
-                        
+
                         {{-- Barre de sélection --}}
                         @if($activeTab === 'global')
                             <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-white rounded-t-full"></div>

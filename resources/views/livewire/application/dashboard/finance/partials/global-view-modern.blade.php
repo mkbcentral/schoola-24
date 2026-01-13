@@ -36,15 +36,15 @@
                 {{-- Date spécifique --}}
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Date spécifique</label>
-                    <input type="date" 
-                           class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                    <input type="date"
+                           class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                            wire:model.live='date_filter'>
                 </div>
 
                 {{-- Catégorie --}}
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Catégorie</label>
-                    <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                    <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                             wire:model.live='category_fee_id_filter'>
                         <option value="">Toutes les catégories</option>
                         @foreach ($categories as $category)
@@ -57,7 +57,7 @@
 
                 {{-- Bouton de réinitialisation --}}
                 <div class="flex items-end">
-                    <button class="w-full px-4 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2" 
+                    <button class="w-full px-4 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
                             wire:click='resetFilters'>
                         <i class="bi bi-arrow-clockwise"></i>
                         Réinitialiser
@@ -66,9 +66,9 @@
             </div>
 
             {{-- Info catégorie sélectionnée --}}
-            @if ($category_fee_id_filter)
+            @if ($report_category_id)
                 @php
-                    $selectedCategory = collect($categories)->firstWhere('id', (int) $category_fee_id_filter);
+                    $selectedCategory = collect($categories)->firstWhere('id', (int) $report_category_id);
                 @endphp
                 @if ($selectedCategory)
                     <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">

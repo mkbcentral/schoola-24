@@ -24,7 +24,7 @@
                         <i class="bi bi-file-earmark-text text-indigo-600 dark:text-indigo-400"></i>
                         Type de Rapport
                     </label>
-                    <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+                    <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                             wire:model.live='report_type'>
                         <option value="daily">Date Spécifique</option>
                         <option value="monthly">Mois Spécifique</option>
@@ -41,8 +41,8 @@
                             <i class="bi bi-calendar-day text-blue-600 dark:text-blue-400"></i>
                             Date
                         </label>
-                        <input type="date" 
-                               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                        <input type="date"
+                               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                                wire:model.live='report_date'>
                     </div>
                 @endif
@@ -78,7 +78,7 @@
                             <i class="bi bi-clock-history text-purple-600 dark:text-purple-400"></i>
                             Période
                         </label>
-                        <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" 
+                        <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                                 wire:model.live='predefined_period'>
                             <option value="week">1 Semaine</option>
                             <option value="2weeks">2 Semaines</option>
@@ -93,8 +93,8 @@
                             <i class="bi bi-calendar-range"></i>
                             Période Calculée
                         </label>
-                        <input type="text" 
-                               class="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 cursor-not-allowed" 
+                        <input type="text"
+                               class="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 cursor-not-allowed"
                                value="{{ date('d/m/Y', strtotime($report_start_date)) }} - {{ date('d/m/Y', strtotime($report_end_date)) }}"
                                readonly>
                     </div>
@@ -106,8 +106,8 @@
                             <i class="bi bi-calendar-check text-teal-600 dark:text-teal-400"></i>
                             Date Début
                         </label>
-                        <input type="date" 
-                               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all" 
+                        <input type="date"
+                               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
                                wire:model.live='report_start_date'>
                     </div>
                     <div class="space-y-2">
@@ -115,8 +115,8 @@
                             <i class="bi bi-calendar-x text-red-600 dark:text-red-400"></i>
                             Date Fin
                         </label>
-                        <input type="date" 
-                               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" 
+                        <input type="date"
+                               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
                                wire:model.live='report_end_date'>
                     </div>
                 @endif
@@ -127,7 +127,7 @@
                             <i class="bi bi-check-circle text-emerald-600 dark:text-emerald-400"></i>
                             Type Paiement
                         </label>
-                        <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all" 
+                        <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                                 wire:model.live='report_payment_type'>
                             <option value="all">Tous</option>
                             <option value="paid">Payés</option>
@@ -144,12 +144,13 @@
                 @endif
 
                 {{-- Catégorie (toujours visible) --}}
+
                 <div class="space-y-2">
                     <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                         <i class="bi bi-tag text-amber-600 dark:text-amber-400"></i>
                         Catégorie
                     </label>
-                    <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" 
+                    <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
                             wire:model.live='report_category_id'>
                         <option value="">Toutes</option>
                         @foreach ($categories as $category)
@@ -164,7 +165,7 @@
                         <i class="bi bi-box-seam text-cyan-600 dark:text-cyan-400"></i>
                         Source
                     </label>
-                    <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all" 
+                    <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
                             wire:model.live='report_source'>
                         <option value="">Toutes les sources</option>
                         <option value="scolar_fee">Frais Scolaires</option>

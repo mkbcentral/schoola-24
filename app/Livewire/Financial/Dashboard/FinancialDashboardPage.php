@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Financial\Dashboard;
 
+use App\Domain\Helpers\SmsNotificationHelper;
 use App\Services\FinancialDashboardService;
+use Exception;
 use Livewire\Component;
 
 class FinancialDashboardPage extends Component
@@ -13,7 +15,6 @@ class FinancialDashboardPage extends Component
     // Filtres globaux
     public string $month_filter = '';
     public string $date_filter = '';
-    public string $category_fee_id_filter = '';
     public string $currency = 'USD'; // Devise par défaut
 
     // Filtres pour rapports détaillés
@@ -44,7 +45,7 @@ class FinancialDashboardPage extends Component
         $service = app(FinancialDashboardService::class);
         $categories = $service->getAvailableCategories();
         $minerval = $categories->first(fn($cat) => stripos($cat->name, 'MINERVAL') !== false);
-        $this->category_fee_id_filter = $minerval ? (string)$minerval->id : '';
+        $this->report_category_id = $minerval ? (string)$minerval->id : '';
 
         $this->currency = 'USD';
 
@@ -54,7 +55,7 @@ class FinancialDashboardPage extends Component
         $this->report_start_date = date('Y-m-01');
         $this->report_end_date = date('Y-m-d');
         $this->predefined_period = '1month';
-        $this->report_category_id = $this->category_fee_id_filter;
+        //$this->report_category_id = $this->category_fee_id_filter;
 
         // Générer le rapport initial
         $this->generateDetailedReport();
@@ -72,6 +73,7 @@ class FinancialDashboardPage extends Component
 
     public function updatedCategoryFeeIdFilter(): void
     {
+        dd($this->category_fee_id_filter);
         // Les données seront rechargées dans render()
     }
 
@@ -96,7 +98,7 @@ class FinancialDashboardPage extends Component
     {
         $this->month_filter = date('m');
         $this->date_filter = '';
-        $this->category_fee_id_filter = '';
+        $this->report_category_id = '';
         $this->currency = 'USD';
         $this->updateCharts();
     }
@@ -236,6 +238,7 @@ class FinancialDashboardPage extends Component
         }
 
         $this->detailedReport = $service->generateReport($filters);
+        $this->updateCharts();
     }
 
     private function getPredefinedLabel(): string
@@ -253,11 +256,23 @@ class FinancialDashboardPage extends Component
 
     private function updateCharts(): void
     {
+        //dd($this->report_category_id);
         $service = app(FinancialDashboardService::class);
-        $categoryId = $this->category_fee_id_filter ? (int)$this->category_fee_id_filter : null;
+        $categoryId = $this->report_category_id ? (int)$this->report_category_id : null;
         $chartData = $service->getMonthlyChartData(date('Y'), $categoryId, $this->currency);
 
         $this->dispatch('charts-updated', $chartData);
+    }
+
+    //Test to send sms
+    public function testSendSms(): void
+    {
+        try {
+            $response = SmsNotificationHelper::sendOrangeSMS('+243971330007', 'Test message');
+            dd('SMS envoyé!', $response);
+        } catch (Exception $e) {
+            dd('Erreur:', $e->getMessage());
+        }
     }
 
     public function render(): \Illuminate\Contracts\View\View
@@ -265,11 +280,11 @@ class FinancialDashboardPage extends Component
         $service = app(FinancialDashboardService::class);
 
         // ID de catégorie pour filtrer
-        $categoryId = $this->category_fee_id_filter ? (int)$this->category_fee_id_filter : null;
+        $categoryId = $this->report_category_id ? (int)$this->report_category_id : null;
 
         // Récupérer les données du dashboard selon la devise et catégorie
         // Note: On ne passe PAS de filtres month/date pour avoir le total annuel dans les cartes globales
-        $data = $service->getDashboardData([], $this->currency, $categoryId);
+        $data = $service->getDashboardData([], $this->currency, categoryId: $categoryId);
 
         // Mettre à jour les propriétés
         $this->total_revenue = $data['revenues'];

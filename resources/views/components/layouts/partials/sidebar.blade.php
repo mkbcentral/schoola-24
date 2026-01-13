@@ -35,18 +35,18 @@
                     <i class="bi bi-chevron-down text-xs transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
                 </button>
                 <ul x-show="open" x-collapse class="mt-2 ml-3 space-y-1 border-l-2 border-blue-600/30 dark:border-gray-700/40 pl-4">
+                     <li>
+                        <a href="{{ route('payment.daily') }}"
+                           class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('payment.quick') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
+                            <i class="bi bi-lightning text-xs opacity-70"></i>
+                            <span>Nouneau paiement</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ route('payment.list') }}"
                            class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('payment.list') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
                             <i class="bi bi-list-ul text-xs opacity-70"></i>
                             <span>Liste des paiements</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('payment.quick') }}"
-                           class="flex items-center gap-2.5 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-blue-700/20 dark:hover:bg-gray-700/30 rounded-lg transition-all {{ request()->routeIs('payment.quick') ? 'bg-blue-700/30 dark:bg-gray-700/40 text-white font-medium' : '' }}">
-                            <i class="bi bi-lightning text-xs opacity-70"></i>
-                            <span>Paiement rapide</span>
                         </a>
                     </li>
                     <li>

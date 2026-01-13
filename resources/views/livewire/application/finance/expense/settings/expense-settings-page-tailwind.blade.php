@@ -154,8 +154,6 @@
                                 <span class="ms-3 text-sm font-medium text-gray-700 dark:text-gray-300">Catégorie active</span>
                             </label>
                         </div>
-
-                        </div>
                     </form>
                 </div>
 
@@ -163,13 +161,13 @@
                 <div class="bg-gradient-to-r from-gray-50/80 to-gray-100/80 dark:from-gray-700/80 dark:to-gray-700/80 backdrop-blur-sm px-6 py-4 border-t border-gray-200/50 dark:border-gray-600/50 rounded-b-2xl flex justify-end gap-3">
                     <button type="button" 
                             wire:click="closeCategoryModal"
-                            class="px-4 py-2 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-medium rounded-lg transition-colors flex items-center gap-2">
+                            class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-medium rounded-lg transition-all flex items-center gap-2 shadow-sm">
                         <i class="bi bi-x-circle"></i>Annuler
                     </button>
                     <button type="submit"
                             wire:loading.attr="disabled"
                             form="categoryForm"
-                            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors flex items-center gap-2">
+                            class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-all flex items-center gap-2 shadow-md">
                         <span wire:loading.remove wire:target="saveCategory">
                             <i class="bi bi-check-circle"></i>
                             @if($editingCategoryId) Modifier @else Créer @endif
@@ -281,8 +279,6 @@
                                 <span class="ms-3 text-sm font-medium text-gray-700 dark:text-gray-300">Source active</span>
                             </label>
                         </div>
-
-                        </div>
                     </form>
                 </div>
 
@@ -290,13 +286,13 @@
                 <div class="bg-gradient-to-r from-gray-50/80 to-gray-100/80 dark:from-gray-700/80 dark:to-gray-700/80 backdrop-blur-sm px-6 py-4 border-t border-gray-200/50 dark:border-gray-600/50 rounded-b-2xl flex justify-end gap-3">
                     <button type="button" 
                             wire:click="closeSourceModal"
-                            class="px-4 py-2 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-medium rounded-lg transition-colors flex items-center gap-2">
+                            class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-medium rounded-lg transition-all flex items-center gap-2 shadow-sm">
                         <i class="bi bi-x-circle"></i>Annuler
                     </button>
                     <button type="submit"
                             wire:loading.attr="disabled"
                             form="sourceForm"
-                            class="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors flex items-center gap-2">
+                            class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-all flex items-center gap-2 shadow-md">
                         <span wire:loading.remove wire:target="saveSource">
                             <i class="bi bi-check-circle"></i>
                             @if($editingSourceId) Modifier @else Créer @endif

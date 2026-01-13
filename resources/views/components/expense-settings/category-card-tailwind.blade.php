@@ -32,8 +32,6 @@
                     style="display: none;">
                     <div class="py-1">
                         <button class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center text-gray-700 dark:text-gray-300 transition-colors" 
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#categoryFormOffcanvas"
                             wire:click="openEditCategoryModal({{ $category->id }})"
                             @click="open = false">
                             <i class="bi bi-pencil text-blue-600 dark:text-blue-400 mr-2"></i>

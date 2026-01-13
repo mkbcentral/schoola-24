@@ -332,7 +332,7 @@ class FinancialDashboardService
     public function getAvailableCategories()
     {
         return CategoryFee::where('school_year_id', SchoolYear::DEFAULT_SCHOOL_YEAR_ID())
-            ->where('is_for_dash', true)
+            //->where('is_for_dash', true)
             ->orderBy('name')
             ->get();
     }
