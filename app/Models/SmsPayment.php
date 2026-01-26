@@ -10,7 +10,22 @@ class SmsPayment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['receiver', 'message', 'payment_id'];
+    protected $fillable = [
+        'receiver',
+        'message',
+        'payment_id',
+        'resource_id',
+        'status',
+        'delivery_status',
+        'sent_at',
+        'delivered_at',
+        'error_message'
+    ];
+
+    protected $casts = [
+        'sent_at' => 'datetime',
+        'delivered_at' => 'datetime',
+    ];
 
     /**
      * Get the payment that owns the SmsPayment

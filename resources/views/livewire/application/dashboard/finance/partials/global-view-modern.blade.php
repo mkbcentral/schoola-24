@@ -2,9 +2,9 @@
 <div class="space-y-4">
     {{-- Filtres --}}
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div class="bg-gray-700 dark:bg-gray-900 px-6 py-3 border-b border-gray-200 dark:border-gray-700">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-700 dark:to-indigo-700 px-6 py-3 border-b border-blue-700 dark:border-blue-800">
             <div class="flex items-center gap-3">
-                <div class="bg-gray-600 dark:bg-gray-800 rounded-lg p-2">
+                <div class="bg-white/20 dark:bg-black/20 rounded-lg p-2">
                     <i class="bi bi-funnel text-white"></i>
                 </div>
                 <h2 class="text-white font-semibold text-lg">Filtres</h2>

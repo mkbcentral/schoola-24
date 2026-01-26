@@ -1,75 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Theme initialization
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    let initialTheme = savedTheme;
-    if (!savedTheme || savedTheme === 'auto') {
-        initialTheme = prefersDark ? 'dark' : 'light';
-    }
-
-    document.documentElement.setAttribute('data-bs-theme', initialTheme);
-
-    // Listen for theme changes from other tabs/windows
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'theme' && e.newValue) {
-            const newTheme = e.newValue === 'auto'
-                ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-                : e.newValue;
-
-            document.documentElement.setAttribute('data-bs-theme', newTheme);
-
-            // Update Chart.js instances if they exist
-            if (window.Chart && Chart.instances) {
-                Chart.helpers.each(Chart.instances, function(instance) {
-                    const isDark = newTheme === 'dark';
-                    if (instance.options.plugins && instance.options.plugins.legend) {
-                        instance.options.plugins.legend.labels.color = isDark ? '#fff' : '#666';
-                    }
-                    if (instance.options.scales) {
-                        if (instance.options.scales.x) {
-                            instance.options.scales.x.grid.color = isDark ? '#373b3e' : '#ddd';
-                            instance.options.scales.x.ticks.color = isDark ? '#fff' : '#666';
-                        }
-                        if (instance.options.scales.y) {
-                            instance.options.scales.y.grid.color = isDark ? '#373b3e' : '#ddd';
-                            instance.options.scales.y.ticks.color = isDark ? '#fff' : '#666';
-                        }
-                    }
-                    instance.update();
-                });
-            }
-        }
-    });
-
-    // Theme management
-    const themeSwitch = document.querySelector('.theme-switch');
-    const currentThemeSpan = document.querySelector('.current-theme');
-
-    if (themeSwitch && currentThemeSpan) {
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        currentThemeSpan.textContent = capitalizeFirstLetter(initialTheme);
-
-        // Theme switch handler
-        themeSwitch.addEventListener('click', function (e) {
-            e.preventDefault();
-            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-            document.documentElement.setAttribute('data-bs-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            currentThemeSpan.textContent = capitalizeFirstLetter(newTheme);
-        });
-    }
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    // Charts theme is now managed by the global Alpine store
 
     // Apply theme to charts based on current theme
     function getChartTheme() {
-        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+        const isDark = document.documentElement.classList.contains('dark');
         return {
             color: isDark ? '#fff' : '#666',
             gridColor: isDark ? '#373b3e' : '#ddd',
@@ -202,9 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebarCollapse.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            
+
             console.log('Toggle clicked, isMobile:', isMobile(), 'isToggling:', isToggling);
-            
+
             if (isToggling) return;
             isToggling = true;
 
@@ -217,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Sur desktop: compact/expanded
                 sidebar.classList.toggle('active');
                 content.classList.toggle('active');
-                
+
                 // Sauvegarder l'état (uniquement desktop)
                 const isCompact = sidebar.classList.contains('active');
                 localStorage.setItem('sidebarState', isCompact ? 'compact' : 'expanded');
@@ -237,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (e.target.closest('#sidebarCollapse')) {
                     return;
                 }
-                
+
                 // Fermer si on clique en dehors du sidebar
                 if (!e.target.closest('.sidebar-modern')) {
                     sidebar.classList.remove('show');

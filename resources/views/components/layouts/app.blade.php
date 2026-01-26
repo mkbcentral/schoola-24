@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="light" class="">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -7,18 +7,22 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/Vector-white.svg') }}">
     <title>{{ config('app.name') }}</title>
 
-    {{-- Script inline pour éviter le flash de contenu (FOUC) --}}
+    {{-- Script inline pour éviter le flash de contenu (FOUC) avec Tailwind --}}
     <script>
         (function() {
-            const storedTheme = localStorage.getItem('schoola-theme');
-            const preferredTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ?
-                'dark' : 'light';
-            const theme = storedTheme || preferredTheme;
+            // Nettoyer les anciennes clés localStorage
+            if (localStorage.getItem('theme')) {
+                localStorage.removeItem('theme');
+            }
 
-            document.documentElement.setAttribute('data-bs-theme', theme);
+            const theme = localStorage.getItem('schoola-theme') || 'light';
+            console.log('Theme initial:', theme);
+
+            // S'assurer que la classe dark est bien supprimée par défaut
+            document.documentElement.classList.remove('dark');
+
             if (theme === 'dark') {
-                document.documentElement.classList.add('dark-mode');
-                document.documentElement.classList.add('dark'); // Tailwind dark mode
+                document.documentElement.classList.add('dark');
             }
         })();
     </script>
@@ -30,6 +34,32 @@
 </head>
 
 <body>
+    <script>
+        // Alpine.js global store for theme management
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('theme', {
+                current: localStorage.getItem('schoola-theme') || 'light',
+
+                toggle() {
+                    this.current = this.current === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('schoola-theme', this.current);
+
+                    if (this.current === 'dark') {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+
+                    // Dispatch event for chart updates
+                    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: this.current } }));
+                },
+
+                isDark() {
+                    return this.current === 'dark';
+                }
+            });
+        });
+    </script>
     <div class="flex min-h-screen bg-gray-50 dark:bg-gray-900">
         @include('components.layouts.partials.sidebar')
         <!-- Page Content -->

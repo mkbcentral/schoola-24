@@ -228,35 +228,3 @@
     </div>
 </nav>
 
-<script>
-    function themeToggle() {
-        return {
-            toggle() {
-                const html = document.documentElement;
-                const currentTheme = html.getAttribute('data-bs-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-                // Update theme
-                html.setAttribute('data-bs-theme', newTheme);
-
-                // Toggle dark class for Tailwind
-                if (newTheme === 'dark') {
-                    html.classList.add('dark', 'dark-mode');
-                } else {
-                    html.classList.remove('dark', 'dark-mode');
-                }
-
-                // Save to localStorage
-                localStorage.setItem('schoola-theme', newTheme);
-
-                // Dispatch event for navbar sync
-                window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: newTheme } }));
-            }
-        }
-    }
-
-    // Listen for theme changes from navbar
-    window.addEventListener('theme-changed', (event) => {
-        // Theme already updated by the component that triggered it
-    });
-</script>
